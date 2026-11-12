@@ -686,6 +686,24 @@ table.atable tr.nohover{cursor:default}
 .tags .tag{max-width:100%;white-space:normal;overflow-wrap:anywhere}
 .eprefs{display:grid;grid-template-columns:1fr 1fr;gap:6px 14px;margin-top:8px}@media (max-width:900px){.eprefs{grid-template-columns:1fr}}
 .eprf{align-items:flex-start!important;border:1px solid var(--line);border-radius:10px;padding:8px 10px}.eprf input{margin-top:3px}
+.dstack{display:flex;flex-direction:column;gap:inherit;min-width:0}.dstack>.blk{margin:0}
+.meetnext{border-radius:16px;padding:14px 16px;background:linear-gradient(135deg,#0000FF,#3333FF);color:#fff;margin-bottom:6px}
+.meetnext.agora{background:linear-gradient(135deg,#12B76A,#039855)}.meetnext.logo{background:linear-gradient(135deg,#0000FF,#00A9CC)}
+.meetnext .mnt{font:500 17px/1.3 var(--kanit);margin:2px 0 8px}
+.meetnext .mnd{display:flex;flex-direction:column;gap:2px;font-size:13px;opacity:.95}.meetnext .mnd .big{font:600 22px/1.2 var(--kanit);opacity:1}
+.btn.meetgo{background:#fff;color:#0000FF;border:0;margin-top:12px;font-weight:700;display:inline-flex;gap:6px;align-items:center}
+.meetnext.agora .btn.meetgo{color:#039855}
+.mhd{font-weight:700;margin:12px 0 4px;text-transform:uppercase;letter-spacing:.06em;font-size:11px}
+.meet{display:flex;gap:10px;align-items:center;padding:8px 4px;border-bottom:1px solid var(--line)}.meet:last-child{border-bottom:0}
+.meet .mtime{display:flex;flex-direction:column;align-items:center;min-width:46px;font-size:12px;color:var(--muted)}.meet .mtime b{font-size:14px;color:var(--ink)}
+.meet .mtit{font-weight:600;color:var(--ink);font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mcd.agora{color:#039855;font-weight:700}.mcd.logo{color:#0000FF;font-weight:700}
+.meetbtn{display:inline-flex;gap:5px;align-items:center;white-space:nowrap}
+#nextMeet:empty{display:none}
+.meetchip{display:inline-flex;align-items:center;gap:8px;background:#EEF0FF;color:#0000FF;border-radius:999px;padding:6px 6px 6px 12px;font-size:13px;font-weight:600;margin-right:8px}
+.meetchip.agora{background:#ECFDF3;color:#039855}.meetchip .mct{color:var(--ink);font-weight:500;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.meetchip a{background:currentColor;border-radius:999px;padding:4px 10px;text-decoration:none}.meetchip a{color:#fff!important;background:#0000FF}.meetchip.agora a{background:#039855}
+@media (max-width:1100px){.meetchip .mct{display:none}}
 .modt{border:1px solid var(--line);border-radius:12px;padding:10px;margin-bottom:8px}
 .modt .x{border:0;background:none;color:#98a2b3;cursor:pointer;font-size:15px;padding:6px}
 </style>
@@ -723,6 +741,7 @@ table.atable tr.nohover{cursor:default}
       <div class="crumbs"><span>Mannare</span><span>&#8250;</span><b id="crumbNow">Dashboard</b></div>
       <span class="spacer"></span>
       <span id="topTimer"></span>
+      <span id="nextMeet"></span>
       <button class="iconbtn" id="btnBell" title="Notificações"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 1 7 7v5l2 3v1H3v-1l2-3V9a7 7 0 0 1 7-7zM9 20h6a3 3 0 0 1-6 0z"/></svg><span class="badge" id="nBell" hidden></span></button>
       <span class="sync ok" id="sync">Salvo</span>
       <label class="chip-me" id="chipMe" title="Meu perfil"><span id="meAv"></span><span class="tx"><div class="nm" id="meNome"></div><div class="em" id="meEmail"></div></span></label>
@@ -1117,6 +1136,7 @@ function render(){
   const un = S.notifs.filter(n => n.para === me && !n.lida).length;
   $('#nBell').hidden = !un; $('#nBell').textContent = un;
   syncModelos();
+  setTimeout(proxReuniaoChip, 0);
   { const n = finLate(); $('#nFin').innerHTML = n ? `<span class="n red">${n}</span>` : ''; }
   if(ui.view === 'dash') renderDash();
   else if(ui.view === 'prop') renderProps();
@@ -1739,7 +1759,7 @@ function renderDash(){
 
       <div class="blk c8"><h3>Atividades recentes <span class="spacer"></span><label class="minis">${ic('busca', 'sm')}<input id="aq" placeholder="Buscar" value="${esc(ui.aq || '')}"></label></h3>
         <div class="tablewrap"><table class="atable"><thead><tr><th style="width:34px"><span class="cbx"></span></th><th>Atividade</th><th>Processo</th><th>Data</th><th>Hora</th><th>Pessoa</th><th>Status</th></tr></thead><tbody>${activityRows() || '<tr><td colspan="7" class="empty">Nada encontrado.</td></tr>'}</tbody></table></div></div>
-      ${comAtribCardHtml()}
+      <div class="c4 dstack">${reunioesCardHtml()}${comAtribCardHtml()}</div>
 
       <div class="blk c8"><h3>Minhas tarefas <span class="spacer"></span><button class="btn sm" data-view-go="mine">Ver todas</button></h3>${kanbanHtml()}</div>
       <div class="blk c4">${calHtml(items)}</div>
@@ -2043,7 +2063,7 @@ function renderInteg(){
         ${ult ? '' : '<div class="banner" style="margin:12px 0 0">A sincronização automática começa quando a ponte (Apps Script) for instalada. Até lá, use os botões “Adicionar à Google Agenda” das tarefas e licenças.</div>'}
       </div>
       <div class="blk c5"><h3>Minhas reuniões (próximos dias)</h3>
-        ${on && sy.trazer ? (evs.map(e => `<div class="li"><span class="cico sm" style="background:#E8F0FE;color:#1A73E8">${ic('relogio', 'sm')}</span><div style="flex:1;min-width:0"><b>${esc(e.titulo)}</b><div class="sub">${fmtD(e.data)} | ${e.hora}${e.local ? ' | ' + esc(e.local) : ''}</div></div></div>`).join('') || '<div class="sub">Nenhuma reunião encontrada. Confira se sua agenda está compartilhada com administrativo@mannare.com.br.</div>') : '<div class="sub">Ligue a agenda e marque “Mostrar no painel as reuniões”.</div>'}</div>
+        ${on && sy.trazer ? (reunioes().slice(0, 12).map(reuniaoLinha).join('') || '<div class="sub">Nenhuma reunião encontrada. Confira se sua agenda está compartilhada com administrativo@mannare.com.br.</div>') : '<div class="sub">Ligue a agenda e marque “Mostrar no painel as reuniões”.</div>'}</div>
 
       ${integPropHtml()}
       <div class="blk c6"><h3>Importar do Painel de Licenças antigo</h3>
@@ -3677,6 +3697,59 @@ function procEditClick(tg){
     ui.procEdit = null; save(); render(); toast('Processo atualizado'); return true; }
   return false;
 }
+
+/* ---------- reuniões (Google Agenda), com contagem regressiva e link ---------- */
+const MEET_IC = '<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M3 6h11a2 2 0 0 1 2 2v1.6l4.4-3.1c.6-.4 1.6 0 1.6.8v9.4c0 .8-1 1.2-1.6.8L16 14.4V16a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z"/></svg>';
+function reunioes(){
+  const ag = Date.now();
+  return gEventos().map(e => { const ini = e.inicio ? new Date(e.inicio) : new Date(e.data + 'T' + (e.hora || '00:00') + ':00-03:00');
+      const fim = e.fim ? new Date(e.fim) : new Date(ini.getTime() + 3600e3); return Object.assign({}, e, {ini, fimD:fim}); })
+    .filter(e => e.fimD.getTime() > ag).sort((a, b) => a.ini - b.ini);
+}
+function faltaTxt(e){
+  const ag = Date.now(), ms = e.ini.getTime() - ag;
+  if(ms <= 0) return {t:`acontecendo agora | termina ${e.horaFim || ''}`.replace(/ \| termina $/, ''), c:'agora'};
+  const min = Math.ceil(ms / 60000);
+  if(min < 60) return {t:`em ${min} min`, c:min <= 15 ? 'logo' : 'hoje'};
+  const hoje = TODAY, amanha = addDays(TODAY, 1), d = e.data || '';
+  if(d === hoje){ const h = Math.floor(min / 60), m = min % 60; return {t:`em ${h}h${m ? String(m).padStart(2, '0') + 'min' : ''}`, c:'hoje'}; }
+  if(d === amanha) return {t:`amanhã às ${e.hora}`, c:'depois'};
+  const dias = Math.round((new Date(d + 'T12:00:00') - new Date(hoje + 'T12:00:00')) / 864e5);
+  return {t:`em ${dias} dias | ${fmtD(d)} às ${e.hora}`, c:'depois'};
+}
+const meetLinkHtml = (e, cls) => e.link ? `<a class="btn sm ${cls || 'primary'} meetbtn" href="${esc(e.link)}" target="_blank" rel="noopener" title="${esc(e.link)}">${MEET_IC} Entrar</a>` : '';
+function reuniaoLinha(e){
+  const f = faltaTxt(e);
+  return `<div class="meet ${f.c}"><div class="mtime"><b>${esc(e.hora || '')}</b><span>${esc(e.horaFim || '')}</span></div>
+    <div style="flex:1;min-width:0"><div class="mtit">${esc(e.titulo)}</div><div class="sub"><span class="mcd ${f.c}" data-meetcd="${esc(e.inicio || e.data + 'T' + e.hora)}">${esc(f.t)}</span>${!e.link && e.local ? ' | ' + esc(e.local) : ''}${e.convidados ? ` | ${e.convidados} participante(s)` : ''}</div></div>
+    ${meetLinkHtml(e, f.c === 'agora' || f.c === 'logo' ? 'primary' : '')}</div>`;
+}
+function reunioesCardHtml(){
+  const on = gcalOn() && gSync().trazer, rs = on ? reunioes() : [], prox = rs[0], hoje = rs.filter(e => e.data === TODAY), depois = rs.filter(e => e.data !== TODAY).slice(0, 4);
+  const at = (S.extra['config:gcal_eventos'] || {})._atualizado;
+  if(!on) return `<div class="blk c4"><h3>Minhas reuniões</h3><div class="sub" style="margin:-6px 0 12px">As reuniões da sua Google Agenda, com o tempo que falta e o link para entrar.</div>
+    <div class="empty" style="padding:14px;text-align:left">Para ligar: em <b>Integrações → Google Agenda</b>, clique em <b>Ligar para mim</b> e marque <b>Mostrar no painel as reuniões da minha agenda</b>. Depois compartilhe sua agenda com administrativo@mannare.com.br.</div>
+    <button class="btn sm" data-view-go="integ" style="margin-top:10px">Ir para Integrações</button></div>`;
+  return `<div class="blk c4"><h3>Minhas reuniões <span class="spacer"></span><span class="sub" style="font-weight:500;font-size:12px">${at ? 'atualizado ' + fmtWhen(at) : ''}</span></h3>
+    ${prox ? `<div class="meetnext ${faltaTxt(prox).c}"><div class="sub" style="color:inherit;opacity:.8">Próxima reunião</div><div class="mnt">${esc(prox.titulo)}</div>
+      <div class="mnd"><span data-meetcd="${esc(prox.inicio || prox.data + 'T' + prox.hora)}" class="big">${esc(faltaTxt(prox).t)}</span><span>${prox.data === TODAY ? 'hoje' : fmtD(prox.data)}, ${esc(prox.hora)}${prox.horaFim ? ' às ' + esc(prox.horaFim) : ''}</span></div>
+      ${prox.link ? `<a class="btn meetgo" href="${esc(prox.link)}" target="_blank" rel="noopener">${MEET_IC} Entrar na reunião</a>` : prox.local ? `<div class="sub" style="color:inherit;margin-top:8px">${esc(prox.local)}</div>` : '<div class="sub" style="color:inherit;opacity:.8;margin-top:8px">Sem link de reunião</div>'}</div>` : '<div class="empty" style="padding:16px">Nenhuma reunião nos próximos dias.</div>'}
+    ${hoje.length > 1 ? `<div class="sub mhd">Hoje</div>${hoje.slice(1).map(reuniaoLinha).join('')}` : ''}
+    ${depois.filter(e => e !== prox).length ? `<div class="sub mhd">Próximos dias</div>${depois.filter(e => e !== prox).map(reuniaoLinha).join('')}` : ''}</div>`;
+}
+function proxReuniaoChip(){
+  const el = $('#nextMeet'); if(!el) return;
+  const on = gcalOn() && gSync().trazer, e = on ? reunioes()[0] : null;
+  if(!e){ el.innerHTML = ''; return; }
+  const f = faltaTxt(e), ms = e.ini.getTime() - Date.now();
+  if(ms > 60 * 60000){ el.innerHTML = ''; return; }
+  el.innerHTML = `<span class="meetchip ${f.c}" title="${esc(e.titulo)}">${MEET_IC}<span class="mct">${esc(e.titulo.length > 26 ? e.titulo.slice(0, 24) + '…' : e.titulo)}</span><b>${esc(f.t.split(' | ')[0])}</b>${e.link ? `<a href="${esc(e.link)}" target="_blank" rel="noopener">Entrar</a>` : ''}</span>`;
+}
+function tickReunioes(){
+  $$('[data-meetcd]').forEach(el => { const e = reunioes().find(x => (x.inicio || x.data + 'T' + x.hora) === el.dataset.meetcd); if(e) el.textContent = faltaTxt(e).t; });
+  proxReuniaoChip();
+}
+setInterval(tickReunioes, 30000);
 
 /* ---------- Eventos ---------- */
 document.addEventListener('click', e => {
