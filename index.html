@@ -1607,14 +1607,14 @@ function newProcModal(propId){
     <div class="mhead"><b style="color:var(--navy);font-size:16px">Abrir processo | ${esc(pr.codigo)}</b><span class="spacer"></span><button class="btn ghost" data-tclose>✕</button></div>
     <div style="padding:18px;display:flex;flex-direction:column;gap:12px">
       <div><b>${esc(pr.emp)}</b><div class="sub">${esc(pr.cliente)} | ${esc(pr.objeto)}</div></div>
-      <label class="f">Modelo de tarefas<select id="npModelo">${modelosAtivos().map(([k, m]) => `<option value="${k}" ${k === pr.modelo ? 'selected' : ''}>${m.nome} — ${m.tarefas.length} tarefas</option>`).join('')}</select></label>
+      <label class="f">Modelo de tarefas<select id="npModelo">${OPT_SEM}${modelosAtivos().map(([k, m]) => `<option value="${k}" ${k === pr.modelo ? 'selected' : ''}>${m.nome} — ${m.tarefas.length} tarefas</option>`).join('')}</select></label>
       <div id="npPrev" class="sect" style="margin:0;font-size:13.5px"></div>
       <div class="fields" style="margin:0"><label class="f">Responsável<select id="npResp">${USERS.map(u => `<option value="${u.id}" ${u.id === pr.resp ? 'selected' : ''}>${esc(u.nome)}</option>`).join('')}</select></label>
       <label class="f">Prazo final<input type="date" id="npPrazo" value="${dIn(45)}"></label></div>
       <p class="hint" style="margin:0">As tarefas nascem atribuídas ao responsável; depois é só redistribuir. No painel real isto pode acontecer sozinho quando a proposta é aceita (junto com o e-mail que já vai para o operacional).</p>
     </div>
     <div class="mfoot"><button class="btn" data-tclose>Cancelar</button><button class="btn primary" id="npGo" data-prop="${pr.id}">Criar processo</button></div></div></div>`;
-  const prev = () => { const m = MODELOS[$('#npModelo').value]; $('#npPrev').innerHTML = `<b>${esc(m.orgao)}</b>` + m.tarefas.map(([t, s]) => `<div style="margin-top:4px">&#9633; ${esc(t)}${s.length ? ` <span class="sub">(${s.length} subtarefas)</span>` : ''}</div>`).join(''); };
+  const prev = () => { const m = MODELOS[$('#npModelo').value]; $('#npPrev').innerHTML = !m.tarefas.length ? '<span class="sub">O processo nasce sem tarefas. Depois dá para criar tarefas uma a uma ou aplicar um modelo na aba Tarefas.</span>' : `<b>${esc(m.orgao)}</b>` + m.tarefas.map(([t, s]) => `<div style="margin-top:4px">&#9633; ${esc(t)}${s.length ? ` <span class="sub">(${s.length} subtarefas)</span>` : ''}</div>`).join(''); };
   $('#npModelo').onchange = prev; prev();
 }
 
@@ -2087,7 +2087,8 @@ function avulsoModal(st0){
       <div class="fields" style="margin:0">
         <label class="f">Cliente / grupo<input id="avCli" list="avGrupos" placeholder="Ex.: Construtora Litoral"><datalist id="avGrupos">${grupos.map(g => `<option value="${esc(g)}">`).join('')}</datalist></label>
         <label class="f">Obra / empreendimento<input id="avEmp" placeholder="Ex.: Residencial Mar Azul"></label>
-        <label class="f">Modelo de tarefas<select id="avMod">${Object.entries(MODELOS).map(([k, m]) => `<option value="${k}">${m.nome}</option>`).join('')}</select></label>
+        <label class="f">Modelo de tarefas<select id="avMod">${OPT_SEM}${modelosAtivos().map(([k, m]) => `<option value="${k}" ${k === 'alvara' ? 'selected' : ''}>${esc(m.nome)} (${m.tarefas.length} tarefas)</option>`).join('')}</select></label>
+        <label class="f">Serviço (nome do processo)<input id="avSrv" placeholder="em branco = nome do modelo"></label>
         <label class="f">Responsável<select id="avResp">${USERS.map(u => `<option value="${u.id}" ${u.id === me ? 'selected' : ''}>${esc(u.nome)}</option>`).join('')}</select></label>
         <label class="f">Prazo final<input type="date" id="avPrazo" value="${dIn(45)}"></label>
         <label class="f">Status inicial<select id="avSt">${PROC_ST.map(s => `<option value="${s.k}" ${s.k === st0 ? 'selected' : ''}>${s.l}</option>`).join('')}</select></label>
@@ -3495,12 +3496,14 @@ function avisoPropostaNova(p){
 const MODELOS_BASE = JSON.parse(J(MODELOS));
 function syncModelos(){
   const c = S.cfg.modelosTarefa || {};
-  Object.keys(MODELOS).forEach(k => { if(!MODELOS_BASE[k] && !c[k]) delete MODELOS[k]; });
+  MODELOS.sem = {nome:'Sem modelo', orgao:'—', tarefas:[]}; if(!SERV_C.sem) SERV_C.sem = '#9A9DB0';
+  Object.keys(MODELOS).forEach(k => { if(k !== 'sem' && !MODELOS_BASE[k] && !c[k]) delete MODELOS[k]; });
   Object.keys(MODELOS_BASE).forEach(k => { if(!c[k]) MODELOS[k] = JSON.parse(J(MODELOS_BASE[k])); });
   Object.entries(c).forEach(([k, m]) => { if(m && m.removido){ if(!S.procs.some(p => p.modelo === k)) delete MODELOS[k]; else MODELOS[k] = Object.assign({}, MODELOS_BASE[k] || m, {oculto:true}); return; }
     if(m && m.nome) MODELOS[k] = {nome:m.nome, orgao:m.orgao || '—', tarefas:(m.tarefas || []).map(x => [x[0], x[1] || []])}; if(!SERV_C[k]) SERV_C[k] = '#6666FF'; });
 }
-const modelosAtivos = () => Object.entries(MODELOS).filter(([k, m]) => !m.oculto);
+const modelosAtivos = () => Object.entries(MODELOS).filter(([k, m]) => !m.oculto && k !== 'sem');
+const OPT_SEM = '<option value="sem">Sem modelo (processo sem tarefas)</option>';
 let modEdit = null;
 function modModal(k, pre){
   const m = k ? MODELOS[k] : null;
@@ -3702,8 +3705,8 @@ document.addEventListener('click', e => {
   { const av = tg.closest('[data-avnew]'); if(av){ avulsoModal(av.dataset.avnew || ''); return; } }
   if(tg.closest('[data-avgo]')){ const cli = $('#avCli').value.trim(), emp = $('#avEmp').value.trim(); if(!cli || !emp){ toast('Preencha cliente e obra'); return; }
     const mod = $('#avMod').value, resp = $('#avResp').value; const prop = {id:'av-' + uid(), codigo:'Avulso', cliente:cli, grupo:cli, emp, objeto:MODELOS[mod].nome, valor:0, status:'aprovada', resp, modelo:mod, itens:[]};
-    const p = mkProcess(prop, mod, resp, $('#avPrazo').value, me); p.codigo = nextCode('PROC-', S.procs); p.status = $('#avSt').value; p.log[0].txt = `criou o processo sem proposta (modelo “${MODELOS[mod].nome}”)`; S.procs.push(p); rebuildProps();
-    notify(resp, `abriu o processo ${p.codigo} (${esc(emp)}) e atribuiu as tarefas a você`, p.id, null); save(); closeTask(); ui.view = 'proc'; render(); openDrawer('proc', p.id); toast(p.codigo + ' criado'); return; }
+    const p = mkProcess(prop, mod, resp, $('#avPrazo').value, me); p.codigo = nextCode('PROC-', S.procs); p.status = $('#avSt').value; const sv = $('#avSrv') ? $('#avSrv').value.trim() : ''; if(sv || mod === 'sem'){ p.servico = sv || 'Processo'; p.prop.objeto = p.servico; } if(mod === 'sem') p.orgao = ''; p.log[0].txt = mod === 'sem' ? 'criou o processo sem proposta e sem modelo de tarefas' : `criou o processo sem proposta (modelo “${MODELOS[mod].nome}”)`; S.procs.push(p); rebuildProps();
+    notify(resp, mod === 'sem' ? `abriu o processo ${p.codigo} (${esc(emp)}) e deixou você como responsável` : `abriu o processo ${p.codigo} (${esc(emp)}) e atribuiu as tarefas a você`, p.id, null); save(); closeTask(); ui.view = 'proc'; render(); openDrawer('proc', p.id); toast(p.codigo + ' criado'); return; }
   { const g = tg.closest('[data-chart]'); if(g){ ui.chartMode = g.dataset.chart; render(); return; } }
   { const g = tg.closest('[data-lst]'); if(g){ ui.lSt = ui.lSt === g.dataset.lst ? '' : g.dataset.lst; render(); return; } }
   if(tg.closest('[data-lpend]')){ $('#pendLic')?.scrollIntoView({behavior:'smooth', block:'center'}); return; }
@@ -3762,7 +3765,7 @@ document.addEventListener('click', e => {
     if(tg.matches('[data-mclose]') || tg.closest('[data-tclose]')){ closeTask(); return; }
     if((el = tg.closest('#npGo'))){
       const pr = propById(el.dataset.prop);
-      const p = mkProcess(pr, $('#npModelo').value, $('#npResp').value, $('#npPrazo').value, me);
+      const p = mkProcess(pr, $('#npModelo').value, $('#npResp').value, $('#npPrazo').value, me); if($('#npModelo').value === 'sem'){ p.servico = pr.tipo || String(pr.objeto || '').split('\n')[0].slice(0, 80) || 'Processo'; p.orgao = ''; p.log[0].txt = `criou o processo a partir da proposta ${pr.codigo} (sem modelo de tarefas)`; }
       p.codigo = nextCode('PROC-', S.procs);
       S.procs.push(p); pr.procId = p.id;
       notify(p.resp, `abriu o processo ${p.codigo} (${esc(pr.emp)}) e atribuiu as tarefas a você`, p.id, null);
