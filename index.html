@@ -1212,6 +1212,38 @@ input[type="checkbox"]{border-radius:3px!important}
 .pecola{margin-top:12px;border:1px dashed var(--line);padding:10px 12px}.pecola summary{cursor:pointer;font-weight:600;font-size:13px}
 .seg .n{margin-left:6px;font-size:11px;color:var(--muted)}
 
+
+/* ---------- checklist: atribuição e conversa ---------- */
+.ckcm .hd{flex-wrap:wrap}
+.ckact{margin-left:auto;display:inline-flex;gap:10px}
+.ckact button{border:0;background:none;padding:0;font:inherit;font-size:11.5px;color:var(--m-azul,#4948d1);cursor:pointer;font-weight:500}
+.ckact button:hover{text-decoration:underline}
+.ckact button.del{color:#98a2b3}.ckact button.del:hover{color:#B42318}
+.ckpick{display:flex;gap:6px;align-items:center;margin-top:6px}
+.ckpick select{border:1px solid var(--line);padding:4px 6px;font:inherit;font-size:12.5px;background:#fff;min-width:200px}
+.ckcm .asg{display:flex;gap:8px;align-items:center;margin-top:6px;padding:5px 8px;background:#FFF8E6;border:1px solid #FDE7B0;font-size:12px}
+.ckcm .asg.ok{background:#ECFAF2;border-color:#BDEBD2}
+.ckcm .asg .av{width:18px;height:18px}
+.ckthr{margin-top:6px;padding-left:10px;border-left:2px solid var(--line);display:flex;flex-direction:column;gap:5px}
+.ckcm.rp .bx{background:#fff}
+.ckcm.rp .av{width:18px;height:18px;font-size:8px}
+.ckcm.rp.novo .bx{background:transparent}
+/* ---------- equipes ---------- */
+.eqav .av{border-radius:6px!important}
+.whopick .eqbtn{border-style:dashed!important}
+.eqsec{border:1px solid var(--line);background:var(--ui-panel,#fff);padding:14px 16px;margin-bottom:16px}
+.eqsh{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
+.eqgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px}
+.eqcard{display:flex;gap:12px;align-items:flex-start;border:1px solid var(--line);padding:12px}
+.eqcard>.avw .av{width:40px;height:40px}
+.eqcor{width:26px;height:26px;border:2px solid #fff;outline:1px solid var(--line);cursor:pointer;padding:0}
+.eqcor.on{outline:2px solid var(--ink)}
+.eqmemb{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px}
+.eqm{display:flex;gap:8px;align-items:center;border:1px solid var(--line);padding:6px 8px;cursor:pointer;font-size:13px}
+.eqm.on{border-color:var(--m-azul,#4948d1);background:var(--m-azul-t05,#F7F7FF)}
+.eqm input{margin:0}
+/* ---------- material: pausado ---------- */
+.mcard .tmr.pz{color:#52525B;background:#F4F4F5;padding:1px 6px;font-size:12px}
 /* ---------- painéis redimensionáveis ---------- */
 @media (min-width:1181px){.app{grid-template-columns:var(--rz-side,260px) minmax(0,1fr)!important}.pwrap:not(.notree){grid-template-columns:var(--rz-tree,250px) minmax(0,1fr)!important}}
 @media (min-width:1001px){.plan{grid-template-columns:var(--rz-plan,300px) minmax(0,1fr)!important}}
@@ -1331,9 +1363,17 @@ let USERS = DEFAULT_USERS, U = {};
 const iniOf = n => (n || '?').replace(/\(.*?\)/g, '').trim().split(/\s+/).filter(Boolean).map((w, i, a) => i === 0 || i === a.length - 1 ? w[0] : '').join('').slice(0, 2).toUpperCase();
 const lightBg = c => ['#00D2FF', '#FDCA40', '#CCCCFF', '#66E4FF'].includes((c || '').toUpperCase());
 function setUsers(list){ USERS = list; U = Object.fromEntries(USERS.map(u => [u.id, u])); }
-const first = id => (U[id]?.nome || '').split(' ')[0];
+const isEq = id => typeof id === 'string' && id.startsWith('eq:');
+const equipes = () => ((typeof S !== 'undefined' && S && S.cfg && S.cfg.equipes) || []);
+const eqById = id => equipes().find(e => e.id === id);
+const membrosDe = id => isEq(id) ? ((eqById(id) || {}).membros || []).filter(m => U[m]) : (id ? [id] : []);
+const respTem = (arr, uid) => !!uid && (Array.isArray(arr) ? arr : [arr]).some(x => x === uid || (isEq(x) && membrosDe(x).includes(uid)));
+const optsResp = (sel, nomeCompleto) => USERS.map(u => `<option value="${u.id}" ${sel === u.id ? 'selected' : ''}>${esc(nomeCompleto ? u.nome : first(u.id))}</option>`).join('') + (equipes().length ? `<optgroup label="Equipes">${equipes().map(e => `<option value="${e.id}" ${sel === e.id ? 'selected' : ''}>${esc(e.nome)}</option>`).join('')}</optgroup>` : '');
+const first = id => isEq(id) ? ((eqById(id) || {}).nome || 'Equipe') : (U[id]?.nome || '').split(' ')[0];
 function avInner(u){ return u.foto ? `<img src="${u.foto}" alt="">` : esc(iniOf(u.nome)); }
 const av = (id, sm, noclick) => {
+  if(isEq(id)){ const e = eqById(id); if(!e) return `<span class="av none ${sm ? 'sm' : ''}" title="Equipe removida">?</span>`;
+    return `<span class="avw eqav" title="Equipe ${esc(e.nome)} | ${membrosDe(id).map(m => first(m)).join(', ') || 'sem membros'}"><span class="av ${sm ? 'sm' : ''}" style="background:${e.cor || '#3333FF'};color:#fff"><svg viewBox="0 0 24 24" width="60%" height="60%" fill="currentColor" aria-hidden="true"><path d="M9 4a3.5 3.5 0 1 1 0 7 3.5 3.5 0 0 1 0-7zM2 19c0-3.3 3.1-6 7-6s7 2.7 7 6v1H2zM16.5 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6zM17.5 13c2.6.4 4.5 2.6 4.5 5.3V20h-4v-1c0-2.3-.9-4.4-2.4-5.9z"/></svg></span></span>`; }
   const u = id && U[id];
   if(!u) return `<span class="av none ${sm ? 'sm' : ''}" title="Sem responsável">+</span>`;
   return `<span class="avw" ${noclick ? '' : `data-user="${u.id}"`} title="${esc(u.nome)} | ${STATUS_U[stOf(u)] || ''}"><span class="av ${sm ? 'sm' : ''}" style="background:${u.cor};color:${lightBg(u.cor) ? '#000' : '#fff'}">${avInner(u)}</span><span class="st st-${stOf(u)}"></span></span>`;
@@ -1618,6 +1658,7 @@ const taskOf = (p, id) => p.tarefas.find(t => t.id === id);
 function logP(p, txt){ p.log.unshift({em:new Date().toISOString(), por:me, txt}); }
 function logT(t, txt){ t.log.unshift({em:new Date().toISOString(), por:me, txt}); }
 function notify(para, txt, procId, taskId){
+  if(isEq(para)){ membrosDe(para).forEach(m => notify(m, txt, procId, taskId)); return; }
   if(!para || para === me) return;
   S.notifs.unshift({id:uid(), para, txt:`<b>${esc(first(me))}</b> ${txt}`, procId, taskId, em:new Date().toISOString(), lida:false});
 }
@@ -1647,9 +1688,10 @@ function people(p){
 function myItems(){
   const out = [];
   S.procs.forEach(p => p.tarefas.forEach(t => {
-    if(t.resp.includes(me)) out.push({k:'tarefa', p, t, titulo:t.titulo, prazo:t.prazo, feito:t.status === 'concluida'});
+    if(respTem(t.resp, me)) out.push({k:'tarefa', p, t, titulo:t.titulo, prazo:t.prazo, feito:t.status === 'concluida'});
     t.subs.forEach(s => { if(s.resp === me) out.push({k:'subtarefa', p, t, s, titulo:s.titulo, prazo:s.prazo, feito:s.feito}); });
-    t.coms.forEach(c => { if(c.atrib === me) out.push({k:'comentário', p, t, c, titulo:c.texto, prazo:'', feito:!!c.resolvido}); });
+    t.coms.forEach(c => { if(c.atrib && respTem([c.atrib], me)) out.push({k:'comentário', p, t, c, titulo:c.texto, prazo:'', feito:!!c.resolvido}); });
+    ckNotasDe(t).forEach(n => { if(n.atrib && respTem([n.atrib], me)) out.push({k:'comentário', p, t, c:n, titulo:n.texto, prazo:'', feito:!!n.resolvido}); });
   }));
   return out;
 }
@@ -1665,7 +1707,7 @@ function render(){
   $('#nMine').innerHTML = mine ? `<span class="n">${mine}</span>` : '';
   { const la = (S.lics || []).filter(l => ['vencida', 'fora', 'renovar'].includes(licInfo(l).st)).length + semLicenca().length;
     $('#nLic').innerHTML = la ? `<span class="n red">${la}</span>` : ''; }
-  { const n = S.mats.filter(m => m.status !== 'entregue' && m.resp.includes(me)).length; $('#nMat').innerHTML = n ? `<span class="n">${n}</span>` : ''; }
+  { const n = S.mats.filter(m => m.status !== 'entregue' && respTem(m.resp, me)).length; $('#nMat').innerHTML = n ? `<span class="n">${n}</span>` : ''; }
   $('#crumbNow').textContent = {mat:'Material técnico', dash:'Dashboard', prop:'Propostas', proc:'Processos', mine:'Minhas tarefas', lic:'Licenças', team:'Equipe', integ:'Integrações', cad:'Cadastros', fin:'Financeiro', plan:'Planejador'}[ui.view];
   { const r = myRunning(); const k = r[0] ? (r[0].mat ? 'mat|' + r[0].t.id : r[0].p.id + '|' + r[0].t.id) : ''; $('#topTimer').innerHTML = r.length ? `<span class="toptimer" ${r[0].mat ? `data-mat="${r[0].t.id}"` : `data-open="${k}"`} title="Cronômetro ligado"><i></i><span ${liveAttr(r[0].t, true)}>${fmtClock(timeTotal(r[0].t))}</span><span class="nm">${esc(r[0].t.titulo)}</span><button data-tpausex="${k}" title="Pausar">&#10074;&#10074;</button></span>` : ''; }
   if(ui.hist[ui.hpos] !== ui.view){ ui.hist = ui.hist.slice(0, ui.hpos + 1); ui.hist.push(ui.view); ui.hpos = ui.hist.length - 1; }
@@ -1821,7 +1863,7 @@ function renderProcs(){
 /* ---------- Minhas tarefas ---------- */
 function matsMine(){
   const done = ui.mineFilter !== 'aberto';
-  const ms = (S.mats || []).filter(m => (m.status === 'entregue') === done && (m.resp.includes(me) || m.checks.some(c => c.itens.some(i => i.resp === me && !i.feito))));
+  const ms = (S.mats || []).filter(m => (m.status === 'entregue') === done && (respTem(m.resp, me) || m.checks.some(c => c.itens.some(i => i.resp === me && !i.feito))));
   if(!ms.length) return '';
   return `<div class="tlist"><div class="tgh" style="color:#6666FF">Material técnico <span class="sub">${ms.length}</span></div>${ms.map(m => { const c = matCount(m), mine = m.checks.flatMap(x => x.itens).filter(i => i.resp === me && !i.feito);
     return `<div class="mine-row" data-mat="${m.id}"><span class="sq ${m.status === 'entregue' ? 'done' : ''}" style="border-color:#6666FF;cursor:default"></span>
@@ -2075,7 +2117,7 @@ function feedHtml(coms, t){
 function composerHtml(scope){
   return `<div class="composer" data-scope="${scope}"><div class="mentions" hidden></div>
     <textarea placeholder="Escreva um comentário… use @ para mencionar"></textarea>
-    <div class="row"><label class="sub" style="display:flex;gap:6px;align-items:center">Atribuir a <select class="atrib"><option value="">ninguém</option>${USERS.map(u => `<option value="${u.id}">${esc(first(u.id))}</option>`).join('')}</select></label>
+    <div class="row"><label class="sub" style="display:flex;gap:6px;align-items:center">Atribuir a <select class="atrib"><option value="">ninguém</option>${optsResp('')}</select></label>
     <span class="spacer"></span><button class="btn primary sm" data-send>Comentar</button></div></div>`;
 }
 function sendComment(box){
@@ -2118,7 +2160,7 @@ function renderTask(){
         <input class="ttitle" data-tf="titulo" value="${esc(t.titulo)}">
         <div class="props">
           <span class="k">Status</span><span><select class="stsel" data-tf="status" style="background:${TS[t.status].c}">${TASK_ST.map(s => `<option value="${s.k}" ${s.k === t.status ? 'selected' : ''}>${s.l}</option>`).join('')}</select></span>
-          <span class="k">Responsáveis</span><span class="whopick">${USERS.map(u => `<button data-who="${u.id}" class="${t.resp.includes(u.id) ? 'on' : ''}">${av(u.id, true, true)}${esc(first(u.id))}</button>`).join('')}</span>
+          <span class="k">Responsáveis</span><span class="whopick">${USERS.map(u => `<button data-who="${u.id}" class="${t.resp.includes(u.id) ? 'on' : ''}">${av(u.id, true, true)}${esc(first(u.id))}</button>`).join('')}${equipes().map(e => `<button data-who="${e.id}" class="eqbtn ${t.resp.includes(e.id) ? 'on' : ''}">${av(e.id, true, true)}${esc(e.nome)}</button>`).join('')}</span>
           <span class="k">Prazo</span><span style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><input type="date" data-tf="prazo" value="${t.prazo}"> ${t.prazo ? dueHtml(t.prazo, t.status === 'concluida') : ''} ${gcalBtn(t.titulo + ' | ' + propById(p.propId).emp, t.prazo, p.codigo + ' | ' + p.servico)}</span>
           <span class="k">Prioridade</span><span><select data-tf="prio">${Object.entries(PRIO).map(([k, v]) => `<option value="${k}" ${k === t.prio ? 'selected' : ''}>${v.l}</option>`).join('')}</select></span>
         </div>
@@ -2213,7 +2255,7 @@ function calHtml(items){
       ${dayIts.length > 5 ? `<div class="sub">+ ${dayIts.length - 5} itens</div>` : ''}</div></div>`;
 }
 function kanbanHtml(){
-  const mine = []; S.procs.forEach(p => p.tarefas.forEach(t => { if(t.resp.includes(me)) mine.push({p, t}); }));
+  const mine = []; S.procs.forEach(p => p.tarefas.forEach(t => { if(respTem(t.resp, me)) mine.push({p, t}); }));
   const cols = [['A fazer', x => x.t.status === 'afazer'], ['Em andamento', x => ['andamento', 'aguardando', 'revisao'].includes(x.t.status)], ['Concluídas', x => x.t.status === 'concluida']];
   return `<div class="kanban">${cols.map(([l, f]) => { const its = mine.filter(f).sort((a, b) => (a.t.prazo || '9').localeCompare(b.t.prazo || '9'));
     return `<div class="kcol"><h5>${l} <span class="cnt">${its.length}</span></h5>${its.slice(0, 3).map(({p, t}) => { const pr = propById(p.propId), done = t.status === 'concluida';
@@ -2257,7 +2299,7 @@ function renderDash(){
   const novos30 = S.procs.filter(p => diffDays(p.criadoEm.slice(0, 10)) >= -30).length;
   const propAbertas = S.props.filter(p => PROP_ABERTAS.includes(p.status));
   const valorAberto = propAbertas.reduce((a, p) => a + p.valor, 0);
-  const openIts = items.filter(i => !i.feito), mineOpen = openIts.filter(i => i.resp.includes(me));
+  const openIts = items.filter(i => !i.feito), mineOpen = openIts.filter(i => respTem(i.resp, me));
   const lics = S.lics || [], licAl = lics.filter(l => ['vencida', 'fora', 'renovar'].includes(licInfo(l).st));
   const sem = semLicenca();
   const myCom = myItems().filter(i => i.k === 'comentário' && !i.feito).length;
@@ -2305,7 +2347,7 @@ function renderDash(){
       <div class="blk c4"><h3>Equipe <span class="spacer"></span><span class="more" data-view-go="team">${ic('seta', 'sm')}</span></h3>
         <div class="sub" style="margin:-6px 0 12px">${USERS.filter(u => stOf(u) === 'online').length} online agora</div>
         <div class="teamrow">${team.map(u => av(u.id)).join('')}${USERS.length > 4 ? `<span class="plus" data-view-go="team">+${USERS.length - 4}</span>` : ''}</div>
-        <div class="team" style="margin-top:12px">${USERS.filter(u => stOf(u) === 'online').slice(0, 3).map(u => { const t = openIts.filter(i => i.resp.includes(u.id))[0]; return `<div class="it">${av(u.id)}<div style="flex:1;min-width:0"><div class="nm">${esc(u.nome)}</div><div class="sub" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${t ? esc(t.titulo) : 'Sem tarefas abertas'}</div></div></div>`; }).join('')}</div></div>
+        <div class="team" style="margin-top:12px">${USERS.filter(u => stOf(u) === 'online').slice(0, 3).map(u => { const t = openIts.filter(i => respTem(i.resp, u.id))[0]; return `<div class="it">${av(u.id)}<div style="flex:1;min-width:0"><div class="nm">${esc(u.nome)}</div><div class="sub" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${t ? esc(t.titulo) : 'Sem tarefas abertas'}</div></div></div>`; }).join('')}</div></div>
       <div class="ccard hero c4 alt">
         <div class="ch"><span class="cico w">${ic('pin')}</span><div><div class="ct">Mais tempo no órgão</div><div class="csub">Parado no mesmo setor</div></div></div>
         <div class="cbody">${stuck ? `<div class="cv">${stuck.a.dias} dias</div><div class="cs">${esc(propById(stuck.p.propId).emp)} | ${esc(stuck.a.setor.split(' (')[0])}</div>` : '<div class="cs">Sem tramitação registrada.</div>'}</div>
@@ -2314,13 +2356,13 @@ function renderDash(){
 }
 
 /* ---------- Equipe ---------- */
-function openCount(uid){ return allItems().filter(i => !i.feito && i.resp.includes(uid)).length; }
+function openCount(uid){ return allItems().filter(i => !i.feito && respTem(i.resp, uid)).length; }
 function waLink(tel){ const d = (tel || '').replace(/\D/g, ''); return d ? 'https://wa.me/' + (d.length <= 11 ? '55' + d : d) : ''; }
 function photoBox(u, cls){ return `<div class="${cls}" style="background:${u.cor};color:${lightBg(u.cor) ? '#000' : '#fff'}">${avInner(u)}</div>`; }
 function renderTeam(){
   const items = allItems();
   $('#view').innerHTML = `<div class="pagehead"><div><h1>Equipe</h1><p>Foto, contato e disponibilidade de quem trabalha nos processos.</p></div><span class="spacer"></span><button class="btn primary" data-addmember>${ic('mais', 'sm')} Novo membro</button></div>
-    <div class="tgrid">${USERS.map(u => { const mine = items.filter(i => i.resp.includes(u.id)), ab = mine.filter(i => !i.feito), fe = mine.filter(i => i.feito), at = ab.filter(i => i.prazo && diffDays(i.prazo) < 0);
+    <div class="tgrid">${USERS.map(u => { const mine = items.filter(i => respTem(i.resp, u.id)), ab = mine.filter(i => !i.feito), fe = mine.filter(i => i.feito), at = ab.filter(i => i.prazo && diffDays(i.prazo) < 0);
       const pct = mine.length ? Math.round(fe.length * 100 / mine.length) : 0;
       return `<div class="tcard">
       ${photoBox(u, 'ph')}
@@ -2370,7 +2412,7 @@ function resizePhoto(file, cb){
 }
 function showPop(uid, anchor){
   const u = U[uid]; if(!u) return;
-  const its = allItems().filter(i => !i.feito && i.resp.includes(uid)).sort((a, b) => (a.prazo || '9').localeCompare(b.prazo || '9'));
+  const its = allItems().filter(i => !i.feito && respTem(i.resp, uid)).sort((a, b) => (a.prazo || '9').localeCompare(b.prazo || '9'));
   const pop = $('#pop');
   pop.innerHTML = `<div class="hd">${photoBox(u, 'ph')}<div style="min-width:0;flex:1"><div class="nm">${esc(u.nome)}</div><div class="sub">${esc(u.cargo || '')}${u.emp ? ' | ' + esc(u.emp) : ''}</div>
       <div style="margin-top:8px;display:flex;align-items:center;gap:6px"><span class="stchip" style="padding:0"><i class="st-${stOf(u)}" style="margin-left:6px"></i></span><select data-ustatus="${u.id}">${Object.entries(STATUS_EDIT).map(([k, v]) => `<option value="${k}" ${k === (u.status || 'auto') ? 'selected' : ''}>${v}</option>`).join('')}</select></div></div></div>
@@ -2566,7 +2608,7 @@ function timerCardHtml(){
   return `<div class="ccard hero alt c4 tracker">
     <div class="ch"><span class="cico w">${ic('relogio')}</span><div><div class="ct">Rastreio de tempo</div><div class="csub">${run.length ? (run.length > 1 ? run.length + ' cronômetros ligados' : 'Cronômetro ligado') : 'Nenhum cronômetro ligado'}</div></div></div>
     <div class="cbody">${cur ? `<div class="bigclock" ${liveAttr(cur.t, true)}>${fmtClock(timeTotal(cur.t))}</div><div class="cs" style="cursor:pointer" ${cur.mat ? `data-mat="${cur.t.id}"` : `data-open="${cur.p.id}|${cur.t.id}"`}>${esc(cur.t.titulo)} | ${esc(cur.mat ? 'Material técnico' : propById(cur.p.propId).emp)}</div>
-      <div class="tctrl"><button class="tcb" data-tpausex="${cur.mat ? 'mat' : cur.p.id}|${cur.t.id}" title="Pausar">&#10074;&#10074;</button><button class="tcb stop" data-tstopx="${cur.mat ? 'mat' : cur.p.id}|${cur.t.id}" title="Parar e mandar para Em revisão"><i></i></button></div>`
+      <div class="tctrl"><button class="tcb" data-tpausex="${cur.mat ? 'mat' : cur.p.id}|${cur.t.id}" title="Pausar">&#10074;&#10074;</button><button class="tcb stop" data-tstopx="${cur.mat ? 'mat' : cur.p.id}|${cur.t.id}" title="${cur.mat ? 'Parar e pausar o material' : 'Parar e mandar para Em revisão'}"><i></i></button></div>`
       : `<div class="bigclock dim">00:00:00</div><div class="cs">Coloque uma tarefa em <b>Em andamento</b> para começar a contar.</div>`}</div>
     <div class="cf" data-view-go="team">Esta semana: ${fmtDur(wk)} <span>${ic('seta', 'sm')}</span></div></div>`;
 }
@@ -2659,7 +2701,7 @@ function gIcon(sz){ sz = sz || 26; return `<svg width="${sz}" height="${sz}" vie
 const MAT_ST = [
   {k:'aguardando', l:'Aguardando dados',  c:'#6666FF', bg:'#F1F1FF'},
   {k:'elaboracao', l:'Em elaboração',     c:'#FDCA40', bg:'#FFF4D9'},
-  {k:'revisao',    l:'Em revisão',        c:'#00D2FF', bg:'#CCF6FF'},
+  {k:'revisao',    l:'Pausado',           c:'#71717A', bg:'#F4F4F5'},
   {k:'ajustes',    l:'Ajustes',           c:'#0000FF', bg:'#EFEFFF'},
   {k:'validacao',  l:'Validação interna', c:'#D92D20', bg:'#FEF0EF'},
   {k:'entregue',   l:'Entregue',          c:'#12B76A', bg:'#ECFAF2'}
@@ -2684,27 +2726,28 @@ function setMatStatus(m, st){
   if(st === 'validacao') notifyMat(aprov, `enviou “${esc(m.titulo)}” para validação interna`, m);
   if(st === 'entregue') m.resp.forEach(r => notifyMat(r, `aprovou e entregou “${esc(m.titulo)}”`, m));
 }
-function notifyMat(para, txt, m){ if(!para || para === me) return; S.notifs.unshift({id:uid(), para, txt:`<b>${esc(first(me))}</b> ${txt}`, procId:null, taskId:null, matId:m.id, em:nowISO(), lida:false}); }
+function notifyMat(para, txt, m){ if(isEq(para)){ membrosDe(para).forEach(x => notifyMat(x, txt, m)); return; } if(!para || para === me) return; S.notifs.unshift({id:uid(), para, txt:`<b>${esc(first(me))}</b> ${txt}`, procId:null, taskId:null, matId:m.id, em:nowISO(), lida:false}); }
 function matCard(m){
   const c = matCount(m), run = runningOf(m).length;
   return `<div class="mcard" draggable="true" data-mat="${m.id}">
     <div class="mt">${esc(m.titulo)}</div>
     <div class="mm">${m.objetivo || m.historico ? `<span title="Tem descrição">${ic('lista', 'sm')}</span>` : ''}<span title="Checklist">${ic('check', 'sm')} ${c.f}/${c.t}</span>${m.coms.length ? `<span>${ic('comentario', 'sm')} ${m.coms.length}</span>` : ''}${run ? `<span class="tmr on"><i></i><span ${liveAttr(m)}>${fmtClock(timeTotal(m))}</span></span>` : timeTotal(m) ? `<span>${ic('relogio', 'sm')} ${fmtDur(timeTotal(m))}</span>` : ''}</div>
+    ${matPausaHtml(m) ? `<div class="mm" style="margin-top:4px">${matPausaHtml(m)}</div>` : ''}
     <div class="mf">${avs(m.resp)}${m.prazo ? `<span class="sub">${ic('relogio', 'sm')} ${dueHtml(m.prazo, m.status === 'entregue')}</span>` : ''}${m.prio !== 'normal' ? `<span class="flag" style="color:${PRIO[m.prio].c}">${ic('bandeira', 'sm')} ${PRIO[m.prio].l}</span>` : ''}</div>
     <div class="tags" style="margin-top:8px">${tag(m.tipo, '#6666FF')}</div></div>`;
 }
 function renderMats(){
   const q = norm(ui.mq || '');
-  const list = (S.mats || []).filter(m => matNoGrupo(m) && (!q || norm([m.codigo, m.titulo, m.tipo, m.dados.cliente, m.dados.matricula].join(' ')).includes(q)) && (!ui.mResp || m.resp.includes(ui.mResp)) && (!ui.mTipo || m.tipo === ui.mTipo));
+  const list = (S.mats || []).filter(m => matNoGrupo(m) && (!q || norm([m.codigo, m.titulo, m.tipo, m.dados.cliente, m.dados.matricula].join(' ')).includes(q)) && (!ui.mResp || respTem(m.resp, ui.mResp)) && (!ui.mTipo || m.tipo === ui.mTipo));
   $('#view').innerHTML = `<div class="pagehead"><div><h1>Material técnico</h1><p>Retificações, remembramentos, pareceres e demais peças técnicas. A aprovação final é de ${esc(first(aprovMat()))} (validação interna).</p></div></div>
     <div class="pwrap"><div>${matTreeHtml()}</div><div class="pmain">${(ui.mSel || {}).g ? `<div class="crumb"><a class="link" data-mtall>Todos</a> / ${ui.mSel.e ? `<a class="link" data-mtg="${esc(ui.mSel.g)}">${esc(ui.mSel.g)}</a> / <b>${esc(ui.mSel.e)}</b>` : `<b>${esc(ui.mSel.g)}</b>`}</div>` : ''}<div class="filters"><input type="search" id="mq" placeholder="Buscar por título, cliente ou matrícula" value="${esc(ui.mq || '')}">
-      <select id="mResp"><option value="">Todas as pessoas</option>${USERS.map(u => `<option value="${u.id}" ${ui.mResp === u.id ? 'selected' : ''}>${esc(u.nome)}</option>`).join('')}</select>
+      <select id="mResp"><option value="">Todas as pessoas</option>${optsResp(ui.mResp, true)}</select>
       <select id="mTipo"><option value="">Todos os tipos</option>${MAT_TIPOS.map(t => `<option ${ui.mTipo === t ? 'selected' : ''}>${t}</option>`).join('')}</select></div>
     <div class="mboard">${MAT_ST.map(st => { const ms = list.filter(m => m.status === st.k);
       return `<div class="mcol" data-mcol="${st.k}"><div class="mh"><span class="mst" style="--c:${st.c}">${st.l}</span><span class="sub mcnt">${ms.length}</span></div>
         ${ms.map(matCard).join('')}
         <div class="madd"><input data-madd="${st.k}" placeholder="+ Adicionar material"></div></div>`; }).join('')}</div>
-    <p class="hint" style="margin-top:-24px">Arraste os cartões entre as colunas. O cronômetro liga em <b>Em elaboração</b> e <b>Ajustes</b>. Ao ir para <b>Validação interna</b>, você escolhe quem valida (sugestão: ${esc(first(aprovMat()))}).</p></div></div>`;
+    <p class="hint" style="margin-top:-24px">Arraste os cartões entre as colunas. O cronômetro liga em <b>Em elaboração</b> e <b>Ajustes</b>; em <b>Pausado</b> ele para e começa a contar o tempo parado. Ao ir para <b>Validação interna</b>, você escolhe quem valida (sugestão: ${esc(first(aprovMat()))}).</p></div></div>`;
 }
 function openMat(id){ ui.mat = id; ui.task = null; ui.feedTab = 'com'; renderMat(); }
 function renderMat(){
@@ -2721,7 +2764,7 @@ function renderMat(){
       <div class="props">
         <span class="k">Status</span><span><select class="stsel" data-mf="status" style="background:${MS[m.status].c}">${MAT_ST.map(s => `<option value="${s.k}" ${s.k === m.status ? 'selected' : ''}>${s.l}</option>`).join('')}</select></span>
         <span class="k">Tipo</span><span><select data-mf="tipo">${MAT_TIPOS.map(t => `<option ${t === m.tipo ? 'selected' : ''}>${t}</option>`).join('')}</select></span>
-        <span class="k">Responsáveis</span><span class="whopick">${USERS.map(u => `<button data-mwho="${u.id}" class="${m.resp.includes(u.id) ? 'on' : ''}">${av(u.id, true, true)}${esc(first(u.id))}</button>`).join('')}</span>
+        <span class="k">Responsáveis</span><span class="whopick">${USERS.map(u => `<button data-mwho="${u.id}" class="${m.resp.includes(u.id) ? 'on' : ''}">${av(u.id, true, true)}${esc(first(u.id))}</button>`).join('')}${equipes().map(e => `<button data-mwho="${e.id}" class="eqbtn ${m.resp.includes(e.id) ? 'on' : ''}">${av(e.id, true, true)}${esc(e.nome)}</button>`).join('')}</span>
         <span class="k">Prazo</span><span style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><input type="date" data-mf="prazo" value="${m.prazo}"> ${m.prazo ? dueHtml(m.prazo, m.status === 'entregue') : ''} ${gcalBtn(m.titulo, m.prazo, m.codigo + ' | ' + m.tipo)}</span>
         <span class="k">Prioridade</span><span><select data-mf="prio">${Object.entries(PRIO).map(([k, v]) => `<option value="${k}" ${k === m.prio ? 'selected' : ''}>${v.l}</option>`).join('')}</select></span>
         <span class="k">Proposta</span><span><select data-mf="propId"><option value="">Sem vínculo</option>${S.props.map(p => `<option value="${p.id}" ${p.id === m.propId ? 'selected' : ''}>${esc(p.codigo)} | ${esc(p.emp)}</option>`).join('')}</select></span>
@@ -3961,6 +4004,17 @@ function pickAprovador(titulo, texto, def, cb, opt){
 }
 function fecharPick(){ const d = $('#pickLayer'); if(d) d.innerHTML = ''; pickCb = null; }
 
+/* ---------- material técnico: tempo parado (coluna Pausado) ---------- */
+function matPausa(m, old, st){
+  const pz = m.pausa = m.pausa || {ms:0, ini:'', n:0};
+  if(st === 'revisao' && !pz.ini){ pz.ini = nowISO(); pz.n = (pz.n || 0) + 1; }
+  if(old === 'revisao' && st !== 'revisao' && pz.ini){ const d = Date.now() - new Date(pz.ini); pz.ms = (pz.ms || 0) + Math.max(0, d); pz.ini = ''; logT(m, `retomou após ${fmtDur(d)} parado`); }
+}
+function matPausaHtml(m){
+  const pz = m.pausa; if(!pz || (!pz.ini && !pz.ms)) return '';
+  if(m.status === 'revisao' && pz.ini) return `<span class="tmr pz" title="Tempo parado nesta pausa${pz.ms ? ' | total parado antes: ' + fmtDur(pz.ms) : ''}">❚❚ parado <span data-live="0|${pz.ini}">${fmtClock(Date.now() - new Date(pz.ini))}</span></span>`;
+  return `<span class="sub" title="Tempo total que o material ficou pausado">❚❚ ${fmtDur(pz.ms)} parado</span>`;
+}
 /* ---------- material técnico: quem valida ---------- */
 const aprovFor = m => { if(m.aprovador && U[m.aprovador]) return m.aprovador; const a = aprovMat(); if(!m.resp.includes(a)) return a; const o = USERS.find(u => u.id !== a && (S.equipe.find(r => r.email.toLowerCase() === u.id) || {}).papel === 'socio'); return o ? o.id : a; };
 function setMatStatus(m, st, escolhido){
@@ -3973,6 +4027,7 @@ function setMatStatus(m, st, escolhido){
   }
   const old = m.status; m.status = st; logT(m, `mudou o status para “${MS[st].l}”`);
   if(MAT_TIMER.includes(st)) startTimer(null, m, me); else if(MAT_TIMER.includes(old)) stopTimers(m, `parou o cronômetro ao mudar para “${MS[st].l}”`);
+  matPausa(m, old, st);
   const aprov = aprovFor(m);
   if(st === 'validacao'){ const ate = m.validacao && m.validacao.ate; logT(m, `pediu a validação de ${first(aprov)}${ate ? ' até ' + fmtD(ate) : ''}`); notifyMat(aprov, `enviou “${esc(m.titulo)}” para a sua validação interna${ate ? ' (entregar até ' + fmtD(ate) + ')' : ''}`, m); }
   if(old === 'validacao' && m.validacao){ m.validacao.fim = nowISO(); m.validacao.resultado = st; }
@@ -4023,10 +4078,11 @@ function minhasAprovacoes(){
 }
 function comsAtribuidos(uid){
   const out = [];
-  for(const l of comLugares()) for(const c of l.arr || []){ if(c.atrib !== uid || c.resolvido) continue;
+  for(const l of comLugares()) for(const c of l.arr || []){ if(!c.atrib || !respTem([c.atrib], uid) || c.resolvido) continue;
     const onde = l.kind === 'task' ? `${l.t.titulo} | ${l.p.codigo}` : l.kind === 'proc' ? `Processo ${l.p.codigo} | ${(propById(l.p.propId) || {}).emp || ''}` : l.kind === 'mat' ? `${l.m.titulo || l.m.codigo}` : `Proposta ${l.pr.codigo} | ${l.pr.emp || l.pr.cliente || ''}`;
     const go = l.kind === 'task' ? `task|${l.p.id}|${l.t.id}` : l.kind === 'proc' ? `proc|${l.p.id}` : l.kind === 'mat' ? `mat|${l.m.id}` : `prop|${l.pr.id}|comentarios`;
     out.push({c, onde, go}); }
+  S.procs.forEach(p => (p.tarefas || []).forEach(t => ckNotasDe(t, true).forEach(({n, c}) => { if(n.atrib && !n.resolvido && respTem([n.atrib], uid)) out.push({c:n, onde:`Checklist: ${c.t.slice(0, 50)}${c.t.length > 50 ? '…' : ''} | ${t.titulo} | ${p.codigo}`, go:`task|${p.id}|${t.id}`}); })));
   return out.sort((a, b) => String(b.c.em).localeCompare(String(a.c.em)));
 }
 function comAtribCardHtml(){
@@ -4080,11 +4136,12 @@ function emailAviso(para, txt, ctx, comentario){
 function ultimoComDe(arr){ const c = (arr || []).slice(-1)[0]; return c && c.autor === me && Date.now() - new Date(c.em).getTime() < 60000 ? c.texto : ''; }
 const ehCom = txt => /^(mencionou você|atribuiu um comentário a você)/.test(txt);
 function notify(para, txt, procId, taskId){
+  if(isEq(para)){ membrosDe(para).forEach(m => notify(m, txt, procId, taskId)); return; }
   if(!para || para === me) return;
   S.notifs.unshift({id:uid(), para, txt:`<b>${esc(first(me))}</b> ${txt}`, procId, taskId, em:new Date().toISOString(), lida:false});
   if(procId){ const p = procById(procId), t = p && taskId ? taskOf(p, taskId) : null; emailAviso(para, txt, {procId, taskId}, ehCom(txt) ? ultimoComDe(t ? t.coms : p && p.coms) : ''); }
 }
-function notifyMat(para, txt, m){ if(!para || para === me) return; S.notifs.unshift({id:uid(), para, txt:`<b>${esc(first(me))}</b> ${txt}`, procId:null, taskId:null, matId:m.id, em:nowISO(), lida:false});
+function notifyMat(para, txt, m){ if(isEq(para)){ membrosDe(para).forEach(x => notifyMat(x, txt, m)); return; } if(!para || para === me) return; S.notifs.unshift({id:uid(), para, txt:`<b>${esc(first(me))}</b> ${txt}`, procId:null, taskId:null, matId:m.id, em:nowISO(), lida:false});
   emailAviso(para, txt, {matId:m.id}, ehCom(txt) ? ultimoComDe(m.coms) : ''); }
 function notifyProp(para, txt, p){ const n0 = S.notifs.length; notify(para, txt, null, null); if(S.notifs.length > n0){ S.notifs[0].propId = p.id; emailAviso(para, txt, {propId:p.id}, ehCom(txt) ? ultimoComDe(p.coms) : ''); } }
 function avisoPropostaNova(p){
@@ -4425,7 +4482,7 @@ function planItens(uid){
   const out = [];
   S.procs.forEach(p => { const pr = propById(p.propId) || {}, onde = `${p.codigo} | ${pr.emp || ''}`;
     (p.tarefas || []).forEach(t => {
-      if(t.resp.includes(uid)) out.push({ref:`t|${p.id}|${t.id}`, k:'tarefa', titulo:t.titulo, onde, prazo:t.prazo, feito:t.status === 'concluida', aberto:isOpen(p)});
+      if(respTem(t.resp, uid)) out.push({ref:`t|${p.id}|${t.id}`, k:'tarefa', titulo:t.titulo, onde, prazo:t.prazo, feito:t.status === 'concluida', aberto:isOpen(p)});
       (t.subs || []).forEach(s => { if(s.resp === uid) out.push({ref:`s|${p.id}|${t.id}|${s.id}`, k:'subtarefa', titulo:s.titulo, onde:`${t.titulo} | ${p.codigo}`, prazo:s.prazo, feito:!!s.feito, aberto:isOpen(p)}); });
     }); });
   (S.mats || []).forEach(m => { if((m.resp || []).includes(uid)) out.push({ref:`m|${m.id}`, k:'material', titulo:m.titulo || m.codigo, onde:m.codigo, prazo:m.prazo, feito:m.status === 'entregue', aberto:true}); });
@@ -4607,7 +4664,7 @@ const verTodos = (view, txt) => `<button class="dlink" data-view-go="${view}">${
 function minhaSemanaItens(){
   const out = [];
   S.procs.forEach(p => { if(!isOpen(p)) return; (p.tarefas || []).forEach(t => {
-    if(t.status !== 'concluida' && t.resp.includes(me)) out.push({k:'tarefa', p, t, codigo:p.codigo, titulo:t.titulo, onde:(propById(p.propId) || {}).emp || '', prazo:t.prazo, run:runningOf(t).some(x => x.por === me), go:`${p.id}|${t.id}`, play:`${p.id}|${t.id}`});
+    if(t.status !== 'concluida' && respTem(t.resp, me)) out.push({k:'tarefa', p, t, codigo:p.codigo, titulo:t.titulo, onde:(propById(p.propId) || {}).emp || '', prazo:t.prazo, run:runningOf(t).some(x => x.por === me), go:`${p.id}|${t.id}`, play:`${p.id}|${t.id}`});
     (t.subs || []).forEach(s => { if(!s.feito && s.resp === me) out.push({k:'subtarefa', p, t, s, codigo:p.codigo, titulo:s.titulo, onde:t.titulo, prazo:s.prazo, run:runningOf(t).some(x => x.por === me), go:`${p.id}|${t.id}`, play:`${p.id}|${t.id}`}); });
   }); });
   (S.mats || []).forEach(m => { if(m.status !== 'entregue' && (m.resp || []).includes(me)) out.push({k:'material', m, codigo:m.codigo, titulo:m.titulo || m.codigo, onde:'Material técnico', prazo:m.prazo, run:runningOf(m).some(x => x.por === me), mat:m.id, play:`mat|${m.id}`}); });
@@ -4695,7 +4752,7 @@ function renderDash(){
       <div class="dcard"><div class="dch"><div class="dct">Licenças a vencer</div>${verTodos('lic')}</div>
         ${nextLics.map(l => { const i = licInfo(l), s = LIC_ST[i.st], pr = licObra(l); return `<div class="drow sm" data-golic="${l.id}"><div class="dtt"><b>${esc(pr.emp)}</b><span>${esc(l.tipo)} | vence ${fmtD(l.validade)}</span></div>${pill(s.l, s.c)}</div>`; }).join('') || '<div class="dempty">Nenhuma licença cadastrada.</div>'}</div>
       <div class="dcard"><div class="dch"><div><div class="dct">Equipe</div><div class="dcs">${USERS.filter(u => stOf(u) === 'online').length} online agora</div></div>${verTodos('team')}</div>
-        ${USERS.slice(0, 5).map(u => { const t = openIts.filter(i => i.resp.includes(u.id)); return `<div class="drow sm" data-view-go="team">${av(u.id, true)}<div class="dtt"><b>${esc(u.nome)}</b><span>${t.length ? esc(t[0].titulo) : 'Sem tarefas abertas'}</span></div><span class="dcount tnum">${t.length}</span></div>`; }).join('')}</div>
+        ${USERS.slice(0, 5).map(u => { const t = openIts.filter(i => respTem(i.resp, u.id)); return `<div class="drow sm" data-view-go="team">${av(u.id, true)}<div class="dtt"><b>${esc(u.nome)}</b><span>${t.length ? esc(t[0].titulo) : 'Sem tarefas abertas'}</span></div><span class="dcount tnum">${t.length}</span></div>`; }).join('')}</div>
       <div class="dcard"><div class="dch"><div><div class="dct">Mais tempo no órgão</div><div class="dcs">Parado no mesmo setor</div></div>${stuck ? `<button class="dlink" data-gotram="${stuck.p.id}">Tramitação →</button>` : ''}</div>
         ${stuck ? `<div class="dkv" style="margin-top:4px"><span class="tnum">${stuck.a.dias} dias</span></div><div class="dcs">${esc((propById(stuck.p.propId) || {}).emp || '')} | ${esc(stuck.a.setor.split(' (')[0])}</div>` : '<div class="dempty">Sem tramitação registrada.</div>'}</div>
     </div>`;
@@ -4782,14 +4839,56 @@ function ckBlocoHtml(s){
     <div class="ckadd"><input data-ckadd="${s.id}" placeholder="+ Adicionar item (Enter)"><input data-ckaddo="${s.id}" placeholder="Observação (opcional)"></div></div>`;
 }
 
-/* anotações do item = comentários com autor */
-const ckNotas = c => [...(c.nota ? [{id:'legado', por:c.notaPor || '', em:c.notaEm || '', txt:c.nota}] : []), ...(c.notas || [])];
-function ckComsHtml(s, c){
-  const soc = isSocio();
-  const lista = ckNotas(c).map(n => { const u = n.por && U[n.por];
-    return `<div class="ckcm">${u ? av(n.por, true) : '<span class="av sm" style="background:#D4D4D8;color:#52525B">?</span>'}<div class="bx"><div class="hd"><b>${u ? esc(u.nome.split(' ').slice(0, 2).join(' ')) : 'Anotação'}</b>${n.em ? `<span class="sub">${fmtWhen(n.em)}</span>` : ''}${(n.por === me || soc || !n.por) ? `<button class="cmx" data-ckcmdel="${s.id}|${c.id}|${n.id}" title="Excluir comentário">✕</button>` : ''}</div><div class="tx">${esc(n.txt)}</div></div></div>`; }).join('');
-  return `<div class="ckcms">${lista}<div class="ckcm novo">${me && U[me] ? av(me, true, true) : ''}<div class="bx"><input data-ckcm="${s.id}|${c.id}" placeholder="Comentar neste item… (Enter para enviar)"></div></div></div>`;
+/* anotações do item = comentários com autor, atribuição e conversa */
+function ckNorm(c){
+  if(c.nota){ c.notas = [{id:'leg_' + c.id, autor:c.notaPor || '', em:c.notaEm || '', texto:c.nota}, ...(c.notas || [])]; c.nota = ''; }
+  (c.notas || []).forEach(n => { if(n.por !== undefined && n.autor === undefined){ n.autor = n.por; delete n.por; } if(n.txt !== undefined && n.texto === undefined){ n.texto = n.txt; delete n.txt; } n.resps = n.resps || []; });
+  return c.notas || [];
 }
+function ckNotasDe(t, comItem){ const out = []; (t.subs || []).forEach(s => (s.check || []).forEach(c => ckNorm(c).forEach(n => out.push(comItem ? {n, c, s} : n)))); return out; }
+const ckNome = id => isEq(id) ? first(id) : U[id] ? U[id].nome.split(' ').slice(0, 2).join(' ') : 'Anotação';
+const ckAv = id => id && (U[id] || isEq(id)) ? av(id, true) : '<span class="av sm" style="background:#D4D4D8;color:#52525B">?</span>';
+function ckComsHtml(s, c){
+  const soc = isSocio(), ref = `${s.id}|${c.id}`;
+  const lista = ckNorm(c).map(n => {
+    const k = `${ref}|${n.id}`, podeDel = n.autor === me || soc || !n.autor, podeRes = n.atrib && (respTem([n.atrib], me) || n.autor === me || soc);
+    const acoes = `<span class="ckact"><button data-ckatrbtn="${k}">${n.atrib ? 'Reatribuir' : 'Atribuir'}</button>${podeDel ? `<button class="del" data-ckcmdel="${k}">Excluir</button>` : ''}</span>`;
+    const picker = ui.ckAtr === k ? `<div class="ckpick"><select data-ckatr="${k}"><option value="">${n.atrib ? '— remover atribuição' : 'Atribuir a…'}</option>${optsResp(n.atrib || '', true)}</select><button class="btn sm ghost" data-ckatrno>Cancelar</button></div>` : '';
+    const asg = n.atrib ? `<div class="asg ${n.resolvido ? 'ok' : ''}">${av(n.atrib, true)}<span style="flex:1">${n.resolvido ? `Resolvido${n.resPor ? ' por <b>' + esc(first(n.resPor)) + '</b>' : ''}` : `Atribuído a <b>${esc(first(n.atrib))}</b>${isEq(n.atrib) ? ' <span class="sub">(equipe)</span>' : ''}`}</span>${podeRes ? `<button class="btn sm" data-ckres="${k}">${n.resolvido ? 'Reabrir' : '✓ Resolver'}</button>` : ''}</div>` : '';
+    const resps = n.resps.map(r => `<div class="ckcm rp">${ckAv(r.autor)}<div class="bx"><div class="hd"><b>${esc(ckNome(r.autor))}</b>${r.em ? `<span class="sub">${fmtWhen(r.em)}</span>` : ''}${r.autor === me || soc ? `<span class="ckact"><button class="del" data-ckrpdel="${k}|${r.id}">Excluir</button></span>` : ''}</div><div class="tx">${esc(r.texto)}</div></div></div>`).join('');
+    const responder = (n.atrib || n.resps.length) && !n.resolvido ? `<div class="ckcm rp novo">${me && U[me] ? av(me, true, true) : ''}<div class="bx"><input data-ckrsp="${k}" placeholder="${n.atrib && respTem([n.atrib], me) ? 'Responder a ' + esc(ckNome(n.autor)) : 'Responder'}… (Enter para enviar)"></div></div>` : '';
+    return `<div class="ckcm">${ckAv(n.autor)}<div class="bx"><div class="hd"><b>${esc(ckNome(n.autor))}</b>${n.em ? `<span class="sub">${fmtWhen(n.em)}</span>` : ''}${acoes}</div><div class="tx">${esc(n.texto)}</div>${picker}${asg}${resps || responder ? `<div class="ckthr">${resps}${responder}</div>` : ''}</div></div>`; }).join('');
+  return `<div class="ckcms">${lista}<div class="ckcm novo">${me && U[me] ? av(me, true, true) : ''}<div class="bx"><input data-ckcm="${ref}" placeholder="Comentar neste item… (Enter para enviar)"></div></div></div>`;
+}
+function ckNotaAchar(k){ const [sid, iid, nid] = String(k).split('|'); const f = ckAchar(sid + '|' + iid); const n = f.c ? ckNorm(f.c).find(x => x.id === nid) : null; return Object.assign(f, {n, sid, iid}); }
+function ckConversa(n){ return [...new Set([n.autor, ...membrosDe(n.atrib), ...(n.resps || []).map(r => r.autor)].filter(x => x && x !== me))]; }
+function ckFoco(sel){ setTimeout(() => { const x = $(`#layer ${sel}`); if(x) x.focus(); }, 0); }
+document.addEventListener('click', e => {
+  const tg = e.target; if(!tg.closest || !tg.closest('#layer')) return; let el;
+  if((el = tg.closest('[data-ckatrbtn]'))){ e.stopPropagation(); ui.ckAtr = ui.ckAtr === el.dataset.ckatrbtn ? null : el.dataset.ckatrbtn; renderTask(); ckFoco(`[data-ckatr="${ui.ckAtr}"]`); return; }
+  if(tg.closest('[data-ckatrno]')){ e.stopPropagation(); ui.ckAtr = null; renderTask(); return; }
+  if((el = tg.closest('[data-ckres]'))){ e.stopPropagation(); const {p, t, n, c} = ckNotaAchar(el.dataset.ckres); if(!n) return;
+    n.resolvido = !n.resolvido; n.resPor = n.resolvido ? me : ''; logT(t, `${n.resolvido ? 'resolveu' : 'reabriu'} um comentário do item “${c.t.slice(0, 60)}”`);
+    if(n.resolvido) ckConversa(n).forEach(x => notify(x, `resolveu o comentário “${esc(n.texto.slice(0, 60))}” no checklist de “${esc(t.titulo)}”`, p.id, t.id));
+    save(); renderTask(); render(); return; }
+  if((el = tg.closest('[data-ckrpdel]'))){ e.stopPropagation(); const parts = el.dataset.ckrpdel.split('|'), rid = parts.pop(); const {t, n} = ckNotaAchar(parts.join('|')); if(!n) return;
+    if(!confirm('Excluir esta resposta?')) return; n.resps = n.resps.filter(r => r.id !== rid); logT(t, 'excluiu uma resposta no checklist'); save(); renderTask(); return; }
+}, true);
+document.addEventListener('change', e => {
+  const tg = e.target; if(!tg.dataset || tg.dataset.ckatr === undefined) return; e.stopPropagation();
+  const {p, t, n, c} = ckNotaAchar(tg.dataset.ckatr); if(!n) return; const id = tg.value;
+  if(!id){ n.atrib = ''; n.resolvido = false; logT(t, `removeu a atribuição de um comentário do item “${c.t.slice(0, 60)}”`); }
+  else { n.atrib = id; n.resolvido = false; n.resPor = ''; logT(t, `atribuiu a ${first(id)} um comentário do item “${c.t.slice(0, 60)}”`);
+    notify(id, `atribuiu um comentário a você no checklist de “${esc(t.titulo)}”: “${esc(c.t.slice(0, 60))}”`, p.id, t.id); }
+  ui.ckAtr = null; save(); renderTask(); render(); if(id) ckFoco(`[data-ckrsp="${tg.dataset.ckatr}"]`);
+}, true);
+document.addEventListener('keydown', e => {
+  const tg = e.target; if(!tg.dataset || tg.dataset.ckrsp === undefined || e.key !== 'Enter') return; e.preventDefault(); e.stopPropagation();
+  const txt = tg.value.trim(); if(!txt) return; const k = tg.dataset.ckrsp, {p, t, n, c} = ckNotaAchar(k); if(!n) return;
+  n.resps.push({id:uid(), autor:me, em:nowISO(), texto:txt}); logT(t, `respondeu no checklist (“${c.t.slice(0, 50)}”): ${txt.slice(0, 80)}`);
+  ckConversa(n).forEach(x => notify(x, `respondeu no checklist de “${esc(t.titulo)}”: “${esc(txt.slice(0, 80))}”`, p.id, t.id));
+  save(); renderTask(); ckFoco(`[data-ckrsp="${k}"]`);
+}, true);
 /* comparativo: máscara numérica e divergências em relação ao projeto arquitetônico */
 const tbMilhar = d => d.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 function tbKind(tb, r, ci){
@@ -4866,8 +4965,8 @@ document.addEventListener('click', e => {
   if((el = tg.closest('[data-ckt]'))){ e.stopPropagation(); const {p, t, s, c} = ckAchar(el.dataset.ckt); if(!c) return;
     c.feito = !c.feito; c.por = me; c.em = nowISO(); logT(t, `${c.feito ? 'marcou' : 'desmarcou'} “${c.t.slice(0, 80)}”`); ckFechar(p, t, s); save(); renderTask(); render(); return; }
   if((el = tg.closest('[data-ckcmdel]'))){ e.stopPropagation(); const [sid, iid, nid] = el.dataset.ckcmdel.split('|'); const {t, c} = ckAchar(sid + '|' + iid); if(!c) return;
-    if(!confirm('Excluir este comentário?')) return;
-    if(nid === 'legado'){ c.nota = ''; } else c.notas = (c.notas || []).filter(n => n.id !== nid);
+    if(!confirm('Excluir este comentário e as respostas dele?')) return;
+    ckNorm(c); c.notas = (c.notas || []).filter(n => n.id !== nid);
     logT(t, `excluiu um comentário do item “${c.t.slice(0, 60)}”`); save(); renderTask(); return; }
   if((el = tg.closest('[data-ckdel]'))){ e.stopPropagation(); const {p, t, s, c} = ckAchar(el.dataset.ckdel); if(!c) return;
     if(!c.extra && !confirm('Remover este item só deste processo? A parametrização do serviço não muda.')) return;
@@ -4891,7 +4990,7 @@ document.addEventListener('keydown', e => {
     t.tabela.l.push({t:v, v:t.tabela.c.map(() => '')}); save(); renderTask(); setTimeout(() => { const n = $('#layer [data-tbadd]'); if(n) n.focus(); }, 0); return; }
   if(tg.dataset.ckcm){ e.preventDefault(); e.stopPropagation(); const txt = tg.value.trim(); if(!txt) return; const {t, c} = ckAchar(tg.dataset.ckcm); if(!c) return;
     const [sid, iid] = tg.dataset.ckcm.split('|');
-    c.notas = c.notas || []; c.notas.push({id:uid(), por:me, em:nowISO(), txt}); logT(t, `comentou no item “${c.t.slice(0, 60)}”: ${txt.slice(0, 80)}`);
+    ckNorm(c); c.notas = c.notas || []; c.notas.push({id:uid(), autor:me, em:nowISO(), texto:txt, resps:[]}); logT(t, `comentou no item “${c.t.slice(0, 60)}”: ${txt.slice(0, 80)}`);
     save(); renderTask(); setTimeout(() => { const n = $(`#layer [data-ckcm="${sid}|${iid}"]`); if(n) n.focus(); }, 0); return; }
   if(tg.dataset.tbv){ e.preventDefault(); e.stopPropagation(); tg.blur(); }
 }, true);
@@ -4911,6 +5010,62 @@ document.addEventListener('input', e => {
   }
   tb.l[r].v[ci] = tg.value.trim(); tbPintar(t);
 }, true);
+
+
+/* ---------- Equipes (grupos de pessoas que recebem tarefas e comentários) ---------- */
+const EQ_CORES = ['#3333FF', '#0000FF', '#00A9CC', '#12B76A', '#C99500', '#D92D20', '#7A5AF8', '#27272A'];
+let eqEd = null;
+renderTeam = (function(base){ return function(){
+  base.apply(this, arguments);
+  const items = allItems(), eqs = equipes();
+  const cards = eqs.map(e => { const dir = items.filter(i => !i.feito && (i.resp || []).includes(e.id)).length, ms = membrosDe(e.id);
+    return `<div class="eqcard">${av(e.id)}<div style="flex:1;min-width:0"><b>${esc(e.nome)}</b><div class="sub">${ms.length} pessoa${ms.length === 1 ? '' : 's'}${dir ? ` | ${dir} item(ns) em aberto atribuído(s) à equipe` : ''}</div><div class="avs" style="margin-top:6px">${ms.map(m => av(m, true)).join('') || '<span class="sub">sem membros</span>'}</div></div><button class="btn sm" data-eqedit="${e.id}">Editar</button></div>`; }).join('');
+  $('#view .pagehead').insertAdjacentHTML('afterend', `<div class="eqsec"><div class="eqsh"><b>Equipes</b><span class="sub">Junte pessoas numa equipe para atribuir tarefas, materiais e comentários a todas de uma vez.</span><span class="spacer"></span><button class="btn sm" data-eqnew>${ic('mais', 'sm')} Nova equipe</button></div>
+    ${eqs.length ? `<div class="eqgrid">${cards}</div>` : '<div class="sub" style="padding:6px 0 2px">Nenhuma equipe criada ainda.</div>'}</div>`);
+}; })(renderTeam);
+function eqModal(id){
+  const e = id ? eqById(id) : null;
+  eqEd = e ? JSON.parse(JSON.stringify(e)) : {id:'eq:' + uid(), nome:'', cor:EQ_CORES[equipes().length % EQ_CORES.length], membros:[]};
+  eqModalHtml(!e);
+}
+function eqModalHtml(novo){
+  const d = eqEd;
+  $('#layer').innerHTML = `<div class="mlayer"><div class="modal small" style="width:min(560px,100%)">
+    <div class="mhead"><b style="color:var(--ink);font-size:16px;font-family:var(--kanit);text-transform:uppercase;font-weight:500">${novo ? 'Nova equipe' : 'Editar equipe'}</b><span class="spacer"></span><button class="btn ghost" data-eqcancel>✕</button></div>
+    <div style="padding:18px;display:flex;flex-direction:column;gap:14px">
+      <label class="f">Nome da equipe<input class="inp" id="eqNome" value="${esc(d.nome)}" placeholder="Ex.: Topografia, Licenciamento"></label>
+      <div class="f"><span class="sub">Cor</span><div style="display:flex;gap:8px;margin-top:6px">${EQ_CORES.map(c => `<button class="eqcor ${d.cor === c ? 'on' : ''}" data-eqcor="${c}" style="background:${c}" title="${c}"></button>`).join('')}</div></div>
+      <div><span class="sub">Membros</span><div class="eqmemb">${USERS.map(u => `<label class="eqm ${d.membros.includes(u.id) ? 'on' : ''}"><input type="checkbox" data-eqm="${u.id}" ${d.membros.includes(u.id) ? 'checked' : ''}>${av(u.id, true, true)}<span>${esc(u.nome)}</span></label>`).join('')}</div></div>
+    </div>
+    <div class="mfoot">${novo ? '' : '<button class="btn ghost danger" data-eqdel>Excluir equipe</button>'}<span class="spacer"></span><button class="btn" data-eqcancel>Cancelar</button><button class="btn primary" data-eqsave>Salvar</button></div></div></div>`;
+  if(novo) setTimeout(() => { const n = $('#eqNome'); if(n) n.focus(); }, 0);
+}
+function eqLer(){ const n = $('#eqNome'); if(n) eqEd.nome = n.value.trim(); eqEd.membros = $$('#layer [data-eqm]').filter(x => x.checked).map(x => x.dataset.eqm); }
+document.addEventListener('click', e => {
+  const tg = e.target; if(!tg.closest) return; let el;
+  if(tg.closest('[data-eqnew]')){ e.stopPropagation(); eqModal(null); return; }
+  if((el = tg.closest('[data-eqedit]'))){ e.stopPropagation(); eqModal(el.dataset.eqedit); return; }
+  if(!eqEd || !tg.closest('#layer')) return;
+  if((el = tg.closest('[data-eqcor]'))){ e.stopPropagation(); eqLer(); eqEd.cor = el.dataset.eqcor; eqModalHtml(!eqById(eqEd.id)); return; }
+  if(tg.closest('[data-eqcancel]')){ e.stopPropagation(); eqEd = null; $('#layer').innerHTML = ''; return; }
+  if(tg.closest('[data-eqsave]')){ e.stopPropagation(); eqLer(); const d = eqEd;
+    if(!d.nome){ toast('Dê um nome à equipe'); $('#eqNome').focus(); return; }
+    if(!d.membros.length){ toast('Escolha pelo menos uma pessoa'); return; }
+    S.cfg.equipes = equipes().slice(); const i = S.cfg.equipes.findIndex(x => x.id === d.id);
+    const novos = i >= 0 ? d.membros.filter(m => !S.cfg.equipes[i].membros.includes(m)) : d.membros;
+    if(i >= 0) S.cfg.equipes[i] = d; else S.cfg.equipes.push(d);
+    novos.forEach(m => { if(m !== me) S.notifs.unshift({id:uid(), para:m, txt:`<b>${esc(first(me))}</b> incluiu você na equipe <b>${esc(d.nome)}</b>`, procId:null, taskId:null, em:nowISO(), lida:false}); });
+    eqEd = null; $('#layer').innerHTML = ''; save(); render(); toast(i >= 0 ? 'Equipe atualizada' : 'Equipe criada'); return; }
+  if(tg.closest('[data-eqdel]')){ e.stopPropagation(); const d = eqEd;
+    const uso = allItems().filter(i => (i.resp || []).includes(d.id)).length + (S.mats || []).filter(m => m.resp.includes(d.id)).length;
+    if(!confirm(`Excluir a equipe “${d.nome}”?${uso ? ` Ela está atribuída a ${uso} item(ns); as pessoas continuam onde já estavam atribuídas individualmente.` : ''}`)) return;
+    S.cfg.equipes = equipes().filter(x => x.id !== d.id);
+    S.procs.forEach(p => p.tarefas.forEach(t => { t.resp = t.resp.filter(x => x !== d.id); }));
+    (S.mats || []).forEach(m => { m.resp = m.resp.filter(x => x !== d.id); });
+    eqEd = null; $('#layer').innerHTML = ''; save(); render(); toast('Equipe excluída'); return; }
+  if(tg.closest('.modal')) e.stopPropagation();
+}, true);
+document.addEventListener('change', e => { const tg = e.target; if(!eqEd || !tg.dataset || tg.dataset.eqm === undefined) return; e.stopPropagation(); tg.closest('.eqm').classList.toggle('on', tg.checked); }, true);
 
 /* ---------- Cadastros: editor da parametrização ---------- */
 let peEd = null;
@@ -5008,7 +5163,7 @@ document.addEventListener('click', e => {
   if(tg.closest('#btnBack')){ if(ui.hpos > 0){ ui.hpos--; ui.view = ui.hist[ui.hpos]; render(); } return; }
   if(tg.closest('#btnFwd')){ if(ui.hpos < ui.hist.length - 1){ ui.hpos++; ui.view = ui.hist[ui.hpos]; render(); } return; }
   { const g = tg.closest('[data-tpausex],[data-tstopx]'); if(g){ e.stopPropagation(); const [pid, tid] = (g.dataset.tpausex || g.dataset.tstopx).split('|');
-    if(pid === 'mat'){ const m = matById(tid); if(g.dataset.tstopx){ setMatStatus(m, 'revisao'); toast('Cronômetro parado | material em revisão'); } else { runningOf(m).filter(x => x.por === me).forEach(x => x.fim = nowISO()); logT(m, 'pausou o cronômetro'); toast('Cronômetro pausado'); } save(); render(); if(ui.mat) renderMat(); return; }
+    if(pid === 'mat'){ const m = matById(tid); if(g.dataset.tstopx){ setMatStatus(m, 'revisao'); toast('Cronômetro parado | material pausado'); } else { runningOf(m).filter(x => x.por === me).forEach(x => x.fim = nowISO()); logT(m, 'pausou o cronômetro'); toast('Cronômetro pausado'); } save(); render(); if(ui.mat) renderMat(); return; }
     const p = procById(pid), t = taskOf(p, tid);
     if(g.dataset.tstopx){ setTaskStatus(p, t, 'revisao'); toast('Cronômetro parado | tarefa em revisão'); } else { runningOf(t).filter(x => x.por === me).forEach(x => x.fim = nowISO()); logT(t, 'pausou o cronômetro'); toast('Cronômetro pausado'); }
     save(); render(); if(ui.task) renderTask(); return; } }
@@ -5169,7 +5324,7 @@ document.addEventListener('click', e => {
   if((el = tg.closest('[data-mf]'))){ ui.mineFilter = el.dataset.mf; render(); return; }
   if((el = tg.closest('[data-chk-task]'))){ const [pid, tid] = el.dataset.chkTask.split('|'); const p = procById(pid), t = taskOf(p, tid); setTaskStatus(p, t, t.status === 'concluida' ? 'andamento' : 'concluida'); save(); render(); return; }
   if((el = tg.closest('[data-chk-sub]'))){ const [pid, tid, sid] = el.dataset.chkSub.split('|'); const t = taskOf(procById(pid), tid), s = t.subs.find(x => x.id === sid); s.feito = !s.feito; logT(t, `${s.feito ? 'concluiu' : 'reabriu'} a subtarefa “${s.titulo}”`); save(); render(); return; }
-  if((el = tg.closest('[data-chk-com]'))){ const [pid, tid, cid] = el.dataset.chkCom.split('|'); const t = taskOf(procById(pid), tid), c = t.coms.find(x => x.id === cid); c.resolvido = !c.resolvido; save(); render(); return; }
+  if((el = tg.closest('[data-chk-com]'))){ const [pid, tid, cid] = el.dataset.chkCom.split('|'); const t = taskOf(procById(pid), tid), c = t.coms.find(x => x.id === cid) || ckNotasDe(t).find(x => x.id === cid); if(!c) return; c.resolvido = !c.resolvido; save(); render(); return; }
   if((el = tg.closest('[data-open]'))){ const [pid, tid] = el.dataset.open.split('|'); openTask(pid, tid); return; }
   if((el = tg.closest('#view [data-proc]'))){ openDrawer('proc', el.dataset.proc); return; }
   if((el = tg.closest('#view [data-prop]'))){ openDrawer('prop', el.dataset.prop); return; }
