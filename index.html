@@ -1158,6 +1158,14 @@ input[type="checkbox"]{border-radius:3px!important}
 .crform{display:flex;flex-direction:column;gap:6px}
 .crform textarea{width:100%;min-height:56px;resize:vertical;padding:8px 10px;border:1px solid var(--m-azul);font:inherit;font-size:13px}
 .crform .row{display:flex;gap:6px;align-items:center}
+.mcard .mtipo{text-transform:none!important;letter-spacing:0!important;font-size:12.5px;line-height:1.4;color:var(--muted)}
+/* planejador: cabeçalho alinhado com as colunas (reserva o espaço da barra de rolagem) */
+.pgh,.pga,.pgb{grid-template-columns:64px repeat(var(--n),minmax(0,1fr))!important;scrollbar-gutter:stable}
+.pgh,.pga{overflow:hidden}
+.pgh>*,.pga>*{min-width:0}
+.pad{overflow:hidden}
+.ptz{padding-right:8px!important;text-align:right;align-self:center}
+.pev{border-radius:4px!important}
 
 </style>
 </head>
