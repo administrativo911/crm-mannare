@@ -1171,6 +1171,46 @@ input[type="checkbox"]{border-radius:3px!important}
 .pmain .mboard{padding-bottom:16px}
 .pmain .mboard + .hint{margin-top:8px!important}
 .tree .tnode .tn{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;flex:1}
+/* parametrização: checklist com observação */
+.cksum{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);margin:0 0 8px}
+.cksum b{color:var(--ink)}
+.srow.ckrow{grid-template-columns:20px 16px 18px minmax(0,1fr) auto 104px 118px 24px!important}
+.ckcar{border:0;background:none;color:var(--muted);cursor:pointer;width:18px;padding:0;font-size:12px}
+.ckgn{color:var(--m-azul);font-weight:600;font-size:12.5px;min-width:16px}
+.ckcnt{font-size:11.5px;font-weight:600;padding:1px 7px;border-radius:999px!important;background:#F4F4F5;color:var(--muted);cursor:pointer;white-space:nowrap}
+.ckcnt.ok{background:#ECFDF3;color:#067647}
+.ckl{background:var(--m-azul-t05,#F7F7FF);border-top:1px solid var(--line);padding:4px 10px 8px 46px}
+.cki{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--line)}
+.cki:last-of-type{border-bottom:0}
+.ckb{width:17px;height:17px;flex:none;margin-top:1px;border:1.5px solid #A1A1AA;border-radius:4px!important;display:grid;place-items:center;font-size:11px;color:#fff;cursor:pointer;background:#fff}
+.ckb:hover{border-color:var(--m-azul)}.ckb.on{background:var(--m-azul);border-color:var(--m-azul)}
+.ckm{flex:1;min-width:0}.ckt{font-size:13px;line-height:1.45;color:var(--ink)}
+.cki.done .ckt{color:var(--muted);text-decoration:line-through}
+.ckn{color:var(--muted);font-size:12px;margin-right:2px}
+.cko{font-size:12px;color:var(--muted);margin-top:3px;display:flex;gap:5px;align-items:flex-start;line-height:1.4}
+.cko svg{width:12px;height:12px;flex:none;margin-top:2px}
+.ckno{width:100%;margin-top:5px;border:0;border-bottom:1px dashed var(--line);background:transparent;font:inherit;font-size:12.5px;padding:2px 0;color:var(--ink)}
+.ckno:focus{outline:0;border-bottom-color:var(--m-azul)}
+.ckno::placeholder{color:#B4B4BB}
+.ckadd{display:grid;grid-template-columns:1.4fr 1fr;gap:8px;padding:8px 0 2px}
+.ckadd input{border:1px dashed var(--line);background:#fff;font:inherit;font-size:12.5px;padding:6px 8px}
+.ckadd input:focus{outline:0;border-color:var(--m-azul);border-style:solid}
+.tbsec{margin:0 0 16px}
+.tbwrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius-lg)!important}
+.tbcmp{border-collapse:collapse;width:100%;font-size:12.5px}
+.tbcmp th,.tbcmp td{border-bottom:1px solid var(--line);border-right:1px solid var(--line);padding:0;text-align:left}
+.tbcmp thead th{background:#FAFAFA;padding:8px;font-weight:600;color:var(--muted);font-size:11.5px;min-width:110px}
+.tbcmp tbody th{padding:6px 8px;font-weight:500;white-space:nowrap;background:#FCFCFD}
+.tbcmp td input{width:100%;border:0;padding:7px 8px;font:inherit;background:transparent;min-width:90px}
+.tbcmp td input:focus{outline:2px solid var(--m-azul);outline-offset:-2px}
+.pebox{display:flex;gap:12px;align-items:center;border:1px solid var(--m-azul-t20,#CCCCFF);background:var(--m-azul-t05,#F7F7FF);padding:12px 14px;margin-top:14px;border-radius:var(--radius-lg)!important}
+.peg{border:1px solid var(--line);padding:10px 12px;margin-bottom:10px;border-radius:var(--radius-lg)!important}
+.pegh{display:flex;gap:8px;align-items:center;margin-bottom:6px}.pegh .inp{flex:1;font-weight:600}
+.pei{display:flex;gap:8px;align-items:flex-start;padding:6px 0 6px 18px;border-top:1px dashed var(--line)}
+.pei .ckn{width:34px;padding-top:8px}.peif{flex:1;display:flex;flex-direction:column;gap:4px}
+.pe2{display:grid;grid-template-columns:1.3fr 1fr;gap:4px}.pe2 .inp{font-size:12px}
+.pecola{margin-top:12px;border:1px dashed var(--line);padding:10px 12px}.pecola summary{cursor:pointer;font-weight:600;font-size:13px}
+.seg .n{margin-left:6px;font-size:11px;color:var(--muted)}
 
 </style>
 </head>
@@ -4018,6 +4058,8 @@ function avisoPropostaNova(p){
 }
 
 /* ---------- modelos de tarefas ---------- */
+if(!MODELOS.demolicao) MODELOS.demolicao = {nome:'Autorização de Demolição', orgao:'SEUMA', tarefas:[['Coletar documentação do cliente', []], ['Protocolar no órgão', ['Registrar nº do protocolo no painel']], ['Acompanhar análise e exigências', []]]};
+if(!SERV_C.demolicao) SERV_C.demolicao = '#6666FF';
 const MODELOS_BASE = JSON.parse(J(MODELOS));
 function syncModelos(){
   const c = S.cfg.modelosTarefa || {};
@@ -4113,7 +4155,7 @@ function extrasClick(e, tg){
   if((el = tg.closest('[data-cadmod]'))){ modModal(el.dataset.cadmod); return true; }
   if(tg.closest('[data-modnovo]')){ modModal(null); return true; }
   if((el = tg.closest('[data-apmodelo]'))){ const p = procById(el.dataset.apmodelo), k = ($('#apModelo') || {}).value, m = MODELOS[k]; if(!p || !m){ toast('Escolha um modelo'); return true; }
-    const resp = p.resp ? [p.resp] : []; m.tarefas.forEach(([t, s]) => p.tarefas.push(mkTask(t, s, {resp}))); logP(p, `aplicou o modelo de tarefas “${m.nome}”`); save(); render(); toast(`${m.tarefas.length} tarefa(s) adicionada(s)`); return true; }
+    const resp = p.resp ? [p.resp] : []; m.tarefas.forEach(([t, s]) => p.tarefas.push(mkTask(t, s, {resp}))); const npar = typeof paramAplicar === 'function' ? paramAplicar(p, k) : 0; logP(p, `aplicou o modelo de tarefas “${m.nome}”`); save(); render(); toast(`${m.tarefas.length} tarefa(s) adicionada(s)${npar ? ' + parametrização' : ''}`); return true; }
   if((el = tg.closest('[data-salvarmodelo]'))){ const p = procById(el.dataset.salvarmodelo); if(!p.tarefas.length){ toast('O processo não tem tarefas'); return true; }
     modModal(null, {nome:p.servico + ' (cópia)', orgao:p.orgao, tarefas:p.tarefas.map(t => [t.titulo, t.subs.map(s => s.titulo)])}); return true; }
   if(modEdit && tg.closest('#layer')){
@@ -4631,6 +4673,218 @@ function dashClick(tg){
     save(); render(); toast('Cronômetro ligado'); return true; }
   return false;
 }
+
+/* ---------- Parametrização (checklists por serviço) ---------- */
+const PARAM_BASE = {"alvara":{"abas":[{"n":"Protocolo","g":[{"t":"Requerimento n° 09","i":[{"t":"Descrever todas as inscrições de IPTU"},{"t":"Verificar se a consulta de adequabilidade indica frente para a mesma via de acesso do empreendimento.","o":"Não é possível alteração do endereço direto no alvará. Necessário certidão endereço e número na adequabilidade"},{"t":"Verificar se as áreas constantes na consulta de adequabilidade coincidem com as do projeto arquitetônico."},{"t":"Verificar se a área de construção informada no PGRCC corresponde à área construída do projeto."},{"t":"Se houver retificação imobiliária, garantir que a área do terreno na adequabilidade informada seja idêntica à pretendida na retificação."},{"t":"Confirmar que a licença ambiental está vigente e válida."},{"t":"Verificar se a área construída constante na licença ambiental corresponde à área construída definitiva do projeto e da consulta de adequabilidade."},{"t":"Caso seja projeto especial, apresentar AOP PE"},{"t":"Caso seja projeto especial, apresentar manifestação da AMC quanto ao quantitativo de vagas."},{"t":"Caso se trate de habitação de interesse social, apresentar declaração de enquadramento da Caixa Econômica Federal."},{"t":"Indicar, em ofício, o representante legal da empresa.","o":"Segue modelo Módelo Representante Legal"},{"t":"Caso exista termo de compromisso firmado antes do alvará exigindo cumprimento até sua emissão, informar se foi cumprido e indicar, em ofício, a baixa da cláusula cumprida."}]},{"t":"Contrato social","i":[{"t":"Cartão CNPJ"},{"t":"Último aditivo, se houver"}]},{"t":"Matrícula","i":[{"t":"Atualizada em até 30 (trinta) dias"},{"t":"Caso mais de uma matrícula, enviar montagem (máscada) dos registros que compõem o imóvel"},{"t":"Se retificação imobiliária, indicar em ofício o número do talão do processo administrativo no cartório"},{"t":"Se matrícula desmembrada/desdobrada/remembrada/unificada, apresentar autorização emitida pela SEUMA"}]},{"t":"RIST","i":[{"t":"Caso acesso pela BR, apresentar autorização do DNIT"},{"t":"Caso acesso pela CE, apresentar autorização da SOP"}]},{"t":"COMAER","i":[{"t":"Está válido? Nota: validade do documento - 01 ano"},{"t":"Caso haja cobertura metálica, apresentar a página do protocolo que comprove a indicação da área da cobertura metálica."}]},{"t":"Certificado do Corpo de Bombeiros","i":[{"t":"Verificar se o endereço informado corresponde à mesma frente do empreendimento"},{"t":"Se o CNPJ constante está de acordo com o titular das demais licenças"},{"t":"Se a área do terreno reflete a última versão do projeto"},{"t":"Se a área construída também corresponde à última versão do projeto."}]},{"t":"Bem tombado","i":[{"t":"Há autorização do órgão que poussui a salvaguarda do bem?"}]},{"t":"Projeto arquitetônico em PDF","i":[{"t":"Projeto arquitetônico na posição horizontal"},{"t":"Projeto arquitetônico com prancha em ordem numérica"}]},{"t":"ART/RRT","i":[{"t":"Projeto arquitetônico"},{"t":"Se incorporação, quadro NBR"},{"t":"Execução"},{"t":"Hidrossanitário"},{"t":"Cálculo"},{"t":"Todas as ART/RRT estão com a área construída conforme última versão do projeto"},{"t":"Todas as ART/RRT estão devidamente assinadas e datas?"},{"t":"Todos os técnicos estão devidamente cadastrados na SEUMA?"}]},{"t":"DAM","i":[{"t":"Guia do DAM com comprovante de pagamento","o":"Emitido por meio do protocolo online. Caso seja isento, necessário marcar obra pública"}]},{"t":"Procurações/autorização","i":[{"t":"Caso a proprietária do terreno seja diversa do requerente do alvará, solicitar autorização expressa, anexando o contrato social para comprovar a legitimidade da assinatura."},{"t":"Autorização/procuração do cliente para Mannare"}]}]},{"n":"Cadastro SEUMA","g":[{"t":"Cadastro sistema SEUMA","i":[{"t":"Inscrição de IPTU válida?"},{"t":"CNPJ do requerente cadastrado na SEUMA?"},{"t":"Responsável legal possui cadastro na SEUMA?"},{"t":"Todos os responsáveis técnicos possuem válido para sua atividade na SEUMA?"},{"t":"Em caso de proprietário divergente do requerente, proprietário possui cadastro?"}]}]},{"n":"Projeto arquitetônico","g":[{"t":"Entregáveis","i":[{"t":"Projeto em PDF"},{"t":"Pranchas numeradas"}]},{"t":"Implantação","i":[{"t":"Verificar se foi definida a poligonal a ser considerada para o projeto legal."},{"t":"Confirmar se o norte está indicado nas pranchas."},{"t":"Verificar se as vias do entorno estão devidamente identificadas e conforme matrícula e/ou parâmetros da prefeitura."},{"t":"Confirmar se os recuos foram indicados e cotados em planta baixa."},{"t":"Caso se aplique, verificar se o recuo de verticalização está sendo respeitado."},{"t":"Caso se aplique, verificar se o recuo entre torres está sendo respeitado."},{"t":"Verificar se estão indicados os acessos de veículos e pedestres."},{"t":"Confirmar se a planta contém a projeção de locação de elevatórias, ETE, reservatório de água, ETA e poços tubulares/artesianos."},{"t":"Em caso de parcelamento, verificar se as quadras e lotes estão identificados."},{"t":"Confirmar se as rampas foram apresentadas com indicação de suas inclinações."},{"t":"Verificar se foi prevista rampa de acesso em frente ao empreendimento, conforme normas de acessibilidade e com representação de inclinação."},{"t":"Confirmar se as vias internas estão dentro dos limites de inclinação (longitudinal 0,5 %–5 %; transversal 1 %–3 %)."},{"t":"Verificar se os portões e seus sistemas de abertura estão indicados."},{"t":"Confirmar se foi apresentada planta de permeabilidade e se o cálculo de permeabilidade está coerente, considerando materiais e uso de concregrama."},{"t":"Verificar se o projeto apresenta detalhe do rebaixo para acesso de veículos conforme legislação local."},{"t":"Caso se aplique, confirmar se as alterações solicitadas pelo RIST foram atendidas (entrada/saída de veículos, embarque e desembarque, bicicletário etc.)."},{"t":"Confirmar se o projeto apresenta cotas suficientes para o entendimento de todos os elementos."},{"t":"Verificar se a numeração dos blocos foi apresentada e segue lógica coerente."},{"t":"Confirmar se as vagas estão dimensionadas conforme legislação local, incluindo as próximas às paredes."},{"t":"Verificar se as vias internas estão dimensionadas conforme legislação local e normas técnicas dos bombeiros."},{"t":"Confirmar se a altura do castelo d’água está representada na planta."},{"t":"Verificar se o recuo do castelo d’água está cotado e respeita o mínimo exigido."},{"t":"Confirmar se a base do castelo d’água e da cisterna está representada, livrando passeios e vias."},{"t":"Verificar se o recuo da ETE está cotado e respeita o mínimo exigido (avaliar ocupação dos recuos com tanques)."},{"t":"Confirmar se os passeios obedecem às dimensões mínimas exigidas pela legislação local e normas de acessibilidade."},{"t":"Verificar se o mínimo de 3 % de vagas PCD foi locado a até 50 m dos acessos das torres PCD e conforme projeto de acessibilidade."},{"t":"Confirmar se o plantio arbóreo mínimo foi respeitado, de acordo com as espécies do plano de arborização local."},{"t":"Verificar se foi apresentado quadro com o quantitativo arbóreo total."},{"t":"Caso existam árvores no passeio, confirmar se posicionamento, faixa de serviço e faixa livre estão representados conforme manual de arborização."},{"t":"Verificar se os abrigos/centrais de gás estão representados."},{"t":"Confirmar se a piscina respeita o recuo mínimo"},{"t":"Verificar se a casa de máquinas da piscina foi representada."},{"t":"Confirmar se a ducha da piscina foi representada com dimensão mínima de 1,50 m × 1,50 m."},{"t":"Verificar se o equipamento e a escada de acesso à piscina foram representados."},{"t":"Confirmar se os passeios externos respeitam o mínimo exigido para as vias, conforme legislação local."},{"t":"Verificar se os sutamentos seguem as exigências da legislação local."},{"t":"Caso sejam necessárias doações para o sistema viário, verificar se estão representadas, hachuradas e cotadas em planta."},{"t":"Confirmar se a nomenclatura das ruas adjacentes está correta, seguindo diretrizes urbanas ou planta aprovada."},{"t":"Verificar se todas as edículas estão indicadas na planta, com nomenclatura padronizada."},{"t":"Verificar se foram representados cortes esquemas longitudinal e transversal da implantação (obrigatório em Eusébio, opcional em Fortaleza e Caucaia)."},{"t":"Confirmar se a poligonal de matrícula está representada com cotas e ângulos conforme matrícula atualizada."},{"t":"Verificar se as vagas PCD e 60+ utilizam piso intertravado."},{"t":"Confirmar se a pavimentação das vias internas é em bloco intertravado ou concregrama (usar concregrama apenas se necessário para permeabilidade)."},{"t":"Verificar se as vagas estão numeradas e se a numeração coincide com o quantitativo total apresentado no quadro de áreas."},{"t":"Em caso de implantações particionadas, confirmar se foi representada a planta chave."},{"t":"Caso utilize recuo médio, verificar se foi representada planta com demonstrativo de cálculo."},{"t":"Confirmar se as saídas de emergência estão desobstruídas."},{"t":"Verificar se a vaga de carga e descarga foi numerada em continuidade e especificada como rotativa."},{"t":"Confirmar se o vão dos muros segue padrão alinhado (apenas última fiada vazada)."},{"t":"Verificar se as rampas de acesso ao passeio nas esquinas estão representadas com inclinação indicada, atendendo à NBR 9050/2020 e largura livre mínima de 1,20 m."},{"t":"Confirmar se a área não edificável está destacada e sem inserção de equipamentos ou vagas."}]},{"t":"Quadro de áreas","i":[{"t":"Verificar se a área do terreno corresponde à matrícula atualizada."},{"t":"Em caso de doação de área, confirmar se ela consta no quadro de áreas e se a legislação permite sua utilização no cálculo do IA."},{"t":"Verificar se a área construída das edículas e das torres está correta e se o somatório inclui todos os ambientes."},{"t":"Confirmar o cálculo total da área construída."},{"t":"Confirmar o cálculo total da área computável, assegurando que todas as áreas exigidas pela legislação local para o IA foram consideradas"},{"t":"Verificar se o cálculo do IA está correto."},{"t":"Verificar se o cálculo da taxa de ocupação está correto."},{"t":"Confirmar se o cálculo de permeabilidade está correto e alinhado à planta de permeabilidade apresentada."},{"t":"Verificar se a quantidade total de unidades está correta."},{"t":"Verificar se a quantidade de unidades por tipologia está correta."},{"t":"Confirmar se a quantidade total de vagas está correta, incluindo vagas PCD e vagas de motos/bicicletas."},{"t":"Verificar se a nomenclatura das unidades está correta, conforme a tipologia padrão."},{"t":"Verificar se a nomenclatura das edículas está correta, conforme a tipologia padrão."},{"t":"Confirmar se o somatório total das unidades com áreas privativas está correto, conforme o quadro NBR."},{"t":"Verificar se foi apresentado memorial de cálculo da área permeável."},{"t":"Confirmar se a numeração dos pavimentos está correta (térreo, 1º pavimento, 2º pavimento, etc.)."}]},{"t":"Carimbo","i":[{"t":"Confirmar se o CNPJ utilizado está correto."},{"t":"Verificar se foi apresentada a numeração total de pranchas."},{"t":"Confirmar se o campo “conteúdo” das pranchas está coerente com os desenhos apresentados e se as escalas estão corretas."},{"t":"Verificar se a atividade informada está de acordo com a consulta de adequabilidade ou documento equivalente."},{"t":"Confirmar se o endereço indicado está correto."},{"t":"Verificar se o número da ART/RRT está informado."}]},{"t":"Pavimento térreo","i":[{"t":"Verificar se a planta apresenta indicação de, no mínimo, dois cortes e duas fachadas."},{"t":"Verificar se os acessos às torres estão sinalizados."},{"t":"Verificar se a nomenclatura e o tamanho das esquadrias indicados em planta coincidem com o quadro de esquadrias."},{"t":"Verificar se portas e janelas apresentam o sentido de abertura correto."},{"t":"Verificar se todos os shafts de gás, incêndio, água e elétrico que chegam ao térreo estão representados."},{"t":"Verificar se a simbologia de apartamentos PCD está indicada conforme a NBR 9050."},{"t":"Verificar se o giro do cadeirante está representado nos apartamentos PCD e nas áreas comuns."},{"t":"Verificar se todas as esquadrias, incluindo alçapões e escadas de marinheiro, estão representadas."},{"t":"Verificar se as alturas dos guarda-corpos estão representadas em planta baixa."},{"t":"Verificar se as esquadrias respeitam as rotas de fuga do projeto de combate a incêndio."},{"t":"Verificar se o layout de áreas molhadas (cozinhas e banheiros) está representado."},{"t":"Verificar se foi apresentado o quadro de esquadrias."},{"t":"Verificar se, para a linha T+4, foi prevista transposição vertical por elevador, assegurando acessibilidade a todos os pavimentos, conforme art. 32 da Lei 13.146/2015."},{"t":"Verificar se as nomenclaturas e áreas dos ambientes estão corretas, incluindo as adaptações nas unidades PCD."},{"t":"Verificar se a projeção da borda do radier está considerada."},{"t":"Verificar se a acessibilidade está garantida em todos os acessos das torres, incluindo sentido de aberturas e patamares necessários."},{"t":"Verificar se a varanda está representada nas unidades."}]},{"t":"Pavimento tipo","i":[{"t":"Verificar se o projeto apresenta indicação de cortes e fachadas, com no mínimo dois cortes."},{"t":"Verificar se portas e janelas estão com o sentido de abertura correto."},{"t":"Verificar se todos os shafts (gás, incêndio, água, elétrico) que chegam ao pavimento tipo estão representados."},{"t":"Verificar se a dimensão da abertura do elevador está conforme o manual do fabricante."},{"t":"Verificar se as alturas dos guarda-corpos estão representadas em planta baixa."},{"t":"Verificar se as esquadrias respeitam as rotas de fuga do projeto de combate a incêndio."},{"t":"Verificar se o layout das áreas molhadas (cozinhas e banheiros) está representado."},{"t":"Verificar se a indicação dos pavimentos está coerente."},{"t":"Verificar se foi apresentado o quadro de esquadrias."}]},{"t":"Coberta","i":[{"t":"Verificar se as alturas das platibandas estão representadas em planta baixa."},{"t":"Verificar se, caso aplicável, foi indicado o sistema de proteção contra raios conforme o projeto de SPDA."},{"t":"Verificar se foi apresentado o quadro de esquadrias."},{"t":"Verificar se a indicação dos pavimentos está coerente."}]},{"t":"Cortes e fachadas","i":[{"t":"Verificar se todos os níveis estão indicados."},{"t":"Verificar se o pé-direito atende à legislação local."},{"t":"Verificar se os ambientes estão corretamente identificados."},{"t":"Verificar se as instalações hidrossanitárias visíveis no corte estão corretas."},{"t":"Verificar se a indicação dos cortes e fachadas está coerente."},{"t":"Para tipologias verticais, verificar se o SPDA está representado e se a altura máxima respeita as diretrizes da Aeronáutica (COMAER)."},{"t":"Verificar se a altura total das torres, incluindo casa de máquinas do elevador e SPDA, está representada e conforme o COMAR aprovado."}]},{"t":"Edículas/áreas de apoio e serviços","i":[{"t":"Verificar se o projeto apresenta indicação de, no mínimo, dois cortes e fachadas."},{"t":"Verificar se portas e janelas estão com o sentido de abertura correto."},{"t":"Confirmar se as construções complementares (abrigos de medidores, hidrômetros, cilindros de gás, postes, guaritas, lixeiras etc.) foram previstas e indicadas."},{"t":"Verificar se a casa de gás do salão de festas, deck ou outras edificações com instalação de gás foi localizada e indicada."},{"t":"Verificar se o layout de áreas molhadas (cozinhas e banheiros) está representado."},{"t":"Confirmar se foi apresentado o quadro de esquadrias."},{"t":"Verificar se a indicação da edícula está coerente."},{"t":"Confirmar se os banheiros estão ventilados; em banheiros adaptados, utilizar boca de lobo."},{"t":"Verificar se o sentido de abertura externa da lixeira não interfere no passeio; o portão deve abrir para dentro ou ser de correr."}]}]},{"n":"Comparativo de vagas","tab":1,"c":["Parecer AMC","Projeto apresentado à AMC","Projeto arquitetônico","Quadro de áreas do alvará"],"l":["Total de vagas","Total de vagas de carro","Vagas de carro (padrão)","Vagas 60+","Vagas PCD","Vagas de táxi","Vagas de bicicleta","Vagas de motocicleta","Vaga de carga/descarga"]},{"n":"Comparativo de áreas","tab":1,"c":["Área construída total","Área construída para efeito de porte","Área do terreno","Observação"],"l":["Consulta de adequabilidade","Licença ambiental","Certificado de bombeiros","PGRCC","Projeto arquitetônico","Quadro NBR","ART cálculo","ART estrutural","ART/RRT projeto","ART/RRT quadros NBR","ART execução","ART/RRT hidrossanitário"]},{"n":"Conferência da emissão final","g":[]}]},"demolicao":{"arq":"Checklist Demolição.pdf | Requerimento Demolição.pdf","abas":[{"n":"Protocolo","g":[{"t":"Requerimento padrão","i":[{"t":"Descrever todas as inscrições de IPTU"},{"t":"Descrever todas as matrículas do imóvel"},{"t":"Descrever responsável técnico pela execução e sua ART"},{"t":"Requerente é o proprietário ou procurador?","o":"Caso seja procurador, apresentar procuração."},{"t":"Endereço do imóvel bate com informação do IPTU e matrícula?","o":"Caso não, coloque na observação qual endereço de acesso ao imóvel para vistoria"}]},{"t":"Contrato social","i":[{"t":"Cartão CNPJ"},{"t":"Contrato social e último aditivo, se houver"}]},{"t":"Matrícula","i":[{"t":"Atualizada em até 30 (trinta) dias"},{"t":"Área da matrícula igual do IPTU?","o":"Área do terreno e área edificada"}]},{"t":"IPTU","i":[{"t":"Extrato de todos os IPTUs"},{"t":"Certidão negativa de débitos ou positiva com efeito de negativa"},{"t":"Área do IPTU igual área da matrícula?"}]},{"t":"Procuração","i":[{"t":"Procuração com assinatura e validade válida?"},{"t":"Apresentar documento do procurador e/ou de quem assinou a procuração"},{"t":"Proprietário pessoa física e casado?","o":"Necessário apresentação de certidão de casamento e a assinatura do conjugue autorizando a demolição"}]},{"t":"Conferência de áreas","i":[{"t":"Foi apresentando levantamento topográfico do terreno com as edificações?"},{"t":"A área do levantamento é igual ao da matrícula e IPTU?"},{"t":"Foi disponibilizado o levantamento em DWG?"},{"t":"Foi definido qual será a área que vai ser utilizado para o material técnico?"}]},{"t":"Planta de demolição","i":[{"t":"Planta está com a localização do imóvel?"},{"t":"Consta as informações referente a área a ser demolida?"},{"t":"Planta assinada pelo requerente e profissional técnico?"}]},{"t":"ART de execução","i":[{"t":"Documento válido e assinado pelo requerente e técnico?"},{"t":"Endereço do imóvel confere com demais documentos?"},{"t":"Área a ser demolida confere com demais documentos?"},{"t":"A descrição da ART estão com as informações compatível com a obra/imóvel?"}]},{"t":"Relatório de métodos de demolição","i":[{"t":"Relatório preenchido e assinado?","o":"Segue modelo: Modelo de Relatório de Métodos Demolição.docx"},{"t":"Croqui do imóvel foi anexado?"},{"t":"Empresa de transporte de resíduos em conformidade com PGRCC?"},{"t":"Área de demolição em conformidade com material técnico?"}]},{"t":"PGRCC","i":[{"t":"Área do terreno e área edificada do PGRCC conferem?"},{"t":"Endereço do imóvel e IPTU conferem?"},{"t":"Foi emitido ART de emissão do PGRCC?"}]},{"t":"Procurações/autorização","i":[{"t":"Caso a proprietária do terreno seja diversa do requerente do alvará, solicitar autorização expressa, anexando o contrato social para comprovar a legitimidade da assinatura."},{"t":"Autorização/procuração do cliente para Mannare"}]},{"t":"Declaração de não tombamento","i":[{"t":"Declaração preenchida e assinada?","o":"Segue modelo: Modelo Declaração de Não Tombamento"}]},{"t":"DAM","i":[{"t":"Guia do DAM com comprovante de pagamento","o":"Taxa N010 - Licença para Demolição"},{"t":"Área edificada em conformidade com material técnico?"}]}]},{"n":"Conferência da emissão final","g":[]}]}};
+(function(){ // ids estáveis para a parametrização original
+  Object.entries(PARAM_BASE).forEach(([k, d]) => d.abas.forEach((a, ai) => {
+    a.id = k + '.' + ai; a.tipo = a.tab ? 'tabela' : 'check'; delete a.tab;
+    (a.g || (a.g = [])).forEach((g, gi) => { g.id = a.id + '.' + gi; g.i.forEach((it, ii) => { it.id = g.id + '.' + ii; it.o = it.o || ''; it.b = it.b || ''; }); });
+    a.c = a.c || []; a.l = a.l || [];
+  }));
+})();
+function paramBaseDe(k){
+  if(PARAM_BASE[k]) return PARAM_BASE[k];
+  const n = normN((MODELOS[k] || {}).nome || '');
+  if(n.includes('demoli')) return PARAM_BASE.demolicao;
+  if(n.includes('alvara de constru')) return PARAM_BASE.alvara;
+  return null;
+}
+function paramDe(k){ const c = (S.cfg && S.cfg.params || {})[k]; if(c) return c.vazio ? null : c; return paramBaseDe(k); }
+const paramItens = d => d ? d.abas.reduce((n, a) => n + (a.tipo === 'check' ? a.g.reduce((x, g) => x + g.i.length, 0) : 0), 0) : 0;
+const paramTitulo = a => a.tipo === 'check' && a.g.length ? 'Parametrização | ' + a.n : a.n;
+function paramTask(k, a, resp, d){
+  const t = mkTask(paramTitulo(a), [], {resp:resp || [], param:{k, aba:a.id}});
+  if(a.tipo === 'tabela') t.tabela = {c:a.c.slice(), l:a.l.map(x => ({t:x, v:a.c.map(() => '')}))};
+  else t.subs = a.g.map(g => paramSub(g));
+  if(d && d.arq && a === d.abas[0]) t.desc = 'Arquivos de apoio: ' + d.arq;
+  return t;
+}
+const paramSub = g => ({id:uid(), titulo:g.t, feito:false, resp:'', prazo:'', tid:g.id, check:g.i.map(paramItem)});
+const paramItem = i => ({id:uid(), tid:i.id, t:i.t, o:i.o || '', b:i.b || '', feito:false, nota:''});
+function paramInserir(p, novas){
+  if(!novas.length) return;
+  const fim = novas.filter(t => /emiss[aã]o final/i.test(t.titulo)), meio = novas.filter(t => !fim.includes(t));
+  let pos = p.tarefas.findIndex(t => /^protocolar/i.test(t.titulo)); if(pos < 0) pos = p.tarefas.length;
+  p.tarefas.splice(pos, 0, ...meio); p.tarefas.push(...fim);
+}
+/* acrescenta só o que falta (não apaga nada do que a equipe marcou ou anotou) */
+function paramAplicar(p, k){
+  const d = paramDe(k); if(!d) return 0;
+  let n = 0; const novas = [], resp = p.resp ? [p.resp] : [];
+  d.abas.forEach(a => {
+    const t = p.tarefas.find(x => x.param && x.param.aba === a.id);
+    if(!t){ novas.push(paramTask(k, a, resp, d)); n++; return; }
+    if(a.tipo === 'tabela'){ t.tabela = t.tabela || {c:[], l:[]};
+      a.c.forEach(c => { if(!t.tabela.c.includes(c)){ t.tabela.c.push(c); t.tabela.l.forEach(l => l.v.push('')); n++; } });
+      a.l.forEach(x => { if(!t.tabela.l.some(l => l.t === x)){ t.tabela.l.push({t:x, v:t.tabela.c.map(() => '')}); n++; } });
+      return; }
+    a.g.forEach(g => { let s = t.subs.find(x => x.tid === g.id);
+      if(!s){ t.subs.push(paramSub(g)); n += 1; return; }
+      s.check = s.check || [];
+      g.i.forEach(i => { if(!s.check.some(c => c.tid === i.id)){ s.check.push(paramItem(i)); s.feito = false; n++; } }); });
+  });
+  paramInserir(p, novas);
+  return n;
+}
+mkProcess = (function(base){ return function(prop, modeloK, resp, prazo, por){
+  const p = base.apply(this, arguments), d = paramDe(modeloK);
+  if(d && modeloK !== 'sem') paramInserir(p, d.abas.map(a => paramTask(modeloK, a, resp ? [resp] : [], d)));
+  return p;
+}; })(mkProcess);
+
+/* ---------- na tarefa: checklist com observação e tabelas ---------- */
+ui.ckOpen = ui.ckOpen || {};
+function ckBlocoHtml(s){
+  const it = s.check || [];
+  return `<div class="ckl" data-ckbox="${s.id}">${it.map((c, i) => `<div class="cki ${c.feito ? 'done' : ''}">
+      <span class="ckb ${c.feito ? 'on' : ''}" data-ckt="${s.id}|${c.id}" role="checkbox" aria-checked="${c.feito}" title="${c.feito ? 'Desmarcar' : 'Marcar como atendido'}">${c.feito ? '✓' : ''}</span>
+      <div class="ckm"><div class="ckt"><span class="ckn">${i + 1}.</span> ${esc(c.t)}${c.extra ? ' <span class="ftag">só neste processo</span>' : ''}</div>
+        ${c.o ? `<div class="cko">${ic('nota', 'sm')} ${esc(c.o)}</div>` : ''}${c.b ? `<div class="cko">${ic('doc', 'sm')} Base legal: ${esc(c.b)}</div>` : ''}
+        <input class="ckno" data-cknota="${s.id}|${c.id}" value="${esc(c.nota || '')}" placeholder="Anotação deste processo"></div>
+      <button class="x" data-ckdel="${s.id}|${c.id}" title="Remover item deste processo">✕</button></div>`).join('')}
+    <div class="ckadd"><input data-ckadd="${s.id}" placeholder="+ Adicionar item (Enter)"><input data-ckaddo="${s.id}" placeholder="Observação (opcional)"></div></div>`;
+}
+function tabelaHtml(t){
+  const tb = t.tabela;
+  return `<div class="tbsec"><div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><b style="color:var(--navy)">Comparativo</b><span class="sub">preencha os valores de cada documento</span></div>
+    <div class="tbwrap"><table class="tbcmp"><thead><tr><th>Documento</th>${tb.c.map(c => `<th>${esc(c)}</th>`).join('')}</tr></thead><tbody>
+    ${tb.l.map((l, r) => `<tr><th>${esc(l.t)}</th>${tb.c.map((c, ci) => `<td><input data-tbv="${r}|${ci}" value="${esc(l.v[ci] || '')}"></td>`).join('')}</tr>`).join('')}</tbody></table></div>
+    <div class="ckadd" style="padding:8px 0 0"><input data-tbadd placeholder="+ Adicionar linha (Enter)"></div></div>`;
+}
+renderTask = (function(base){ return function(){
+  base.apply(this, arguments);
+  if(!ui.task) return;
+  const p = procById(ui.task.procId), t = p && taskOf(p, ui.task.taskId); if(!t) return;
+  const box = $('#layer .subs'); if(!box) return;
+  if(t.tabela){ box.previousElementSibling.insertAdjacentHTML('beforebegin', tabelaHtml(t)); if(!t.subs.length){ box.previousElementSibling.style.display = 'none'; box.style.display = 'none'; } }
+  if(!t.subs.some(s => s.check)) return;
+  const tot = t.subs.reduce((n, s) => n + (s.check || []).length, 0), ok = t.subs.reduce((n, s) => n + (s.check || []).filter(c => c.feito).length, 0);
+  box.previousElementSibling.insertAdjacentHTML('beforebegin', `<div class="cksum"><span>${ic('check', 'sm')} <b>${ok}</b> de ${tot} itens atendidos</span><span class="spacer"></span><button class="btn sm ghost" data-ckall>${t.subs.every(s => !s.check || ui.ckOpen[s.id]) ? 'Recolher tudo' : 'Expandir tudo'}</button></div>`);
+  t.subs.forEach((s, i) => { if(!s.check) return; const row = box.querySelector(`.srow[data-sub="${s.id}"]`); if(!row) return;
+    const f = s.check.filter(c => c.feito).length, aberto = ui.ckOpen[s.id];
+    row.classList.add('ckrow');
+    row.querySelector('.st').insertAdjacentHTML('beforebegin', `<button class="ckcar" data-cktog="${s.id}" aria-label="${aberto ? 'Recolher' : 'Abrir'} checklist">${aberto ? '▾' : '▸'}</button><span class="ckgn">${i + 1}</span>`);
+    row.querySelector('.st').insertAdjacentHTML('afterend', `<span class="ckcnt ${f === s.check.length && f ? 'ok' : ''}" data-cktog="${s.id}">${f}/${s.check.length}</span>`);
+    if(aberto) row.insertAdjacentHTML('afterend', ckBlocoHtml(s)); });
+}; })(renderTask);
+function ckAchar(v){ const [p, t] = curTask(); const [sid, iid] = String(v).split('|'); const s = t.subs.find(x => x.id === sid); return {p, t, s, c:s && iid ? (s.check || []).find(x => x.id === iid) : null}; }
+function ckFechar(p, t, s){
+  const antes = s.feito; s.feito = !!s.check.length && s.check.every(c => c.feito);
+  if(s.feito && !antes) logT(t, `concluiu “${s.titulo}” na parametrização`);
+  if(t.param && t.subs.length && t.subs.every(x => x.feito) && t.status !== 'concluida'){ setTaskStatus(p, t, 'concluida'); toast('Parametrização concluída'); }
+}
+document.addEventListener('click', e => {
+  const tg = e.target; if(!tg.closest || !tg.closest('#layer')) return; let el;
+  if((el = tg.closest('[data-cktog]'))){ e.stopPropagation(); const id = el.dataset.cktog; ui.ckOpen[id] = !ui.ckOpen[id]; renderTask(); return; }
+  if(tg.closest('[data-ckall]')){ e.stopPropagation(); const [, t] = curTask(), abrir = !t.subs.every(s => !s.check || ui.ckOpen[s.id]); t.subs.forEach(s => { if(s.check) ui.ckOpen[s.id] = abrir; }); renderTask(); return; }
+  if((el = tg.closest('[data-ckt]'))){ e.stopPropagation(); const {p, t, s, c} = ckAchar(el.dataset.ckt); if(!c) return;
+    c.feito = !c.feito; c.por = me; c.em = nowISO(); logT(t, `${c.feito ? 'marcou' : 'desmarcou'} “${c.t.slice(0, 80)}”`); ckFechar(p, t, s); save(); renderTask(); render(); return; }
+  if((el = tg.closest('[data-ckdel]'))){ e.stopPropagation(); const {p, t, s, c} = ckAchar(el.dataset.ckdel); if(!c) return;
+    if(!c.extra && !confirm('Remover este item só deste processo? A parametrização do serviço não muda.')) return;
+    s.check.splice(s.check.indexOf(c), 1); logT(t, `removeu o item “${c.t.slice(0, 80)}”`); ckFechar(p, t, s); save(); renderTask(); return; }
+  if(tg.closest('[data-ckbox]') || tg.closest('.tbsec')) e.stopPropagation();
+}, true);
+document.addEventListener('change', e => {
+  const tg = e.target; if(!tg.dataset) return;
+  if(tg.dataset.cknota){ e.stopPropagation(); const {c} = ckAchar(tg.dataset.cknota); if(c){ c.nota = tg.value.trim(); save(); } return; }
+  if(tg.dataset.tbv){ e.stopPropagation(); const [, t] = curTask(), [r, ci] = tg.dataset.tbv.split('|').map(Number); if(t.tabela && t.tabela.l[r]){ t.tabela.l[r].v[ci] = tg.value.trim(); save(); } return; }
+  if(tg.dataset.ckadd !== undefined || tg.dataset.ckaddo !== undefined || tg.dataset.tbadd !== undefined) e.stopPropagation();
+}, true);
+document.addEventListener('keydown', e => {
+  const tg = e.target; if(!tg.dataset || e.key !== 'Enter') return;
+  const sid = tg.dataset.ckadd || tg.dataset.ckaddo;
+  if(sid){ e.preventDefault(); e.stopPropagation(); const {p, t, s} = ckAchar(sid), tx = ($(`#layer [data-ckadd="${sid}"]`).value || '').trim(), ob = ($(`#layer [data-ckaddo="${sid}"]`).value || '').trim();
+    if(!tx){ toast('Escreva o item'); $(`#layer [data-ckadd="${sid}"]`).focus(); return; }
+    s.check.push({id:uid(), t:tx, o:ob, b:'', feito:false, nota:'', extra:true}); s.feito = false; logT(t, `adicionou o item “${tx.slice(0, 80)}” em “${s.titulo}”`);
+    save(); renderTask(); setTimeout(() => { const n = $(`#layer [data-ckadd="${sid}"]`); if(n) n.focus(); }, 0); return; }
+  if(tg.dataset.tbadd !== undefined){ e.preventDefault(); e.stopPropagation(); const [, t] = curTask(), v = tg.value.trim(); if(!v) return;
+    t.tabela.l.push({t:v, v:t.tabela.c.map(() => '')}); save(); renderTask(); setTimeout(() => { const n = $('#layer [data-tbadd]'); if(n) n.focus(); }, 0); return; }
+  if(tg.dataset.cknota || tg.dataset.tbv){ e.preventDefault(); e.stopPropagation(); tg.blur(); }
+}, true);
+
+/* ---------- Cadastros: editor da parametrização ---------- */
+let peEd = null;
+function paramEditor(k){
+  const d = paramDe(k);
+  peEd = {k, aba:0, d:JSON.parse(J(d || {abas:[]}))};
+  if(!peEd.d.abas.length) peEd.d.abas.push({id:uid(), n:'Protocolo', tipo:'check', g:[], c:[], l:[]});
+  paramEditorHtml();
+}
+function paramEditorHtml(){
+  const e = peEd, a = e.d.abas[e.aba] || e.d.abas[0], m = MODELOS[e.k] || {nome:''};
+  const emUso = S.procs.filter(p => p.modelo === e.k && isOpen(p)).length;
+  const corpo = a.tipo === 'tabela'
+    ? `<div class="fields"><label class="f">Colunas (uma por linha)<textarea class="inp" data-pecols rows="${Math.max(3, a.c.length + 1)}">${esc(a.c.join('\n'))}</textarea></label><label class="f">Linhas / documentos (uma por linha)<textarea class="inp" data-pelins rows="${Math.max(3, a.l.length + 1)}">${esc(a.l.join('\n'))}</textarea></label></div>`
+    : a.g.map((g, gi) => `<div class="peg"><div class="pegh"><span class="ckgn">${gi + 1}</span><input class="inp" data-peg="${gi}" value="${esc(g.t)}" placeholder="Nome do grupo (vira subtarefa)"><button class="x" data-peup="${gi}" title="Subir" ${gi ? '' : 'disabled'}>↑</button><button class="x" data-pegdel="${gi}" title="Remover grupo">✕</button></div>
+        ${g.i.map((it, ii) => `<div class="pei"><span class="ckn">${gi + 1}.${ii + 1}</span><div class="peif"><input class="inp" data-pei="${gi}|${ii}|t" value="${esc(it.t)}" placeholder="Item do checklist"><div class="pe2"><input class="inp" data-pei="${gi}|${ii}|o" value="${esc(it.o || '')}" placeholder="Observação"><input class="inp" data-pei="${gi}|${ii}|b" value="${esc(it.b || '')}" placeholder="Base legal (artigo/lei)"></div></div><button class="x" data-peiup="${gi}|${ii}" title="Subir" ${ii ? '' : 'disabled'}>↑</button><button class="x" data-peidel="${gi}|${ii}" title="Remover item">✕</button></div>`).join('')}
+        <button class="btn sm ghost" data-peiadd="${gi}">${ic('mais', 'sm')} Item</button></div>`).join('') + `<div class="prow"><button class="btn sm" data-pegadd>${ic('mais', 'sm')} Grupo</button></div>
+      <details class="pecola"><summary>Colar da planilha</summary><p class="sub">No Google Sheets, selecione as colunas ITEM, DOCUMENTO, ATENDIDO, BASE LEGISLATIVA e OBSERVAÇÃO (pode incluir o cabeçalho), copie com Ctrl+C e cole aqui. Linhas “1, 2, 3” viram grupos e “1.1, 1.2” viram itens. Isso substitui os grupos desta aba.</p><textarea class="inp" id="peCola" rows="5" placeholder="Cole aqui"></textarea><div class="prow"><button class="btn sm primary" data-pecola>Importar</button></div></details>`;
+  $('#layer').innerHTML = `<div class="mlayer" data-mclose><div class="modal small" style="width:min(900px,100%)">
+    <div class="mhead"><b style="color:var(--ink);font-size:17px;font-family:var(--kanit);font-weight:500">Parametrização | ${esc(m.nome)}</b><span class="spacer"></span><button class="btn ghost" data-peback title="Voltar ao modelo">✕</button></div>
+    <div style="padding:16px 20px;overflow:auto;max-height:72vh">
+      <div class="seg" style="margin-bottom:12px;flex-wrap:wrap">${e.d.abas.map((x, i) => `<button data-peaba="${i}" class="${i === e.aba ? 'on' : ''}">${esc(x.n || 'Aba')}<span class="n">${x.tipo === 'tabela' ? 'tabela' : x.g.reduce((n, g) => n + g.i.length, 0)}</span></button>`).join('')}<button data-peabaadd title="Nova aba">+ Aba</button></div>
+      <div class="fields"><label class="f">Nome da aba (vira a tarefa)<input class="inp" data-pean value="${esc(a.n)}"></label><label class="f">Tipo<select class="inp" data-petipo><option value="check" ${a.tipo === 'check' ? 'selected' : ''}>Checklist (grupos e itens)</option><option value="tabela" ${a.tipo === 'tabela' ? 'selected' : ''}>Tabela comparativa</option></select></label></div>
+      ${e.aba === 0 ? `<label class="f" style="margin-bottom:12px">Arquivos de apoio (aparecem na descrição da primeira tarefa)<input class="inp" data-pearq value="${esc(e.d.arq || '')}" placeholder="Checklist.pdf | Requerimento.pdf"></label>` : ''}
+      ${corpo}
+      <div class="prow" style="margin-top:14px"><button class="btn sm ghost danger" data-peabadel>Excluir esta aba</button></div>
+      <p class="hint">Cada aba vira uma tarefa no processo, cada grupo uma subtarefa e cada item um checklist com observação. Mudanças valem para os processos abertos depois de salvar.</p></div>
+    <div class="mfoot">${(S.cfg.params || {})[e.k] && paramBaseDe(e.k) ? '<button class="btn ghost" data-pereset>Voltar à planilha original</button>' : ''}${emUso ? `<button class="btn" data-peatual title="Acrescenta grupos e itens novos aos processos em andamento, sem apagar nada">Salvar e atualizar ${emUso} processo(s) em andamento</button>` : ''}<span class="spacer"></span><button class="btn" data-peback>Cancelar</button><button class="btn primary" data-pesave>Salvar</button></div></div></div>`;
+}
+function peLer(){
+  const e = peEd, a = e.d.abas[e.aba]; if(!a) return; const v = s => ($(`#layer ${s}`) || {}).value;
+  if(v('[data-pean]') !== undefined) a.n = v('[data-pean]').trim();
+  if(v('[data-pearq]') !== undefined) e.d.arq = v('[data-pearq]').trim();
+  if(a.tipo === 'tabela'){ const ls = x => (x || '').split('\n').map(s => s.trim()).filter(Boolean); if(v('[data-pecols]') !== undefined){ a.c = ls(v('[data-pecols]')); a.l = ls(v('[data-pelins]')); } return; }
+  $$('#layer [data-peg]').forEach(n => { const g = a.g[+n.dataset.peg]; if(g) g.t = n.value.trim(); });
+  $$('#layer [data-pei]').forEach(n => { const [gi, ii, f] = n.dataset.pei.split('|'); const it = a.g[+gi] && a.g[+gi].i[+ii]; if(it) it[f] = n.value.trim(); });
+}
+const PE_SIG = ['IPTU','IPTUS','ART','RRT','CNPJ','CPF','SEUMA','PGRCC','DAM','RIST','COMAER','COMAR','AMC','PCD','NBR','ETE','ETA','SPDA','IA','BR','CE','SOP','DNIT','DWG','AOP','PE','PDF','SEFIN','AMC'];
+function peFrase(s){ if(!s || s !== s.toUpperCase() || !/[A-ZÀ-Ú]{3}/.test(s)) return s;
+  let r = s.toLowerCase().replace(/(^|[.?!]\s+)([a-zà-ú])/g, (m, a, b) => a + b.toUpperCase());
+  return r.replace(/[a-zà-úç0-9+]+/gi, w => PE_SIG.includes(w.toUpperCase()) ? (w.toUpperCase() === 'IPTUS' ? 'IPTUs' : w.toUpperCase()) : w).replace(/\bmannare\b/gi, 'Mannare'); }
+function peColar(txt){
+  const gs = []; txt.split(/\r?\n/).forEach(l => { const c = l.split('\t'); const it = (c[0] || '').trim(), tx = (c[1] || '').replace(/\s+/g, ' ').trim();
+    if(/^\d+$/.test(it) && tx) gs.push({id:uid(), t:peFrase(tx), i:[]});
+    else if(/^\d+\.\d+$/.test(it) && tx && gs.length) gs[gs.length - 1].i.push({id:uid(), t:peFrase(tx), b:(c[3] || '').trim(), o:(c[4] || '').replace(/\s+/g, ' ').trim()}); });
+  return gs;
+}
+function peSalvar(atualizar){
+  peLer(); const e = peEd;
+  e.d.abas = e.d.abas.filter(a => a.n); e.d.abas.forEach(a => { a.g = (a.g || []).filter(g => g.t).map(g => Object.assign(g, {i:g.i.filter(i => i.t)})); });
+  S.cfg.params = S.cfg.params || {}; S.cfg.params[e.k] = e.d.abas.length ? Object.assign(e.d, {por:me, em:nowISO()}) : {vazio:true};
+  let n = 0, np = 0; if(atualizar) S.procs.filter(p => p.modelo === e.k && isOpen(p)).forEach(p => { const x = paramAplicar(p, e.k); if(x){ n += x; np++; logP(p, 'recebeu a atualização da parametrização'); } });
+  save(); peEd = null; modModalHtml(); toast(atualizar ? (n ? `Parametrização salva | ${np} processo(s) atualizado(s)` : 'Parametrização salva | nada novo para acrescentar') : 'Parametrização salva');
+}
+document.addEventListener('click', e => {
+  if(!peEd) return; const tg = e.target; if(!tg.closest || !tg.closest('#layer')) return; let el; const P = peEd, a = P.d.abas[P.aba];
+  const ok = () => { e.stopPropagation(); e.preventDefault(); };
+  if(tg.closest('[data-peback]') || tg.matches('[data-mclose]')){ ok(); peEd = null; modModalHtml(); return; }
+  if(tg.closest('[data-pesave]')){ ok(); peSalvar(false); return; }
+  if(tg.closest('[data-peatual]')){ ok(); peSalvar(true); return; }
+  if(tg.closest('[data-pereset]')){ ok(); if(!confirm('Descartar as edições e voltar à parametrização original da planilha?')) return; delete S.cfg.params[P.k]; save(); peEd = null; modModalHtml(); toast('Parametrização original restaurada'); return; }
+  if((el = tg.closest('[data-peaba]'))){ ok(); peLer(); P.aba = +el.dataset.peaba; paramEditorHtml(); return; }
+  if(tg.closest('[data-peabaadd]')){ ok(); peLer(); P.d.abas.push({id:uid(), n:'Nova aba', tipo:'check', g:[], c:[], l:[]}); P.aba = P.d.abas.length - 1; paramEditorHtml(); return; }
+  if(tg.closest('[data-peabadel]')){ ok(); if(!confirm(`Excluir a aba “${a.n}”?`)) return; P.d.abas.splice(P.aba, 1); P.aba = 0; if(!P.d.abas.length) P.d.abas.push({id:uid(), n:'Protocolo', tipo:'check', g:[], c:[], l:[]}); paramEditorHtml(); return; }
+  if(tg.closest('[data-pegadd]')){ ok(); peLer(); a.g.push({id:uid(), t:'', i:[{id:uid(), t:'', o:'', b:''}]}); paramEditorHtml(); setTimeout(() => { const n = $$('#layer [data-peg]').pop(); if(n) n.focus(); }, 0); return; }
+  if((el = tg.closest('[data-pegdel]'))){ ok(); peLer(); const g = a.g[+el.dataset.pegdel]; if(g.i.length && !confirm(`Remover o grupo “${g.t}” e seus ${g.i.length} itens?`)) return; a.g.splice(+el.dataset.pegdel, 1); paramEditorHtml(); return; }
+  if((el = tg.closest('[data-peup]'))){ ok(); peLer(); const i = +el.dataset.peup; [a.g[i - 1], a.g[i]] = [a.g[i], a.g[i - 1]]; paramEditorHtml(); return; }
+  if((el = tg.closest('[data-peiadd]'))){ ok(); peLer(); const g = a.g[+el.dataset.peiadd]; g.i.push({id:uid(), t:'', o:'', b:''}); paramEditorHtml(); setTimeout(() => { const n = $(`#layer [data-pei="${el.dataset.peiadd}|${g.i.length - 1}|t"]`); if(n) n.focus(); }, 0); return; }
+  if((el = tg.closest('[data-peidel]'))){ ok(); peLer(); const [gi, ii] = el.dataset.peidel.split('|').map(Number); a.g[gi].i.splice(ii, 1); paramEditorHtml(); return; }
+  if((el = tg.closest('[data-peiup]'))){ ok(); peLer(); const [gi, ii] = el.dataset.peiup.split('|').map(Number), L = a.g[gi].i; [L[ii - 1], L[ii]] = [L[ii], L[ii - 1]]; paramEditorHtml(); return; }
+  if(tg.closest('[data-pecola]')){ ok(); const gs = peColar(($('#peCola') || {}).value || ''); if(!gs.length){ toast('Não encontrei linhas no formato 1 / 1.1'); return; }
+    peLer(); if(a.g.length && !confirm(`Substituir os ${a.g.length} grupos desta aba pelos ${gs.length} colados?`)) return; a.g = gs; a.tipo = 'check'; paramEditorHtml(); toast(`${gs.length} grupos e ${gs.reduce((n, g) => n + g.i.length, 0)} itens importados`); return; }
+  if(tg.closest('.modal')) e.stopPropagation();
+}, true);
+document.addEventListener('change', e => { if(!peEd || !e.target.matches || !e.target.matches('#layer [data-petipo]')) return; e.stopPropagation(); peLer(); const a = peEd.d.abas[peEd.aba]; a.tipo = e.target.value; a.g = a.g || []; a.c = a.c || []; a.l = a.l || []; paramEditorHtml(); }, true);
+document.addEventListener('keydown', e => { if(peEd && e.key === 'Enter' && e.target.matches && e.target.matches('#layer [data-pei],#layer [data-peg]')){ e.preventDefault(); e.stopPropagation(); } }, true);
+/* no modal do modelo: atalho para a parametrização */
+modModalHtml = (function(base){ return function(){
+  base.apply(this, arguments);
+  const e = modEdit; if(!e) return; const d = paramDe(e.k), foot = $('#layer .mfoot'); if(!foot) return;
+  foot.previousElementSibling.insertAdjacentHTML('beforeend', `<div class="pebox"><div style="flex:1"><b>Parametrização</b><div class="sub">${d ? `${d.abas.length} aba(s) | ${paramItens(d)} itens de checklist: ${esc(d.abas.map(a => a.n).join(', '))}` : 'Nenhuma. Crie para o checklist de conferência nascer junto com o processo.'}</div></div><button class="btn sm" data-peopen>${d ? 'Editar parametrização' : '+ Criar parametrização'}</button></div>`);
+}; })(modModalHtml);
+document.addEventListener('click', e => { const el = e.target.closest && e.target.closest('[data-peopen]'); if(!el || !modEdit) return; e.stopPropagation(); lerMod(); paramEditor(modEdit.k); }, true);
 
 /* ---------- Eventos ---------- */
 document.addEventListener('click', e => {
