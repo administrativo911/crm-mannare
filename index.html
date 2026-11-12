@@ -1166,6 +1166,11 @@ input[type="checkbox"]{border-radius:3px!important}
 .pad{overflow:hidden}
 .ptz{padding-right:8px!important;text-align:right;align-self:center}
 .pev{border-radius:4px!important}
+/* Material técnico com árvore de clientes */
+.pmain{min-width:0}
+.pmain .mboard{padding-bottom:16px}
+.pmain .mboard + .hint{margin-top:8px!important}
+.tree .tnode .tn{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;flex:1}
 
 </style>
 </head>
@@ -2614,16 +2619,16 @@ function matCard(m){
 }
 function renderMats(){
   const q = norm(ui.mq || '');
-  const list = (S.mats || []).filter(m => (!q || norm([m.codigo, m.titulo, m.tipo, m.dados.cliente, m.dados.matricula].join(' ')).includes(q)) && (!ui.mResp || m.resp.includes(ui.mResp)) && (!ui.mTipo || m.tipo === ui.mTipo));
+  const list = (S.mats || []).filter(m => matNoGrupo(m) && (!q || norm([m.codigo, m.titulo, m.tipo, m.dados.cliente, m.dados.matricula].join(' ')).includes(q)) && (!ui.mResp || m.resp.includes(ui.mResp)) && (!ui.mTipo || m.tipo === ui.mTipo));
   $('#view').innerHTML = `<div class="pagehead"><div><h1>Material técnico</h1><p>Retificações, remembramentos, pareceres e demais peças técnicas. A aprovação final é de ${esc(first(aprovMat()))} (validação interna).</p></div></div>
-    <div class="filters"><input type="search" id="mq" placeholder="Buscar por título, cliente ou matrícula" value="${esc(ui.mq || '')}">
+    <div class="pwrap"><div>${matTreeHtml()}</div><div class="pmain">${(ui.mSel || {}).g ? `<div class="crumb"><a class="link" data-mtall>Todos</a> / ${ui.mSel.e ? `<a class="link" data-mtg="${esc(ui.mSel.g)}">${esc(ui.mSel.g)}</a> / <b>${esc(ui.mSel.e)}</b>` : `<b>${esc(ui.mSel.g)}</b>`}</div>` : ''}<div class="filters"><input type="search" id="mq" placeholder="Buscar por título, cliente ou matrícula" value="${esc(ui.mq || '')}">
       <select id="mResp"><option value="">Todas as pessoas</option>${USERS.map(u => `<option value="${u.id}" ${ui.mResp === u.id ? 'selected' : ''}>${esc(u.nome)}</option>`).join('')}</select>
       <select id="mTipo"><option value="">Todos os tipos</option>${MAT_TIPOS.map(t => `<option ${ui.mTipo === t ? 'selected' : ''}>${t}</option>`).join('')}</select></div>
     <div class="mboard">${MAT_ST.map(st => { const ms = list.filter(m => m.status === st.k);
       return `<div class="mcol" data-mcol="${st.k}"><div class="mh"><span class="mst" style="--c:${st.c}">${st.l}</span><span class="sub mcnt">${ms.length}</span></div>
         ${ms.map(matCard).join('')}
         <div class="madd"><input data-madd="${st.k}" placeholder="+ Adicionar material"></div></div>`; }).join('')}</div>
-    <p class="hint" style="margin-top:-24px">Arraste os cartões entre as colunas. O cronômetro liga em <b>Em elaboração</b> e <b>Ajustes</b>. Ao ir para <b>Validação interna</b>, você escolhe quem valida (sugestão: ${esc(first(aprovMat()))}).</p>`;
+    <p class="hint" style="margin-top:-24px">Arraste os cartões entre as colunas. O cronômetro liga em <b>Em elaboração</b> e <b>Ajustes</b>. Ao ir para <b>Validação interna</b>, você escolhe quem valida (sugestão: ${esc(first(aprovMat()))}).</p></div></div>`;
 }
 function openMat(id){ ui.mat = id; ui.task = null; ui.feedTab = 'com'; renderMat(); }
 function renderMat(){
@@ -4280,6 +4285,51 @@ function revisoesMine(){
       <span class="sq" style="border-color:${RCOR[r.k]}"></span><div><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">${tag(r.k, RCOR[r.k])}<b>${esc(r.titulo)}</b></div>
       <div class="sub" style="margin-top:3px">${esc(r.onde)}${r.por ? ' | pedido por ' + esc(first(r.por)) : ''}</div></div><span></span><span style="min-width:70px;text-align:right">${r.prazo ? dueHtml(r.prazo, false) : '<span class="sub">sem prazo</span>'}</span></div>`).join('')}</div>`;
 }
+
+/* ---------- árvore de clientes: Processos (sem grupos vazios) e Material técnico ---------- */
+function arvoreHtml(o){
+  const tq = norm(o.tq || ''), groups = o.groups, sel = o.sel || {}, closedM = o.closed || {};
+  const rows = Object.keys(groups).sort((a, b) => a.localeCompare(b, 'pt')).map(g => {
+    const emps = Object.keys(groups[g]).filter(e => e && e !== '—' && e !== g).sort((a, b) => a.localeCompare(b, 'pt'));
+    const showEmps = tq ? emps.filter(e => norm(e).includes(tq) || norm(g).includes(tq)) : emps;
+    if(tq && !showEmps.length && !norm(g).includes(tq)) return '';
+    const n = Object.values(groups[g]).reduce((a, x) => a + x, 0), closed = closedM[g] && !tq;
+    return `<div class="tnode ${sel.g === g && !sel.e ? 'on' : ''}" data-${o.p}tg="${esc(g)}">${emps.length ? `<span class="car" data-${o.p}tog="${esc(g)}">${closed ? '&#9656;' : '&#9662;'}</span>` : '<span class="car"></span>'}<span class="ti">${ic('pasta', 'sm')}</span><span class="tn" title="${esc(g)}">${esc(g)}</span><span class="tc">${n || ''}</span></div>` +
+      (closed ? '' : showEmps.map(e => `<div class="tnode leaf ${sel.g === g && sel.e === e ? 'on' : ''}" data-${o.p}tg="${esc(g)}" data-${o.p}te="${esc(e)}"><span class="tn" title="${esc(e)}">${esc(e)}</span><span class="tc">${groups[g][e] || ''}</span></div>`).join(''));
+  }).join('');
+  return `<aside class="tree">
+    <input type="search" id="${o.p}tq" placeholder="Buscar cliente ou obra" value="${esc(o.tq || '')}">
+    <div class="tnode ${!sel.g ? 'on' : ''}" data-${o.p}tall><span class="ti">${ic('lista', 'sm')}</span><span class="tn">${o.todos}</span><span class="tc">${o.total}</span></div>
+    <div class="tsep">Clientes</div>${rows || '<div class="sub" style="padding:8px">Nenhum cliente ainda.</div>'}
+  </aside>`;
+}
+const nomeOk = x => { x = String(x == null ? '' : x).trim(); return x && x !== '—' ? x : ''; };
+function treeHtml(){
+  const groups = {}, put = (g, e, n) => { g = nomeOk(g); if(!g) return; e = nomeOk(e); groups[g] = groups[g] || {}; groups[g][e] = (groups[g][e] || 0) + n; };
+  S.props.forEach(pr => put(pr.grupo || pr.cliente, pr.emp, 0));
+  S.procs.forEach(p => { const pr = propById(p.propId) || {}; put(pr.grupo || pr.cliente || 'Sem cliente', pr.emp, isOpen(p) ? 1 : 0); });
+  return arvoreHtml({p:'', groups, sel:ui.sel, closed:ui.closed, tq:ui.tq, todos:'Todos os processos', total:S.procs.filter(isOpen).length});
+}
+function matGrupo(m){
+  const pr = m.propId ? propById(m.propId) : null;
+  return {g:nomeOk(pr && (pr.grupo || pr.cliente)) || nomeOk(m.dados && m.dados.cliente) || 'Sem cliente', e:nomeOk(pr && pr.emp) || nomeOk(m.dados && m.dados.imovel)};
+}
+function matNoGrupo(m){ const s = ui.mSel || {}; if(!s.g) return true; const x = matGrupo(m); return x.g === s.g && (!s.e || x.e === s.e); }
+function matTreeHtml(){
+  const groups = {};
+  S.props.forEach(pr => { const g = nomeOk(pr.grupo || pr.cliente); if(!g) return; groups[g] = groups[g] || {}; const e = nomeOk(pr.emp); groups[g][e] = groups[g][e] || 0; });
+  (S.mats || []).forEach(m => { const x = matGrupo(m); groups[x.g] = groups[x.g] || {}; groups[x.g][x.e] = (groups[x.g][x.e] || 0) + (m.status !== 'entregue' ? 1 : 0); });
+  return arvoreHtml({p:'m', groups, sel:ui.mSel || {}, closed:ui.mClosed || {}, tq:ui.mtq, todos:'Todos os materiais', total:(S.mats || []).filter(m => m.status !== 'entregue').length});
+}
+document.addEventListener('click', e => {
+  const tg = e.target, el = tg.closest && tg.closest('[data-mtog],[data-mtall],[data-mtg]'); if(!el) return;
+  e.stopPropagation();
+  if(el.dataset.mtog !== undefined && tg.closest('[data-mtog]')){ ui.mClosed = ui.mClosed || {}; ui.mClosed[el.dataset.mtog] = !ui.mClosed[el.dataset.mtog]; }
+  else if(el.dataset.mtall !== undefined) ui.mSel = {g:'', e:''};
+  else { ui.mSel = {g:el.dataset.mtg, e:el.dataset.mte || ''}; if(!el.dataset.mte){ ui.mClosed = ui.mClosed || {}; ui.mClosed[el.dataset.mtg] = false; } }
+  const sc = $('.tree') ? $('.tree').scrollTop : 0; render(); if($('.tree')) $('.tree').scrollTop = sc;
+}, true);
+document.addEventListener('input', e => { if(e.target && e.target.id === 'mtq'){ e.stopPropagation(); ui.mtq = e.target.value; const pos = e.target.selectionStart; render(); const n = $('#mtq'); if(n){ n.focus(); n.setSelectionRange(pos, pos); } } }, true);
 
 /* =================== Planejador: prioridades, tarefas e calendário da semana =================== */
 const PH = 48;                                      // altura de 1 hora (px)
