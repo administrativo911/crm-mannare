@@ -1212,6 +1212,42 @@ input[type="checkbox"]{border-radius:3px!important}
 .pecola{margin-top:12px;border:1px dashed var(--line);padding:10px 12px}.pecola summary{cursor:pointer;font-weight:600;font-size:13px}
 .seg .n{margin-left:6px;font-size:11px;color:var(--muted)}
 
+/* ---------- painéis redimensionáveis ---------- */
+@media (min-width:1181px){.app{grid-template-columns:var(--rz-side,260px) minmax(0,1fr)!important}.pwrap:not(.notree){grid-template-columns:var(--rz-tree,250px) minmax(0,1fr)!important}}
+@media (min-width:1001px){.plan{grid-template-columns:var(--rz-plan,300px) minmax(0,1fr)!important}}
+@media (min-width:861px){.mbody{grid-template-columns:minmax(0,var(--rz-mleft,57.4%)) minmax(0,1fr)!important}.modal:not(.small){width:min(var(--rz-modal,1080px),100%)!important}}
+.rzh{position:absolute;top:0;bottom:0;width:9px;cursor:col-resize;z-index:31;touch-action:none}
+.rzh::after{content:'';position:absolute;top:0;bottom:0;left:4px;width:2px;background:transparent;transition:background .15s}
+.rzh:hover::after,.rzh.on::after{background:var(--m-azul,#4948d1)}
+.rzh.edge{left:auto!important;right:0}
+body.rzing,body.rzing *{cursor:col-resize!important;user-select:none!important}
+/* ---------- comparativo: divergências ---------- */
+.tbcmp td.base{background:var(--m-azul-t05,#F7F7FF)}
+.tbcmp td.dv{background:#FEE4E2}
+.tbcmp td.dv input{color:#B42318;font-weight:600}
+.tbcmp th.basehd{color:var(--m-azul,#4948d1)!important}
+.tbcmp td input{text-align:right;font-variant-numeric:tabular-nums}
+.tbcmp td.txt input{text-align:left}
+.tbleg{display:flex;gap:14px;align-items:center;font-size:12px;color:var(--muted);margin-top:8px;flex-wrap:wrap}
+.tbleg i{display:inline-block;width:11px;height:11px;margin-right:5px;vertical-align:-1px;border:1px solid var(--line)}
+.tbleg .dvn{color:#B42318;font-weight:600}
+/* ---------- anotações como comentários ---------- */
+.ckcms{margin-top:6px;display:flex;flex-direction:column;gap:6px}
+.ckcm{display:flex;gap:8px;align-items:flex-start}
+.ckcm .av{width:22px;height:22px;font-size:9px;border-width:0}
+.ckcm .avw .st{display:none}
+.ckcm .bx{flex:1;min-width:0;background:var(--soft,#F4F4F5);border:1px solid var(--line);padding:5px 9px}
+.ckcm .hd{display:flex;gap:8px;align-items:baseline;font-size:12px}
+.ckcm .hd b{font-weight:600;color:var(--ink)}
+.ckcm .hd .sub{font-size:11px}
+.ckcm .tx{font-size:12.5px;line-height:1.45;color:var(--ink);white-space:pre-wrap;word-break:break-word}
+.ckcm .cmx{margin-left:auto;border:0;background:none;color:#98a2b3;cursor:pointer;font-size:11px;padding:0 2px}
+.ckcm .cmx:hover{color:#B42318}
+.ckcm.novo .bx{background:transparent;padding:0;border:0}
+.ckcm.novo input{width:100%;border:0;border-bottom:1px dashed var(--line);background:transparent;font:inherit;font-size:12.5px;padding:3px 0;color:var(--ink)}
+.ckcm.novo input:focus{outline:0;border-bottom-color:var(--m-azul)}
+.ckcm.novo input::placeholder{color:#B4B4BB}
+
 </style>
 </head>
 <body>
@@ -4741,15 +4777,64 @@ function ckBlocoHtml(s){
       <span class="ckb ${c.feito ? 'on' : ''}" data-ckt="${s.id}|${c.id}" role="checkbox" aria-checked="${c.feito}" title="${c.feito ? 'Desmarcar' : 'Marcar como atendido'}">${c.feito ? '✓' : ''}</span>
       <div class="ckm"><div class="ckt"><span class="ckn">${i + 1}.</span> ${esc(c.t)}${c.extra ? ' <span class="ftag">só neste processo</span>' : ''}</div>
         ${c.o ? `<div class="cko">${ic('nota', 'sm')} ${esc(c.o)}</div>` : ''}${c.b ? `<div class="cko">${ic('doc', 'sm')} Base legal: ${esc(c.b)}</div>` : ''}
-        <input class="ckno" data-cknota="${s.id}|${c.id}" value="${esc(c.nota || '')}" placeholder="Anotação deste processo"></div>
+        ${ckComsHtml(s, c)}</div>
       <button class="x" data-ckdel="${s.id}|${c.id}" title="Remover item deste processo">✕</button></div>`).join('')}
     <div class="ckadd"><input data-ckadd="${s.id}" placeholder="+ Adicionar item (Enter)"><input data-ckaddo="${s.id}" placeholder="Observação (opcional)"></div></div>`;
 }
+
+/* anotações do item = comentários com autor */
+const ckNotas = c => [...(c.nota ? [{id:'legado', por:c.notaPor || '', em:c.notaEm || '', txt:c.nota}] : []), ...(c.notas || [])];
+function ckComsHtml(s, c){
+  const soc = isSocio();
+  const lista = ckNotas(c).map(n => { const u = n.por && U[n.por];
+    return `<div class="ckcm">${u ? av(n.por, true) : '<span class="av sm" style="background:#D4D4D8;color:#52525B">?</span>'}<div class="bx"><div class="hd"><b>${u ? esc(u.nome.split(' ').slice(0, 2).join(' ')) : 'Anotação'}</b>${n.em ? `<span class="sub">${fmtWhen(n.em)}</span>` : ''}${(n.por === me || soc || !n.por) ? `<button class="cmx" data-ckcmdel="${s.id}|${c.id}|${n.id}" title="Excluir comentário">✕</button>` : ''}</div><div class="tx">${esc(n.txt)}</div></div></div>`; }).join('');
+  return `<div class="ckcms">${lista}<div class="ckcm novo">${me && U[me] ? av(me, true, true) : ''}<div class="bx"><input data-ckcm="${s.id}|${c.id}" placeholder="Comentar neste item… (Enter para enviar)"></div></div></div>`;
+}
+/* comparativo: máscara numérica e divergências em relação ao projeto arquitetônico */
+const tbMilhar = d => d.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+function tbKind(tb, r, ci){
+  const col = tb.c[ci] || '', lin = (tb.l[r] || {}).t || '';
+  if(/observ|obs\.|coment|nota/i.test(col)) return 'txt';
+  return /[áa]rea|m²|m2/i.test(col + ' ' + lin) ? 'dec' : 'int';
+}
+function tbFmt(v, kind){
+  v = String(v || '');
+  if(kind === 'txt' || /[^\d.,\s]/.test(v)) return v;
+  let d = v.replace(/\D/g, ''); if(!d) return '';
+  if(kind === 'dec'){ d = d.replace(/^0+/, '').padStart(3, '0'); return tbMilhar(d.slice(0, -2)) + ',' + d.slice(-2); }
+  return tbMilhar(d.replace(/^0+(?=\d)/, ''));
+}
+function tbNum(v){ v = String(v || '').trim(); if(!/^-?[\d.\s]*(,\d*)?$/.test(v) || !/\d/.test(v)) return null; return parseFloat(v.replace(/[.\s]/g, '').replace(',', '.')); }
+function tbIgual(a, b){ const x = tbNum(a), y = tbNum(b); if(x !== null && y !== null) return Math.abs(x - y) < 0.005; return norm(String(a).trim()) === norm(String(b).trim()); }
+function tbBase(tb){
+  const ci = tb.c.findIndex(c => /arquitet/i.test(c)); if(ci >= 0) return {tipo:'col', i:ci};
+  const r = tb.l.findIndex(l => /arquitet/i.test(l.t)); if(r >= 0) return {tipo:'lin', i:r};
+  return null;
+}
+function tbAnalise(tb){
+  const b = tbBase(tb), out = {b, cel:{}, n:0}; if(!b) return out;
+  tb.l.forEach((l, r) => tb.c.forEach((c, ci) => {
+    const k = r + '|' + ci;
+    if(tbKind(tb, r, ci) === 'txt') return;
+    if((b.tipo === 'col' && ci === b.i) || (b.tipo === 'lin' && r === b.i)){ out.cel[k] = 'base'; return; }
+    const ref = b.tipo === 'col' ? l.v[b.i] : (tb.l[b.i].v || [])[ci], v = l.v[ci];
+    if(String(ref || '').trim() && String(v || '').trim() && !tbIgual(v, ref)){ out.cel[k] = 'dv'; out.n++; }
+  }));
+  return out;
+}
+function tbPintar(t){
+  const tb = t.tabela, box = $('#layer .tbsec'); if(!tb || !box) return;
+  const a = tbAnalise(tb);
+  box.querySelectorAll('td[data-tbc]').forEach(td => { const k = td.dataset.tbc; td.classList.remove('base', 'dv'); if(a.cel[k]) td.classList.add(a.cel[k]); const inp = td.querySelector('input'); if(inp) inp.title = a.cel[k] === 'dv' ? 'Diverge do projeto arquitetônico' : a.cel[k] === 'base' ? 'Base de comparação (projeto arquitetônico)' : ''; });
+  const n = box.querySelector('.dvn'); if(n){ n.textContent = a.n ? `${a.n} divergência${a.n > 1 ? 's' : ''}` : 'Nenhuma divergência'; n.style.color = a.n ? '' : 'var(--muted)'; }
+}
 function tabelaHtml(t){
-  const tb = t.tabela;
+  const tb = t.tabela, a = tbAnalise(tb), b = a.b;
   return `<div class="tbsec"><div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><b style="color:var(--navy)">Comparativo</b><span class="sub">preencha os valores de cada documento</span></div>
-    <div class="tbwrap"><table class="tbcmp"><thead><tr><th>Documento</th>${tb.c.map(c => `<th>${esc(c)}</th>`).join('')}</tr></thead><tbody>
-    ${tb.l.map((l, r) => `<tr><th>${esc(l.t)}</th>${tb.c.map((c, ci) => `<td><input data-tbv="${r}|${ci}" value="${esc(l.v[ci] || '')}"></td>`).join('')}</tr>`).join('')}</tbody></table></div>
+    <div class="tbwrap"><table class="tbcmp"><thead><tr><th>Documento</th>${tb.c.map((c, ci) => `<th class="${b && b.tipo === 'col' && b.i === ci ? 'basehd' : ''}">${esc(c)}</th>`).join('')}</tr></thead><tbody>
+    ${tb.l.map((l, r) => `<tr><th class="${b && b.tipo === 'lin' && b.i === r ? 'basehd' : ''}">${esc(l.t)}</th>${tb.c.map((c, ci) => { const k = tbKind(tb, r, ci), cl = [a.cel[r + '|' + ci] || '', k === 'txt' ? 'txt' : ''].join(' ').trim();
+      return `<td class="${cl}" data-tbc="${r}|${ci}"><input data-tbv="${r}|${ci}" ${k === 'txt' ? '' : 'inputmode="decimal"'} value="${esc(l.v[ci] || '')}"${a.cel[r + '|' + ci] === 'dv' ? ' title="Diverge do projeto arquitetônico"' : ''}></td>`; }).join('')}</tr>`).join('')}</tbody></table></div>
+    ${b ? `<div class="tbleg"><span><i style="background:var(--m-azul-t05,#F7F7FF)"></i>Projeto arquitetônico (base)</span><span><i style="background:#FEE4E2"></i>Diverge da base</span><span class="dvn" ${a.n ? '' : 'style="color:var(--muted)"'}>${a.n ? `${a.n} divergência${a.n > 1 ? 's' : ''}` : 'Nenhuma divergência'}</span></div>` : ''}
     <div class="ckadd" style="padding:8px 0 0"><input data-tbadd placeholder="+ Adicionar linha (Enter)"></div></div>`;
 }
 renderTask = (function(base){ return function(){
@@ -4780,6 +4865,10 @@ document.addEventListener('click', e => {
   if(tg.closest('[data-ckall]')){ e.stopPropagation(); const [, t] = curTask(), abrir = !t.subs.every(s => !s.check || ui.ckOpen[s.id]); t.subs.forEach(s => { if(s.check) ui.ckOpen[s.id] = abrir; }); renderTask(); return; }
   if((el = tg.closest('[data-ckt]'))){ e.stopPropagation(); const {p, t, s, c} = ckAchar(el.dataset.ckt); if(!c) return;
     c.feito = !c.feito; c.por = me; c.em = nowISO(); logT(t, `${c.feito ? 'marcou' : 'desmarcou'} “${c.t.slice(0, 80)}”`); ckFechar(p, t, s); save(); renderTask(); render(); return; }
+  if((el = tg.closest('[data-ckcmdel]'))){ e.stopPropagation(); const [sid, iid, nid] = el.dataset.ckcmdel.split('|'); const {t, c} = ckAchar(sid + '|' + iid); if(!c) return;
+    if(!confirm('Excluir este comentário?')) return;
+    if(nid === 'legado'){ c.nota = ''; } else c.notas = (c.notas || []).filter(n => n.id !== nid);
+    logT(t, `excluiu um comentário do item “${c.t.slice(0, 60)}”`); save(); renderTask(); return; }
   if((el = tg.closest('[data-ckdel]'))){ e.stopPropagation(); const {p, t, s, c} = ckAchar(el.dataset.ckdel); if(!c) return;
     if(!c.extra && !confirm('Remover este item só deste processo? A parametrização do serviço não muda.')) return;
     s.check.splice(s.check.indexOf(c), 1); logT(t, `removeu o item “${c.t.slice(0, 80)}”`); ckFechar(p, t, s); save(); renderTask(); return; }
@@ -4787,7 +4876,7 @@ document.addEventListener('click', e => {
 }, true);
 document.addEventListener('change', e => {
   const tg = e.target; if(!tg.dataset) return;
-  if(tg.dataset.cknota){ e.stopPropagation(); const {c} = ckAchar(tg.dataset.cknota); if(c){ c.nota = tg.value.trim(); save(); } return; }
+  if(tg.dataset.ckcm !== undefined){ e.stopPropagation(); return; }
   if(tg.dataset.tbv){ e.stopPropagation(); const [, t] = curTask(), [r, ci] = tg.dataset.tbv.split('|').map(Number); if(t.tabela && t.tabela.l[r]){ t.tabela.l[r].v[ci] = tg.value.trim(); save(); } return; }
   if(tg.dataset.ckadd !== undefined || tg.dataset.ckaddo !== undefined || tg.dataset.tbadd !== undefined) e.stopPropagation();
 }, true);
@@ -4800,7 +4889,27 @@ document.addEventListener('keydown', e => {
     save(); renderTask(); setTimeout(() => { const n = $(`#layer [data-ckadd="${sid}"]`); if(n) n.focus(); }, 0); return; }
   if(tg.dataset.tbadd !== undefined){ e.preventDefault(); e.stopPropagation(); const [, t] = curTask(), v = tg.value.trim(); if(!v) return;
     t.tabela.l.push({t:v, v:t.tabela.c.map(() => '')}); save(); renderTask(); setTimeout(() => { const n = $('#layer [data-tbadd]'); if(n) n.focus(); }, 0); return; }
-  if(tg.dataset.cknota || tg.dataset.tbv){ e.preventDefault(); e.stopPropagation(); tg.blur(); }
+  if(tg.dataset.ckcm){ e.preventDefault(); e.stopPropagation(); const txt = tg.value.trim(); if(!txt) return; const {t, c} = ckAchar(tg.dataset.ckcm); if(!c) return;
+    const [sid, iid] = tg.dataset.ckcm.split('|');
+    c.notas = c.notas || []; c.notas.push({id:uid(), por:me, em:nowISO(), txt}); logT(t, `comentou no item “${c.t.slice(0, 60)}”: ${txt.slice(0, 80)}`);
+    save(); renderTask(); setTimeout(() => { const n = $(`#layer [data-ckcm="${sid}|${iid}"]`); if(n) n.focus(); }, 0); return; }
+  if(tg.dataset.tbv){ e.preventDefault(); e.stopPropagation(); tg.blur(); }
+}, true);
+
+
+document.addEventListener('input', e => {
+  const tg = e.target; if(!tg.dataset || tg.dataset.tbv === undefined) return; e.stopPropagation();
+  const [, t] = curTask(); if(!t || !t.tabela) return; const [r, ci] = tg.dataset.tbv.split('|').map(Number); const tb = t.tabela; if(!tb.l[r]) return;
+  const kind = tbKind(tb, r, ci), old = tg.value, pos = tg.selectionStart == null ? old.length : tg.selectionStart;
+  let novo = tbFmt(old, kind);
+  if(e.inputType === 'insertFromPaste' && kind === 'dec'){ const n = tbNum(old); if(n !== null) novo = tbFmt(n.toFixed(2), 'dec'); }
+  if(novo !== old){
+    const dirDig = old.slice(pos).replace(/\D/g, '').length; tg.value = novo;
+    let i = novo.length, cnt = 0; while(i > 0 && cnt < dirDig){ i--; if(/\d/.test(novo[i])) cnt++; }
+    if(kind === 'dec' && dirDig === 0) i = novo.length;
+    try{ tg.setSelectionRange(i, i); }catch(_){}
+  }
+  tb.l[r].v[ci] = tg.value.trim(); tbPintar(t);
 }, true);
 
 /* ---------- Cadastros: editor da parametrização ---------- */
@@ -5199,6 +5308,57 @@ document.addEventListener('drop', e => { const col = e.target.closest?.('.col,.p
   if(p && p.status !== col.dataset.col){ const old = p.status; logP(p, `mudou o status do processo para “${PS[col.dataset.col].l}”`); p.status = col.dataset.col; save(); render(); toast(`${p.codigo} → ${PS[p.status].l}`); afterStatus(p, old); } });
 
 boot();
+
+/* ---------- painéis redimensionáveis (arraste a borda; duplo clique restaura) ---------- */
+(function(){
+  const LS = 'mannare.rz', root = document.documentElement;
+  let st = {}; try{ st = JSON.parse(localStorage.getItem(LS) || '{}') || {}; }catch(_){}
+  const R = [
+    {k:'side', sel:'.app', mq:'(min-width:1181px)', unit:'px', min:190, max:460},
+    {k:'tree', sel:'.pwrap:not(.notree)', mq:'(min-width:1181px)', unit:'px', min:170, max:560},
+    {k:'plan', sel:'.plan', mq:'(min-width:1001px)', unit:'px', min:220, max:640},
+    {k:'mleft', sel:'#layer .mbody', mq:'(min-width:861px)', unit:'%', min:28, max:80},
+    {k:'modal', sel:'#layer .modal:not(.small)', mq:'(min-width:861px)', unit:'px', min:640, max:3000, edge:true}
+  ];
+  const aplicar = () => R.forEach(r => st[r.k] != null ? root.style.setProperty('--rz-' + r.k, st[r.k] + r.unit) : root.style.removeProperty('--rz-' + r.k));
+  const gapDe = c => parseFloat(getComputedStyle(c).columnGap) || 0;
+  function posicionar(){
+    R.forEach(r => { const on = matchMedia(r.mq).matches;
+      document.querySelectorAll(r.sel).forEach(c => {
+        let h = [...c.children].find(x => x.classList.contains('rzh'));
+        if(!on){ if(h) h.style.display = 'none'; return; }
+        if(!h){ h = document.createElement('div'); h.className = 'rzh' + (r.edge ? ' edge' : ''); h.dataset.rz = r.k; h.title = 'Arraste para ajustar a largura | duplo clique para restaurar';
+          if(getComputedStyle(c).position === 'static') c.style.position = 'relative'; c.appendChild(h); }
+        h.style.display = '';
+        if(r.edge) return;
+        const f = c.firstElementChild; if(!f || f === h) return;
+        const x = f.getBoundingClientRect().right - c.getBoundingClientRect().left + gapDe(c) / 2 - 4;
+        h.style.left = x + 'px';
+      }); });
+  }
+  let raf = 0; const agendar = () => { if(!raf) raf = requestAnimationFrame(() => { raf = 0; posicionar(); }); };
+  aplicar();
+  new MutationObserver(agendar).observe(document.body, {childList:true, subtree:true, attributes:true, attributeFilter:['class', 'hidden']});
+  addEventListener('resize', agendar); document.addEventListener('DOMContentLoaded', agendar); agendar();
+  document.addEventListener('pointerdown', e => {
+    const h = e.target.closest && e.target.closest('.rzh'); if(!h) return;
+    e.preventDefault(); e.stopPropagation();
+    const r = R.find(x => x.k === h.dataset.rz), c = h.parentElement, cr = c.getBoundingClientRect(), gap = gapDe(c), x0 = e.clientX, w0 = cr.width;
+    try{ h.setPointerCapture(e.pointerId); }catch(_){}
+    h.classList.add('on'); document.body.classList.add('rzing');
+    const mover = ev => {
+      let v = r.edge ? w0 + (ev.clientX - x0) * 2 : ev.clientX - cr.left - gap / 2;
+      if(r.unit === '%') v = v / cr.width * 100;
+      if(r.edge) v = Math.min(v, innerWidth - 24);
+      v = Math.max(r.min, Math.min(r.max, v)); st[r.k] = Math.round(v * 10) / 10; aplicar(); posicionar();
+    };
+    const soltar = () => { h.removeEventListener('pointermove', mover); h.removeEventListener('pointerup', soltar); h.removeEventListener('pointercancel', soltar);
+      h.classList.remove('on'); document.body.classList.remove('rzing'); try{ localStorage.setItem(LS, JSON.stringify(st)); }catch(_){} };
+    h.addEventListener('pointermove', mover); h.addEventListener('pointerup', soltar); h.addEventListener('pointercancel', soltar);
+  }, true);
+  document.addEventListener('click', e => { if(e.target.closest && e.target.closest('.rzh')){ e.stopPropagation(); e.preventDefault(); } }, true);
+  document.addEventListener('dblclick', e => { const h = e.target.closest && e.target.closest('.rzh'); if(!h) return; e.stopPropagation(); delete st[h.dataset.rz]; aplicar(); posicionar(); try{ localStorage.setItem(LS, JSON.stringify(st)); }catch(_){} }, true);
+})();
 </script>
 </body>
 </html>
