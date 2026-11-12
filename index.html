@@ -683,6 +683,9 @@ table.atable tr.nohover{cursor:default}
 .combo .cl{font-size:12px;color:var(--muted);margin-top:2px}
 .combo mark{background:#FFF3C4;color:inherit;border-radius:3px;padding:0 1px}
 .combo .cmore{font-size:12px;color:var(--muted);padding:6px 12px}
+.tags .tag{max-width:100%;white-space:normal;overflow-wrap:anywhere}
+.eprefs{display:grid;grid-template-columns:1fr 1fr;gap:6px 14px;margin-top:8px}@media (max-width:900px){.eprefs{grid-template-columns:1fr}}
+.eprf{align-items:flex-start!important;border:1px solid var(--line);border-radius:10px;padding:8px 10px}.eprf input{margin-top:3px}
 .modt{border:1px solid var(--line);border-radius:12px;padding:10px;margin-bottom:8px}
 .modt .x{border:0;background:none;color:#98a2b3;cursor:pointer;font-size:15px;padding:6px}
 </style>
@@ -1056,7 +1059,6 @@ async function boot(){
 
 let ui = {view:'dash', hist:[], hpos:-1, chartMode:'semana', lq:'', lCid:'', lBai:'', lSt:'', aq:'', fAlert:'', fStatus:'', calMonth:'', calDay:'', sel:{g:'', e:''}, closed:{}, tq:'', view:'dash', procMode:'quadro', hideTree:true, drawer:null, dtab:'tarefas', task:null, feedTab:'com', q:'', fResp:'', fServ:'', fMine:false, mineFilter:'aberto'};
 const procById = id => S.procs.find(p => p.id === id);
-const propById = id => S.props.find(p => p.id === id);
 const taskOf = (p, id) => p.tarefas.find(t => t.id === id);
 function logP(p, txt){ p.log.unshift({em:new Date().toISOString(), por:me, txt}); }
 function logT(t, txt){ t.log.unshift({em:new Date().toISOString(), por:me, txt}); }
@@ -1182,8 +1184,8 @@ const isOpen = p => !['concluido', 'arquivado'].includes(p.status);
 function treeHtml(){
   const tq = norm(ui.tq);
   const groups = {};
-  S.props.forEach(pr => { (groups[pr.grupo] = groups[pr.grupo] || {}); groups[pr.grupo][pr.emp] = groups[pr.grupo][pr.emp] || 0; });
-  S.procs.forEach(p => { const pr = propById(p.propId); if(isOpen(p)) groups[pr.grupo][pr.emp]++; });
+  S.props.forEach(pr0 => { const pr = propById(pr0.id); (groups[pr.grupo] = groups[pr.grupo] || {}); groups[pr.grupo][pr.emp] = groups[pr.grupo][pr.emp] || 0; });
+  S.procs.forEach(p => { const pr = propById(p.propId); if(!pr) return; const g = groups[pr.grupo] = groups[pr.grupo] || {}; g[pr.emp] = g[pr.emp] || 0; if(isOpen(p)) g[pr.emp]++; });
   const total = S.procs.filter(isOpen).length;
   const rows = Object.keys(groups).sort((a, b) => a.localeCompare(b, 'pt')).map(g => {
     const emps = Object.keys(groups[g]).sort((a, b) => a.localeCompare(b, 'pt'));
@@ -1377,7 +1379,7 @@ function drawerProc(p){
       <div style="margin-top:12px"><button class="btn sm" data-goprop="${pr.id}">Abrir a proposta</button></div></div>
       <p class="hint">No painel real, esta aba também mostra as parcelas de Contas a receber da proposta — dá para ver se o cliente está em dia antes de protocolar.</p>`;
   }
-  return `<div class="dhead"><div style="flex:1"><div class="sub">${esc(p.codigo)} | ${esc(p.servico)} | proposta <a class="link" data-goprop="${pr.id}">${esc(pr.codigo)}</a></div><h2>${esc(pr.emp)}</h2><div class="sub">${esc(pr.cliente)}${procTime(p) ? ' | tempo rastreado: <b>' + fmtDur(procTime(p)) + '</b>' : ''}</div></div><button class="btn ghost" data-close>✕</button></div>
+  return `${procHeadHtml(p, pr)}
     <div class="dbody">
       <div class="fields">
         <label class="f">Status do processo<select data-pf="status">${PROC_ST.map(s => `<option value="${s.k}" ${s.k === p.status ? 'selected' : ''}>${s.l}</option>`).join('')}</select></label>
@@ -2853,6 +2855,7 @@ function propChange(tg){
       if(sv){ if(sv.nucleo && NUCLEOS[sv.nucleo] && p.nucleo === 'outros'){ p.nucleo = sv.nucleo; p.aprovador = ''; }
         const r = d.itens.find(x => !x.descricao && (x.valor === '' || x.valor === undefined)); if(r && !d.itens.some(x => x.descricao)){ r.descricao = sv.descricao || sv.nome; aplicaServico(p, r); afterContentEdit(p); } }
       else if(p.nucleo === 'outros'){ const g = guessNucleo(v); if(g !== 'outros'){ p.nucleo = g; p.aprovador = ''; } } }
+    if(k === 'cliente' && v.trim()) setTimeout(() => { avisoPropostaNova(p); save(); }, 0);
     if(k === 'cliente'){ const c = findCli(v, ''); const s = findSpe(v, '');
       if(s){ aplicaCliente(p, s.cli); p.emp = p.emp || s.emp.nome; p.cnpj = s.emp.cnpj || p.cnpj; } else if(c) aplicaCliente(p, c); }
     if(k === 'emp'){ const c = findCli(p.cliente, p.cnpj), e = c && spesDe(c).find(x => normN(x.nome) === normN(v));
@@ -2926,8 +2929,8 @@ function integPropHtml(){
       ${modelosEmail().map((m, i) => `<div style="margin-bottom:12px"><div style="display:flex;gap:8px"><input class="inp" data-mod="${i}|nome" value="${esc(m.nome)}" style="font-weight:700" ${soc ? '' : 'disabled'}>${soc ? `<button class="btn sm ghost" data-moddel="${i}" title="Remover">✕</button>` : ''}</div><textarea class="inp" data-mod="${i}|texto" rows="5" style="margin-top:6px" ${soc ? '' : 'disabled'}>${esc(m.texto)}</textarea></div>`).join('')}
       ${soc ? `<button class="btn sm" data-modadd>${ic('mais', 'sm')} Modelo</button>` : ''}</div>
     ${finIntegHtml()}
-    <div class="blk c6"><h3>Avisos por e-mail</h3><div class="sub" style="margin:-6px 0 12px">Quem é mencionado com @ num comentário recebe um e-mail com o texto e o link do CRM (enviado pela ponte, pela conta administrativo@).</div>
-      <label class="pchk"><input type="checkbox" data-mencaoemail ${S.cfg.mencaoEmailOff ? '' : 'checked'} ${isSocio() ? '' : 'disabled'}> Enviar e-mail quando alguém for mencionado</label></div>
+    <div class="blk c12"><h3>Avisos por e-mail</h3><div class="sub" style="margin:-6px 0 12px">Os e-mails saem pela ponte, pela conta administrativo@, com o link do CRM. Cada pessoa escolhe abaixo o que quer receber.</div>
+      <label class="pchk"><input type="checkbox" data-mencaoemail ${S.cfg.mencaoEmailOff ? '' : 'checked'} ${isSocio() ? '' : 'disabled'}> Enviar e-mails de aviso do painel (chave geral, só sócios mudam)</label>${emailPrefsHtml()}</div>
     <div class="blk c12"><h3>Importar propostas em aberto do painel.mannare.com.br</h3>
       <div class="sub" style="margin:-6px 0 12px">Uma vez só. Você escolhe quais trazer. ${S.propsDb.some(p => p.origemId) ? `<b style="color:var(--ok)">${S.propsDb.filter(p => p.origemId).length} já importadas.</b>` : ''}</div>
       <div class="fields" style="margin:0 0 10px"><label class="f" style="grid-column:span 2">Endereço do Apps Script (Configurações do painel atual, termina em /exec)<input id="impApi" value="${esc(pc.api || '')}"></label><label class="f">Senha (TOKEN)<input id="impTok" type="password" value="${esc(pc.token || '')}"></label></div>
@@ -3440,24 +3443,53 @@ function irPara(go){
   else if(k === 'prop'){ ui.view = 'prop'; render(); openDrawer('prop', a, b || 'dados'); }
 }
 
-/* ---------- e-mail quando for mencionado ---------- */
-function ultimoComDe(arr){ const c = (arr || []).slice(-1)[0]; return c && c.autor === me && Date.now() - new Date(c.em).getTime() < 60000 ? c.texto : ''; }
-function emailMencao(para, txt, link, comentario){
-  if(!para || para === me || !/@/.test(para) || !/^(mencionou você|atribuiu um comentário a você)/.test(txt)) return;
-  if(S.cfg.mencaoEmailOff) return;
-  const atr = /^atribuiu/.test(txt), quem = U[me] ? U[me].nome : me, onde = txt.replace(/^(mencionou você|atribuiu um comentário a você)\s*/, '').replace(/<[^>]+>/g, '').replace(/&quot;|&#39;|&amp;|&lt;|&gt;/g, s => ({'&quot;':'"', '&#39;':"'", '&amp;':'&', '&lt;':'<', '&gt;':'>'})[s]);
-  S.emails.push({id:uid(), status:'pendente', tipo:'aviso', para, cc:'', replyTo:me, por:me, em:nowISO(),
-    assunto:`${first(me)} ${atr ? 'atribuiu um comentário a você' : 'mencionou você'} ${onde}`.slice(0, 150),
-    corpo:`Olá, ${first(para)}.\n\n${quem} ${atr ? 'atribuiu um comentário a você' : 'mencionou você'} ${onde} no CRM da Mannare${comentario ? ':\n\n"' + comentario + '"' : '.'}\n\nAbrir no CRM: ${link}\n\n(Aviso automático do CRM Mannare. Responder este e-mail vai para ${first(me)}.)`});
+/* ---------- e-mails de aviso (cada pessoa escolhe o que recebe) ---------- */
+const EMAIL_CATS = [
+  {k:'tarefas', l:'Tarefas', sub:'Tarefa ou subtarefa atribuída a você, concluída, pedidos de aprovação e respostas.', def:false},
+  {k:'mencoes', l:'Comentários', sub:'Menções (@), comentários atribuídos a você e comentários seus resolvidos.', def:true},
+  {k:'processos', l:'Processos', sub:'Processo aberto ou passado para você.', def:false},
+  {k:'tramitacao', l:'Tramitação', sub:'Quando a tramitação de um processo seu é atualizada.', def:false},
+  {k:'licencas', l:'Vencimento de licenças', sub:'Resumo das 7h quando uma licença entra no prazo de renovação, e licenças atribuídas a você.', def:true},
+  {k:'propostasNovas', l:'Propostas novas', sub:'Quando alguém cadastra uma proposta nova.', def:false},
+  {k:'propostas', l:'Aprovação de propostas', sub:'Pedidos de aprovação, propostas aprovadas e ajustes pedidos.', def:false},
+  {k:'material', l:'Material técnico', sub:'Validação interna pedida a você e material entregue.', def:false},
+  {k:'financeiro', l:'Financeiro', sub:'Resumo das 7h com contas a pagar vencendo e recebíveis atrasados.', def:false}];
+function querEmail(id, k){ const u = U[id], c = EMAIL_CATS.find(x => x.k === k), v = u && u.emailPrefs ? u.emailPrefs[k] : undefined; return v === undefined ? !!(c && c.def) : !!v; }
+function catDe(txt, ctx){
+  if(/^(mencionou você|atribuiu um comentário a você|resolveu seu comentário)/.test(txt)) return 'mencoes';
+  if(/tramitação/.test(txt)) return 'tramitacao';
+  if(/licença|renovação/i.test(txt)) return 'licencas';
+  if(ctx.propId) return 'propostas';
+  if(ctx.matId) return 'material';
+  if(ctx.taskId || /tarefa/.test(txt)) return 'tarefas';
+  return 'processos';
 }
+const limpaHtml = t => String(t || '').replace(/<[^>]+>/g, '').replace(/&quot;|&#39;|&amp;|&lt;|&gt;/g, s => ({'&quot;':'"', '&#39;':"'", '&amp;':'&', '&lt;':'<', '&gt;':'>'})[s]);
+function filaEmail(para, cat, assunto, corpo){
+  if(!para || !/@/.test(para) || S.cfg.mencaoEmailOff || !querEmail(para, cat)) return;
+  S.emails.push({id:uid(), status:'pendente', tipo:'aviso', cat, para, cc:'', replyTo:me, por:me, em:nowISO(), assunto:assunto.slice(0, 150),
+    corpo:`Olá, ${first(para)}.\n\n${corpo}\n\nAbrir no CRM: ${location.origin + location.pathname}\n\n(Aviso automático do CRM Mannare. Para escolher o que você recebe por e-mail: Integrações › Avisos por e-mail.)`});
+}
+function emailAviso(para, txt, ctx, comentario){
+  if(!para || para === me) return;
+  const cat = catDe(txt, ctx), t = limpaHtml(txt), quem = U[me] ? U[me].nome : me;
+  filaEmail(para, cat, `${first(me)} ${t}`, `${quem} ${t}${comentario ? ':\n\n"' + comentario + '"' : '.'}`);
+}
+function ultimoComDe(arr){ const c = (arr || []).slice(-1)[0]; return c && c.autor === me && Date.now() - new Date(c.em).getTime() < 60000 ? c.texto : ''; }
+const ehCom = txt => /^(mencionou você|atribuiu um comentário a você)/.test(txt);
 function notify(para, txt, procId, taskId){
   if(!para || para === me) return;
   S.notifs.unshift({id:uid(), para, txt:`<b>${esc(first(me))}</b> ${txt}`, procId, taskId, em:new Date().toISOString(), lida:false});
-  if(/^(mencionou você|atribuiu um comentário a você)/.test(txt) && procId){ const p = procById(procId), t = p && taskId ? taskOf(p, taskId) : null; emailMencao(para, txt, location.origin + location.pathname, ultimoComDe(t ? t.coms : p && p.coms)); }
+  if(procId){ const p = procById(procId), t = p && taskId ? taskOf(p, taskId) : null; emailAviso(para, txt, {procId, taskId}, ehCom(txt) ? ultimoComDe(t ? t.coms : p && p.coms) : ''); }
 }
 function notifyMat(para, txt, m){ if(!para || para === me) return; S.notifs.unshift({id:uid(), para, txt:`<b>${esc(first(me))}</b> ${txt}`, procId:null, taskId:null, matId:m.id, em:nowISO(), lida:false});
-  emailMencao(para, txt, location.origin + location.pathname, ultimoComDe(m.coms)); }
-function notifyProp(para, txt, p){ const n0 = S.notifs.length; notify(para, txt, null, null); if(S.notifs.length > n0){ S.notifs[0].propId = p.id; emailMencao(para, txt, location.origin + location.pathname, ultimoComDe(p.coms)); } }
+  emailAviso(para, txt, {matId:m.id}, ehCom(txt) ? ultimoComDe(m.coms) : ''); }
+function notifyProp(para, txt, p){ const n0 = S.notifs.length; notify(para, txt, null, null); if(S.notifs.length > n0){ S.notifs[0].propId = p.id; emailAviso(para, txt, {propId:p.id}, ehCom(txt) ? ultimoComDe(p.coms) : ''); } }
+function avisoPropostaNova(p){
+  if(p.avisoNova) return; p.avisoNova = nowISO();
+  USERS.forEach(u => { if(u.id !== me) filaEmail(u.id, 'propostasNovas', `Nova proposta ${p.codigo}: ${p.cliente}${p.emp ? ' | ' + p.emp : ''}`,
+    `${U[me] ? U[me].nome : me} cadastrou a proposta ${p.codigo}.\n\nCliente: ${p.cliente}${p.emp ? '\nObra: ' + p.emp : ''}${p.tipo ? '\nServiço: ' + p.tipo : ''}\nResponsável: ${(U[p.resp] || {}).nome || p.resp}`); });
+}
 
 /* ---------- modelos de tarefas ---------- */
 const MODELOS_BASE = JSON.parse(J(MODELOS));
@@ -3510,6 +3542,8 @@ function extrasClick(e, tg){
     const r = tg.closest('.pickrow'); if(r){ $$('#pickLayer .pickrow').forEach(x => x.classList.toggle('on', x === r)); }
     return false;
   }
+  if(procEditClick(tg)) return true;
+  if((el = tg.closest('[data-emailtodos]'))){ const u = U[me]; if(u){ const v = el.dataset.emailtodos === '1'; u.emailPrefs = Object.fromEntries(EMAIL_CATS.map(c => [c.k, v])); save(); render(); toast(v ? 'Todos os e-mails ligados' : 'Todos os e-mails desligados'); } return true; }
   if((el = tg.closest('[data-comdel]'))){ ui.comDel = el.dataset.comdel; reRender(); return true; }
   if(tg.closest('[data-comdelno]')){ ui.comDel = null; reRender(); return true; }
   if((el = tg.closest('[data-comdelok]'))){ const f = acharCom(el.dataset.comdelok); ui.comDel = null;
@@ -3554,7 +3588,16 @@ function extrasClick(e, tg){
   }
   return false;
 }
+function emailPrefsHtml(){
+  const off = k => USERS.filter(u => !querEmail(u.id, k)).length;
+  return `<div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--line)"><b style="color:var(--ink)">O que você (${esc(first(me))}) quer receber por e-mail</b>
+    <div class="eprefs">${EMAIL_CATS.map(c => `<label class="pchk eprf"><input type="checkbox" data-emailpref="${c.k}" ${querEmail(me, c.k) ? 'checked' : ''}><span><b>${c.l}</b><div class="sub" style="font-weight:500">${c.sub}</div></span></label>`).join('')}</div>
+    <div style="display:flex;gap:8px;margin-top:10px"><button class="btn sm" data-emailtodos="1">Marcar tudo</button><button class="btn sm ghost" data-emailtodos="0">Desmarcar tudo</button></div>
+    <p class="hint" style="margin:10px 0 0">A notificação no sino do painel continua chegando sempre. Os convites da Google Agenda são escolhidos no card da Agenda.</p>
+    ${isSocio() ? `<details style="margin-top:8px"><summary class="sub" style="cursor:pointer">Ver a escolha da equipe</summary><div style="overflow:auto;margin-top:8px"><table class="atable" style="font-size:12.5px"><thead><tr><th></th>${EMAIL_CATS.map(c => `<th style="text-align:center">${c.l}</th>`).join('')}</tr></thead><tbody>${USERS.map(u => `<tr class="nohover"><td>${esc(first(u.id))}</td>${EMAIL_CATS.map(c => `<td style="text-align:center">${querEmail(u.id, c.k) ? '✓' : '<span class="sub">—</span>'}</td>`).join('')}</tr>`).join('')}</tbody></table></div></details>` : ''}</div>`;
+}
 function extrasChange(tg){
+  if(tg.dataset.emailpref){ const u = U[me]; if(!u){ toast('Seu cadastro na equipe ainda não carregou'); return true; } u.emailPrefs = Object.assign({}, u.emailPrefs, {[tg.dataset.emailpref]:tg.checked}); save(); render(); toast(tg.checked ? 'Você vai receber esses e-mails' : 'Pronto, você não recebe mais esses e-mails'); return true; }
   if(tg.dataset.mencaoemail !== undefined){ S.cfg.mencaoEmailOff = !tg.checked; save(); toast(tg.checked ? 'E-mails de menção ligados' : 'E-mails de menção desligados'); return true; }
   return false;
 }
@@ -3594,6 +3637,43 @@ document.addEventListener('keydown', e => {
 }, true);
 document.addEventListener('scroll', e => { if(combo.inp && combo.el && !combo.el.contains(e.target)) comboFechar(); }, true);
 window.addEventListener('resize', comboFechar);
+
+/* ---------- editar nome do processo, obra, cliente e grupo ---------- */
+function propById(id){
+  const pr = S.props.find(p => p.id === id); if(!pr) return pr;
+  const pc = S.procs.find(x => x.propId === id && x.ovr); return pc ? Object.assign({}, pr, pc.ovr) : pr;
+}
+function procHeadHtml(p, pr){
+  if(ui.procEdit === p.id){
+    const v = k => esc((p.ovr && p.ovr[k] !== undefined ? p.ovr[k] : pr[k]) || '');
+    return `<div class="dhead"><div style="flex:1"><div class="sub" style="margin-bottom:10px">${esc(p.codigo)} | editar identificação do processo</div>
+      <div class="fields" style="margin:0"><label class="f">Obra / empreendimento<input id="peEmp" value="${v('emp')}"></label><label class="f">Cliente<input id="peCli" value="${v('cliente')}" list="dlPeCli" autocomplete="off"></label>
+        <label class="f">Grupo (pasta em Processos)<input id="peGrp" value="${v('grupo')}" list="dlPeGrp" autocomplete="off" placeholder="igual ao cliente se ficar vazio"></label><label class="f">Serviço<input id="peSrv" value="${esc(p.servico || '')}"></label></div>
+      <datalist id="dlPeCli">${[...new Set([...(S.clis || []).map(c => c.nome), ...S.props.map(x => x.cliente)].filter(Boolean))].map(c => `<option value="${esc(c)}">`).join('')}</datalist>
+      <datalist id="dlPeGrp">${[...new Set(S.procs.map(x => (propById(x.propId) || {}).grupo).filter(Boolean))].map(g => `<option value="${esc(g)}">`).join('')}</datalist>
+      <p class="hint" style="margin:8px 0 0">Muda só o processo. ${S.propsDb.some(x => x.id === p.propId) ? 'A proposta continua com os dados dela.' : ''}</p>
+      <div style="display:flex;gap:8px;margin-top:10px"><button class="btn primary sm" data-pesave="${p.id}">Salvar</button><button class="btn sm" data-pecancel>Cancelar</button></div></div><button class="btn ghost" data-close>✕</button></div>`;
+  }
+  return `<div class="dhead"><div style="flex:1"><div class="sub">${esc(p.codigo)} | ${esc(p.servico)} | proposta <a class="link" data-goprop="${pr.id}">${esc(pr.codigo)}</a></div><h2>${esc(pr.emp)}</h2><div class="sub">${esc(pr.cliente)}${pr.grupo && pr.grupo !== pr.cliente ? ' | grupo ' + esc(pr.grupo) : ''}${procTime(p) ? ' | tempo rastreado: <b>' + fmtDur(procTime(p)) + '</b>' : ''}</div></div>
+    <button class="btn sm ghost" data-peedit="${p.id}" title="Editar obra, cliente, grupo e serviço">✎ Editar</button><button class="btn ghost" data-close>✕</button></div>`;
+}
+function procEditClick(tg){
+  let el;
+  if((el = tg.closest('[data-peedit]'))){ ui.procEdit = el.dataset.peedit; renderDrawer(); setTimeout(() => { const i = $('#peEmp'); if(i) i.focus(); }, 0); return true; }
+  if(tg.closest('[data-pecancel]')){ ui.procEdit = null; renderDrawer(); return true; }
+  if((el = tg.closest('[data-pesave]'))){ const p = procById(el.dataset.pesave); if(!p) return true;
+    const emp = $('#peEmp').value.trim(), cliente = $('#peCli').value.trim(), grupo = $('#peGrp').value.trim() || cliente, servico = $('#peSrv').value.trim();
+    if(!emp || !cliente){ toast('Preencha a obra e o cliente'); return true; }
+    const antes = propById(p.propId) || {};
+    p.ovr = {emp, cliente, grupo};
+    if(p.prop){ p.prop.emp = emp; p.prop.cliente = cliente; p.prop.grupo = grupo; }
+    const mud = [antes.emp !== emp ? `obra “${antes.emp}” → “${emp}”` : '', antes.cliente !== cliente ? `cliente “${antes.cliente}” → “${cliente}”` : '', antes.grupo !== grupo ? `grupo “${antes.grupo}” → “${grupo}”` : '', servico && servico !== p.servico ? `serviço “${p.servico}” → “${servico}”` : ''].filter(Boolean);
+    if(servico) p.servico = servico;
+    if(mud.length) logP(p, 'alterou ' + mud.join(', '));
+    if(ui.sel && (ui.sel.g || ui.sel.e)) ui.sel = {g:grupo, e:emp};
+    ui.procEdit = null; save(); render(); toast('Processo atualizado'); return true; }
+  return false;
+}
 
 /* ---------- Eventos ---------- */
 document.addEventListener('click', e => {
