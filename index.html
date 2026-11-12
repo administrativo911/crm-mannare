@@ -1363,7 +1363,7 @@ function renderMine(){
   }
   $('#view').innerHTML = `<div class="pagehead"><div><h1>Minhas tarefas</h1><p>Tarefas, subtarefas e comentários atribuídos a ${esc(first(me))}, de todos os processos.</p></div><span class="spacer"></span>
     <div class="seg"><button data-mf="aberto" class="${ui.mineFilter === 'aberto' ? 'on' : ''}">Em aberto</button><button data-mf="feito" class="${ui.mineFilter === 'feito' ? 'on' : ''}">Concluídas</button></div></div>
-    ${matsMine()}${html || '<div class="blk empty">Nada por aqui. Tudo em dia.</div>'}<div style="height:40px"></div>`;
+    ${revisoesMine()}${matsMine()}${html || (revisoesMine() ? '' : '<div class="blk empty">Nada por aqui. Tudo em dia.</div>')}<div style="height:40px"></div>`;
 }
 
 /* ---------- Drawer (proposta ou processo) ---------- */
@@ -1657,7 +1657,7 @@ function renderTask(){
   tickLive();
 }
 function curTask(){ const p = procById(ui.task.procId); return [p, taskOf(p, ui.task.taskId)]; }
-function setTaskStatus(p, t, st){
+function setTaskStatusBase(p, t, st){
   if(t.status === st) return;
   const old = t.status;
   t.status = st; logT(t, `mudou o status para “${TS[st].l}”`);
@@ -3431,14 +3431,16 @@ function acharCom(id){ for(const l of comLugares()){ const i = (l.arr || []).fin
 function reRender(){ render(); if(ui.task) renderTask(); if(ui.mat) renderMat(); }
 
 /* ---------- escolher aprovador ---------- */
-let pickCb = null;
-function pickAprovador(titulo, texto, def, cb){
-  pickCb = cb; let d = $('#pickLayer'); if(!d){ d = document.createElement('div'); d.id = 'pickLayer'; document.body.appendChild(d); }
+let pickCb = null, pickOpt = {};
+function pickAprovador(titulo, texto, def, cb, opt){
+  pickCb = cb; pickOpt = opt || {}; let d = $('#pickLayer'); if(!d){ d = document.createElement('div'); d.id = 'pickLayer'; document.body.appendChild(d); }
+  const ate = pickOpt.ate || addDays(TODAY, 2);
   d.innerHTML = `<div class="mlayer" style="z-index:90"><div class="modal small" style="width:min(460px,100%)">
     <div class="mhead"><b style="color:var(--ink);font-size:17px;font-family:var(--kanit);font-weight:500">${esc(titulo)}</b><span class="spacer"></span><button class="btn ghost" data-pickno>✕</button></div>
-    <div style="padding:16px 20px;display:flex;flex-direction:column;gap:8px;max-height:60vh;overflow:auto">${texto ? `<p class="sub" style="margin:0 0 4px">${texto}</p>` : ''}
-      ${USERS.map(u => `<label class="pickrow ${u.id === def ? 'on' : ''}"><input type="radio" name="pickap" value="${u.id}" ${u.id === def ? 'checked' : ''}>${av(u.id, true)}<span style="flex:1"><b>${esc(u.nome)}</b>${u.cargo ? `<div class="sub">${esc(u.cargo)}</div>` : ''}</span>${u.id === def ? '<span class="sub">sugerido</span>' : ''}</label>`).join('')}</div>
-    <div class="mfoot"><button class="btn" data-pickno>Cancelar</button><button class="btn primary" data-pickok>Enviar para aprovação</button></div></div></div>`;
+    <div style="padding:16px 20px;display:flex;flex-direction:column;gap:8px;max-height:64vh;overflow:auto">${texto ? `<p class="sub" style="margin:0 0 4px">${texto}</p>` : ''}
+      ${USERS.map(u => `<label class="pickrow ${u.id === def ? 'on' : ''}"><input type="radio" name="pickap" value="${u.id}" ${u.id === def ? 'checked' : ''}>${av(u.id, true)}<span style="flex:1"><b>${esc(u.nome)}</b>${u.cargo ? `<div class="sub">${esc(u.cargo)}</div>` : ''}</span>${u.id === def ? '<span class="sub">sugerido</span>' : ''}</label>`).join('')}
+      ${pickOpt.prazo ? `<label class="f" style="margin-top:6px">${esc(pickOpt.prazoLabel || 'Entregar até')}<input type="date" id="pickAte" value="${ate}" min="${TODAY}"></label><p class="sub" style="margin:0">Vira uma tarefa com esse prazo em Minhas tarefas e no Planejador de quem foi escolhido.</p>` : ''}</div>
+    <div class="mfoot"><button class="btn" data-pickno>Cancelar</button><button class="btn primary" data-pickok>${esc(pickOpt.botao || 'Enviar para aprovação')}</button></div></div></div>`;
 }
 function fecharPick(){ const d = $('#pickLayer'); if(d) d.innerHTML = ''; pickCb = null; }
 
@@ -3448,28 +3450,44 @@ function setMatStatus(m, st, escolhido){
   if(m.status === st) return;
   if(st === 'validacao' && !escolhido){
     const def = (() => { const keep = m.aprovador; m.aprovador = ''; const d = aprovFor(m); m.aprovador = keep; return d; })();
-    pickAprovador('Quem vai validar?', `“${esc(m.titulo || m.codigo)}” vai para <b>Validação interna</b>.`, def, id => { m.aprovador = id; setMatStatus(m, 'validacao', true); save(); render(); if(ui.mat) renderMat(); });
+    pickAprovador('Quem vai validar?', `“${esc(m.titulo || m.codigo)}” vai para <b>Validação interna</b>.`, def, (id, ate) => { m.aprovador = id; m.validacao = {por:id, ate, pedidoPor:me, em:nowISO()}; setMatStatus(m, 'validacao', true); save(); render(); if(ui.mat) renderMat(); },
+      {prazo:true, prazoLabel:'Validar até', botao:'Enviar para validação', ate:m.prazo && m.prazo > TODAY && m.prazo < addDays(TODAY, 2) ? m.prazo : ''});
     return;
   }
   const old = m.status; m.status = st; logT(m, `mudou o status para “${MS[st].l}”`);
   if(MAT_TIMER.includes(st)) startTimer(null, m, me); else if(MAT_TIMER.includes(old)) stopTimers(m, `parou o cronômetro ao mudar para “${MS[st].l}”`);
   const aprov = aprovFor(m);
-  if(st === 'validacao'){ logT(m, `pediu a validação de ${first(aprov)}`); notifyMat(aprov, `enviou “${esc(m.titulo)}” para a sua validação interna`, m); }
+  if(st === 'validacao'){ const ate = m.validacao && m.validacao.ate; logT(m, `pediu a validação de ${first(aprov)}${ate ? ' até ' + fmtD(ate) : ''}`); notifyMat(aprov, `enviou “${esc(m.titulo)}” para a sua validação interna${ate ? ' (entregar até ' + fmtD(ate) + ')' : ''}`, m); }
+  if(old === 'validacao' && m.validacao){ m.validacao.fim = nowISO(); m.validacao.resultado = st; }
   if(st === 'entregue') m.resp.forEach(r => notifyMat(r, `aprovou e entregou “${esc(m.titulo)}”`, m));
+}
+
+/* ---------- tarefas: revisão (ao ir para "Em revisão") ---------- */
+function setTaskStatus(p, t, st, escolhido){
+  if(st === 'revisao' && t.status !== 'revisao' && !escolhido){
+    pickAprovador('Quem vai revisar?', `“${esc(t.titulo)}” vai para <b>Revisão</b>.`, t.aprov && t.aprov.aprovador || defAprovTarefa(t), (id, ate) => {
+      t.aprov = {st:'pendente', revisao:true, aprovador:id, ate, pedidoPor:me, pedidoEm:nowISO()}; setTaskStatusBase(p, t, 'revisao');
+      logT(t, `pediu a revisão de ${first(id)} até ${fmtD(ate)}`); notify(id, `pediu a sua revisão na tarefa “${esc(t.titulo)}” (entregar até ${fmtD(ate)})`, p.id, t.id);
+      save(); render(); if(ui.task) renderTask(); toast('Enviada para revisão de ' + first(id)); }, {prazo:true, prazoLabel:'Revisar até', botao:'Enviar para revisão'});
+    return;
+  }
+  const old = t.status; setTaskStatusBase(p, t, st);
+  if(old === 'revisao' && st !== 'revisao' && t.aprov && t.aprov.st === 'pendente' && t.aprov.revisao){ t.aprov = Object.assign({}, t.aprov, {st:'encerrada', em:nowISO(), por:me}); logT(t, 'saiu da revisão antes da resposta do revisor'); }
 }
 
 /* ---------- tarefas: aprovação ---------- */
 function defAprovTarefa(t){ const soc = USERS.filter(u => (S.equipe.find(r => r.email.toLowerCase() === u.id) || {}).papel === 'socio');
   return (soc.find(u => u.id !== me && !t.resp.includes(u.id)) || soc.find(u => u.id !== me) || USERS.find(u => u.id !== me) || U[me]).id; }
 function taskAprovBadge(t){ const a = t.aprov; if(!a) return '';
-  return a.st === 'pendente' ? ` <span class="apb pend">${ic('relogio', 'sm')} aprovação: ${esc(first(a.aprovador))}</span>` : a.st === 'aprovada' ? ` <span class="apb ok">✓ aprovada</span>` : a.st === 'ajustes' ? ' <span class="apb adj">ajustes pedidos</span>' : ''; }
+  if(a.st === 'encerrada') return '';
+  return a.st === 'pendente' ? ` <span class="apb pend">${ic('relogio', 'sm')} ${a.revisao ? 'revisão' : 'aprovação'}: ${esc(first(a.aprovador))}${a.ate ? ' até ' + fmtD(a.ate) : ''}</span>` : a.st === 'aprovada' ? ` <span class="apb ok">✓ aprovada</span>` : a.st === 'ajustes' ? ' <span class="apb adj">ajustes pedidos</span>' : ''; }
 function taskAprovHtml(p, t){
   const a = t.aprov;
-  if(!a) return `<div class="aprovbox"><div style="flex:1"><b>Aprovação</b><div class="sub">Peça para alguém aprovar esta tarefa antes de concluir.</div></div><button class="btn sm" data-tapedir>Pedir aprovação</button></div>`;
-  if(a.st === 'pendente') return `<div class="aprovbox pend"><div style="flex:1"><b>Aguardando aprovação de ${esc(U[a.aprovador] ? U[a.aprovador].nome : a.aprovador)}</b><div class="sub">Pedido por ${esc(first(a.pedidoPor))} em ${fmtWhen(a.pedidoEm)}</div>
+  if(!a || a.st === 'encerrada') return `<div class="aprovbox"><div style="flex:1"><b>Aprovação</b><div class="sub">Peça para alguém aprovar esta tarefa antes de concluir.</div></div><button class="btn sm" data-tapedir>Pedir aprovação</button></div>`;
+  if(a.st === 'pendente') return `<div class="aprovbox pend"><div style="flex:1"><b>Aguardando ${a.revisao ? 'revisão' : 'aprovação'} de ${esc(U[a.aprovador] ? U[a.aprovador].nome : a.aprovador)}${a.ate ? ` <span class="apb ${a.ate < TODAY ? 'adj' : 'pend'}">até ${fmtD(a.ate)}</span>` : ''}</b><div class="sub">Pedido por ${esc(first(a.pedidoPor))} em ${fmtWhen(a.pedidoEm)}${a.revisao && me === a.aprovador ? ' | ao aprovar, a tarefa é concluída' : ''}</div>
       ${me === a.aprovador ? `<input class="inp" id="taObs" placeholder="O que precisa ajustar? (para pedir ajustes)" style="margin-top:8px">` : ''}</div>
-      ${me === a.aprovador ? `<div class="aprovbtns"><button class="btn sm" data-taajuste>Pedir ajustes</button><button class="btn sm primary" data-taok>Aprovar</button></div>` : `<div class="aprovbtns">${a.pedidoPor === me ? '<button class="btn sm ghost" data-tatrocar>Trocar aprovador</button><button class="btn sm ghost" data-tacancel>Cancelar pedido</button>' : `<span class="sub">só ${esc(first(a.aprovador))} aprova</span>`}</div>`}</div>`;
-  if(a.st === 'aprovada') return `<div class="aprovbox ok"><div style="flex:1"><b>✓ Aprovada por ${esc(U[a.por] ? U[a.por].nome : a.por)}</b><div class="sub">${fmtWhen(a.em)}</div></div><button class="btn sm ghost" data-tapedir>Pedir nova aprovação</button></div>`;
+      ${me === a.aprovador ? `<div class="aprovbtns"><button class="btn sm" data-taajuste>Pedir ajustes</button><button class="btn sm primary" data-taok>${a.revisao ? 'Aprovar revisão' : 'Aprovar'}</button></div>` : `<div class="aprovbtns">${a.pedidoPor === me ? '<button class="btn sm ghost" data-tatrocar>Trocar aprovador</button><button class="btn sm ghost" data-tacancel>Cancelar pedido</button>' : `<span class="sub">só ${esc(first(a.aprovador))} aprova</span>`}</div>`}</div>`;
+  if(a.st === 'aprovada') return `<div class="aprovbox ok"><div style="flex:1"><b>✓ ${a.revisao ? 'Revisão aprovada' : 'Aprovada'} por ${esc(U[a.por] ? U[a.por].nome : a.por)}</b><div class="sub">${fmtWhen(a.em)}</div></div><button class="btn sm ghost" data-tapedir>Pedir nova aprovação</button></div>`;
   return `<div class="aprovbox adj"><div style="flex:1"><b>${esc(first(a.por))} pediu ajustes</b><div class="sub">${esc(a.obs || '')} | ${fmtWhen(a.em)}</div></div><button class="btn sm primary" data-tapedir>Pedir aprovação de novo</button></div>`;
 }
 function pedirAprovTarefa(p, t, def){
@@ -3606,12 +3624,14 @@ function aplicarModeloHtml(p){
 function extrasClick(e, tg){
   let el;
   if(pickCb && tg.closest('#pickLayer')){
-    if(tg.closest('[data-pickok]')){ const v = ($('#pickLayer input[name="pickap"]:checked') || {}).value; if(!v){ toast('Escolha quem aprova'); return true; } const cb = pickCb; fecharPick(); cb(v); return true; }
+    if(tg.closest('[data-pickok]')){ const v = ($('#pickLayer input[name="pickap"]:checked') || {}).value; if(!v){ toast('Escolha quem aprova'); return true; }
+      const ate = $('#pickAte') ? $('#pickAte').value : ''; if(pickOpt.prazo && !ate){ toast('Escolha a data de entrega'); return true; } const cb = pickCb; fecharPick(); cb(v, ate); return true; }
     if(tg.closest('[data-pickno]') || tg.classList.contains('mlayer')){ fecharPick(); if(ui.mat) renderMat(); render(); return true; }
     const r = tg.closest('.pickrow'); if(r){ $$('#pickLayer .pickrow').forEach(x => x.classList.toggle('on', x === r)); }
     return false;
   }
   if(planClick(e, tg)) return true;
+  { const el0 = tg.closest('[data-plopen]'); if(el0 && !tg.closest('.plan')){ abrirItem(el0.dataset.plopen); return true; } }
   if(procEditClick(tg)) return true;
   if((el = tg.closest('[data-emailtodos]'))){ const u = U[me]; if(u){ const v = el.dataset.emailtodos === '1'; u.emailPrefs = Object.fromEntries(EMAIL_CATS.map(c => [c.k, v])); save(); render(); toast(v ? 'Todos os e-mails ligados' : 'Todos os e-mails desligados'); } return true; }
   if((el = tg.closest('[data-comdel]'))){ ui.comDel = el.dataset.comdel; reRender(); return true; }
@@ -3626,17 +3646,20 @@ function extrasClick(e, tg){
     const p = procById(ui.task.procId), t = p && taskOf(p, ui.task.taskId);
     if(t){
       if(tg.closest('[data-tapedir]')){ pedirAprovTarefa(p, t); return true; }
-      if(tg.closest('[data-tatrocar]')){ pedirAprovTarefa(p, t, t.aprov.aprovador); return true; }
-      if(tg.closest('[data-tacancel]')){ t.aprov = null; logT(t, 'cancelou o pedido de aprovação'); save(); render(); renderTask(); return true; }
-      if(tg.closest('[data-taok]')){ if(!t.aprov || me !== t.aprov.aprovador) return true; t.aprov = {st:'aprovada', por:me, em:nowISO(), pedidoPor:t.aprov.pedidoPor}; logT(t, 'aprovou a tarefa');
+      if(tg.closest('[data-tatrocar]')){ if(t.aprov.revisao){ const a0 = t.aprov; pickAprovador('Quem vai revisar?', `“${esc(t.titulo)}”`, a0.aprovador, (id, ate) => { t.aprov = Object.assign({}, a0, {aprovador:id, ate}); logT(t, `passou a revisão para ${first(id)} até ${fmtD(ate)}`); notify(id, `pediu a sua revisão na tarefa “${esc(t.titulo)}” (entregar até ${fmtD(ate)})`, p.id, t.id); save(); render(); renderTask(); }, {prazo:true, prazoLabel:'Revisar até', botao:'Trocar revisor', ate:a0.ate}); return true; }
+        pedirAprovTarefa(p, t, t.aprov.aprovador); return true; }
+      if(tg.closest('[data-tacancel]')){ const rev = t.aprov && t.aprov.revisao; t.aprov = null; logT(t, rev ? 'cancelou o pedido de revisão' : 'cancelou o pedido de aprovação'); if(rev && t.status === 'revisao') setTaskStatusBase(p, t, 'andamento'); save(); render(); renderTask(); return true; }
+      if(tg.closest('[data-taok]')){ if(!t.aprov || me !== t.aprov.aprovador) return true; const rev = !!t.aprov.revisao; t.aprov = {st:'aprovada', revisao:rev, por:me, em:nowISO(), pedidoPor:t.aprov.pedidoPor}; logT(t, rev ? 'aprovou a revisão' : 'aprovou a tarefa');
+        if(rev && t.status === 'revisao') setTaskStatusBase(p, t, 'concluida');
         [...new Set([t.aprov.pedidoPor, ...t.resp])].forEach(r => notify(r, `aprovou a tarefa “${esc(t.titulo)}”`, p.id, t.id)); save(); render(); renderTask(); toast('Tarefa aprovada'); return true; }
       if(tg.closest('[data-taajuste]')){ const obs = ($('#taObs') || {}).value || ''; if(!obs.trim()){ toast('Escreva o que precisa ajustar'); $('#taObs').focus(); return true; }
-        const ped = t.aprov.pedidoPor; t.aprov = {st:'ajustes', por:me, em:nowISO(), obs:obs.trim(), pedidoPor:ped}; logT(t, 'pediu ajustes: ' + obs.trim());
+        const ped = t.aprov.pedidoPor, rev = !!t.aprov.revisao; t.aprov = {st:'ajustes', revisao:rev, por:me, em:nowISO(), obs:obs.trim(), pedidoPor:ped}; logT(t, 'pediu ajustes: ' + obs.trim());
+        if(rev && t.status === 'revisao') setTaskStatusBase(p, t, 'andamento');
         [...new Set([ped, ...t.resp])].forEach(r => notify(r, `pediu ajustes na tarefa “${esc(t.titulo)}”: ${esc(obs.trim())}`, p.id, t.id)); save(); render(); renderTask(); return true; }
     }
   }
   // material: trocar quem valida
-  if(ui.mat && tg.closest('[data-mattrocar]')){ const m = matById(ui.mat); pickAprovador('Quem vai validar?', `“${esc(m.titulo || m.codigo)}”`, aprovFor(m), id => { m.aprovador = id; logT(m, `passou a validação para ${first(id)}`); notifyMat(id, `enviou “${esc(m.titulo)}” para a sua validação interna`, m); save(); render(); renderMat(); }); return true; }
+  if(ui.mat && tg.closest('[data-mattrocar]')){ const m = matById(ui.mat); pickAprovador('Quem vai validar?', `“${esc(m.titulo || m.codigo)}”`, aprovFor(m), (id, ate) => { m.aprovador = id; m.validacao = Object.assign({}, m.validacao, {por:id, ate, pedidoPor:(m.validacao || {}).pedidoPor || me, em:nowISO()}); logT(m, `passou a validação para ${first(id)} até ${fmtD(ate)}`); notifyMat(id, `enviou “${esc(m.titulo)}” para a sua validação interna (entregar até ${fmtD(ate)})`, m); save(); render(); renderMat(); }, {prazo:true, prazoLabel:'Validar até', botao:'Trocar', ate:(m.validacao || {}).ate}); return true; }
   // modelos de tarefas
   if((el = tg.closest('[data-cadmod]'))){ modModal(el.dataset.cadmod); return true; }
   if(tg.closest('[data-modnovo]')){ modModal(null); return true; }
@@ -3799,6 +3822,23 @@ function tickReunioes(){
 }
 setInterval(tickReunioes, 30000);
 
+
+/* ---------- revisões e validações viram tarefas de quem foi escolhido ---------- */
+function revisoesDe(uid){
+  const out = [];
+  S.procs.forEach(p => (p.tarefas || []).forEach(t => { const a = t.aprov; if(a && a.st === 'pendente' && a.aprovador === uid) out.push({ref:`r|${p.id}|${t.id}`, k:a.revisao ? 'revisão' : 'aprovação', titulo:`${a.revisao ? 'Revisar' : 'Aprovar'}: ${t.titulo}`, onde:`${p.codigo} | ${(propById(p.propId) || {}).emp || ''}`, prazo:a.ate || '', feito:false, aberto:true, por:a.pedidoPor}); }));
+  (S.mats || []).forEach(m => { if(m.status === 'validacao' && aprovFor(m) === uid) out.push({ref:`v|${m.id}`, k:'validação', titulo:`Validar: ${m.titulo || m.codigo}`, onde:m.codigo, prazo:(m.validacao && m.validacao.ate) || '', feito:false, aberto:true, por:(m.validacao || {}).pedidoPor}); });
+  return out;
+}
+const RCOR = {'revisão':'#F79009', 'aprovação':'#B54708', 'validação':'#C11574'};
+function revisoesMine(){
+  const rs = revisoesDe(me).sort((a, b) => (a.prazo || '9999').localeCompare(b.prazo || '9999'));
+  if(!rs.length || ui.mineFilter === 'feito') return '';
+  return `<div class="tlist"><div class="tgh" style="color:#B54708">Revisões e validações para você <span class="sub">${rs.length}</span></div>${rs.map(r => `<div class="mine-row" data-plopen="${r.ref}" style="cursor:pointer">
+      <span class="sq" style="border-color:${RCOR[r.k]}"></span><div><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">${tag(r.k, RCOR[r.k])}<b>${esc(r.titulo)}</b></div>
+      <div class="sub" style="margin-top:3px">${esc(r.onde)}${r.por ? ' | pedido por ' + esc(first(r.por)) : ''}</div></div><span></span><span style="min-width:70px;text-align:right">${r.prazo ? dueHtml(r.prazo, false) : '<span class="sub">sem prazo</span>'}</span></div>`).join('')}</div>`;
+}
+
 /* =================== Planejador: prioridades, tarefas e calendário da semana =================== */
 const PH = 48;                                      // altura de 1 hora (px)
 const DSEM = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
@@ -3819,24 +3859,27 @@ function planItens(uid){
       (t.subs || []).forEach(s => { if(s.resp === uid) out.push({ref:`s|${p.id}|${t.id}|${s.id}`, k:'subtarefa', titulo:s.titulo, onde:`${t.titulo} | ${p.codigo}`, prazo:s.prazo, feito:!!s.feito, aberto:isOpen(p)}); });
     }); });
   (S.mats || []).forEach(m => { if((m.resp || []).includes(uid)) out.push({ref:`m|${m.id}`, k:'material', titulo:m.titulo || m.codigo, onde:m.codigo, prazo:m.prazo, feito:m.status === 'entregue', aberto:true}); });
-  return out;
+  return out.concat(revisoesDe(uid));
 }
 function itemDe(ref){
   const [k, a, b, c] = String(ref || '').split('|');
+  if(k === 'r' || k === 'v'){ const it = revisoesDe(planUser()).concat(revisoesDe(me)).find(x => x.ref === ref); if(it) return it;
+    if(k === 'v'){ const m = matById(a); return m ? {ref, k:'validação', titulo:`Validar: ${m.titulo || m.codigo}`, onde:m.codigo, prazo:'', feito:m.status !== 'validacao'} : null; }
+    const p = procById(a), t = p && taskOf(p, b); return t ? {ref, k:'revisão', titulo:`Revisar: ${t.titulo}`, onde:p.codigo, prazo:(t.aprov || {}).ate || '', feito:!(t.aprov && t.aprov.st === 'pendente')} : null; }
   if(k === 'm'){ const m = matById(a); return m ? {ref, k:'material', titulo:m.titulo || m.codigo, onde:m.codigo, prazo:m.prazo, feito:m.status === 'entregue'} : null; }
   const p = procById(a), t = p && taskOf(p, b); if(!t) return null;
   if(k === 't') return {ref, k:'tarefa', titulo:t.titulo, onde:p.codigo, prazo:t.prazo, feito:t.status === 'concluida', p, t};
   const s = (t.subs || []).find(x => x.id === c); return s ? {ref, k:'subtarefa', titulo:s.titulo, onde:`${t.titulo} | ${p.codigo}`, prazo:s.prazo, feito:!!s.feito, p, t, s} : null;
 }
-function abrirItem(ref){ const [k, a, b] = ref.split('|'); if(k === 'm'){ openMat(a); return; } openTask(a, b); }
+function abrirItem(ref){ const [k, a, b] = ref.split('|'); if(k === 'm' || k === 'v'){ openMat(a); return; } openTask(a, b); }
 function concluirItem(ref){
   const it = itemDe(ref); if(!it) return;
   if(it.k === 'subtarefa'){ it.s.feito = !it.s.feito; logT(it.t, `${it.s.feito ? 'concluiu' : 'reabriu'} a subtarefa “${it.s.titulo}”`); }
-  else if(it.k === 'tarefa') setTaskStatus(it.p, it.t, it.feito ? 'afazer' : 'concluida');
+  else if(it.k === 'tarefa' && it.p) setTaskStatus(it.p, it.t, it.feito ? 'afazer' : 'concluida');
   else { abrirItem(ref); return; }
   save(); render();
 }
-const KCOR = {tarefa:'#0000FF', subtarefa:'#6666FF', material:'#00A9CC', livre:'#F79009'};
+const KCOR = {tarefa:'#0000FF', subtarefa:'#6666FF', material:'#00A9CC', livre:'#667085', 'revisão':'#F79009', 'aprovação':'#B54708', 'validação':'#C11574'};
 
 /* ---------- dados do planejamento (no cadastro de cada pessoa) ---------- */
 const blocos = uid => (U[uid] && U[uid].plano) || [];
@@ -3852,7 +3895,7 @@ function renderPlan(){
   const late = its.filter(i => i.prazo && i.prazo <= TODAY).sort((a, b) => a.prazo.localeCompare(b.prazo));
   const lst = its.filter(i => !pri.includes(i.ref)).sort((a, b) => (a.prazo || '9999').localeCompare(b.prazo || '9999'));
   const itRow = (i, n) => `<div class="pli" ${meu ? `draggable="true" data-plref="${i.ref}"` : ''} title="${esc(i.titulo)}${meu ? ' (arraste para o calendário)' : ''}">
-      ${n ? `<span class="pln">${n}</span>` : ''}<button class="plchk ${i.feito ? 'on' : ''}" data-plok="${i.ref}" ${meu ? '' : 'disabled'} title="${i.k === 'material' ? 'Abrir' : 'Concluir'}">${i.feito ? '✓' : ''}</button>
+      ${n ? `<span class="pln">${n}</span>` : ''}<button class="plchk ${i.feito ? 'on' : ''}" data-plok="${i.ref}" ${meu ? '' : 'disabled'} title="${['tarefa', 'subtarefa'].includes(i.k) ? 'Concluir' : 'Abrir'}">${i.feito ? '✓' : ''}</button>
       <span class="pldot" style="background:${KCOR[i.k]}"></span><div class="plt" data-plopen="${i.ref}"><b>${esc(i.titulo)}</b><span>${esc(i.onde || '')}${i.prazo ? ` | <i class="${i.prazo < TODAY ? 'late' : i.prazo === TODAY ? 'hoje' : ''}">${fmtD(i.prazo)}</i>` : ''}${semBloco.has(i.ref) ? ' | <i class="ok">planejado</i>' : ''}</span></div>
       ${n && meu ? `<button class="plx" data-plprirm="${i.ref}" title="Tirar das prioridades">✕</button>` : ''}</div>`;
   const side = `<aside class="plside">
@@ -3916,7 +3959,7 @@ function blocoModal(b){
       <label class="f">Tarefa<select id="bkRef"><option value="">— bloco livre (sem tarefa) —</option>${its.map(i => `<option value="${i.ref}" ${i.ref === b.ref ? 'selected' : ''}>${esc(i.titulo.slice(0, 70))} | ${esc(i.onde.slice(0, 30))}</option>`).join('')}${it && !its.some(i => i.ref === b.ref) ? `<option value="${b.ref}" selected>${esc(it.titulo)}</option>` : ''}</select></label>
       <label class="f">Título (para bloco livre)<input id="bkTit" value="${esc(b.ref ? '' : b.titulo || '')}" placeholder="Ex.: Foco | revisar memoriais"></label>
       <div class="fields" style="margin:0"><label class="f">Dia<input type="date" id="bkDia" value="${b.ini.slice(0, 10)}"></label><label class="f">Início<input type="time" id="bkIni" step="900" value="${b.ini.slice(11, 16)}"></label><label class="f">Fim<input type="time" id="bkFim" step="900" value="${b.fim.slice(11, 16)}"></label></div>
-      ${it ? `<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn sm" data-bkabrir>Abrir ${it.k}</button>${it.k !== 'material' ? `<button class="btn sm" data-bkok>${it.feito ? 'Reabrir' : '✓ Concluir'} ${it.k}</button>` : ''}</div>` : ''}
+      ${it ? `<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn sm" data-bkabrir>Abrir ${it.k}</button>${['tarefa', 'subtarefa'].includes(it.k) ? `<button class="btn sm" data-bkok>${it.feito ? 'Reabrir' : '✓ Concluir'} ${it.k}</button>` : ''}</div>` : ''}
     </div>
     <div class="mfoot">${novo ? '' : '<button class="btn danger" data-bkdel>Tirar do calendário</button>'}<span class="spacer"></span><button class="btn" data-tclose>Cancelar</button><button class="btn primary" data-bksave>Salvar</button></div></div></div>`;
 }
