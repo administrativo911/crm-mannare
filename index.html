@@ -1149,6 +1149,15 @@ input[type="checkbox"]{border-radius:3px!important}
 .dtimer{min-height:240px}
 .dsem .dlist{margin:0!important;padding:0!important}
 .dent .seg button{padding:4px 9px!important;font-size:12px!important}
+/* respostas de comentários */
+.cresp{margin-top:8px;display:flex;flex-direction:column;gap:8px}
+.crr{display:flex;gap:8px;padding-left:10px;border-left:2px solid var(--line)}
+.crb{flex:1;min-width:0}.crb .hd{display:flex;gap:8px;align-items:center;font-size:12.5px}.crb .tx{font-size:13px;margin-top:2px;white-space:pre-wrap}
+.crbtn{align-self:flex-start;border:0;background:none;padding:2px 0;color:var(--m-azul);font-size:12.5px;font-weight:500;cursor:pointer;display:inline-flex;gap:5px;align-items:center}
+.crbtn:hover{text-decoration:underline}.crbtn svg{width:13px;height:13px}
+.crform{display:flex;flex-direction:column;gap:6px}
+.crform textarea{width:100%;min-height:56px;resize:vertical;padding:8px 10px;border:1px solid var(--m-azul);font:inherit;font-size:13px}
+.crform .row{display:flex;gap:6px;align-items:center}
 
 </style>
 </head>
@@ -1703,11 +1712,10 @@ function renderProcs(){
           const ncom = p.coms.length + p.tarefas.reduce((x, t) => x + t.coms.length, 0);
           return `<div class="mcard pk" draggable="true" data-proc="${p.id}">
             <div class="mt">${esc(pr.emp || p.codigo)}</div>
-            <div class="sub" style="margin-top:2px">${esc(p.codigo)} | ${esc(pr.cliente || '')}</div>
+            <div class="sub mtipo" style="margin-top:2px" title="${esc(pr.cliente || '')}">${esc(p.codigo)} | ${esc(p.servico || pr.tipo || '')}</div>
             <div class="mm"><span title="Tarefas">${ic('check', 'sm')} ${g.ok}/${g.tot}</span>${ncom ? `<span>${ic('comentario', 'sm')} ${ncom}</span>` : ''}${p.drive ? `<a href="${esc(p.drive)}" target="_blank" rel="noopener" data-stop title="Pasta no Drive" style="color:var(--azul);display:inline-flex">${ic('pasta', 'sm')}</a>` : ''}${lc ? `<span class="late">${ic('alerta', 'sm')} ${lc}</span>` : ''}</div>
             ${a ? `<div class="sub" style="margin-top:6px;display:flex;gap:4px;align-items:center">${ic('pin', 'sm')} ${esc(a.setor.split(' (')[0])} | ${a.dias === 0 ? 'hoje' : 'há ' + a.dias + 'd'}</div>` : ''}
             <div class="mf">${avs(people(p))}${nd ? `<span class="sub">${ic('relogio', 'sm')} ${dueHtml(nd)}</span>` : ''}</div>
-            <div class="tags" style="margin-top:8px">${tag(p.servico, SERV_C[p.modelo])}</div>
           </div>`; }).join('')}
         ${typeof avulsoModal === 'function' ? `<div class="madd"><button data-avnew="${st.k}">+ Adicionar processo</button></div>` : ''}</div>`;
     }).join('')}</div><p class="hint" style="margin-top:-24px;margin-bottom:40px">Arraste os cartões entre as colunas para mudar o status do processo.</p>`;
@@ -3812,8 +3820,35 @@ function feedHtml(coms, t){
   if(!coms.length) return '<div class="empty" style="padding:24px">Nenhum comentário ainda. Use @ para mencionar alguém.</div>';
   const soc = isSocio();
   return coms.map(c => `<div class="cm">${av(c.autor)}<div class="bx"><div class="hd"><b>${esc(first(c.autor))}</b><span class="sub">${fmtWhen(c.em)}</span>${c.autor === me || soc ? `<span class="spacer"></span>${ui.comDel === c.id ? `<span class="cmdel"><span class="sub">Excluir?</span><button class="btn sm" data-comdelno>Não</button><button class="btn sm danger" data-comdelok="${c.id}">Excluir</button></span>` : `<button class="cmx" data-comdel="${c.id}" title="Excluir comentário">${ic('lixo', 'sm')}</button>`}` : ''}</div><div class="tx">${fmtText(c.texto)}</div>
-    ${c.atrib ? `<div class="asg ${c.resolvido ? 'ok' : ''}">${av(c.atrib, true)}<span style="flex:1">${c.resolvido ? `Resolvido por ${esc(first(c.atrib))}` : `Atribuído a <b>${esc(first(c.atrib))}</b>`}</span>${!c.resolvido ? `<button class="btn sm" data-resolve="${c.id}">✓ Resolver</button>` : ''}</div>` : ''}</div></div>`).join('');
+    ${c.atrib ? `<div class="asg ${c.resolvido ? 'ok' : ''}">${av(c.atrib, true)}<span style="flex:1">${c.resolvido ? `Resolvido por ${esc(first(c.atrib))}` : `Atribuído a <b>${esc(first(c.atrib))}</b>`}</span>${!c.resolvido ? `<button class="btn sm" data-resolve="${c.id}">✓ Resolver</button>` : ''}</div>` : ''}
+    ${respostasHtml(c, soc)}</div></div>`).join('');
 }
+/* ---------- comentários: responder ---------- */
+function respostasHtml(c, soc){
+  const rs = c.respostas || [], aberto = ui.comResp === c.id;
+  return `<div class="cresp">${rs.map(r => `<div class="crr">${av(r.autor, true)}<div class="crb"><div class="hd"><b>${esc(first(r.autor))}</b><span class="sub">${fmtWhen(r.em)}</span>${r.autor === me || soc ? `<span class="spacer"></span><button class="cmx" data-respdel="${c.id}|${r.id}" title="Excluir resposta">${ic('lixo', 'sm')}</button>` : ''}</div><div class="tx">${fmtText(r.texto)}</div></div></div>`).join('')}
+    ${aberto ? `<div class="crform"><textarea id="respTxt" data-respc="${c.id}" rows="2" placeholder="Responder a ${esc(first(c.autor))}… use @ para mencionar"></textarea><div class="row"><span class="sub">Ctrl+Enter envia</span><span class="spacer"></span><button class="btn sm" data-respno>Cancelar</button><button class="btn sm primary" data-respok="${c.id}">Responder</button></div></div>`
+      : `<button class="crbtn" data-resp="${c.id}">${ic('comentario', 'sm')} ${rs.length ? 'Responder' : 'Responder'}${rs.length ? ` <span class="sub">| ${rs.length} resposta${rs.length > 1 ? 's' : ''}</span>` : ''}</button>`}</div>`;
+}
+function avisarResposta(f, para, txt, texto){
+  if(!para || para === me) return;
+  const ctx = f.kind === 'mat' ? {matId:f.m.id} : f.kind === 'prop' ? {propId:f.pr.id} : {procId:f.p.id, taskId:f.t ? f.t.id : null};
+  S.notifs.unshift(Object.assign({id:uid(), para, txt:`<b>${esc(first(me))}</b> ${txt}`, procId:null, taskId:null, em:nowISO(), lida:false}, ctx));
+  emailAviso(para, txt, ctx, texto);
+}
+function enviarResposta(id){
+  const ta = $('#respTxt'), txt = ta ? ta.value.trim() : ''; if(!txt){ toast('Escreva a resposta'); if(ta) ta.focus(); return; }
+  const f = acharCom(id); if(!f){ ui.comResp = null; reRender(); return; }
+  const c = f.c; (c.respostas = c.respostas || []).push({id:uid(), autor:me, texto:txt, em:nowISO()});
+  const onde = f.t ? `“${esc(f.t.titulo)}”` : f.m ? `“${esc(f.m.titulo || f.m.codigo)}”` : f.pr ? `a proposta ${esc(f.pr.codigo || '')}` : `o processo ${esc(f.p.codigo)}`;
+  const n = norm(txt), ment = USERS.filter(u => n.includes('@' + norm(first(u.id)))).map(u => u.id);
+  const conversa = new Set([c.autor, c.atrib, ...(c.respostas || []).map(r => r.autor)].filter(x => x && x !== me && !ment.includes(x)));
+  conversa.forEach(u => avisarResposta(f, u, u === c.autor ? `respondeu seu comentário em ${onde}` : `respondeu um comentário em ${onde}`, txt));
+  ment.forEach(u => avisarResposta(f, u, `mencionou você em ${onde}`, txt));
+  const alvo = f.t || f.m || f.p || f.pr; if(alvo && alvo.log) alvo.log.push({em:nowISO(), por:me, txt:'respondeu um comentário'});
+  ui.comResp = null; save(); reRender(); toast('Resposta enviada');
+}
+document.addEventListener('keydown', e => { if(e.target && e.target.id === 'respTxt'){ e.stopPropagation(); if(e.key === 'Enter' && (e.ctrlKey || e.metaKey)){ e.preventDefault(); enviarResposta(e.target.dataset.respc); } else if(e.key === 'Escape'){ ui.comResp = null; reRender(); } } }, true);
 // todos os lugares onde há comentários
 function* comLugares(){
   for(const p of S.procs){ yield {arr:p.coms, kind:'proc', p}; for(const t of p.tarefas || []) yield {arr:t.coms, kind:'task', p, t}; }
@@ -3924,7 +3959,7 @@ function irPara(go){
 /* ---------- e-mails de aviso (cada pessoa escolhe o que recebe) ---------- */
 const EMAIL_CATS = [
   {k:'tarefas', l:'Tarefas', sub:'Tarefa ou subtarefa atribuída a você, concluída, pedidos de aprovação e respostas.', def:false},
-  {k:'mencoes', l:'Comentários', sub:'Menções (@), comentários atribuídos a você e comentários seus resolvidos.', def:true},
+  {k:'mencoes', l:'Comentários', sub:'Menções (@), comentários atribuídos a você, respostas aos seus comentários e comentários seus resolvidos.', def:true},
   {k:'processos', l:'Processos', sub:'Processo aberto ou passado para você.', def:false},
   {k:'tramitacao', l:'Tramitação', sub:'Quando a tramitação de um processo seu é atualizada.', def:false},
   {k:'licencas', l:'Vencimento de licenças', sub:'Resumo das 7h quando uma licença entra no prazo de renovação, e licenças atribuídas a você.', def:true},
@@ -3934,7 +3969,7 @@ const EMAIL_CATS = [
   {k:'financeiro', l:'Financeiro', sub:'Resumo das 7h com contas a pagar vencendo e recebíveis atrasados.', def:false}];
 function querEmail(id, k){ const u = U[id], c = EMAIL_CATS.find(x => x.k === k), v = u && u.emailPrefs ? u.emailPrefs[k] : undefined; return v === undefined ? !!(c && c.def) : !!v; }
 function catDe(txt, ctx){
-  if(/^(mencionou você|atribuiu um comentário a você|resolveu seu comentário)/.test(txt)) return 'mencoes';
+  if(/^(mencionou você|atribuiu um comentário a você|resolveu seu comentário|respondeu)/.test(txt)) return 'mencoes';
   if(/tramitação/.test(txt)) return 'tramitacao';
   if(/licença|renovação/i.test(txt)) return 'licencas';
   if(ctx.propId) return 'propostas';
@@ -4028,6 +4063,13 @@ function extrasClick(e, tg){
   { const el0 = tg.closest('[data-plopen]'); if(el0 && !tg.closest('.plan')){ abrirItem(el0.dataset.plopen); return true; } }
   if(procEditClick(tg)) return true;
   if((el = tg.closest('[data-emailtodos]'))){ const u = U[me]; if(u){ const v = el.dataset.emailtodos === '1'; u.emailPrefs = Object.fromEntries(EMAIL_CATS.map(c => [c.k, v])); save(); render(); toast(v ? 'Todos os e-mails ligados' : 'Todos os e-mails desligados'); } return true; }
+  if((el = tg.closest('[data-resp]'))){ ui.comResp = el.dataset.resp; reRender(); setTimeout(() => { const t = $('#respTxt'); if(t) t.focus(); }, 30); return true; }
+  if(tg.closest('[data-respno]')){ ui.comResp = null; reRender(); return true; }
+  if((el = tg.closest('[data-respok]'))){ enviarResposta(el.dataset.respok); return true; }
+  if(tg.closest('#respTxt')) return true;
+  if((el = tg.closest('[data-respdel]'))){ const [cid, rid] = el.dataset.respdel.split('|'), f = acharCom(cid);
+    if(f){ const i = (f.c.respostas || []).findIndex(r => r.id === rid); if(i >= 0 && (f.c.respostas[i].autor === me || isSocio())){ f.c.respostas.splice(i, 1); save(); toast('Resposta excluída'); } }
+    reRender(); return true; }
   if((el = tg.closest('[data-comdel]'))){ ui.comDel = el.dataset.comdel; reRender(); return true; }
   if(tg.closest('[data-comdelno]')){ ui.comDel = null; reRender(); return true; }
   if((el = tg.closest('[data-comdelok]'))){ const f = acharCom(el.dataset.comdelok); ui.comDel = null;
