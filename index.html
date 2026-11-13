@@ -1263,6 +1263,86 @@ input[type="checkbox"]{border-radius:3px!important}
 .mpbody{border-top:1px solid var(--line)}
 .mpbody .mine-row:first-child{border-top:0}
 @media (max-width:900px){.mph{grid-template-columns:18px minmax(0,1fr) auto}.mpflags,.mpprog{display:none}}
+
+/* ---------- protocolo, órgão, cronograma, vínculos ---------- */
+.orgtag{display:inline-flex;align-items:center;gap:3px;font-size:11px;font-weight:700;letter-spacing:.03em;color:var(--oc);background:color-mix(in srgb,var(--oc) 10%,#fff);border:1px solid color-mix(in srgb,var(--oc) 30%,#fff);padding:1px 6px;line-height:1.5;white-space:nowrap}
+.orgtag svg{width:11px;height:11px}
+.ptags{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:6px}
+.ctag{display:inline-flex;align-items:center;gap:3px;font-size:11px;font-weight:600;color:#52525B;background:#F4F4F5;padding:1px 6px;white-space:nowrap}
+.ctag svg{width:11px;height:11px}.ctag.late{color:#B42318;background:#FEE4E2}.ctag.ok{color:#067647;background:#ECFAF2}.ctag.dep{color:#6941C6;background:#F4F3FF}
+.mpt .orgtag{align-self:center}
+.pdatas{border:1px solid var(--line);padding:10px 12px;margin:-4px 0 14px}
+.pdh{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:6px;font-size:13px}
+.pdv{font-size:12px;font-weight:600;padding:1px 7px}.pdv.late{color:#B42318;background:#FEE4E2}.pdv.ok{color:#067647;background:#ECFAF2}
+.vrow{display:flex;gap:10px;align-items:center;padding:9px 12px;border-top:1px solid var(--line)}
+.sect .vrow:first-of-type{border-top:0}
+.vrow.mrow{cursor:pointer}.vrow.mrow:hover{background:var(--soft,#FAFAFA)}
+.vtipo{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:2px 6px;color:#fff;background:#6941C6}.vtipo.suc{background:#0E9384}
+.vadd{display:flex;gap:8px;align-items:center;margin-top:10px}.vadd .inp{flex:1}
+.rowc.matr{grid-template-columns:minmax(220px,2.3fr) minmax(130px,1.1fr) minmax(90px,.8fr) minmax(130px,1.1fr) minmax(110px,1fr) minmax(90px,.8fr)!important}
+@media (max-width:1250px){.rowc.matr{grid-template-columns:1fr 1fr 1fr!important}}
+
+/* ---------- relatório do processo ---------- */
+.relgrid{display:grid;grid-template-columns:minmax(220px,300px) minmax(0,1fr);gap:14px;align-items:start;margin-top:12px}
+@media (max-width:900px){.relgrid{grid-template-columns:1fr}}
+.relopts{border:1px solid var(--line);padding:12px}
+.relck{display:flex;gap:8px;align-items:flex-start;font-size:13px;padding:3px 0;cursor:pointer}.relck input{margin-top:3px}
+.relck.sub2{padding-left:18px;font-size:12.5px}
+.reltr{margin:6px 0}.reltr summary{cursor:pointer;font-size:12.5px;font-weight:600;color:var(--m-azul,#4948d1);padding:4px 0}
+.relprev{border:1px solid var(--line);background:#e8eaf2;padding:0;overflow:hidden;min-width:0}
+.relscale{position:relative;overflow:hidden}
+#relFrame{border:0;display:block;transform-origin:0 0;background:#fff;height:1123px}
+
+/* ---------- vínculos (estilo lista de dependências) ---------- */
+.vbar{display:flex;gap:8px;align-items:center}
+.vmenu{position:relative;flex:1;max-width:560px}
+.vbtn{width:100%;text-align:left;border:0;background:#EDEDED;padding:8px 12px;font:inherit;font-size:13.5px;color:var(--ink);cursor:pointer}
+.vbtn:hover{background:#E4E4E7}
+.vdrop{position:absolute;top:calc(100% + 6px);left:0;z-index:5;background:#fff;border:1px solid var(--line);box-shadow:0 10px 30px rgba(14,16,48,.15);min-width:280px;padding:6px 0}
+.vdrop button{display:flex;gap:10px;align-items:center;width:100%;border:0;background:none;text-align:left;padding:7px 14px;font:inherit;font-size:13.5px;cursor:pointer;color:var(--ink)}
+.vdrop button:hover{background:#F4F4F5}.vdrop hr{border:0;border-top:1px solid var(--line);margin:5px 0}
+.vi{display:inline-grid;place-items:center;width:15px;height:15px;border-radius:50%!important;color:#fff;font-style:normal;font-size:11px;font-weight:700;flex:none}
+.vi.red{background:#E5484D}.vi.amb{background:#F5B700;border-radius:2px!important}.vi.blu{background:#5B7DB1;border-radius:3px!important}
+.vpick{border:1px solid var(--m-azul,#4948d1);background:var(--m-azul-t05,#F7F7FF);padding:10px 12px;margin-top:10px}
+.vgh{display:flex;gap:8px;align-items:center;margin:12px 0 4px;font-size:14px}
+.vtab{border-top:1px solid var(--line)}
+.vth,.vtr{display:grid;grid-template-columns:minmax(0,1fr) 96px 150px 90px 26px;gap:10px;align-items:center;padding:7px 4px;border-bottom:1px solid var(--line);font-size:13px}
+.vth{font-size:11.5px;color:var(--muted);padding:6px 4px}
+.vtr.vazio,.vtr.add{display:block}.vtr.add{border-bottom:0}
+.vnm{display:flex;gap:8px;align-items:center;min-width:0}.vnm a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink);text-decoration:none;font-weight:500}.vnm a:hover{text-decoration:underline}
+.vdot{width:11px;height:11px;border-radius:50%!important;border:2.5px solid var(--c);flex:none;display:inline-block;box-shadow:inset 0 0 0 2px #fff;background:var(--c)}
+.vrl{font-size:11px;color:#5B7DB1;background:#EEF2F8;padding:0 6px;white-space:nowrap}
+@media (max-width:760px){.vth,.vtr{grid-template-columns:minmax(0,1fr) 26px}.vth span:nth-child(n+2):not(:last-child),.vtr>span:nth-child(n+2){display:none}}
+/* ---------- processos para cadastro ---------- */
+.cadsec{border:1px solid #FEC84B;background:#FFFCF5;margin-bottom:16px}
+.cadsec .tgh{display:flex;gap:8px;align-items:center;padding:10px 16px;border-bottom:1px solid #FEDF89}
+.cadrow{display:flex;gap:10px;align-items:center;padding:10px 16px;border-top:1px solid #FEF0C7;background:#fff}
+.cadsec .tgh+.cadrow{border-top:0}
+.cadinfo{margin-top:10px;padding:8px 10px;border:1px solid #FEDF89;background:#FFFCF5;font-size:13px}
+/* ---------- Gantt ---------- */
+.gantt{display:grid;grid-template-columns:270px minmax(0,1fr);border:1px solid var(--line);background:var(--ui-panel,#fff)}
+.gleft{border-right:1px solid var(--line)}
+.ghd{height:38px;border-bottom:1px solid var(--line);font-size:11.5px;color:var(--muted);font-weight:600;padding:0 12px;display:flex;align-items:center;position:relative;background:#FAFAFA}
+.gnm{height:46px;display:flex;gap:8px;align-items:center;padding:0 10px;border-bottom:1px solid #F1F1F3;cursor:pointer;font-size:13px}
+.gnm:hover{background:#FAFAFF}.gnm .sub{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:11.5px}.gnm>div{flex:1}
+.gnm.grp{cursor:default;background:#F7F7F8;font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+.gright{min-width:0}.gscroll{overflow-x:auto}
+.ghd .gmes{position:absolute;top:2px;font-size:11.5px;color:var(--ink);font-weight:600;border-left:1px solid var(--line);padding-left:5px;height:18px;line-height:18px}
+.ghd .gsem2{position:absolute;bottom:2px;font-size:10px;color:var(--muted);padding-left:2px}
+.ghd{padding:0}
+.gbody{position:relative}
+.gtrow{position:absolute;left:0;height:46px;border-bottom:1px solid #F1F1F3}.gtrow.grp{background:#F7F7F8}
+.gvl{position:absolute;top:0;bottom:0;border-left:1px dashed #EEEEF2}
+.ghoje{position:absolute;top:0;bottom:0;border-left:2px solid #D92D20;z-index:2}
+.gbar{position:absolute;height:12px;cursor:pointer;z-index:3}
+.gbar.gpl{background:repeating-linear-gradient(135deg,#E4E7F5 0 4px,#EEF0FA 4px 8px);border:1px solid #9AA4D6}
+.gbar.grl{background:var(--c);opacity:.9}.gbar.grl.run{background:linear-gradient(90deg,var(--c) 85%,color-mix(in srgb,var(--c) 40%,#fff))}
+.gmile{position:absolute;width:12px;height:12px;background:#9AA4D6;transform:rotate(45deg);z-index:3}
+.gsem{position:absolute;left:10px;font-size:11.5px;color:var(--muted);font-style:italic}
+.gsvg{position:absolute;left:0;top:0;pointer-events:none;z-index:4;overflow:visible}
+.garr{fill:none;stroke:#6941C6;stroke-width:1.6}.garr.bad{stroke:#D92D20;stroke-dasharray:4 3}
+.gsvg path{pointer-events:stroke}
+.gleg{display:flex;gap:18px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin:10px 0 40px;align-items:center}.gleg span{display:inline-flex;gap:6px;align-items:center}
 /* ---------- painéis redimensionáveis ---------- */
 @media (min-width:1181px){.app{grid-template-columns:var(--rz-side,260px) minmax(0,1fr)!important}.pwrap:not(.notree){grid-template-columns:var(--rz-tree,250px) minmax(0,1fr)!important}}
 @media (min-width:1001px){.plan{grid-template-columns:var(--rz-plan,300px) minmax(0,1fr)!important}}
@@ -1271,6 +1351,8 @@ input[type="checkbox"]{border-radius:3px!important}
 .rzh::after{content:'';position:absolute;top:0;bottom:0;left:4px;width:2px;background:transparent;transition:background .15s}
 .rzh:hover::after,.rzh.on::after{background:var(--m-azul,#4948d1)}
 .rzh.edge{left:auto!important;right:0}
+.rzh.edgel{left:0!important}
+@media (min-width:861px){.drawer{width:min(var(--rz-drawer,880px),calc(100% - 20px))!important}}
 body.rzing,body.rzing *{cursor:col-resize!important;user-select:none!important}
 /* ---------- comparativo: divergências ---------- */
 .tbcmp td.base{background:var(--m-azul-t05,#F7F7FF)}
@@ -1388,6 +1470,12 @@ const eqById = id => equipes().find(e => e.id === id);
 const membrosDe = id => isEq(id) ? ((eqById(id) || {}).membros || []).filter(m => U[m]) : (id ? [id] : []);
 const respTem = (arr, uid) => !!uid && (Array.isArray(arr) ? arr : [arr]).some(x => x === uid || (isEq(x) && membrosDe(x).includes(uid)));
 const optsResp = (sel, nomeCompleto) => USERS.map(u => `<option value="${u.id}" ${sel === u.id ? 'selected' : ''}>${esc(nomeCompleto ? u.nome : first(u.id))}</option>`).join('') + (equipes().length ? `<optgroup label="Equipes">${equipes().map(e => `<option value="${e.id}" ${sel === e.id ? 'selected' : ''}>${esc(e.nome)}</option>`).join('')}</optgroup>` : '');
+const pcod = p => p ? (String(p.protocolo || '').trim() || p.codigo || '') : '';
+const ORG_COR = {SEUMA:'#12B76A', SEINF:'#F79009', SEFIN:'#0000FF', AMC:'#7A5AF8', SEGER:'#00A9CC', CBMCE:'#D92D20', SEMACE:'#0E9384', IPHAN:'#C99500'};
+function orgaoSigla(p){ const a = typeof tramAtual === 'function' ? tramAtual(p) : null; let s = String((a && a.setor) || p.orgao || '').trim(); if(!s || s === '—') return '';
+  s = s.split(/[\/(|–]|\s-\s/)[0].trim().replace(/^\d+\s*/, ''); return s.toUpperCase().slice(0, 18); }
+function orgaoTag(p){ const s = orgaoSigla(p); if(!s) return ''; const a = typeof tramAtual === 'function' ? tramAtual(p) : null;
+  return `<span class="orgtag" style="--oc:${ORG_COR[s] || '#52525B'}" title="${a ? 'Tramitando em ' + esc(a.setor) : 'Órgão: ' + esc(p.orgao || '')}">${ic('pin', 'sm')}${esc(s)}</span>`; }
 const first = id => isEq(id) ? ((eqById(id) || {}).nome || 'Equipe') : (U[id]?.nome || '').split(' ')[0];
 function avInner(u){ return u.foto ? `<img src="${u.foto}" alt="">` : esc(iniOf(u.nome)); }
 const av = (id, sm, noclick) => {
@@ -1758,7 +1846,7 @@ function renderProps(){
     const p = pr.procId && procById(pr.procId);
     let acomp;
     if(p){ const g = progress(p);
-      acomp = `<div style="display:flex;gap:10px;align-items:center">${ring(g.pct, 40, PS[p.status].c)}<div><div class="lb">Processo ${esc(p.codigo)}</div>${pill(PS[p.status].l, PS[p.status].c)}</div></div>`;
+      acomp = `<div style="display:flex;gap:10px;align-items:center">${ring(g.pct, 40, PS[p.status].c)}<div><div class="lb">Processo ${esc(pcod(p))}</div>${pill(PS[p.status].l, PS[p.status].c)}</div></div>`;
     } else if(pr.status === 'aprovada') acomp = `<button class="btn sm primary" data-newproc="${pr.id}">${ic('mais', 'sm')} Abrir processo</button>`;
     else acomp = '<span class="sub">abre quando o cliente aceitar</span>';
     return `<div class="rowc prop" data-prop="${pr.id}">
@@ -1824,8 +1912,8 @@ function procRow(p){
   const pr = propById(p.propId), g = progress(p), lc = lateCount(p), nd = nextDue(p), a = tramAtual(p);
   const ncom = p.coms.length + p.tarefas.reduce((x, t) => x + t.coms.length, 0);
   return `<div class="rowc" data-proc="${p.id}">
-    <div><div class="sub" style="font-weight:700">${esc(p.codigo)} | ${esc(pr.cliente)}</div><div class="nm">${esc(pr.emp)}</div>
-      <div class="tags">${tag(p.servico, SERV_C[p.modelo])}${p.protocolo ? tag(p.protocolo, '#9A9DB0') : ''}</div></div>
+    <div><div class="sub" style="font-weight:700">${esc(pcod(p))} | ${esc(pr.cliente)}</div><div class="nm">${esc(pr.emp)}</div>
+      <div class="tags">${orgaoTag(p)}${tag(p.servico, SERV_C[p.modelo])}${procCronoHtml(p)}</div></div>
     <div><div class="lb">Status</div>${pill(PS[p.status].l, PS[p.status].c)}</div>
     <div><div class="lb">Tarefas</div><div class="vv">${ring(g.pct, 34, '#0000FF', '')} ${g.ok}/${g.tot}</div></div>
     <div><div class="lb">${a ? 'Está em' : 'Órgão'}</div><div class="vv" style="display:block">${a ? `${esc(a.setor.split(' (')[0])}<div class="sub ${a.dias >= 15 ? 'late' : a.dias >= 7 ? 'soon' : ''}">${a.dias === 0 ? 'chegou hoje' : 'há ' + a.dias + ' dia' + (a.dias > 1 ? 's' : '')}</div>` : esc(p.orgao)}</div></div>
@@ -1851,7 +1939,9 @@ function renderProcs(){
       <label class="sub" style="display:flex;gap:6px;align-items:center;font-weight:700"><input type="checkbox" id="pMine" ${ui.fMine ? 'checked' : ''}> só onde tenho tarefa</label>
     </div>`;
   let body;
-  if(ui.procMode === 'lista'){
+  if(ui.procMode === 'gantt'){
+    body = (ui.sel.e ? '' : `<p class="hint" style="margin:0 0 10px">Dica: escolha um empreendimento na árvore à esquerda para ver só os processos dele.</p>`) + ganttHtml(list);
+  } else if(ui.procMode === 'lista'){
     const tabs = `<div class="seg" style="margin-bottom:14px"><button data-fst="" class="${!ui.fStatus ? 'on' : ''}">Todos <span class="n">${list.length}</span></button>${PROC_ST.map(s => { const n = list.filter(p => p.status === s.k).length; return n ? `<button data-fst="${s.k}" class="${ui.fStatus === s.k ? 'on' : ''}">${s.l} <span class="n">${n}</span></button>` : ''; }).join('')}</div>`;
     body = tabs + `<div class="rows">${shown.map(procRow).join('') || '<div class="blk empty">Nenhum processo com esses filtros.</div>'}</div>`;
   } else {
@@ -1861,10 +1951,10 @@ function renderProcs(){
         ${ps.map(p => { const pr = propById(p.propId) || p.prop || {}, g = progress(p), lc = lateCount(p), a = tramAtual(p), nd = nextDue(p);
           const ncom = p.coms.length + p.tarefas.reduce((x, t) => x + t.coms.length, 0);
           return `<div class="mcard pk" draggable="true" data-proc="${p.id}">
-            <div class="mt">${esc(pr.emp || p.codigo)}</div>
-            <div class="sub mtipo" style="margin-top:2px" title="${esc(pr.cliente || '')}">${esc(p.codigo)} | ${esc(p.servico || pr.tipo || '')}</div>
+            <div class="mt">${esc(pr.emp || pcod(p))}</div>
+            <div class="sub mtipo" style="margin-top:2px" title="${esc(pr.cliente || '')}">${esc(pcod(p))} | ${esc(p.servico || pr.tipo || '')}</div>
             <div class="mm"><span title="Tarefas">${ic('check', 'sm')} ${g.ok}/${g.tot}</span>${ncom ? `<span>${ic('comentario', 'sm')} ${ncom}</span>` : ''}${p.drive ? `<a href="${esc(p.drive)}" target="_blank" rel="noopener" data-stop title="Pasta no Drive" style="color:var(--azul);display:inline-flex">${ic('pasta', 'sm')}</a>` : ''}${lc ? `<span class="late">${ic('alerta', 'sm')} ${lc}</span>` : ''}</div>
-            ${a ? `<div class="sub" style="margin-top:6px;display:flex;gap:4px;align-items:center">${ic('pin', 'sm')} ${esc(a.setor.split(' (')[0])} | ${a.dias === 0 ? 'hoje' : 'há ' + a.dias + 'd'}</div>` : ''}
+            <div class="ptags">${orgaoTag(p)}${a ? `<span class="sub">${a.dias === 0 ? 'chegou hoje' : 'há ' + a.dias + 'd'}</span>` : ''}${procCronoHtml(p)}${p.valProt && p.valProt.st === 'pendente' ? `<span class="ctag late" title="Aguardando validação de ${esc(first(p.valProt.por))}">validação: ${esc(first(p.valProt.por))}</span>` : ''}</div>
             <div class="mf">${avs(people(p))}${nd ? `<span class="sub">${ic('relogio', 'sm')} ${dueHtml(nd)}</span>` : ''}</div>
           </div>`; }).join('')}
         ${typeof avulsoModal === 'function' ? `<div class="madd"><button data-avnew="${st.k}">+ Adicionar processo</button></div>` : ''}</div>`;
@@ -1874,8 +1964,8 @@ function renderProcs(){
   const scroll = $('.tree')?.scrollTop || 0, hideT = ui.procMode === 'quadro' && ui.hideTree;
   $('#view').innerHTML = `<div class="pagehead"><div><h1>Processos</h1><p>Organizados por cliente e obra.</p></div><span class="spacer"></span><button class="btn" data-avnew>${ic('mais', 'sm')} Processo sem proposta</button>
       ${ui.procMode === 'quadro' ? `<button class="btn sm" data-hidetree>${ui.hideTree ? ic('lista', 'sm') + ' Mostrar clientes' : 'Ocultar clientes'}</button>` : ''}
-      <div class="seg"><button data-mode="quadro" class="${ui.procMode === 'quadro' ? 'on' : ''}">${ic('quadro', 'sm')} Quadro</button><button data-mode="lista" class="${ui.procMode === 'lista' ? 'on' : ''}">${ic('lista', 'sm')} Lista</button></div></div>
-    <div class="pwrap ${hideT ? 'notree' : ''}">${hideT ? '' : treeHtml()}<div class="pmain">${crumb}${alerts}${filtros}${body}</div></div>`;
+      <div class="seg"><button data-mode="quadro" class="${ui.procMode === 'quadro' ? 'on' : ''}">${ic('quadro', 'sm')} Quadro</button><button data-mode="lista" class="${ui.procMode === 'lista' ? 'on' : ''}">${ic('lista', 'sm')} Lista</button><button data-mode="gantt" class="${ui.procMode === 'gantt' ? 'on' : ''}">${ic('relogio', 'sm')} Gantt</button></div></div>
+    <div class="pwrap ${hideT ? 'notree' : ''}">${hideT ? '' : treeHtml()}<div class="pmain">${crumb}${cadSecHtml(false)}${alerts}${filtros}${body}</div></div>`;
   const tr = $('.tree'); if(tr) tr.scrollTop = scroll;
 }
 
@@ -1911,7 +2001,7 @@ function renderMine(){
   items.forEach(i => { (grupos[i.p.id] = grupos[i.p.id] || {p:i.p, its:[]}).its.push(i); });
   const prazoMin = g => g.its.map(i => i.prazo).filter(Boolean).sort()[0] || '9999';
   const lista = Object.values(grupos).map(g => Object.assign(g, {at:g.its.filter(i => bucket(i) === 0).length, hj:g.its.filter(i => bucket(i) === 1).length, pz:prazoMin(g)}))
-    .sort((x, y) => (y.at > 0) - (x.at > 0) || x.pz.localeCompare(y.pz) || String(x.p.codigo).localeCompare(String(y.p.codigo)));
+    .sort((x, y) => (y.at > 0) - (x.at > 0) || x.pz.localeCompare(y.pz) || String(pcod(x.p)).localeCompare(String(pcod(y.p))));
   const html = lista.map(g => {
     const p = g.p, pr = propById(p.propId) || {}, aberto = !!ui.mineOpen[p.id];
     const tot = p.tarefas.length, conc = p.tarefas.filter(t => t.status === 'concluida').length;
@@ -1920,7 +2010,7 @@ function renderMine(){
     return `<div class="mpcard ${aberto ? 'open' : ''} ${g.at ? 'mplate' : ''}">
       <div class="mph" data-mineproc="${p.id}" role="button" aria-expanded="${aberto}">
         <span class="mpcar">${aberto ? '▾' : '▸'}</span>
-        <div class="mpmain"><div class="mpt"><span class="mpcod">${esc(p.codigo)}</span><b>${esc(pr.emp || '')}</b></div>
+        <div class="mpmain"><div class="mpt"><span class="mpcod">${esc(pcod(p))}</span>${orgaoTag(p)}<b>${esc(pr.emp || '')}</b></div>
           <div class="sub">${esc(p.servico || '')}${pr.cliente ? ' | ' + esc(pr.cliente) : ''}</div></div>
         <div class="mpcnt"><b>${g.its.length}</b><span class="sub">${cont}</span></div>
         <div class="mpflags">${g.at ? `<span class="mpf red">${g.at} atrasada${g.at > 1 ? 's' : ''}</span>` : ''}${g.hj ? `<span class="mpf amb">${g.hj} para hoje</span>` : ''}${!g.at && !g.hj && g.pz !== '9999' ? `<span class="sub">próximo prazo ${fmtD(g.pz)}</span>` : ''}${g.pz === '9999' ? '<span class="sub">sem prazo</span>' : ''}</div>
@@ -1954,7 +2044,7 @@ function drawerProp(pr){
   let proc;
   if(p){
     const g = progress(p);
-    proc = `<div class="sect"><h4>Processo ${esc(p.codigo)} ${pill(PS[p.status].l, PS[p.status].c)}</h4>
+    proc = `<div class="sect"><h4>Processo ${esc(pcod(p))} ${pill(PS[p.status].l, PS[p.status].c)}</h4>
       <div class="prog" style="margin-bottom:10px"><div class="bar" style="flex:1;height:8px"><i style="width:${g.pct}%"></i></div><b>${g.pct}%</b> | ${g.ok} de ${g.tot} tarefas</div>
       ${p.tarefas.map(t => `<div style="display:flex;gap:8px;align-items:center;padding:4px 0;font-size:14px"><span class="sq ${t.status === 'concluida' ? 'done' : ''}" style="border-color:${TS[t.status].c};cursor:default"></span><span style="flex:1">${esc(t.titulo)}</span>${avs(t.resp)}<span style="width:64px;text-align:right">${dueHtml(t.prazo, t.status === 'concluida')}</span></div>`).join('')}
       <div style="margin-top:12px"><button class="btn primary sm" data-goproc="${p.id}">Abrir processo →</button></div></div>`;
@@ -1972,7 +2062,7 @@ function drawerProp(pr){
 function drawerProc(p){
   const pr = propById(p.propId);
   const ncom = p.coms.length;
-  const tabs = [['tarefas', 'Tarefas', p.tarefas.filter(t => t.status !== 'concluida').length], ['descricao', 'Descrição', 0], ['drive', 'Pasta no Drive', 0], ['tramitacao', 'Tramitação', (p.tram || []).length], ['licenca', 'Licença', isOpen(p) ? 0 : licsOf(p).length], ['comentarios', 'Comentários', ncom], ['atividade', 'Atividade', 0], ['proposta', 'Proposta', 0]];
+  const tabs = [['tarefas', 'Tarefas', p.tarefas.filter(t => t.status !== 'concluida').length], ['descricao', 'Descrição', 0], ['drive', 'Pasta no Drive', 0], ['tramitacao', 'Tramitação', (p.tram || []).length], ['licenca', 'Licença', isOpen(p) ? 0 : licsOf(p).length], ['comentarios', 'Comentários', ncom], ['vinculos', 'Vínculos', procPred(p).length + procSuc(p).length], ['material', 'Material técnico', matsDoProc(p).length], ['relatorio', 'Relatório', 0], ['atividade', 'Atividade', 0], ['proposta', 'Proposta', 0]];
   let body = '';
   if(ui.dtab === 'tarefas'){
     const grupos = TASK_ST.map(st => {
@@ -2002,6 +2092,12 @@ function drawerProc(p){
   } else if(ui.dtab === 'comentarios'){
     body = `<div class="sect" style="padding:0;overflow:hidden"><div class="feed" style="max-height:none">${feedHtml(p.coms, null)}</div>${composerHtml('proc')}</div>
       <p class="hint">Comentários gerais do processo. Para assuntos de uma etapa, comente dentro da tarefa.</p>`;
+  } else if(ui.dtab === 'vinculos'){
+    body = vincHtml(p);
+  } else if(ui.dtab === 'material'){
+    body = matProcHtml(p);
+  } else if(ui.dtab === 'relatorio'){
+    body = relTabHtml(p);
   } else if(ui.dtab === 'atividade'){
     const all = [...p.log.map(l => ({...l, ctx:''})), ...p.tarefas.flatMap(t => t.log.map(l => ({...l, ctx:t.titulo})))].sort((a, b) => b.em.localeCompare(a.em));
     body = all.map(l => `<div class="act">${av(l.por, true)}<div><b>${esc(first(l.por))}</b> ${esc(l.txt)}${l.ctx ? ` <span class="sub">em “${esc(l.ctx)}”</span>` : ''}<div>${fmtWhen(l.em)}</div></div></div>`).join('') || '<div class="empty">Sem atividade.</div>';
@@ -2022,9 +2118,10 @@ function drawerProc(p){
         <label class="f">Nº do protocolo<input data-pf="protocolo" value="${esc(p.protocolo)}" placeholder="ainda não protocolado"></label>
         <label class="f">Prazo final<input type="date" data-pf="prazo" value="${p.prazo}"></label>
       </div>
+      ${procDatasHtml(p)}${valProtHtml(p)}
       <div class="tabs" style="padding:0;margin:0 0 14px">${tabs.map(([k, l, n]) => `<button class="tab ${ui.dtab === k ? 'on' : ''}" data-dtab="${k}">${l}${n ? ` <span class="n">${n}</span>` : ''}</button>`).join('')}</div>
       ${body}
-      <div class="delzone">${ui.delConfirm === p.id ? `<span class="sub" style="flex:1">Excluir ${esc(p.codigo)} com todas as tarefas, comentários e tramitação? Isso não pode ser desfeito.</span><button class="btn sm" data-delproc-no>Cancelar</button><button class="btn sm danger" data-delproc-ok="${p.id}">Sim, excluir</button>` : `<span class="spacer"></span><button class="btn sm danger" data-delproc="${p.id}">Excluir processo</button>`}</div>
+      <div class="delzone">${ui.delConfirm === p.id ? `<span class="sub" style="flex:1">Excluir ${esc(pcod(p))} com todas as tarefas, comentários e tramitação? Isso não pode ser desfeito.</span><button class="btn sm" data-delproc-no>Cancelar</button><button class="btn sm danger" data-delproc-ok="${p.id}">Sim, excluir</button>` : `<span class="spacer"></span><button class="btn sm danger" data-delproc="${p.id}">Excluir processo</button>`}</div>
     </div>`;
 }
 
@@ -2134,7 +2231,7 @@ function addTram(p, items){
   if(novos.length){
     logP(p, `registrou ${novos.length} movimentaç${novos.length === 1 ? 'ão' : 'ões'} na tramitação`);
     const a = tramAtual(p);
-    new Set([p.resp, ...people(p)]).forEach(u => notify(u, `atualizou a tramitação de ${esc(p.codigo)}: agora em ${esc(a.setor)}`, p.id, null));
+    new Set([p.resp, ...people(p)]).forEach(u => notify(u, `atualizou a tramitação de ${esc(pcod(p))}: agora em ${esc(a.setor)}`, p.id, null));
   }
   return novos.length;
 }
@@ -2166,7 +2263,7 @@ function sendComment(box){
   const t = scope === 'task' ? taskOf(p, ui.task.taskId) : null;
   (t ? t.coms : p.coms).push(c);
   ta.value = '';
-  const onde = t ? `“${esc(t.titulo)}”` : `o processo ${esc(p.codigo)}`;
+  const onde = t ? `“${esc(t.titulo)}”` : `o processo ${esc(pcod(p))}`;
   const n = norm(txt);
   const ment = USERS.filter(u => n.includes('@' + norm(first(u.id))));
   ment.forEach(u => { if(u.id !== atrib) notify(u.id, `mencionou você em ${onde}`, p.id, t?.id || null); });
@@ -2190,14 +2287,14 @@ function renderTask(){
   const feed = ui.feedTab === 'com' ? feedHtml(t.coms, t)
     : (t.log.map(l => `<div class="act">${av(l.por, true)}<div><b>${esc(first(l.por))}</b> ${esc(l.txt)}<div>${fmtWhen(l.em)}</div></div></div>`).join('') || '<div class="empty" style="padding:24px">Sem atividade.</div>');
   $('#layer').innerHTML = `<div class="mlayer" data-mclose><div class="modal">
-    <div class="mhead"><span>${esc(p.codigo)} | ${esc(pr.emp)}</span><span>/</span><span>${esc(p.servico)}</span><span class="spacer"></span><button class="btn sm danger" data-deltask>Excluir tarefa</button><button class="btn ghost" data-tclose>✕</button></div>
+    <div class="mhead"><span>${esc(pcod(p))} | ${esc(pr.emp)}</span><span>/</span><span>${esc(p.servico)}</span><span class="spacer"></span><button class="btn sm danger" data-deltask>Excluir tarefa</button><button class="btn ghost" data-tclose>✕</button></div>
     <div class="mbody">
       <div class="mleft">
         <input class="ttitle" data-tf="titulo" value="${esc(t.titulo)}">
         <div class="props">
           <span class="k">Status</span><span><select class="stsel" data-tf="status" style="background:${TS[t.status].c}">${TASK_ST.map(s => `<option value="${s.k}" ${s.k === t.status ? 'selected' : ''}>${s.l}</option>`).join('')}</select></span>
           <span class="k">Responsáveis</span><span class="whopick">${USERS.map(u => `<button data-who="${u.id}" class="${t.resp.includes(u.id) ? 'on' : ''}">${av(u.id, true, true)}${esc(first(u.id))}</button>`).join('')}${equipes().map(e => `<button data-who="${e.id}" class="eqbtn ${t.resp.includes(e.id) ? 'on' : ''}">${av(e.id, true, true)}${esc(e.nome)}</button>`).join('')}</span>
-          <span class="k">Prazo</span><span style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><input type="date" data-tf="prazo" value="${t.prazo}"> ${t.prazo ? dueHtml(t.prazo, t.status === 'concluida') : ''} ${gcalBtn(t.titulo + ' | ' + propById(p.propId).emp, t.prazo, p.codigo + ' | ' + p.servico)}</span>
+          <span class="k">Prazo</span><span style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><input type="date" data-tf="prazo" value="${t.prazo}"> ${t.prazo ? dueHtml(t.prazo, t.status === 'concluida') : ''} ${gcalBtn(t.titulo + ' | ' + propById(p.propId).emp, t.prazo, pcod(p) + ' | ' + p.servico)}</span>
           <span class="k">Prioridade</span><span><select data-tf="prio">${Object.entries(PRIO).map(([k, v]) => `<option value="${k}" ${k === t.prio ? 'selected' : ''}>${v.l}</option>`).join('')}</select></span>
         </div>
         ${timeSectHtml(p, t)}${taskAprovHtml(p, t)}
@@ -2256,7 +2353,7 @@ function newProcModal(propId){
 function renderNotifs(){
   const ns = S.notifs.filter(n => n.para === me);
   $('#npanel').innerHTML = `<div class="h">Notificações<span class="spacer"></span><button class="btn sm ghost" data-readall>Marcar todas como lidas</button></div>` +
-    (ns.map(n => `<div class="ni ${n.lida ? '' : 'unread'}" data-notif="${n.id}"><div>${n.lida ? '' : '<span style="color:var(--indigo)">●</span> '}${n.txt}<div class="when">${fmtWhen(n.em)} | ${esc(procById(n.procId)?.codigo || matById(n.matId)?.codigo || '')}</div></div></div>`).join('') || '<div class="empty">Sem notificações.</div>');
+    (ns.map(n => `<div class="ni ${n.lida ? '' : 'unread'}" data-notif="${n.id}"><div>${n.lida ? '' : '<span style="color:var(--indigo)">●</span> '}${n.txt}<div class="when">${fmtWhen(n.em)} | ${esc(pcod(procById(n.procId)) || matById(n.matId)?.codigo || '')}</div></div></div>`).join('') || '<div class="empty">Sem notificações.</div>');
 }
 
 /* ---------- Dashboard ---------- */
@@ -2325,7 +2422,7 @@ function activityRows(){
   return all.filter(a => !q || norm([a.txt, a.ctx, propById(a.p.propId).emp, first(a.por)].join(' ')).includes(q)).sort((a, b) => b.em.localeCompare(a.em)).slice(0, 7).map(a => { const d = new Date(a.em), pr = propById(a.p.propId);
     return `<tr data-proc="${a.p.id}"><td><span class="cbx"></span></td>
       <td><div class="actt"><span class="aico">${ic(a.txt.includes('coment') ? 'comentario' : a.txt.includes('tramita') ? 'pin' : a.txt.includes('conclu') ? 'check' : 'doc', 'sm')}</span><div><b>${esc(first(a.por))}</b> ${esc(a.txt)}${a.ctx ? `<div class="sub">${esc(a.ctx)}</div>` : ''}</div></div></td>
-      <td><b>${esc(pr.emp)}</b><div class="sub">${esc(a.p.codigo)}</div></td>
+      <td><b>${esc(pr.emp)}</b><div class="sub">${esc(pcod(a.p))}</div></td>
       <td>${fmtD(isoOf(d))}</td><td>${pad(d.getHours())}:${pad(d.getMinutes())}</td>
       <td>${av(a.por, true)}</td><td><span class="sdot"><i style="background:${PS[a.p.status].c}"></i>${PS[a.p.status].l}</span></td></tr>`; }).join('');
 }
@@ -2498,8 +2595,8 @@ function licModal(procId, licId, auto){
   $('#layer').innerHTML = `<div class="mlayer" data-mclose><div class="modal small" style="width:min(640px,100%)">
     <div class="mhead"><b style="color:var(--ink);font-size:17px;font-family:var(--kanit);font-weight:500">${licId ? 'Editar licença' : 'Cadastrar licença'}</b><span class="spacer"></span><button class="btn ghost" data-tclose>✕</button></div>
     <div style="padding:18px 20px;display:flex;flex-direction:column;gap:14px;overflow:auto">
-      ${auto ? `<div class="banner" style="margin:0;background:#E3F8EC;color:#065F46"><b>${esc(p.codigo)} foi finalizado.</b> Cadastre a licença emitida para o painel avisar a hora de renovar.</div>` : ''}
-      ${p.id ? `<div><div class="sub">${esc(p.codigo)} | ${esc(p.servico)}</div><b style="font-size:16px">${esc(pr.emp)}</b> <span class="sub">| ${esc(pr.cliente)}</span></div>` : `<div class="fields" style="margin:0"><label class="f">Cliente<input id="lfCli" value="${esc(l.cliente || '')}"></label><label class="f">Obra<input id="lfObra" value="${esc(l.obra || '')}"></label></div>`}
+      ${auto ? `<div class="banner" style="margin:0;background:#E3F8EC;color:#065F46"><b>${esc(pcod(p))} foi finalizado.</b> Cadastre a licença emitida para o painel avisar a hora de renovar.</div>` : ''}
+      ${p.id ? `<div><div class="sub">${esc(pcod(p))} | ${esc(p.servico)}</div><b style="font-size:16px">${esc(pr.emp)}</b> <span class="sub">| ${esc(pr.cliente)}</span></div>` : `<div class="fields" style="margin:0"><label class="f">Cliente<input id="lfCli" value="${esc(l.cliente || '')}"></label><label class="f">Obra<input id="lfObra" value="${esc(l.obra || '')}"></label></div>`}
       <div class="fields" style="margin:0">
         <label class="f">Tipo de licença<select id="lfTipo">${LIC_TIPOS.map(t => `<option ${t === l.tipo ? 'selected' : ''}>${t}</option>`).join('')}</select></label>
         <label class="f">Número<input id="lfNum" value="${esc(l.numero)}" placeholder="Ex.: 1234/2026"></label>
@@ -2536,7 +2633,7 @@ function licRow(l){
     <div><div class="lb">Protocolar até</div><div class="vv" style="display:block"><span class="${i.dp < 0 ? 'late' : i.st === 'renovar' ? 'soon' : ''}">${fmtD(i.protocolarAte)}</span><div class="sub">${l.antecedencia} dias antes</div></div></div>
     <div><div class="lb">Situação</div>${pill(s.l, s.c)}</div>
     <div><div class="lb">Responsável</div>${avs([l.resp])}</div>
-    <div class="acts">${ren ? `<button class="btn sm" data-goproc="${ren.id}">${esc(ren.codigo)}</button>` : ['renovar', 'fora', 'vencida'].includes(i.st) ? `<button class="btn sm primary" data-licrenov="${l.id}">Iniciar renovação</button>` : (p ? `<button class="btn sm" data-goproc="${p.id}">${esc(p.codigo)}</button>` : `<button class="btn sm" data-licedit="${l.id}">Editar</button>`)}</div>
+    <div class="acts">${ren ? `<button class="btn sm" data-goproc="${ren.id}">${esc(pcod(ren))}</button>` : ['renovar', 'fora', 'vencida'].includes(i.st) ? `<button class="btn sm primary" data-licrenov="${l.id}">Iniciar renovação</button>` : (p ? `<button class="btn sm" data-goproc="${p.id}">${esc(pcod(p))}</button>` : `<button class="btn sm" data-licedit="${l.id}">Editar</button>`)}</div>
   </div>`;
 }
 function renderLics(){
@@ -2560,7 +2657,7 @@ function renderLics(){
       <div class="acard" data-lpend><div class="top2"><span class="ico">${ic('doc')}</span>${sem.length ? `<span class="w">${ic('alerta', 'sm')} Cadastrar</span>` : ''}</div><div class="v">${sem.length}</div><div class="ft">Processos finalizados sem licença</div></div>
     </div>
     ${sem.length ? `<div class="blk" style="margin-bottom:16px" id="pendLic"><h3>Processos finalizados aguardando cadastro da licença <span class="cnt">${sem.length}</span></h3>
-      ${sem.map(p => { const pr = propById(p.propId); return `<div class="pend"><div style="flex:1;min-width:0"><b>${esc(pr.emp)}</b> <span class="sub">| ${esc(p.codigo)} | ${esc(p.servico)} | ${PS[p.status].l}</span></div><button class="btn sm primary" data-licnew="${p.id}">${ic('mais', 'sm')} Cadastrar licença</button></div>`; }).join('')}</div>` : ''}
+      ${sem.map(p => { const pr = propById(p.propId); return `<div class="pend"><div style="flex:1;min-width:0"><b>${esc(pr.emp)}</b> <span class="sub">| ${esc(pcod(p))} | ${esc(p.servico)} | ${PS[p.status].l}</span></div><button class="btn sm primary" data-licnew="${p.id}">${ic('mais', 'sm')} Cadastrar licença</button></div>`; }).join('')}</div>` : ''}
     <div class="filters">
       <input type="search" id="lq" placeholder="Buscar por obra, cliente, tipo ou número" value="${esc(ui.lq || '')}">
       <select id="lCid"><option value="">Todas as cidades</option>${cidades.map(c => `<option ${c === ui.lCid ? 'selected' : ''}>${esc(c)}</option>`).join('')}</select>
@@ -2596,8 +2693,8 @@ function startRenewal(l){
   np.prazo = licInfo(l).protocolarAte;
   np.log[0].txt = `abriu a renovação da licença ${l.tipo}${l.numero ? ' nº ' + l.numero : ''} (vence em ${fmtD(l.validade)})`;
   S.procs.push(np); l.renovProcId = np.id; rebuildProps();
-  notify(l.resp, `abriu a renovação de ${esc(l.tipo)} de ${esc(pr.emp)} (${np.codigo})`, np.id, null);
-  save(); toast(`${np.codigo} aberto para a renovação`); ui.view = 'proc'; render(); openDrawer('proc', np.id);
+  notify(l.resp, `abriu a renovação de ${esc(l.tipo)} de ${esc(pr.emp)} (${pcod(np)})`, np.id, null);
+  save(); toast(`${pcod(np)} aberto para a renovação`); ui.view = 'proc'; render(); openDrawer('proc', np.id);
 }
 
 /* ---------- Rastreio de tempo ---------- */
@@ -2768,7 +2865,7 @@ function matCard(m){
   return `<div class="mcard" draggable="true" data-mat="${m.id}">
     <div class="mt">${esc(m.titulo)}</div>
     <div class="mm">${m.objetivo || m.historico ? `<span title="Tem descrição">${ic('lista', 'sm')}</span>` : ''}<span title="Checklist">${ic('check', 'sm')} ${c.f}/${c.t}</span>${m.coms.length ? `<span>${ic('comentario', 'sm')} ${m.coms.length}</span>` : ''}${run ? `<span class="tmr on"><i></i><span ${liveAttr(m)}>${fmtClock(timeTotal(m))}</span></span>` : timeTotal(m) ? `<span>${ic('relogio', 'sm')} ${fmtDur(timeTotal(m))}</span>` : ''}</div>
-    ${matPausaHtml(m) ? `<div class="mm" style="margin-top:4px">${matPausaHtml(m)}</div>` : ''}
+    ${matPausaHtml(m) ? `<div class="mm" style="margin-top:4px">${matPausaHtml(m)}</div>` : ''}${m.procId && procById(m.procId) ? `<div class="ptags" style="margin-top:6px"><span class="ctag" title="Processo vinculado">${ic('pasta', 'sm')} ${esc(pcod(procById(m.procId)))}</span>${orgaoTag(procById(m.procId))}</div>` : ''}
     <div class="mf">${avs(m.resp)}${m.prazo ? `<span class="sub">${ic('relogio', 'sm')} ${dueHtml(m.prazo, m.status === 'entregue')}</span>` : ''}${m.prio !== 'normal' ? `<span class="flag" style="color:${PRIO[m.prio].c}">${ic('bandeira', 'sm')} ${PRIO[m.prio].l}</span>` : ''}</div>
     <div class="tags" style="margin-top:8px">${tag(m.tipo, '#6666FF')}</div></div>`;
 }
@@ -2804,6 +2901,7 @@ function renderMat(){
         <span class="k">Prazo</span><span style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><input type="date" data-mf="prazo" value="${m.prazo}"> ${m.prazo ? dueHtml(m.prazo, m.status === 'entregue') : ''} ${gcalBtn(m.titulo, m.prazo, m.codigo + ' | ' + m.tipo)}</span>
         <span class="k">Prioridade</span><span><select data-mf="prio">${Object.entries(PRIO).map(([k, v]) => `<option value="${k}" ${k === m.prio ? 'selected' : ''}>${v.l}</option>`).join('')}</select></span>
         <span class="k">Proposta</span><span><select data-mf="propId"><option value="">Sem vínculo</option>${S.props.map(p => `<option value="${p.id}" ${p.id === m.propId ? 'selected' : ''}>${esc(p.codigo)} | ${esc(p.emp)}</option>`).join('')}</select></span>
+        <span class="k">Processo</span><span style="display:flex;gap:8px;align-items:center"><select data-mf="procId"><option value="">Sem vínculo</option>${S.procs.map(p => `<option value="${p.id}" ${p.id === m.procId ? 'selected' : ''}>${esc(pcod(p))} | ${esc((propById(p.propId) || {}).emp || '')} | ${esc(p.servico || '')}</option>`).join('')}</select>${m.procId && procById(m.procId) ? `<a class="link" data-goproc="${m.procId}">abrir</a>` : ''}</span>
       </div>
       ${timeSectHtml(null, m).replace('Começa sozinho quando a tarefa vai para <b>Em andamento</b> e para quando sai desse status.', 'Liga sozinho em <b>Em elaboração</b> e <b>Ajustes</b> e para quando o material sai dessas colunas.').replace(/data-tstart/, 'data-mtstart').replace(/data-tpause/, 'data-mtpause')}
       <div class="sect" style="box-shadow:none;border:1px solid var(--line)"><h4>Dados do processo</h4><div class="fields" style="margin:0">${D.map(([k, l]) => `<label class="f">${l}<input data-md="${k}" value="${esc(m.dados[k] || '')}"></label>`).join('')}</div></div>
@@ -2860,6 +2958,7 @@ function matHandleChange(tg){
   if(!ui.mat || !tg.closest('#layer')) return false; const m = matById(ui.mat);
   if(tg.dataset.mf){ const k = tg.dataset.mf, v = tg.value;
     if(k === 'status'){ setMatStatus(m, v); save(); renderMat(); render(); return true; }
+    if(k === 'procId'){ const pp = procById(v); logT(m, pp ? `vinculou ao processo ${pcod(pp)}` : 'desvinculou do processo'); if(pp) logP(pp, `vinculou o material técnico “${m.titulo || m.codigo}”`); }
     m[k] = v; if(['titulo', 'tipo', 'prazo', 'prio'].includes(k)) logT(m, k === 'titulo' ? 'renomeou o material' : `alterou ${k === 'prio' ? 'a prioridade' : k === 'prazo' ? 'o prazo' : 'o tipo'}`);
     save(); render(); if(['prazo', 'prio', 'tipo', 'propId', 'pasta', 'arquivo'].includes(k)) renderMat(); return true; }
   if(tg.dataset.md){ m.dados[tg.dataset.md] = tg.value; save(); return true; }
@@ -3038,11 +3137,11 @@ function renderProps(){
   const valorAberto = all.filter(p => PROP_ABERTAS.includes(p.status)).reduce((a, p) => a + docTotal(p.doc), 0);
   const rows = list.map(p => { const st = PROP_ST[p.status] || PROP_ST.nova, mp = S.props.find(x => x.id === p.id) || {}, proc = mp.procId && procById(mp.procId);
     let acomp;
-    if(proc){ const g = progress(proc); acomp = `<div style="display:flex;gap:10px;align-items:center">${ring(g.pct, 40, PS[proc.status].c)}<div><div class="lb">Processo ${esc(proc.codigo)}</div>${pill(PS[proc.status].l, PS[proc.status].c)}</div></div>`; }
+    if(proc){ const g = progress(proc); acomp = `<div style="display:flex;gap:10px;align-items:center">${ring(g.pct, 40, PS[proc.status].c)}<div><div class="lb">Processo ${esc(pcod(proc))}</div>${pill(PS[proc.status].l, PS[proc.status].c)}</div></div>`; }
     else if(p.status === 'aprovada') acomp = `<button class="btn sm primary" data-newproc="${p.id}">${ic('mais', 'sm')} Abrir processo</button>`;
     else acomp = aprovChip(p);
     return `<div class="rowc prop" data-prop="${p.id}">
-      <div><div class="sub" style="font-weight:700">${esc(p.codigo)}</div><div class="nm">${esc(p.emp || p.cliente || 'Proposta sem nome')}</div><div class="sub">${esc(p.cliente)}</div><div class="tags">${p.tipo ? tag(p.tipo, '#0000FF') : ''}${norm(p.tipo) !== norm(NUCLEOS[p.nucleo]) ? tag(NUCLEOS[p.nucleo] || 'Outros', '#9A9DB0') : ''}</div></div>
+      <div><div class="sub" style="font-weight:700">${esc(p.codigo)}</div><div class="nm">${esc(p.emp || p.cliente || 'Proposta sem nome')}</div><div class="sub">${esc(p.cliente)}</div><div class="tags">${p.tipo ? tag(p.tipo, '#0000FF') : ''}${norm(p.tipo) !== norm(NUCLEOS[p.nucleo]) ? tag(NUCLEOS[p.nucleo] || 'Outros', '#9A9DB0') : ''}${p.equipeOp && eqById(p.equipeOp) ? `<span class="ctag" title="Equipe de operação">${av(p.equipeOp, true, true)} ${esc(first(p.equipeOp))}</span>` : ''}${p.cadastro && p.cadastro.st === 'pendente' ? cadPrazoHtml(p.cadastro).replace('faltam', 'cadastro: faltam') : ''}</div></div>
       <div><div class="lb">Responsável</div><div class="vv">${av(p.resp, true)} ${esc(first(p.resp))}</div></div>
       <div><div class="lb">Status</div>${pill(st.l, st.c)}</div>
       <div><div class="lb">Valor</div><div class="vv">${docTotal(p.doc) ? brl(docTotal(p.doc)) : '—'}</div></div>
@@ -3082,6 +3181,8 @@ function drawerProp(pr){
           + (p.cliente && !c ? `<p class="hint" style="margin:10px 0 0">“${esc(p.cliente)}” ainda não está nos Cadastros. <a class="link" data-clinovo>Cadastrar com os dados desta proposta</a></p>` : '')
           + `<datalist id="dlCli">${(S.clis || []).map(c => `<option value="${esc(c.nome)}" label="${esc([c.cnpj, c.grupo].filter(Boolean).join(' | '))}">`).join('')}${(S.clis || []).flatMap(c => spesDe(c).filter(e => temSpe(e) && e.razao).map(e => `<option value="${esc(e.razao)}" label="${esc('SPE do ' + (e.nome || 'empreendimento') + ' | ' + c.nome)}">`)).join('')}</datalist>`
           + `<datalist id="dlEmp">${(c ? spesDe(c) : (S.clis || []).flatMap(spesDe)).filter(e => e.nome).map(e => `<option value="${esc(e.nome)}" label="${esc(temSpe(e) ? 'SPE: ' + [e.razao, e.cnpj].filter(Boolean).join(' | ') : 'no CNPJ do cliente')}">`).join('')}</datalist>`; })()}</div>
+    <div class="sect"><h4>Operação</h4><div class="fields" style="margin:0"><label class="f">Equipe de operação<select data-pp="equipeOp"><option value="">— definir equipe</option>${equipes().map(e => `<option value="${e.id}" ${p.equipeOp === e.id ? 'selected' : ''}>${esc(e.nome)}</option>`).join('')}</select></label></div>
+      ${equipes().length ? '' : '<p class="hint" style="margin:8px 0 0">Crie as equipes em <b>Equipe</b> para escolher aqui.</p>'}${cadInfoHtml(p)}</div>
     <div class="sect"><h4>Datas</h4><div class="fields" style="margin:0">
       <label class="f">Entrada<input type="date" data-pp="dataEntrada" value="${p.dataEntrada || ''}"></label><label class="f">Prazo para enviar<input type="date" data-pp="prazo" value="${p.prazo || ''}"></label></div>
       <label class="f" style="margin-top:12px">Observações internas<textarea data-pp="obs" rows="2">${esc(p.obs || '')}</textarea></label></div>`;
@@ -3478,13 +3579,14 @@ function propChange(tg){
   const mud = () => { afterContentEdit(p); rebuildProps(); save(); renderKeep(); return true; };
   if(tg.dataset.pp){ const k = tg.dataset.pp, v = tg.value;
     if(k === 'status'){ if(PROP_PRECISA_APROV.includes(v) && !aprovOk(p)){ toast('Precisa da aprovação interna antes'); renderDrawer(); return true; }
-      propLog(p, `mudou o status para “${PROP_ST[v].l}”`); p.status = v; const nr = v === 'aprovada' ? garantirRecebiveis(p) : 0; save(); render(); if(nr) toast(`Proposta aceita: ${nr} recebível(is) gerado(s) no Financeiro`); return true; }
+      propLog(p, `mudou o status para “${PROP_ST[v].l}”`); p.status = v; if(v === 'aprovada') cadAbrir(p); const nr = v === 'aprovada' ? garantirRecebiveis(p) : 0; save(); render(); if(nr) toast(`Proposta aceita: ${nr} recebível(is) gerado(s) no Financeiro`); return true; }
     if(k === 'aprovador'){ const ant = aprovadorDe(p); p.aprovador = v === aprovadorPadrao(p) ? '' : v; const nv = aprovadorDe(p);
       if(nv !== ant){ propLog(p, `trocou quem aprova para ${first(nv)}`); if(p.aprov && p.aprov.st === 'pendente'){ p.aprov.aprovador = nv; notifyProp(nv, `pediu a sua aprovação na proposta ${esc(p.codigo)}`, p); } }
       save(); render(); return true; }
     if(k === 'nucleo'){ const ant = aprovadorDe(p); p.nucleo = v; p.aprovador = ''; const nv = aprovadorDe(p); propLog(p, 'alterou o núcleo');
       if(nv !== ant && p.aprov && p.aprov.st === 'pendente'){ p.aprov.aprovador = nv; notifyProp(nv, `pediu a sua aprovação na proposta ${esc(p.codigo)}`, p); }
       save(); render(); return true; }
+    if(k === 'equipeOp'){ propLog(p, v ? `definiu a equipe de operação: ${first(v)}` : 'removeu a equipe de operação'); if(p.cadastro && p.cadastro.st === 'pendente' && v){ p.cadastro.equipe = v; membrosDe(v).forEach(m => notifyProp(m, `deixou com a sua equipe o cadastro dos processos da proposta ${esc(p.codigo)} (até 24h)`, p)); } }
     p[k] = v;
     if(k === 'resp'){ propLog(p, `passou a proposta para ${first(v)}`); }
     if(k === 'tipo'){ const sv = (S.servs || []).find(x => x.nome === v);
@@ -4008,7 +4110,7 @@ function enviarResposta(id){
   const ta = $('#respTxt'), txt = ta ? ta.value.trim() : ''; if(!txt){ toast('Escreva a resposta'); if(ta) ta.focus(); return; }
   const f = acharCom(id); if(!f){ ui.comResp = null; reRender(); return; }
   const c = f.c; (c.respostas = c.respostas || []).push({id:uid(), autor:me, texto:txt, em:nowISO()});
-  const onde = f.t ? `“${esc(f.t.titulo)}”` : f.m ? `“${esc(f.m.titulo || f.m.codigo)}”` : f.pr ? `a proposta ${esc(f.pr.codigo || '')}` : `o processo ${esc(f.p.codigo)}`;
+  const onde = f.t ? `“${esc(f.t.titulo)}”` : f.m ? `“${esc(f.m.titulo || f.m.codigo)}”` : f.pr ? `a proposta ${esc(f.pr.codigo || '')}` : `o processo ${esc(pcod(f.p))}`;
   const n = norm(txt), ment = USERS.filter(u => n.includes('@' + norm(first(u.id)))).map(u => u.id);
   const conversa = new Set([c.autor, c.atrib, ...(c.respostas || []).map(r => r.autor)].filter(x => x && x !== me && !ment.includes(x)));
   conversa.forEach(u => avisarResposta(f, u, u === c.autor ? `respondeu seu comentário em ${onde}` : `respondeu um comentário em ${onde}`, txt));
@@ -4107,7 +4209,8 @@ function pedirAprovTarefa(p, t, def){
 /* ---------- aprovações pendentes e comentários atribuídos (dashboard) ---------- */
 function minhasAprovacoes(){
   const out = [];
-  S.procs.forEach(p => (p.tarefas || []).forEach(t => { if(t.aprov && t.aprov.st === 'pendente' && t.aprov.aprovador === me) out.push({tipo:'Tarefa', titulo:t.titulo, sub:p.codigo + ' | ' + (propById(p.propId) || {}).emp, go:`task|${p.id}|${t.id}`, em:t.aprov.pedidoEm, por:t.aprov.pedidoPor}); }));
+  S.procs.forEach(p => (p.tarefas || []).forEach(t => { if(t.aprov && t.aprov.st === 'pendente' && t.aprov.aprovador === me) out.push({tipo:'Tarefa', titulo:t.titulo, sub:pcod(p) + ' | ' + (propById(p.propId) || {}).emp, go:`task|${p.id}|${t.id}`, em:t.aprov.pedidoEm, por:t.aprov.pedidoPor}); }));
+  S.procs.forEach(p => { const r = p.rel; if(r && r.st === 'pendente' && r.validador === me) out.push({tipo:'Relatório', titulo:'Relatório do processo ' + pcod(p), sub:(propById(p.propId) || {}).emp || '', go:`proc|${p.id}|relatorio`, em:r.pedidoEm, por:r.pedidoPor}); });
   (S.mats || []).forEach(m => { if(m.status === 'validacao' && aprovFor(m) === me) out.push({tipo:'Material técnico', titulo:m.titulo || m.codigo, sub:m.codigo, go:`mat|${m.id}`, em:'', por:(m.resp || [])[0]}); });
   (S.propsDb || []).forEach(p => { if(p.aprov && p.aprov.st === 'pendente' && aprovadorDe(p) === me) out.push({tipo:'Proposta', titulo:p.emp || p.cliente || p.codigo, sub:p.codigo, go:`prop|${p.id}|aprovacao`, em:p.aprov.pedidoEm, por:p.aprov.pedidoPor}); });
   return out;
@@ -4115,10 +4218,10 @@ function minhasAprovacoes(){
 function comsAtribuidos(uid){
   const out = [];
   for(const l of comLugares()) for(const c of l.arr || []){ if(!c.atrib || !respTem([c.atrib], uid) || c.resolvido) continue;
-    const onde = l.kind === 'task' ? `${l.t.titulo} | ${l.p.codigo}` : l.kind === 'proc' ? `Processo ${l.p.codigo} | ${(propById(l.p.propId) || {}).emp || ''}` : l.kind === 'mat' ? `${l.m.titulo || l.m.codigo}` : `Proposta ${l.pr.codigo} | ${l.pr.emp || l.pr.cliente || ''}`;
+    const onde = l.kind === 'task' ? `${l.t.titulo} | ${pcod(l.p)}` : l.kind === 'proc' ? `Processo ${pcod(l.p)} | ${(propById(l.p.propId) || {}).emp || ''}` : l.kind === 'mat' ? `${l.m.titulo || l.m.codigo}` : `Proposta ${l.pr.codigo} | ${l.pr.emp || l.pr.cliente || ''}`;
     const go = l.kind === 'task' ? `task|${l.p.id}|${l.t.id}` : l.kind === 'proc' ? `proc|${l.p.id}` : l.kind === 'mat' ? `mat|${l.m.id}` : `prop|${l.pr.id}|comentarios`;
     out.push({c, onde, go}); }
-  S.procs.forEach(p => (p.tarefas || []).forEach(t => ckNotasDe(t, true).forEach(({n, c}) => { if(n.atrib && !n.resolvido && respTem([n.atrib], uid)) out.push({c:n, onde:`Checklist: ${c.t.slice(0, 50)}${c.t.length > 50 ? '…' : ''} | ${t.titulo} | ${p.codigo}`, go:`task|${p.id}|${t.id}`}); })));
+  S.procs.forEach(p => (p.tarefas || []).forEach(t => ckNotasDe(t, true).forEach(({n, c}) => { if(n.atrib && !n.resolvido && respTem([n.atrib], uid)) out.push({c:n, onde:`Checklist: ${c.t.slice(0, 50)}${c.t.length > 50 ? '…' : ''} | ${t.titulo} | ${pcod(p)}`, go:`task|${p.id}|${t.id}`}); })));
   return out.sort((a, b) => String(b.c.em).localeCompare(String(a.c.em)));
 }
 function comAtribCardHtml(){
@@ -4132,7 +4235,7 @@ function comAtribCardHtml(){
 function irPara(go){
   const [k, a, b] = go.split('|'); closeTask();
   if(k === 'task'){ ui.view = 'proc'; render(); openDrawer('proc', a); openTask(a, b); }
-  else if(k === 'proc'){ ui.view = 'proc'; render(); openDrawer('proc', a); }
+  else if(k === 'proc'){ ui.view = 'proc'; render(); openDrawer('proc', a, b || undefined); }
   else if(k === 'mat'){ ui.view = 'mat'; render(); openMat(a); }
   else if(k === 'prop'){ ui.view = 'prop'; render(); openDrawer('prop', a, b || 'dados'); }
 }
@@ -4360,7 +4463,7 @@ function propById(id){
 function procHeadHtml(p, pr){
   if(ui.procEdit === p.id){
     const v = k => esc((p.ovr && p.ovr[k] !== undefined ? p.ovr[k] : pr[k]) || '');
-    return `<div class="dhead"><div style="flex:1"><div class="sub" style="margin-bottom:10px">${esc(p.codigo)} | editar identificação do processo</div>
+    return `<div class="dhead"><div style="flex:1"><div class="sub" style="margin-bottom:10px">${esc(pcod(p))} | editar identificação do processo</div>
       <div class="fields" style="margin:0"><label class="f">Obra / empreendimento<input id="peEmp" value="${v('emp')}"></label><label class="f">Cliente<input id="peCli" value="${v('cliente')}" list="dlPeCli" autocomplete="off"></label>
         <label class="f">Grupo (pasta em Processos)<input id="peGrp" value="${v('grupo')}" list="dlPeGrp" autocomplete="off" placeholder="igual ao cliente se ficar vazio"></label><label class="f">Serviço<input id="peSrv" value="${esc(p.servico || '')}"></label></div>
       <datalist id="dlPeCli">${[...new Set([...(S.clis || []).map(c => c.nome), ...S.props.map(x => x.cliente)].filter(Boolean))].map(c => `<option value="${esc(c)}">`).join('')}</datalist>
@@ -4368,7 +4471,7 @@ function procHeadHtml(p, pr){
       <p class="hint" style="margin:8px 0 0">Muda só o processo. ${S.propsDb.some(x => x.id === p.propId) ? 'A proposta continua com os dados dela.' : ''}</p>
       <div style="display:flex;gap:8px;margin-top:10px"><button class="btn primary sm" data-pesave="${p.id}">Salvar</button><button class="btn sm" data-pecancel>Cancelar</button></div></div><button class="btn ghost" data-close>✕</button></div>`;
   }
-  return `<div class="dhead"><div style="flex:1"><div class="sub">${esc(p.codigo)} | ${esc(p.servico)} | proposta <a class="link" data-goprop="${pr.id}">${esc(pr.codigo)}</a></div><h2>${esc(pr.emp)}</h2><div class="sub">${esc(pr.cliente)}${pr.grupo && pr.grupo !== pr.cliente ? ' | grupo ' + esc(pr.grupo) : ''}${procTime(p) ? ' | tempo rastreado: <b>' + fmtDur(procTime(p)) + '</b>' : ''}</div></div>
+  return `<div class="dhead"><div style="flex:1"><div class="sub">${esc(pcod(p))} | ${esc(p.servico)} | proposta <a class="link" data-goprop="${pr.id}">${esc(pr.codigo)}</a></div><h2>${esc(pr.emp)}</h2><div class="sub">${esc(pr.cliente)}${pr.grupo && pr.grupo !== pr.cliente ? ' | grupo ' + esc(pr.grupo) : ''}${procTime(p) ? ' | tempo rastreado: <b>' + fmtDur(procTime(p)) + '</b>' : ''}</div></div>
     <button class="btn sm ghost" data-peedit="${p.id}" title="Editar obra, cliente, grupo e serviço">✎ Editar</button><button class="btn ghost" data-close>✕</button></div>`;
 }
 function procEditClick(tg){
@@ -4444,7 +4547,7 @@ setInterval(tickReunioes, 30000);
 /* ---------- revisões e validações viram tarefas de quem foi escolhido ---------- */
 function revisoesDe(uid){
   const out = [];
-  S.procs.forEach(p => (p.tarefas || []).forEach(t => { const a = t.aprov; if(a && a.st === 'pendente' && a.aprovador === uid) out.push({ref:`r|${p.id}|${t.id}`, k:a.revisao ? 'revisão' : 'aprovação', titulo:`${a.revisao ? 'Revisar' : 'Aprovar'}: ${t.titulo}`, onde:`${p.codigo} | ${(propById(p.propId) || {}).emp || ''}`, prazo:a.ate || '', feito:false, aberto:true, por:a.pedidoPor}); }));
+  S.procs.forEach(p => (p.tarefas || []).forEach(t => { const a = t.aprov; if(a && a.st === 'pendente' && a.aprovador === uid) out.push({ref:`r|${p.id}|${t.id}`, k:a.revisao ? 'revisão' : 'aprovação', titulo:`${a.revisao ? 'Revisar' : 'Aprovar'}: ${t.titulo}`, onde:`${pcod(p)} | ${(propById(p.propId) || {}).emp || ''}`, prazo:a.ate || '', feito:false, aberto:true, por:a.pedidoPor}); }));
   (S.mats || []).forEach(m => { if(m.status === 'validacao' && aprovFor(m) === uid) out.push({ref:`v|${m.id}`, k:'validação', titulo:`Validar: ${m.titulo || m.codigo}`, onde:m.codigo, prazo:(m.validacao && m.validacao.ate) || '', feito:false, aberto:true, por:(m.validacao || {}).pedidoPor}); });
   return out;
 }
@@ -4516,10 +4619,10 @@ function planDias(){ const u = planUI(); return u.modo === 'dia' ? [u.dia || TOD
 /* ---------- itens (tarefas, subtarefas, materiais) ---------- */
 function planItens(uid){
   const out = [];
-  S.procs.forEach(p => { const pr = propById(p.propId) || {}, onde = `${p.codigo} | ${pr.emp || ''}`;
+  S.procs.forEach(p => { const pr = propById(p.propId) || {}, onde = `${pcod(p)} | ${pr.emp || ''}`;
     (p.tarefas || []).forEach(t => {
       if(respTem(t.resp, uid)) out.push({ref:`t|${p.id}|${t.id}`, k:'tarefa', titulo:t.titulo, onde, prazo:t.prazo, feito:t.status === 'concluida', aberto:isOpen(p)});
-      (t.subs || []).forEach(s => { if(s.resp === uid) out.push({ref:`s|${p.id}|${t.id}|${s.id}`, k:'subtarefa', titulo:s.titulo, onde:`${t.titulo} | ${p.codigo}`, prazo:s.prazo, feito:!!s.feito, aberto:isOpen(p)}); });
+      (t.subs || []).forEach(s => { if(s.resp === uid) out.push({ref:`s|${p.id}|${t.id}|${s.id}`, k:'subtarefa', titulo:s.titulo, onde:`${t.titulo} | ${pcod(p)}`, prazo:s.prazo, feito:!!s.feito, aberto:isOpen(p)}); });
     }); });
   (S.mats || []).forEach(m => { if((m.resp || []).includes(uid)) out.push({ref:`m|${m.id}`, k:'material', titulo:m.titulo || m.codigo, onde:m.codigo, prazo:m.prazo, feito:m.status === 'entregue', aberto:true}); });
   return out.concat(revisoesDe(uid));
@@ -4528,11 +4631,11 @@ function itemDe(ref){
   const [k, a, b, c] = String(ref || '').split('|');
   if(k === 'r' || k === 'v'){ const it = revisoesDe(planUser()).concat(revisoesDe(me)).find(x => x.ref === ref); if(it) return it;
     if(k === 'v'){ const m = matById(a); return m ? {ref, k:'validação', titulo:`Validar: ${m.titulo || m.codigo}`, onde:m.codigo, prazo:'', feito:m.status !== 'validacao'} : null; }
-    const p = procById(a), t = p && taskOf(p, b); return t ? {ref, k:'revisão', titulo:`Revisar: ${t.titulo}`, onde:p.codigo, prazo:(t.aprov || {}).ate || '', feito:!(t.aprov && t.aprov.st === 'pendente')} : null; }
+    const p = procById(a), t = p && taskOf(p, b); return t ? {ref, k:'revisão', titulo:`Revisar: ${t.titulo}`, onde:pcod(p), prazo:(t.aprov || {}).ate || '', feito:!(t.aprov && t.aprov.st === 'pendente')} : null; }
   if(k === 'm'){ const m = matById(a); return m ? {ref, k:'material', titulo:m.titulo || m.codigo, onde:m.codigo, prazo:m.prazo, feito:m.status === 'entregue'} : null; }
   const p = procById(a), t = p && taskOf(p, b); if(!t) return null;
-  if(k === 't') return {ref, k:'tarefa', titulo:t.titulo, onde:p.codigo, prazo:t.prazo, feito:t.status === 'concluida', p, t};
-  const s = (t.subs || []).find(x => x.id === c); return s ? {ref, k:'subtarefa', titulo:s.titulo, onde:`${t.titulo} | ${p.codigo}`, prazo:s.prazo, feito:!!s.feito, p, t, s} : null;
+  if(k === 't') return {ref, k:'tarefa', titulo:t.titulo, onde:pcod(p), prazo:t.prazo, feito:t.status === 'concluida', p, t};
+  const s = (t.subs || []).find(x => x.id === c); return s ? {ref, k:'subtarefa', titulo:s.titulo, onde:`${t.titulo} | ${pcod(p)}`, prazo:s.prazo, feito:!!s.feito, p, t, s} : null;
 }
 function abrirItem(ref){ const [k, a, b] = ref.split('|'); if(k === 'm' || k === 'v'){ openMat(a); return; } openTask(a, b); }
 function concluirItem(ref){
@@ -4700,8 +4803,8 @@ const verTodos = (view, txt) => `<button class="dlink" data-view-go="${view}">${
 function minhaSemanaItens(){
   const out = [];
   S.procs.forEach(p => { if(!isOpen(p)) return; (p.tarefas || []).forEach(t => {
-    if(t.status !== 'concluida' && respTem(t.resp, me)) out.push({k:'tarefa', p, t, codigo:p.codigo, titulo:t.titulo, onde:(propById(p.propId) || {}).emp || '', prazo:t.prazo, run:runningOf(t).some(x => x.por === me), go:`${p.id}|${t.id}`, play:`${p.id}|${t.id}`});
-    (t.subs || []).forEach(s => { if(!s.feito && s.resp === me) out.push({k:'subtarefa', p, t, s, codigo:p.codigo, titulo:s.titulo, onde:t.titulo, prazo:s.prazo, run:runningOf(t).some(x => x.por === me), go:`${p.id}|${t.id}`, play:`${p.id}|${t.id}`}); });
+    if(t.status !== 'concluida' && respTem(t.resp, me)) out.push({k:'tarefa', p, t, codigo:pcod(p), titulo:t.titulo, onde:(propById(p.propId) || {}).emp || '', prazo:t.prazo, run:runningOf(t).some(x => x.por === me), go:`${p.id}|${t.id}`, play:`${p.id}|${t.id}`});
+    (t.subs || []).forEach(s => { if(!s.feito && s.resp === me) out.push({k:'subtarefa', p, t, s, codigo:pcod(p), titulo:s.titulo, onde:t.titulo, prazo:s.prazo, run:runningOf(t).some(x => x.por === me), go:`${p.id}|${t.id}`, play:`${p.id}|${t.id}`}); });
   }); });
   (S.mats || []).forEach(m => { if(m.status !== 'entregue' && (m.resp || []).includes(me)) out.push({k:'material', m, codigo:m.codigo, titulo:m.titulo || m.codigo, onde:'Material técnico', prazo:m.prazo, run:runningOf(m).some(x => x.por === me), mat:m.id, play:`mat|${m.id}`}); });
   return out;
@@ -4858,6 +4961,7 @@ function paramAplicar(p, k){
 }
 mkProcess = (function(base){ return function(prop, modeloK, resp, prazo, por){
   const p = base.apply(this, arguments), d = paramDe(modeloK);
+  try{ const rp = rawProp(prop.id); if(rp && rp.cadastro && rp.cadastro.st === 'pendente'){ (rp.cadastro.procs = rp.cadastro.procs || []).push(p.id); } }catch(_){}
   if(d && modeloK !== 'sem') paramInserir(p, d.abas.map(a => paramTask(modeloK, a, resp ? [resp] : [], d)));
   return p;
 }; })(mkProcess);
@@ -5111,6 +5215,431 @@ document.addEventListener('click', e => {
   if(tg.closest('[data-mineall]')){ e.stopPropagation(); const ids = ui._mineIds || [], abrir = !ids.every(k => ui.mineOpen[k]); ids.forEach(k => ui.mineOpen[k] = abrir); renderMine(); return; }
 }, true);
 
+
+/* ============ Processos: cronograma (datas planejadas e reais) ============ */
+const PDATAS = [['iniPlan', 'Início planejado'], ['fimPlan', 'Final planejado'], ['iniReal', 'Início real'], ['fimReal', 'Finalização real']];
+const pdat = p => p.datas = p.datas || {};
+function procDatasAuto(p, st, old){ const d = pdat(p);
+  if(st === 'analise' && !d.iniReal){ d.iniReal = TODAY; logP(p, `registrou o início real em ${fmtD(TODAY)} (${old === 'protocolo' ? 'saiu de Protocolo para Análise' : 'entrou em Análise'})`); }
+  if(['concluido', 'arquivado'].includes(st) && !d.fimReal){ d.fimReal = TODAY; logP(p, `registrou a finalização real em ${fmtD(TODAY)}`); } }
+const diasEntre = (a, b) => a && b ? Math.round((new Date(b + 'T12:00') - new Date(a + 'T12:00')) / 864e5) : null;
+function procDesvio(p){ const d = pdat(p); if(!d.fimPlan) return null; const ref = d.fimReal || (TODAY > d.fimPlan ? TODAY : null); return ref ? diasEntre(d.fimPlan, ref) : null; }
+function procDatasHtml(p){ const d = pdat(p), dv = procDesvio(p), pend = procPred(p).filter(x => isOpen(x));
+  return `<div class="pdatas"><div class="pdh"><b>Cronograma</b>${dv !== null ? `<span class="pdv ${dv > 0 ? 'late' : 'ok'}">${dv > 0 ? `${dv} dia${dv > 1 ? 's' : ''} além do planejado` : dv === 0 ? 'no prazo planejado' : `${-dv} dia${dv < -1 ? 's' : ''} antes do planejado`}</span>` : ''}
+    ${pend.length ? `<span class="pdv late" title="Predecessoras ainda abertas">aguarda ${pend.map(x => esc(pcod(x))).join(', ')}</span>` : ''}</div>
+    <div class="fields" style="margin:0">${PDATAS.map(([k, l]) => `<label class="f">${l}<input type="date" data-pd="${k}" value="${d[k] || ''}"></label>`).join('')}</div></div>`; }
+function procCronoHtml(p){ const d = pdat(p), dv = procDesvio(p), pend = procPred(p).filter(x => isOpen(x)); let o = '';
+  if(d.fimPlan && !d.fimReal) o += `<span class="ctag ${dv > 0 ? 'late' : ''}" title="Final planejado${d.iniPlan ? ' | início planejado ' + fmtD(d.iniPlan) : ''}">${ic('relogio', 'sm')}${dv > 0 ? `+${dv}d` : 'até ' + fmtD(d.fimPlan)}</span>`;
+  if(d.fimReal) o += `<span class="ctag ok" title="Finalizado em ${fmtD(d.fimReal)}">✓ ${fmtD(d.fimReal)}</span>`;
+  return o; }
+
+/* ============ Processos: predecessoras e sucessoras ============ */
+const procPred = p => (p.deps || []).map(procById).filter(Boolean);
+const procSuc = p => S.procs.filter(x => (x.deps || []).includes(p.id));
+function depAlcanca(de, alvo, vis){ vis = vis || new Set(); if(de === alvo) return true; if(vis.has(de)) return false; vis.add(de); const x = procById(de); return !!x && (x.deps || []).some(d => depAlcanca(d, alvo, vis)); }
+const procLabel = x => `${pcod(x)} | ${(propById(x.propId) || {}).emp || ''} | ${x.servico || ''}`;
+const procNome = x => `${pcod(x)} | ${String(x.servico || '').toUpperCase()} | ${String((propById(x.propId) || {}).emp || '').toUpperCase()}`;
+const procRels = p => (p.rels || []).map(procById).filter(Boolean);
+const procRelac = p => (p.relac || []).map(r => ({r, x:procById(r.id)})).filter(o => o.x);
+const VMODOS = {rel:['Vincular um processo', 'Processo relacionado'], bloq:['Este processo bloqueia…', 'Processo que fica bloqueado por este'], bloqpor:['Este processo está bloqueado por…', 'Processo que precisa andar antes'], relac:['Relacionamento…', 'Processo do relacionamento']};
+function vincTabela(lst, tipo, p, vazio){
+  return `<div class="vtab"><div class="vth"><span>Nome</span><span>Prazo final</span><span>Status</span><span>Responsável</span><span></span></div>
+    ${lst.map(o => { const x = o.x || o; return `<div class="vtr"><span class="vnm"><i class="vdot" style="--c:${PS[x.status].c}" title="${esc(PS[x.status].l)}"></i><a class="link" data-goproc="${x.id}">${esc(procNome(x))}</a>${o.r ? `<span class="vrl">${esc(o.r.nome || 'Relacionamento')}</span>` : ''}</span>
+      <span>${x.prazo ? dueHtml(x.prazo, !isOpen(x)) : '<span class="sub">—</span>'}</span><span>${pill(PS[x.status].l, PS[x.status].c)}</span><span>${x.resp ? av(x.resp, true) : '<span class="sub">—</span>'}</span>
+      <button class="x" data-vdel="${tipo}|${x.id}" title="Remover vínculo">✕</button></div>`; }).join('') || `<div class="vtr vazio"><span class="sub">${vazio}</span></div>`}
+    <div class="vtr add"><a class="link" data-vmodo="${tipo}">+ Adicionar processo</a></div></div>`;
+}
+function vincHtml(p){
+  ui.vtab = ui.vtab || 'dep';
+  const rel = procRels(p), pre = procPred(p), suc = procSuc(p), rc = procRelac(p), pend = pre.filter(x => isOpen(x)), modo = ui.vmodo && ui.vmodo.p === p.id ? ui.vmodo.k : '';
+  const usados = new Set([p.id, ...(modo === 'rel' ? (p.rels || []) : modo === 'bloqpor' ? (p.deps || []) : modo === 'bloq' ? suc.map(x => x.id) : (p.relac || []).map(r => r.id))]);
+  const livres = S.procs.filter(x => !usados.has(x.id) && (modo === 'bloqpor' ? !depAlcanca(x.id, p.id) : modo === 'bloq' ? !depAlcanca(p.id, x.id) : true));
+  const pr = propById(p.propId) || {};
+  const picker = modo ? `<div class="vpick"><b>${VMODOS[modo][0]}</b><div class="vadd" style="margin-top:8px"><input class="inp" id="vBusca" list="vLista" placeholder="Busque por protocolo, serviço ou empreendimento" autocomplete="off">${modo === 'relac' ? '<input class="inp" id="vRelNome" placeholder="Nome do relacionamento (ex.: Loteamento)" style="max-width:240px">' : ''}<button class="btn sm primary" data-vok>Vincular</button><button class="btn sm ghost" data-vcancel>Cancelar</button></div>
+      <datalist id="vLista">${livres.map(x => `<option value="${esc(procNome(x))}">`).join('')}</datalist></div>` : '';
+  return `<div class="vbar"><div class="vmenu"><button class="vbtn" data-vmenu>⇄ Vincular itens ou adicionar dependências</button>${ui.vmenu ? `<div class="vdrop">
+      <button data-vmodo="rel">⇄ Vincular um processo</button><hr><button data-vmodo="bloq"><i class="vi red">–</i>Este processo bloqueia…</button><button data-vmodo="bloqpor"><i class="vi amb">!</i>Este processo está bloqueado por…</button><hr><button data-vmodo="relac"><i class="vi blu">⟳</i>Relacionamento…</button></div>` : ''}</div>
+      <span class="spacer"></span><button class="btn sm ghost" data-vgantt="${esc(pr.emp || '')}">${ic('quadro', 'sm')} Gantt do empreendimento</button></div>
+    ${picker}
+    ${pend.length ? `<div class="aprovbox pend" style="margin:10px 0"><div style="flex:1"><b>Bloqueado por ${pend.length} processo${pend.length > 1 ? 's' : ''} ainda aberto${pend.length > 1 ? 's' : ''}</b><div class="sub">${pend.map(x => esc(pcod(x)) + ' (' + PS[x.status].l + ')').join(', ')}</div></div></div>` : ''}
+    <div class="tabs vtabs" style="padding:0;margin:12px 0 10px"><button class="tab ${ui.vtab === 'rel' ? 'on' : ''}" data-vtab="rel">Relacionadas${rel.length ? ` <span class="n">${rel.length}</span>` : ''}</button><button class="tab ${ui.vtab === 'dep' ? 'on' : ''}" data-vtab="dep">Dependências${pre.length + suc.length ? ` <span class="n">${pre.length + suc.length}</span>` : ''}</button><button class="tab ${ui.vtab === 'relac' ? 'on' : ''}" data-vtab="relac">⟳ Relacionamento${rc.length ? ` <span class="n">${rc.length}</span>` : ''}</button></div>
+    ${ui.vtab === 'rel' ? vincTabela(rel, 'rel', p, 'Nenhum processo relacionado.')
+      : ui.vtab === 'relac' ? vincTabela(rc, 'relac', p, 'Nenhum relacionamento.')
+      : `<div class="vgh"><i class="vi red">–</i><b>Bloqueia</b> <span class="sub">${suc.length}</span></div>${vincTabela(suc, 'bloq', p, 'Nenhum processo depende deste.')}
+         <div class="vgh"><i class="vi amb">!</i><b>Bloqueado por</b> <span class="sub">${pre.length}</span></div>${vincTabela(pre, 'bloqpor', p, 'Este processo não depende de outro.')}`}
+    <p class="hint">Estes vínculos só aparecem aqui, com o processo aberto. <b>Bloqueia / bloqueado por</b> entram no Gantt como setas; <b>Relacionadas</b> e <b>Relacionamento</b> são só referência.</p>`;
+}
+document.addEventListener('click', e => {
+  const tg = e.target; if(!tg.closest || !tg.closest('#drawer') || !ui.drawer || ui.drawer.kind !== 'proc') return; let el;
+  const p = procById(ui.drawer.id); if(!p) return;
+  if(tg.closest('[data-vmenu]')){ e.stopPropagation(); ui.vmenu = !ui.vmenu; renderDrawer(); return; }
+  if((el = tg.closest('[data-vmodo]'))){ e.stopPropagation(); const k = el.dataset.vmodo; ui.vmenu = false; ui.vmodo = {p:p.id, k}; if(k === 'bloq' || k === 'bloqpor') ui.vtab = 'dep'; else ui.vtab = k; renderDrawer(); setTimeout(() => { const n = $('#vBusca'); if(n) n.focus(); }, 0); return; }
+  if((el = tg.closest('[data-vtab]'))){ e.stopPropagation(); ui.vtab = el.dataset.vtab; renderDrawer(); return; }
+  if(tg.closest('[data-vcancel]')){ e.stopPropagation(); ui.vmodo = null; renderDrawer(); return; }
+  if(tg.closest('[data-vok]')){ e.stopPropagation(); const k = ui.vmodo && ui.vmodo.k, q = ($('#vBusca').value || '').trim(); const x = S.procs.find(y => procNome(y) === q) || S.procs.find(y => y.id !== p.id && norm(procNome(y)).includes(norm(q)) && q);
+    if(!x || x.id === p.id){ toast('Escolha um processo da lista'); return; }
+    if(k === 'rel'){ if(!(p.rels || []).includes(x.id)){ (p.rels = p.rels || []).push(x.id); (x.rels = x.rels || []).push(p.id); } logP(p, `relacionou ao processo ${pcod(x)}`); }
+    else if(k === 'bloqpor'){ if(depAlcanca(x.id, p.id)){ toast('Isso criaria um ciclo de dependências'); return; } (p.deps = p.deps || []).push(x.id); logP(p, `ficou bloqueado por ${pcod(x)}`); logP(x, `passou a bloquear ${pcod(p)}`); }
+    else if(k === 'bloq'){ if(depAlcanca(p.id, x.id)){ toast('Isso criaria um ciclo de dependências'); return; } (x.deps = x.deps || []).push(p.id); logP(p, `passou a bloquear ${pcod(x)}`); logP(x, `ficou bloqueado por ${pcod(p)}`); }
+    else if(k === 'relac'){ const nome = ($('#vRelNome').value || '').trim() || 'Relacionamento'; (p.relac = p.relac || []).push({id:x.id, nome}); (x.relac = x.relac || []).push({id:p.id, nome}); logP(p, `criou o relacionamento “${nome}” com ${pcod(x)}`); }
+    ui.vmodo = null; save(); render(); return; }
+  if((el = tg.closest('[data-vdel]'))){ e.stopPropagation(); const [k, id] = el.dataset.vdel.split('|'), x = procById(id);
+    if(k === 'rel'){ p.rels = (p.rels || []).filter(d => d !== id); if(x) x.rels = (x.rels || []).filter(d => d !== p.id); }
+    else if(k === 'bloqpor') p.deps = (p.deps || []).filter(d => d !== id);
+    else if(k === 'bloq'){ if(x) x.deps = (x.deps || []).filter(d => d !== p.id); }
+    else if(k === 'relac'){ p.relac = (p.relac || []).filter(r => r.id !== id); if(x) x.relac = (x.relac || []).filter(r => r.id !== p.id); }
+    logP(p, `removeu o vínculo com ${x ? pcod(x) : 'um processo'}`); save(); render(); return; }
+  if((el = tg.closest('[data-vgantt]'))){ e.stopPropagation(); const pr = propById(p.propId) || {}; ui.sel = {g:pr.grupo || '', e:pr.emp || ''}; ui.procMode = 'gantt'; ui.view = 'proc'; closeDrawer(); render(); return; }
+}, true);
+
+/* ============ Processos: mudança de status (validação ao ir para Protocolo) ============ */
+function procMudarStatus(p, v, doQuadro){
+  const old = p.status; if(old === v) return;
+  const aplicar = () => { logP(p, `mudou o status do processo para “${PS[v].l}”`); procDatasAuto(p, v, old); p.status = v; save(); render(); if(doQuadro) toast(`${pcod(p)} → ${PS[v].l}`); afterStatus(p, old); };
+  if(v === 'protocolo' && !(p.valProt && p.valProt.st === 'pendente')){
+    render();
+    const def = (USERS.find(u => u.id !== me && u.id !== p.resp && (S.equipe.find(x => x.email.toLowerCase() === u.id) || {}).papel === 'socio') || USERS.find(u => u.id !== me) || U[me]).id;
+    pickAprovador('Quem valida o protocolo?', `<b>${esc(pcod(p))}</b> vai para <b>Protocolo</b>. Escolha quem confere a documentação antes de protocolar no órgão.`, (p.valProt && p.valProt.por) || def, (id, ate) => {
+      p.valProt = {st:'pendente', por:id, ate, pedidoPor:me, em:nowISO()}; logP(p, `pediu a validação do protocolo a ${first(id)}${ate ? ' até ' + fmtD(ate) : ''}`);
+      notify(id, `pediu a sua validação para protocolar ${esc(pcod(p))}${ate ? ' até ' + fmtD(ate) : ''}`, p.id, null); aplicar(); },
+      {prazo:true, prazoLabel:'Validar até', botao:'Enviar para validação', ate:addDays(TODAY, 1)});
+    return;
+  }
+  aplicar();
+}
+function valProtHtml(p){
+  const v = p.valProt; if(!v) return '';
+  if(v.st === 'pendente') return `<div class="aprovbox pend" style="margin-bottom:14px"><div style="flex:1"><b>Protocolo aguardando validação de ${esc(U[v.por] ? U[v.por].nome : v.por)}${v.ate ? ' até ' + fmtD(v.ate) : ''}</b><div class="sub">pedido por ${esc(first(v.pedidoPor))} ${fmtWhen(v.em)}</div></div>
+    ${me === v.por ? '<button class="btn sm" data-vpajuste>Pedir ajustes</button><button class="btn sm primary" data-vpok>Validar protocolo</button>' : '<button class="btn sm ghost" data-vpcancel>Cancelar pedido</button>'}</div>`;
+  if(v.st === 'ok' && p.status === 'protocolo') return `<div class="aprovbox ok" style="margin-bottom:14px"><div style="flex:1"><b>✓ Protocolo validado por ${esc(U[v.validou] ? U[v.validou].nome : v.validou)}</b><div class="sub">${fmtWhen(v.okEm)}</div></div></div>`;
+  if(v.st === 'ajustes' && p.status !== 'protocolo') return `<div class="banner" style="background:#FDE8E7;color:#7A1A12;margin-bottom:14px"><b>Ajustes antes de protocolar, pedidos por ${esc(first(v.validou))}:</b> ${esc(v.obs || '')}</div>`;
+  return '';
+}
+document.addEventListener('click', e => {
+  const tg = e.target; if(!tg.closest || !tg.closest('#drawer') || !ui.drawer || ui.drawer.kind !== 'proc') return;
+  const p = procById(ui.drawer.id); if(!p || !p.valProt) return; const v = p.valProt;
+  if(tg.closest('[data-vpok]')){ e.stopPropagation(); if(me !== v.por) return; Object.assign(v, {st:'ok', validou:me, okEm:nowISO()}); logP(p, 'validou a documentação para protocolo'); notify(v.pedidoPor, `validou ${esc(pcod(p))}. Já pode protocolar.`, p.id, null); if(p.resp !== v.pedidoPor) notify(p.resp, `validou ${esc(pcod(p))}. Já pode protocolar.`, p.id, null); save(); render(); toast('Protocolo validado'); return; }
+  if(tg.closest('[data-vpajuste]')){ e.stopPropagation(); const obs = prompt('O que precisa ajustar antes de protocolar?'); if(obs === null) return;
+    Object.assign(v, {st:'ajustes', validou:me, okEm:nowISO(), obs:obs.trim()}); logP(p, `pediu ajustes antes do protocolo: ${obs}`); p.status = 'levdoc'; logP(p, 'voltou o processo para “Lev. documentação”');
+    notify(v.pedidoPor, `pediu ajustes antes de protocolar ${esc(pcod(p))}: ${esc(obs)}`, p.id, null); save(); render(); return; }
+  if(tg.closest('[data-vpcancel]')){ e.stopPropagation(); p.valProt = null; logP(p, 'cancelou o pedido de validação do protocolo'); save(); render(); return; }
+}, true);
+revisoesDe = (function(base){ return function(uid){ const out = base.apply(this, arguments);
+  S.procs.forEach(p => { const v = p.valProt, pr = propById(p.propId) || {};
+    if(v && v.st === 'pendente' && v.por === uid) out.push({ref:`pv|${p.id}`, k:'validação', titulo:`Validar protocolo: ${pcod(p)}`, onde:`${pr.emp || ''} | ${p.servico || ''}`, prazo:v.ate || '', feito:false, aberto:true, por:v.pedidoPor});
+    const r = p.rel; if(r && r.st === 'pendente' && r.validador === uid) out.push({ref:`rl|${p.id}`, k:'validação', titulo:`Validar relatório: ${pcod(p)}`, onde:`${pr.emp || ''} | ${p.servico || ''}`, prazo:r.ate || '', feito:false, aberto:true, por:r.pedidoPor}); });
+  return out; }; })(revisoesDe);
+itemDe = (function(base){ return function(ref){ const k = String(ref || '').split('|')[0]; if(k === 'pv' || k === 'rl') return revisoesDe(planUser()).concat(revisoesDe(me)).find(x => x.ref === ref) || null; return base.apply(this, arguments); }; })(itemDe);
+abrirItem = (function(base){ return function(ref){ const [k, a] = ref.split('|'); if(k === 'pv' || k === 'rl'){ closeTask(); ui.view = 'proc'; render(); openDrawer('proc', a, k === 'rl' ? 'relatorio' : 'tarefas'); return; } return base.apply(this, arguments); }; })(abrirItem);
+
+/* ============ Propostas fechadas: processos para cadastro (24h) ============ */
+const CAD_H = 24;
+function cadAbrir(p){
+  if(p.cadastro && p.cadastro.st === 'pendente') return;
+  const ate = new Date(Date.now() + CAD_H * 3600e3).toISOString();
+  p.cadastro = {st:'pendente', em:nowISO(), ate, por:me, equipe:p.equipeOp || '', procs:[]};
+  propLog(p, 'proposta fechada: processos aguardando cadastro (até 24h)');
+  const quem = p.equipeOp ? membrosDe(p.equipeOp) : [p.resp].filter(Boolean);
+  quem.forEach(m => notifyProp(m, `fechou a proposta ${esc(p.codigo)} (${esc(p.emp || p.cliente || '')}). Cadastre o(s) processo(s) em até 24h para a parametrização.`, p));
+}
+const cadPend = () => (S.propsDb || []).filter(p => p.cadastro && p.cadastro.st === 'pendente');
+const cadMeu = (p, uid) => p.cadastro.equipe ? respTem([p.cadastro.equipe], uid) : (p.resp === uid);
+function cadPrazoHtml(c){ const h = (new Date(c.ate) - Date.now()) / 3600e3;
+  return h >= 0 ? `<span class="ctag ${h < 6 ? 'late' : ''}">${ic('relogio', 'sm')} faltam ${h >= 1 ? Math.floor(h) + 'h' : Math.max(1, Math.round(h * 60)) + 'min'}</span>` : `<span class="ctag late">${ic('alerta', 'sm')} atrasado ${-h >= 1 ? Math.floor(-h) + 'h' : Math.round(-h * 60) + 'min'}</span>`; }
+function cadInfoHtml(p){ const c = p.cadastro; if(!c) return '';
+  const ps = S.procs.filter(x => x.propId === p.id);
+  return `<div class="cadinfo">${c.st === 'pendente' ? `<b>Processos para cadastro</b> ${cadPrazoHtml(c)}` : `<b>✓ Cadastro concluído</b> <span class="sub">${fmtWhen(c.okEm)} por ${esc(first(c.okPor))}</span>`}<div class="sub">${ps.length ? ps.length + ' processo(s): ' + ps.map(x => esc(pcod(x))).join(', ') : 'nenhum processo cadastrado ainda'}</div></div>`; }
+function cadRowHtml(p){ const c = p.cadastro, ps = S.procs.filter(x => x.propId === p.id);
+  return `<div class="cadrow"><div style="flex:1;min-width:0"><div class="sub" style="font-weight:700">${esc(p.codigo)} | ${esc(p.cliente || '')}</div><b>${esc(p.emp || p.cliente || '')}</b> <span class="sub">${esc(p.tipo || '')}</span>
+      <div class="ptags">${cadPrazoHtml(c)}${c.equipe ? `<span class="ctag">${av(c.equipe, true, true)} ${esc(first(c.equipe))}</span>` : '<span class="ctag late">sem equipe definida</span>'}${ps.length ? `<span class="ctag ok">${ps.length} cadastrado(s): ${ps.map(x => esc(pcod(x))).join(', ')}</span>` : ''}</div></div>
+    <button class="btn sm primary" data-newproc="${p.id}">${ic('mais', 'sm')} Cadastrar processo</button><button class="btn sm" data-cadok="${p.id}" ${ps.length ? '' : 'disabled title="Cadastre pelo menos um processo"'}>Concluir cadastro</button></div>`; }
+function cadSecHtml(somenteMeus){ const ls = cadPend().filter(p => !somenteMeus || cadMeu(p, me)).sort((a, b) => a.cadastro.ate.localeCompare(b.cadastro.ate)); if(!ls.length) return '';
+  return `<div class="cadsec"><div class="tgh" style="color:#B54708">Processos para cadastro <span class="sub">${ls.length}</span><span class="spacer"></span><span class="sub" style="text-transform:none;letter-spacing:0;font-weight:500">propostas fechadas | cadastrar em até 24h para a parametrização</span></div>${ls.map(cadRowHtml).join('')}</div>`; }
+document.addEventListener('click', e => { const el = e.target.closest && e.target.closest('[data-cadok]'); if(!el) return; e.stopPropagation(); const p = rawProp(el.dataset.cadok); if(!p || !p.cadastro) return;
+  Object.assign(p.cadastro, {st:'ok', okEm:nowISO(), okPor:me}); propLog(p, 'concluiu o cadastro dos processos'); save(); render(); toast('Cadastro concluído'); }, true);
+renderMine = (function(base){ return function(){ base.apply(this, arguments); if(ui.mineFilter === 'feito') return; const h = cadSecHtml(true); if(h) $('#view .pagehead').insertAdjacentHTML('afterend', h); }; })(renderMine);
+
+/* ============ Gantt dos processos (por empreendimento) ============ */
+function ganttHtml(list){
+  const dd = x => pdat(x), dts = []; list.forEach(x => { const d = dd(x); ['iniPlan', 'fimPlan', 'iniReal', 'fimReal'].forEach(k => d[k] && dts.push(d[k])); });
+  if(!dts.length) return `<div class="blk empty">Nenhum processo deste filtro tem datas no cronograma. Abra o processo e preencha <b>Início/Final planejado</b> para ele aparecer aqui.</div>`;
+  dts.push(TODAY); dts.sort();
+  const ini = addDays(dts[0], -7), fim = addDays(dts[dts.length - 1], 14), nd = diasEntre(ini, fim) + 1;
+  const DW = Math.max(6, Math.min(26, Math.floor(1000 / nd))), W = nd * DW, RH = 46, x = d => diasEntre(ini, d) * DW;
+  const grupos = {}; list.forEach(p => { const e = (propById(p.propId) || {}).emp || 'Sem empreendimento'; (grupos[e] = grupos[e] || []).push(p); });
+  const rows = []; Object.keys(grupos).sort((a, b) => a.localeCompare(b, 'pt')).forEach(e => { rows.push({g:e}); grupos[e].sort((a, b) => (dd(a).iniPlan || dd(a).iniReal || '9').localeCompare(dd(b).iniPlan || dd(b).iniReal || '9')).forEach(p => rows.push({p})); });
+  const meses = []; { let d = ini; while(d <= fim){ const m = d.slice(0, 7), last = addDays(addMonths(m + '-01', 1), -1), f2 = last < fim ? last : fim; meses.push({l:`${MESN[+m.slice(5) - 1].slice(0, 3)}/${m.slice(2, 4)}`, x:x(d), w:(diasEntre(d, f2) + 1) * DW}); d = addDays(f2, 1); } }
+  const semanas = []; for(let i = 0; i < nd; i++){ const d = addDays(ini, i); if(new Date(d + 'T12:00').getDay() === 1) semanas.push({x:i * DW, l:d.slice(8)}); }
+  const yOf = {}; rows.forEach((r, i) => { if(r.p) yOf[r.p.id] = i * RH + RH / 2; });
+  const barras = rows.map((r, i) => { if(r.g) return `<div class="gtrow grp" style="top:${i * RH}px;width:${W}px"></div>`; const p = r.p, d = dd(p), y = i * RH, st = PS[p.status];
+    let h = `<div class="gtrow" style="top:${y}px;width:${W}px"></div>`;
+    if(d.iniPlan && d.fimPlan) h += `<div class="gbar gpl" style="left:${x(d.iniPlan)}px;top:${y + 8}px;width:${Math.max(DW, x(d.fimPlan) - x(d.iniPlan) + DW)}px" title="Planejado: ${fmtD(d.iniPlan)} → ${fmtD(d.fimPlan)}" data-goproc="${p.id}"></div>`;
+    else if(d.fimPlan) h += `<div class="gmile" style="left:${x(d.fimPlan) + DW / 2 - 6}px;top:${y + 10}px" title="Final planejado ${fmtD(d.fimPlan)}"></div>`;
+    if(d.iniReal){ const f = d.fimReal || TODAY; h += `<div class="gbar grl ${!d.fimReal ? 'run' : ''}" style="left:${x(d.iniReal)}px;top:${y + 24}px;width:${Math.max(DW, x(f) - x(d.iniReal) + DW)}px;--c:${st.c}" title="Real: ${fmtD(d.iniReal)} → ${d.fimReal ? fmtD(d.fimReal) : 'em andamento'}" data-goproc="${p.id}"></div>`; }
+    if(!d.iniPlan && !d.fimPlan && !d.iniReal) h += `<div class="gsem" style="top:${y + 14}px">sem datas no cronograma</div>`;
+    return h; }).join('');
+  const fimX = p => { const d = dd(p); const f = d.fimReal || d.fimPlan || (d.iniReal ? TODAY : d.iniPlan); return f ? x(f) + DW : null; };
+  const iniX = p => { const d = dd(p); const f = d.iniReal || d.iniPlan || d.fimPlan; return f ? x(f) : null; };
+  const setas = list.flatMap(p => procPred(p).filter(q => yOf[q.id] !== undefined && yOf[p.id] !== undefined).map(q => { const x1 = fimX(q), x2 = iniX(p); if(x1 === null || x2 === null) return '';
+    const y1 = yOf[q.id] - 4, y2 = yOf[p.id] - 4, mx = Math.max(x1 + 8, Math.min(x2 - 8, x1 + 14)), atras = x2 < x1;
+    return `<path d="M${x1} ${y1} H${mx} V${y2} H${x2 - 2}" class="garr ${atras ? 'bad' : ''}" marker-end="url(#gah${atras ? 'b' : ''})"><title>${esc(pcod(q))} bloqueia ${esc(pcod(p))}${atras ? ' (começou antes da predecessora terminar)' : ''}</title></path>`; })).join('');
+  const H = rows.length * RH;
+  return `<div class="gantt"><div class="gleft"><div class="ghd">Processo</div>${rows.map(r => r.g ? `<div class="gnm grp">${esc(r.g)}</div>` : `<div class="gnm" data-goproc="${r.p.id}"><i class="vdot" style="--c:${PS[r.p.status].c}"></i><div style="min-width:0"><b>${esc(pcod(r.p))}</b><div class="sub">${esc(r.p.servico || '')}</div></div>${orgaoTag(r.p)}</div>`).join('')}</div>
+    <div class="gright"><div class="gscroll"><div class="ghd" style="width:${W}px">${meses.map(m => `<span class="gmes" style="left:${m.x}px;width:${m.w}px">${m.l}</span>`).join('')}${DW >= 10 ? semanas.map(w => `<span class="gsem2" style="left:${w.x}px">${w.l}</span>`).join('') : ''}</div>
+      <div class="gbody" style="width:${W}px;height:${H}px">${semanas.map(w => `<i class="gvl" style="left:${w.x}px"></i>`).join('')}${barras}<i class="ghoje" style="left:${x(TODAY) + DW / 2}px" title="Hoje"></i>
+        <svg class="gsvg" width="${W}" height="${H}"><defs><marker id="gah" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8z" fill="#6941C6"/></marker><marker id="gahb" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8z" fill="#D92D20"/></marker></defs>${setas}</svg></div></div></div></div>
+    <div class="gleg"><span><i class="gbar gpl" style="position:static;display:inline-block;width:22px;height:10px"></i> planejado</span><span><i class="gbar grl" style="position:static;display:inline-block;width:22px;height:10px;--c:#0000FF"></i> realizado (cor do status)</span><span><i class="gmile" style="position:static;display:inline-block"></i> só final planejado</span><span><svg width="26" height="10"><path d="M0 5 H20" class="garr" marker-end="url(#gah)"/></svg> bloqueia</span><span><i class="ghoje" style="position:static;display:inline-block;height:12px"></i> hoje</span></div>`;
+}
+/* ============ Processos: material técnico vinculado ============ */
+const matsDoProc = p => (S.mats || []).filter(m => m.procId === p.id);
+function matProcHtml(p){
+  const ms = matsDoProc(p), livres = (S.mats || []).filter(m => m.procId !== p.id);
+  return `<div class="sect" style="padding:0;overflow:hidden">${ms.map(m => { const c = matCount(m), st = MS[m.status];
+      return `<div class="vrow mrow" data-mat="${m.id}"><span class="mst" style="--c:${st.c}">${st.l}</span><div style="flex:1;min-width:0"><b>${esc(m.titulo || m.codigo)}</b><div class="sub">${esc(m.codigo)} | ${esc(m.tipo)} | checklist ${c.f}/${c.t}${m.status === 'revisao' && m.pausa && m.pausa.ini ? ' | pausado' : ''}</div></div>${avs(m.resp)}<span style="min-width:60px;text-align:right">${dueHtml(m.prazo, m.status === 'entregue')}</span><button class="x" data-matunlink="${m.id}" title="Desvincular do processo">✕</button></div>`; }).join('') || '<div class="sub" style="padding:14px">Nenhum material técnico vinculado.</div>'}</div>
+    <div class="sect"><h4>Vincular</h4>
+      <div class="vadd"><input class="inp" id="matNovoTit" placeholder="Novo material para este processo (ex.: Memorial descritivo)"><select class="inp" id="matNovoTipo" style="max-width:220px">${MAT_TIPOS.map(t => `<option>${t}</option>`).join('')}</select><button class="btn sm primary" data-matnovoproc>Criar</button></div>
+      ${livres.length ? `<div class="vadd"><select class="inp" id="matLink"><option value="">Vincular material já existente…</option>${livres.map(m => `<option value="${m.id}">${esc(m.codigo)} | ${esc(m.titulo || '')}${m.procId && procById(m.procId) ? ' (hoje em ' + esc(pcod(procById(m.procId))) + ')' : ''}</option>`).join('')}</select><button class="btn sm" data-matlink>Vincular</button></div>` : ''}</div>`;
+}
+
+document.addEventListener('change', e => {
+  const tg = e.target; if(!tg.dataset || tg.dataset.pd === undefined || !ui.drawer) return; e.stopPropagation();
+  const p = procById(ui.drawer.id); if(!p) return; const d = pdat(p), k = tg.dataset.pd, v = tg.value;
+  if(d[k] === v) return; d[k] = v; logP(p, `${v ? 'definiu' : 'limpou'} ${PDATAS.find(x => x[0] === k)[1].toLowerCase()}${v ? ' em ' + fmtD(v) : ''}`); save(); render();
+}, true);
+document.addEventListener('click', e => {
+  const tg = e.target; if(!tg.closest || !tg.closest('#drawer') || !ui.drawer || ui.drawer.kind !== 'proc') return; let el;
+  const p = procById(ui.drawer.id); if(!p) return;
+  if((el = tg.closest('[data-depadd]'))){ e.stopPropagation(); const pre = el.dataset.depadd === 'pre', id = ($(pre ? '#depPre' : '#depSuc') || {}).value; if(!id){ toast('Escolha um processo'); return; }
+    const x = procById(id); if(pre){ (p.deps = p.deps || []).push(id); logP(p, `vinculou a predecessora ${pcod(x)}`); logP(x, `passou a ser predecessora de ${pcod(p)}`); }
+    else { (x.deps = x.deps || []).push(p.id); logP(p, `vinculou a sucessora ${pcod(x)}`); logP(x, `passou a depender de ${pcod(p)}`); }
+    save(); render(); return; }
+  if((el = tg.closest('[data-depdel]'))){ e.stopPropagation(); const [tp, id] = el.dataset.depdel.split('|'), x = procById(id);
+    if(tp === 'pre') p.deps = (p.deps || []).filter(d => d !== id); else if(x) x.deps = (x.deps || []).filter(d => d !== p.id);
+    logP(p, `removeu o vínculo com ${x ? pcod(x) : 'um processo'}`); save(); render(); return; }
+  if((el = tg.closest('[data-matunlink]'))){ e.stopPropagation(); const m = matById(el.dataset.matunlink); if(!m) return; m.procId = ''; logT(m, `desvinculou do processo ${pcod(p)}`); logP(p, `desvinculou o material “${m.titulo || m.codigo}”`); save(); render(); return; }
+  if(tg.closest('[data-matlink]')){ e.stopPropagation(); const m = matById(($('#matLink') || {}).value); if(!m){ toast('Escolha um material'); return; } m.procId = p.id; logT(m, `vinculou ao processo ${pcod(p)}`); logP(p, `vinculou o material “${m.titulo || m.codigo}”`); save(); render(); return; }
+  if(tg.closest('[data-matnovoproc]')){ e.stopPropagation(); const t = ($('#matNovoTit').value || '').trim(); if(!t){ toast('Dê um título ao material'); $('#matNovoTit').focus(); return; }
+    const pr = propById(p.propId) || {}; const m = mkMat({titulo:t, tipo:$('#matNovoTipo').value, resp:p.resp ? [p.resp] : [me], procId:p.id, propId:S.props.some(x => x.id === p.propId) ? p.propId : '', dados:{cliente:pr.cliente || '', imovel:pr.emp || '', matricula:(p.imovel || {}).matricula || '', municipio:'Fortaleza', nprocesso:pcod(p)}});
+    (S.mats = S.mats || []).push(m); logP(p, `criou o material técnico “${t}”`); save(); render(); toast(`${m.codigo} criado e vinculado`); return; }
+}, true);
+/* no modal do material: abrir o processo vinculado */
+document.addEventListener('click', e => { const el = e.target.closest && e.target.closest('#layer [data-goproc]'); if(!el) return; e.stopPropagation(); e.preventDefault(); const id = el.dataset.goproc; closeTask(); ui.view = 'proc'; render(); openDrawer('proc', id, 'material'); }, true);
+
+/* ============ Material técnico: painel (quadro/lista, sem proposta, ocultar clientes) ============ */
+const matAtras = m => m.status !== 'entregue' && m.prazo && diffDays(m.prazo) < 0;
+const MAT_ALERTS = [['prazo7', 'relogio', 'Prazos nos próximos 7 dias', 'Conferir prazos', m => m.status !== 'entregue' && m.prazo && diffDays(m.prazo) >= 0 && diffDays(m.prazo) <= 7],
+  ['atrasado', 'alerta', 'Atrasados', 'Cobrar entrega', matAtras],
+  ['validacao', 'check', 'Em validação interna', 'Validar', m => m.status === 'validacao'],
+  ['pausado', 'pin', 'Pausados', 'Retomar', m => m.status === 'revisao']];
+function matRow(m){
+  const c = matCount(m), st = MS[m.status], pp = m.procId ? procById(m.procId) : null, run = runningOf(m).length, x = matGrupo(m);
+  return `<div class="rowc matr" data-mat="${m.id}">
+    <div><div class="sub" style="font-weight:700">${esc(m.codigo)} | ${esc(x.g)}</div><div class="nm">${esc(m.titulo || '(sem título)')}</div><div class="tags">${tag(m.tipo, '#6666FF')}${x.e ? tag(x.e, '#9A9DB0') : ''}</div></div>
+    <div><div class="lb">Status</div>${pill(st.l, st.c)}${m.status === 'revisao' ? `<div style="margin-top:4px">${matPausaHtml(m)}</div>` : ''}</div>
+    <div><div class="lb">Checklist</div><div class="vv">${ring(c.t ? Math.round(c.f * 100 / c.t) : 0, 34, '#0000FF', '')} ${c.f}/${c.t}</div></div>
+    <div><div class="lb">Processo</div><div class="vv" style="display:block">${pp ? `${esc(pcod(pp))}<div class="sub">${orgaoTag(pp)}</div>` : '<span class="sub">sem vínculo</span>'}</div></div>
+    <div><div class="lb">Prazo</div><div class="vv" style="display:block">${dueHtml(m.prazo, m.status === 'entregue')}${run ? `<div class="sub" style="color:var(--azul)">● cronômetro ligado</div>` : timeTotal(m) ? `<div class="sub">${fmtDur(timeTotal(m))}</div>` : ''}</div></div>
+    <div><div class="lb">Equipe</div>${avs(m.resp)}</div></div>`;
+}
+renderMats = (function(){ return function(){
+  ui.mMode = ui.mMode || 'quadro';
+  const q = norm(ui.mq || ''), hideT = !!ui.mHideTree;
+  const base = (S.mats || []).filter(m => (hideT || matNoGrupo(m)) && (!q || norm([m.codigo, m.titulo, m.tipo, m.dados.cliente, m.dados.matricula, m.procId && procById(m.procId) ? pcod(procById(m.procId)) : ''].join(' ')).includes(q)) && (!ui.mResp || respTem(m.resp, ui.mResp)) && (!ui.mTipo || m.tipo === ui.mTipo));
+  const al = MAT_ALERTS.find(a => a[0] === ui.mAlert), list = al ? base.filter(al[4]) : base;
+  const alerts = `<div class="alerts four">${MAT_ALERTS.map(([k, i, l, w, f]) => { const n = base.filter(f).length;
+    return `<div class="acard ${ui.mAlert === k ? 'on' : ''}" data-malert="${k}"><div class="top2"><span class="ico">${ic(i)}</span>${n ? `<span class="w">${ic('alerta', 'sm')} ${w}</span>` : ''}</div><div class="v">${n}</div><div class="ft">${l} <span>${ic('seta', 'sm')}</span></div></div>`; }).join('')}</div>`;
+  const filtros = `<div class="filters"><input type="search" id="mq" placeholder="Buscar por título, cliente, matrícula ou protocolo" value="${esc(ui.mq || '')}">
+      <select id="mResp"><option value="">Todas as pessoas</option>${optsResp(ui.mResp, true)}</select>
+      <select id="mTipo"><option value="">Todos os tipos</option>${MAT_TIPOS.map(t => `<option ${ui.mTipo === t ? 'selected' : ''}>${t}</option>`).join('')}</select></div>`;
+  let body;
+  if(ui.mMode === 'lista'){
+    const tabs = `<div class="seg" style="margin-bottom:14px"><button data-mfst="" class="${!ui.mFst ? 'on' : ''}">Todos <span class="n">${list.length}</span></button>${MAT_ST.map(st => { const n = list.filter(m => m.status === st.k).length; return n ? `<button data-mfst="${st.k}" class="${ui.mFst === st.k ? 'on' : ''}">${st.l} <span class="n">${n}</span></button>` : ''; }).join('')}</div>`;
+    const shown = ui.mFst ? list.filter(m => m.status === ui.mFst) : list;
+    body = tabs + `<div class="rows">${shown.sort((a, b) => MAT_ST.findIndex(x => x.k === a.status) - MAT_ST.findIndex(x => x.k === b.status) || (a.prazo || '9').localeCompare(b.prazo || '9')).map(matRow).join('') || '<div class="blk empty">Nenhum material com esses filtros.</div>'}</div>`;
+  } else {
+    body = `<div class="mboard">${MAT_ST.map(st => { const ms = list.filter(m => m.status === st.k);
+      return `<div class="mcol" data-mcol="${st.k}"><div class="mh"><span class="mst" style="--c:${st.c}">${st.l}</span><span class="sub mcnt">${ms.length}</span></div>
+        ${ms.map(matCard).join('')}
+        <div class="madd"><input data-madd="${st.k}" placeholder="+ Adicionar material"></div></div>`; }).join('')}</div>
+      <p class="hint" style="margin-top:-24px">Arraste os cartões entre as colunas. O cronômetro liga em <b>Em elaboração</b> e <b>Ajustes</b>; em <b>Pausado</b> ele para e começa a contar o tempo parado. Ao ir para <b>Validação interna</b>, você escolhe quem valida (sugestão: ${esc(first(aprovMat()))}).</p>`;
+  }
+  const crumb = !hideT && (ui.mSel || {}).g ? `<div class="crumb"><a class="link" data-mtall>Todos</a> / ${ui.mSel.e ? `<a class="link" data-mtg="${esc(ui.mSel.g)}">${esc(ui.mSel.g)}</a> / <b>${esc(ui.mSel.e)}</b>` : `<b>${esc(ui.mSel.g)}</b>`}</div>` : '';
+  const scroll = $('.tree')?.scrollTop || 0;
+  $('#view').innerHTML = `<div class="pagehead"><div><h1>Material técnico</h1><p>Retificações, remembramentos, pareceres e demais peças técnicas. A aprovação final é de ${esc(first(aprovMat()))} (validação interna).</p></div><span class="spacer"></span>
+      <button class="btn" data-matnew>${ic('mais', 'sm')} Material sem proposta</button>
+      <button class="btn sm" data-mhidetree>${hideT ? ic('lista', 'sm') + ' Mostrar clientes' : 'Ocultar clientes'}</button>
+      <div class="seg"><button data-mmode="quadro" class="${ui.mMode === 'quadro' ? 'on' : ''}">${ic('quadro', 'sm')} Quadro</button><button data-mmode="lista" class="${ui.mMode === 'lista' ? 'on' : ''}">${ic('lista', 'sm')} Lista</button></div></div>
+    <div class="pwrap ${hideT ? 'notree' : ''}">${hideT ? '' : `<div>${matTreeHtml()}</div>`}<div class="pmain">${crumb}${alerts}${filtros}${body}</div></div>`;
+  const tr = $('.tree'); if(tr) tr.scrollTop = scroll;
+}; })();
+function matNovoModal(){
+  $('#layer').innerHTML = `<div class="mlayer"><div class="modal small" style="width:min(680px,100%)">
+    <div class="mhead"><b style="color:var(--ink);font-size:16px;font-family:var(--kanit);text-transform:uppercase;font-weight:500">Novo material técnico</b><span class="spacer"></span><button class="btn ghost" data-mncancel>✕</button></div>
+    <div style="padding:18px;display:flex;flex-direction:column;gap:12px">
+      <p class="sub" style="margin:0">Para peças avulsas, sem proposta. Se houver um processo relacionado, vincule abaixo.</p>
+      <div class="fields" style="margin:0"><label class="f">Título<input class="inp" id="mnTit" placeholder="Ex.: Retificação de área | Lote 12"></label>
+        <label class="f">Tipo<select class="inp" id="mnTipo">${MAT_TIPOS.map(t => `<option>${t}</option>`).join('')}</select></label>
+        <label class="f">Cliente<input class="inp" id="mnCli" list="dlMnCli"></label>
+        <label class="f">Imóvel / obra<input class="inp" id="mnImo"></label>
+        <label class="f">Matrícula / transcrição<input class="inp" id="mnMat"></label>
+        <label class="f">Responsável<select class="inp" id="mnResp">${optsResp(me, true)}</select></label>
+        <label class="f">Prazo<input class="inp" type="date" id="mnPrazo"></label>
+        <label class="f">Status inicial<select class="inp" id="mnSt">${MAT_ST.filter(x => x.k !== 'entregue').map(x => `<option value="${x.k}">${x.l}</option>`).join('')}</select></label></div>
+      <label class="f">Processo vinculado (opcional)<select class="inp" id="mnProc"><option value="">Sem vínculo</option>${S.procs.map(x => `<option value="${x.id}">${esc(procLabel(x))}</option>`).join('')}</select></label>
+      <datalist id="dlMnCli">${[...new Set([...(S.clis || []).map(c => c.nome), ...S.props.map(x => x.cliente)].filter(Boolean))].map(c => `<option value="${esc(c)}">`).join('')}</datalist>
+    </div>
+    <div class="mfoot"><span class="spacer"></span><button class="btn" data-mncancel>Cancelar</button><button class="btn primary" data-mnsave>Criar material</button></div></div></div>`;
+  setTimeout(() => { const n = $('#mnTit'); if(n) n.focus(); }, 0);
+}
+document.addEventListener('click', e => {
+  const tg = e.target; if(!tg.closest) return; let el;
+  if(tg.closest('[data-matnew]')){ e.stopPropagation(); matNovoModal(); return; }
+  if(tg.closest('[data-mncancel]')){ e.stopPropagation(); $('#layer').innerHTML = ''; return; }
+  if(tg.closest('[data-mnsave]')){ e.stopPropagation(); const v = id => ($('#' + id).value || '').trim(), t = v('mnTit'); if(!t){ toast('Dê um título ao material'); $('#mnTit').focus(); return; }
+    const proc = procById(v('mnProc')), st = v('mnSt');
+    const m = mkMat({titulo:t, tipo:v('mnTipo'), resp:v('mnResp') ? [v('mnResp')] : [], prazo:v('mnPrazo'), status:st, procId:proc ? proc.id : '', dados:{cliente:v('mnCli'), imovel:v('mnImo'), matricula:v('mnMat'), municipio:'Fortaleza', nprocesso:proc ? pcod(proc) : ''}});
+    (S.mats = S.mats || []).push(m); if(MAT_TIMER.includes(st)) startTimer(null, m, me); if(st === 'revisao') matPausa(m, '', 'revisao');
+    if(proc) logP(proc, `vinculou o material técnico “${t}”`); if(m.resp[0]) notifyMat(m.resp[0], `atribuiu o material “${esc(t)}” a você`, m);
+    save(); $('#layer').innerHTML = ''; render(); openMat(m.id); toast(`${m.codigo} criado`); return; }
+  if(!tg.closest('#view')) return;
+  if(tg.closest('[data-mhidetree]')){ e.stopPropagation(); ui.mHideTree = !ui.mHideTree; render(); return; }
+  if((el = tg.closest('[data-mmode]'))){ e.stopPropagation(); ui.mMode = el.dataset.mmode; render(); return; }
+  if((el = tg.closest('[data-malert]'))){ e.stopPropagation(); ui.mAlert = ui.mAlert === el.dataset.malert ? '' : el.dataset.malert; render(); return; }
+  if((el = tg.closest('[data-mfst]'))){ e.stopPropagation(); ui.mFst = el.dataset.mfst; render(); return; }
+}, true);
+
+
+/* ============ Processos: relatório para o cliente (timbrado, minuta e validação) ============ */
+const REL_SEC = [['ident', 'Identificação do processo'], ['situacao', 'Situação atual'], ['crono', 'Cronograma'], ['tram', 'Histórico de tramitação'], ['notif', 'Notificações e exigências'],
+  ['etapas', 'Etapas do serviço'], ['mats', 'Materiais técnicos'], ['vinc', 'Processos relacionados'], ['lic', 'Licenças emitidas'], ['obs', 'Considerações finais']];
+function relDe(p){ const r = p.rel = p.rel || {};
+  r.sec = r.sec || Object.fromEntries(REL_SEC.map(([k]) => [k, !['vinc', 'mats'].includes(k)]));
+  r.excl = r.excl || []; r.titulo = r.titulo || 'Relatório de acompanhamento do processo'; r.obs = r.obs || ''; r.st = r.st || 'rascunho'; r.etapasPend = r.etapasPend !== false; return r; }
+const relHashStr = str => { let h = 5381; for(let i = 0; i < str.length; i++) h = ((h << 5) + h + str.charCodeAt(i)) | 0; return (h >>> 0).toString(36); };
+const relHash = p => relHashStr(relCorpo(p, false));
+const relValido = p => { const r = relDe(p); return r.st === 'aprovado' && r.hash === relHash(p); };
+const relTram = p => [...(p.tram || [])].sort((a, b) => a.em.localeCompare(b.em));
+const fmtDH = v => v ? fmtDT(v).replace(' às ', ', ') : '';
+function relCorpo(p, assinar){
+  const r = relDe(p), pr = propById(p.propId) || {}, d = pdat(p), a = tramAtual(p), on = k => !!r.sec[k], hoje = r.st === 'aprovado' && r.dataRef ? r.dataRef : TODAY, ad = a ? Math.max(0, diasEntre(a.desde.slice(0, 10), hoje)) : 0;
+  let n = 0; const bar = t => `<h2 class="bar"><span class="n">${String(++n).padStart(2, '0')}</span>${esc(t.toUpperCase())}</h2>`;
+  const kv = rows => `<table class="kv">${rows.filter(x => x[1]).map(([k, v]) => `<tr><th>${esc(k)}</th><td>${v}</td></tr>`).join('')}</table>`;
+  const im = p.imovel || {}, resp = U[p.resp];
+  let h = `<div class="title">${esc(r.titulo)}</div><div class="date">Fortaleza, ${dataExtenso(hoje)}.</div><div class="to">À ${esc(String(pr.cliente || '').replace(/\.+$/, ''))}.</div>`;
+  if(on('ident')) h += bar('Identificação do processo') + kv([['Empreendimento', esc(pr.emp || '')], ['Cliente', esc(pr.cliente || '')], ['Serviço', esc(p.servico || '')], ['Nº do protocolo', esc(p.protocolo || 'ainda não protocolado')], ['Órgão', esc(p.orgao || '')],
+    ['Endereço', esc([im.endereco, im.bairro, im.cidade].filter(Boolean).join(', '))], ['Matrícula', esc(im.matricula || '')], ['Inscrição imobiliária', esc(im.iptu || '')], ['Responsável Mannare', esc(resp ? resp.nome : '')]]);
+  if(on('situacao')){ const ult = tramSort(p)[0];
+    h += bar('Situação atual') + kv([['Status', esc(PS[p.status].l)], ['Onde está', a ? esc(a.setor) : ''], ['Desde', a ? `${fmtDH(a.desde)} (${ad === 0 ? 'no dia deste relatório' : ad + ' dia' + (ad > 1 ? 's' : '')})` : ''], ['Última movimentação', ult ? `${esc(ult.de)} ${esc((TRAM_AC[ult.acao] || TRAM_AC.outro).l)}${ult.para ? ' para ' + esc(ult.para) : ''}` : '']]); }
+  if(on('crono') && PDATAS.some(([k]) => d[k])){ const ref = d.fimReal || (d.fimPlan && hoje > d.fimPlan ? hoje : null), dv = d.fimPlan && ref ? diasEntre(d.fimPlan, ref) : null;
+    h += bar('Cronograma') + `<table class="val"><thead><tr><th></th><th class="c">Início</th><th class="c">Finalização</th></tr></thead><tbody><tr><td><b>Planejado</b></td><td class="c">${fmtDateBR(d.iniPlan) || '—'}</td><td class="c">${fmtDateBR(d.fimPlan) || '—'}</td></tr><tr><td><b>Realizado</b></td><td class="c">${fmtDateBR(d.iniReal) || '—'}</td><td class="c">${fmtDateBR(d.fimReal) || (isOpen(p) ? 'em andamento' : '—')}</td></tr></tbody></table>${dv !== null && dv !== 0 ? `<p class="ind">${dv > 0 ? `A finalização ${d.fimReal ? 'ocorreu' : 'está'} ${dv} dia${dv > 1 ? 's' : ''} além da data planejada${p.status === 'notificado' || (p.tram || []).some(t => t.acao === 'exigencia') ? ', em parte pelo tempo de atendimento às exigências do órgão' : ''}.` : `A finalização ocorreu ${-dv} dia${dv < -1 ? 's' : ''} antes da data planejada.`}</p>` : ''}`; }
+  const tl = relTram(p).filter(t => !r.excl.includes(t.id));
+  if(on('tram') && tl.length) h += bar('Histórico de tramitação') + `<table class="val tr"><thead><tr><th style="width:30mm">Data</th><th>Movimentação</th></tr></thead><tbody>${tl.map(t => `<tr${t.acao === 'exigencia' ? ' class="ex"' : ''}><td>${fmtDH(t.em)}</td><td><b>${esc(t.de)}</b> ${esc((TRAM_AC[t.acao] || TRAM_AC.outro).l)}${t.acao === 'encaminhou' && t.para ? ' para <b>' + esc(t.para) + '</b>' : ''}${t.obs ? `<div class="ob">${esc(t.obs)}</div>` : ''}</td></tr>`).join('')}</tbody></table>`;
+  const ex = tl.filter(t => t.acao === 'exigencia');
+  if(on('notif') && (ex.length || p.status === 'notificado')) h += bar('Notificações e exigências') + (ex.length ? `<ol class="al">${ex.map(t => `<li><b>${fmtDateBR(t.em)}</b> | ${esc(t.de)}${t.obs ? ': ' + esc(t.obs) : ''}</li>`).join('')}</ol>` : '') + (p.status === 'notificado' ? `<p class="ind">O processo encontra-se notificado e a Mannare está providenciando o atendimento às exigências.</p>` : '');
+  if(on('etapas') && p.tarefas.length){ const ok = p.tarefas.filter(t => t.status === 'concluida'), pend = p.tarefas.filter(t => t.status !== 'concluida');
+    h += bar('Etapas do serviço') + `<table class="val et"><tbody>${ok.map(t => `<tr><td class="ck">✓</td><td>${esc(t.titulo.replace(/^Parametrização \| /, 'Conferência | '))}</td><td class="c">concluída</td></tr>`).join('')}${r.etapasPend ? pend.map(t => `<tr class="pd"><td class="ck">○</td><td>${esc(t.titulo.replace(/^Parametrização \| /, 'Conferência | '))}</td><td class="c">${t.status === 'andamento' ? 'em andamento' : 'a realizar'}</td></tr>`).join('') : ''}</tbody></table>`; }
+  const ms = matsDoProc(p);
+  if(on('mats') && ms.length) h += bar('Materiais técnicos') + `<table class="val et"><tbody>${ms.map(m => `<tr><td>${esc(m.titulo || m.codigo)}</td><td>${esc(m.tipo)}</td><td class="c">${m.status === 'entregue' ? 'entregue' : 'em elaboração'}</td></tr>`).join('')}</tbody></table>`;
+  const vv = [...procPred(p).map(x => ['Depende de', x]), ...procSuc(p).map(x => ['Antecede', x])];
+  if(on('vinc') && vv.length) h += bar('Processos relacionados') + `<table class="val et"><tbody>${vv.map(([k, x]) => `<tr><td>${k}</td><td><b>${esc(pcod(x))}</b> | ${esc(x.servico || '')}</td><td class="c">${esc(PS[x.status].l)}</td></tr>`).join('')}</tbody></table>`;
+  const ls = licsOf(p);
+  if(on('lic') && ls.length) h += bar('Licenças emitidas') + `<table class="val et"><thead><tr><th>Documento</th><th class="c">Emissão</th><th class="c">Validade</th></tr></thead><tbody>${ls.map(l => `<tr><td>${esc(l.tipo)}${l.numero ? ' nº ' + esc(l.numero) : ''}<div class="ob">${esc(l.orgao || '')}</div></td><td class="c">${fmtDateBR(l.emissao)}</td><td class="c">${fmtDateBR(l.validade)}</td></tr>`).join('')}</tbody></table>`;
+  if(on('obs') && r.obs.trim()) h += bar('Considerações finais') + r.obs.split(/\n+/).filter(x => x.trim()).map(x => `<p class="ind">${mdP(x)}</p>`).join('');
+  const v = U[r.validador] || U[p.resp] || {}, img = assinar && (S.assin || {})[v.id];
+  h += `<div class="close"><div class="att">Atenciosamente,</div><div class="sg"><div class="sigbox">${img ? `<img src="${img}" alt="">` : ''}</div><div class="ln"></div><div class="rz">${esc(EMPRESA.razao)}</div><div>CNPJ nº ${esc(EMPRESA.cnpj)}</div>${v.nome ? `<div class="nm">${esc(v.nome)}</div>` : ''}${v.cargo ? `<div>${esc(v.cargo)}</div>` : ''}</div></div>`;
+  return h;
+}
+function relHtml(p, modo){
+  const ok = relValido(p), minuta = !ok, corpo = relCorpo(p, ok), font = modo === 'prev' ? '' : (($('#fontcss') || {}).textContent || '');
+  const nome = `Relatório ${pcod(p)} | ${(propById(p.propId) || {}).emp || ''}`.replace(/[\\/:*?"<>|]+/g, '-');
+  const css = `*{box-sizing:border-box}html,body{margin:0}body{font:300 10pt/1.75 Sora,"Segoe UI",Arial,sans-serif;color:#1d2238;-webkit-print-color-adjust:exact;print-color-adjust:exact}b{font-weight:600}
+main{padding:0 22mm}.title{font:500 16pt/1.3 Kanit,Arial,sans-serif;color:#274b9a;text-align:right;margin:0 0 6mm;letter-spacing:.03em}.date{text-align:right}
+.to{font:500 13pt/1.3 Kanit,Arial,sans-serif;color:#274b9a;margin:2mm 0 8mm;text-transform:uppercase;letter-spacing:.02em}
+h2.bar{display:flex;align-items:center;gap:3mm;font:500 11pt/1.3 Kanit,Arial,sans-serif;color:#274b9a;letter-spacing:.04em;margin:7mm 0 3mm;padding:0 0 1.6mm;border-bottom:.5mm solid #274b9a;break-after:avoid;page-break-after:avoid}
+h2.bar .n{display:inline-flex;align-items:center;justify-content:center;min-width:8.5mm;height:6.5mm;padding:0 1.5mm;background:#274b9a;color:#fff;border-radius:0 2.5mm 0 2.5mm;font-size:10pt;margin-right:3mm}
+p.ind{text-indent:12mm;text-align:justify;margin:2mm 0}
+table.kv{width:100%;border-collapse:separate;border-spacing:.45mm;line-height:1.4}table.kv th{width:46mm;text-align:left;background:#d8e0f0;color:#274b9a;font-weight:600;padding:1.8mm 4mm}table.kv td{background:#eef1f8;padding:1.8mm 4mm}
+table.val{width:100%;border-collapse:separate;border-spacing:.45mm;margin:1mm 0 3mm;line-height:1.4}table.val th{background:#274b9a;color:#fff;font:500 9pt/1.3 Kanit,Arial,sans-serif;letter-spacing:.04em;padding:2mm 4mm;text-align:left}
+table.val td{background:#eef1f8;padding:1.8mm 4mm;vertical-align:top}table.val .c{text-align:center}table.val tr{break-inside:avoid;page-break-inside:avoid}
+table.val.tr td:first-child{white-space:nowrap;font-size:9pt}table.val tr.ex td{background:#fdecea}.ob{font-size:9pt;color:#4b5068;margin-top:.8mm}
+table.val.et td.ck{width:8mm;text-align:center;color:#274b9a;font-weight:600}table.val.et tr.pd td{background:#f6f7fb;color:#5b6078}
+ol.al{list-style:none;counter-reset:al;margin:0;padding:0 0 0 9mm}ol.al li{counter-increment:al;position:relative;text-align:justify;margin-bottom:1.5mm}ol.al li::before{content:counter(al, lower-alpha) ")";position:absolute;left:-7mm;color:#274b9a;font-weight:600}
+.close{break-inside:avoid;page-break-inside:avoid;padding-top:8mm;line-height:1.35;font-size:9.5pt}.close .att{font-style:italic;margin-bottom:4mm;font-size:10pt}
+.sg .sigbox{height:20mm;display:flex;align-items:flex-end;padding-left:3mm}.sg .sigbox img{max-height:22mm;max-width:62mm;margin-bottom:-2.6mm}.sg .ln{border-top:1px solid #1d2238;width:66mm;margin-bottom:4mm}.sg .rz,.sg .nm{color:#274b9a;font-weight:600}.sg .rz{text-transform:uppercase}
+.wm{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-35deg);font:600 70pt Kanit,Arial,sans-serif;color:rgba(39,75,154,.09);white-space:nowrap;pointer-events:none;z-index:5;letter-spacing:.08em}`;
+  if(modo === 'prev') return `<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><style>${css}body{background:#fff}.wm{position:absolute;top:420px}img.tb{display:block;width:210mm}</style></head><body>${minuta ? '<div class="wm">MINUTA</div>' : ''}<img class="tb" src="${HEADER_IMG}" alt=""><main style="padding-top:6mm;padding-bottom:6mm">${corpo}</main><img class="tb" src="${FOOTER_IMG}" alt=""></body></html>`;
+  return `<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>${esc(nome)}</title><style>${font}
+@page{size:A4;margin:41mm 0 24mm 0;@top-left{content:image-set(url("${HEADER_IMG}") 2.5198x);vertical-align:top;width:210mm}@top-right{content:"PÁGINA " counter(page, decimal-leading-zero);font:200 10pt Kanit,Arial,sans-serif;letter-spacing:.04em;color:#3a3f55;vertical-align:bottom;text-align:right;padding-right:22mm;padding-bottom:3mm;width:60mm}@bottom-left{content:image-set(url("${FOOTER_IMG}") 2.5198x);vertical-align:bottom;width:210mm}}
+${css}.hdr img,.ftr-screen{display:block;width:210mm}table.pg{width:210mm;border-collapse:collapse}table.pg>*>tr>td{padding:0;background:none}
+.tools{position:sticky;top:0;z-index:10;background:${minuta ? '#B54708' : '#0000ff'};color:#fff;padding:10px 16px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;font:13px Sora,Arial,sans-serif}.tools button{background:#fff;color:#0000ff;border:0;border-radius:6px;padding:8px 14px;font:500 14px Kanit,Arial,sans-serif;cursor:pointer}
+@media screen{body{background:#e8eaf2}.sheet{width:210mm;margin:16px auto 40px;background:#fff;box-shadow:0 4px 24px rgba(0,0,0,.15);position:relative}.sp-top{height:11mm}.sp-bot{height:10mm}}
+@media print{.tools,.hdr,.ftr-screen{display:none}.sp-top,.sp-bot{height:2mm}}</style></head><body>
+<div class="tools"><button onclick="window.print()">Imprimir / Salvar como PDF</button><span>${minuta ? '<b>MINUTA</b>: ainda não validada. Peça a validação no painel antes de enviar ao cliente.' : 'Versão validada. No destino, escolha <b>Salvar como PDF</b> e desmarque <b>Cabeçalhos e rodapés</b>.'}</span></div>
+${minuta ? '<div class="wm">MINUTA</div>' : ''}<div class="sheet"><div class="hdr"><img src="${HEADER_IMG}" alt=""></div>
+<table class="pg"><thead><tr><td><div class="sp-top"></div></td></tr></thead><tfoot><tr><td><div class="sp-bot"></div></td></tr></tfoot><tbody><tr><td><main>${corpo}</main></td></tr></tbody></table>
+<img class="ftr-screen" src="${FOOTER_IMG}" alt=""></div></body></html>`;
+}
+function relStatusHtml(p){
+  const r = relDe(p), ok = relValido(p), mudou = r.st === 'aprovado' && !ok, v = r.validador;
+  if(ok) return `<div class="aprovbox ok"><div style="flex:1"><b>✓ Validado por ${esc(U[v] ? U[v].nome : v)}</b><div class="sub">${fmtWhen(r.em)} | pode ser enviado ao cliente</div></div><button class="btn sm ghost" data-relreabrir>Voltar a minuta</button></div>`;
+  if(r.st === 'pendente') return `<div class="aprovbox pend"><div style="flex:1"><b>Minuta aguardando validação de ${esc(U[v] ? U[v].nome : v)}${r.ate ? ' até ' + fmtD(r.ate) : ''}</b><div class="sub">pedido por ${esc(first(r.pedidoPor))} ${fmtWhen(r.pedidoEm)}</div></div>
+    ${me === v ? '<button class="btn sm" data-relajuste>Pedir ajustes</button><button class="btn sm primary" data-relok>Validar relatório</button>' : '<button class="btn sm ghost" data-relcancel>Cancelar pedido</button>'}</div>`;
+  return `<div class="aprovbox"><div style="flex:1"><b>Minuta</b><div class="sub">${mudou ? 'O relatório mudou depois da validação e voltou a ser minuta. ' : ''}${r.ajuste ? `Ajustes pedidos por ${esc(first(r.ajuste.por))}: “${esc(r.ajuste.txt)}”. ` : ''}Sai com a marca d’água MINUTA até ser validado.</div></div><button class="btn sm primary" data-relpedir>Pedir validação</button></div>`;
+}
+function relTabHtml(p){
+  const r = relDe(p), tl = relTram(p);
+  return `${relStatusHtml(p)}
+    <div class="relgrid"><div class="relopts">
+      <label class="f">Título<input class="inp" data-relf="titulo" value="${esc(r.titulo)}"></label>
+      <div class="sub" style="font-weight:700;margin:10px 0 4px">Incluir no relatório</div>
+      ${REL_SEC.map(([k, l]) => `<label class="relck"><input type="checkbox" data-relsec="${k}" ${r.sec[k] ? 'checked' : ''}>${l}</label>`).join('')}
+      ${r.sec.etapas ? `<label class="relck sub2"><input type="checkbox" data-relpend ${r.etapasPend ? 'checked' : ''}>mostrar também as etapas pendentes</label>` : ''}
+      ${r.sec.tram && tl.length ? `<details class="reltr" ${tl.length <= 8 ? 'open' : ''}><summary>Movimentações (${tl.length - r.excl.filter(id => tl.some(t => t.id === id)).length} de ${tl.length})</summary>${tl.map(t => `<label class="relck sub2"><input type="checkbox" data-reltr="${t.id}" ${r.excl.includes(t.id) ? '' : 'checked'}><span>${fmtD(t.em.slice(0, 10))} | ${esc(t.de)} <span class="sub">${esc((TRAM_AC[t.acao] || TRAM_AC.outro).l)}</span></span></label>`).join('')}</details>` : ''}
+      ${r.sec.obs ? `<label class="f" style="margin-top:8px">Considerações finais<textarea class="inp" data-relf="obs" rows="5" placeholder="Texto livre para o cliente. **negrito** funciona.">${esc(r.obs)}</textarea></label>` : ''}
+      <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"><button class="btn primary sm" data-relabrir>${ic('doc', 'sm')} Abrir para imprimir / PDF</button></div>
+      <p class="hint">A prévia ao lado atualiza na hora. Seções sem conteúdo (sem licença, sem materiais etc.) não aparecem.</p></div>
+    <div class="relprev"><div class="relscale"><iframe id="relFrame" title="Prévia do relatório"></iframe></div></div></div>`;
+}
+function relPreview(){
+  const fr = $('#relFrame'); if(!fr || !ui.drawer) return; const p = procById(ui.drawer.id); if(!p) return;
+  const wrap = fr.parentElement, W = 794, sc = Math.min(1, (wrap.parentElement.clientWidth - 2) / W);
+  fr.style.width = W + 'px'; fr.style.transform = `scale(${sc})`;
+  fr.onload = () => { try{ const h = fr.contentDocument.documentElement.scrollHeight; fr.style.height = h + 'px'; wrap.style.height = (h * sc) + 'px'; }catch(_){} };
+  fr.srcdoc = relHtml(p, 'prev');
+}
+renderDrawer = (function(base){ return function(){ base.apply(this, arguments); if(ui.drawer && ui.drawer.kind === 'proc' && ui.dtab === 'relatorio') relPreview(); }; })(renderDrawer);
+let relT = 0;
+document.addEventListener('input', e => { const tg = e.target; if(!tg.dataset || tg.dataset.relf === undefined || !ui.drawer) return; e.stopPropagation();
+  const p = procById(ui.drawer.id); relDe(p)[tg.dataset.relf] = tg.value; clearTimeout(relT); relT = setTimeout(relPreview, 350); }, true);
+document.addEventListener('change', e => {
+  const tg = e.target; if(!tg.dataset || !ui.drawer || !tg.closest('#drawer')) return;
+  if(tg.dataset.relf === undefined && tg.dataset.relsec === undefined && tg.dataset.reltr === undefined && tg.dataset.relpend === undefined) return; e.stopPropagation();
+  const p = procById(ui.drawer.id), r = relDe(p);
+  if(tg.dataset.relf !== undefined) r[tg.dataset.relf] = tg.value;
+  if(tg.dataset.relsec !== undefined) r.sec[tg.dataset.relsec] = tg.checked;
+  if(tg.dataset.relpend !== undefined) r.etapasPend = tg.checked;
+  if(tg.dataset.reltr !== undefined){ const id = tg.dataset.reltr; r.excl = r.excl.filter(x => x !== id); if(!tg.checked) r.excl.push(id); }
+  save(); renderDrawer();
+}, true);
+document.addEventListener('click', e => {
+  const tg = e.target; if(!tg.closest || !tg.closest('#drawer') || !ui.drawer || ui.drawer.kind !== 'proc') return;
+  const p = procById(ui.drawer.id); if(!p) return; const r = relDe(p);
+  if(tg.closest('[data-relabrir]')){ e.stopPropagation(); const html = relHtml(p, 'tela'), w = window.open('', '_blank'); if(w){ w.document.open(); w.document.write(html); w.document.close(); } else toast('Permita pop-ups para abrir o relatório'); logP(p, `abriu o relatório${relValido(p) ? ' validado' : ' (minuta)'}`); save(); return; }
+  if(tg.closest('[data-relpedir]')){ e.stopPropagation();
+    const def = (USERS.find(u => u.id !== me && (S.equipe.find(x => x.email.toLowerCase() === u.id) || {}).papel === 'socio') || USERS.find(u => u.id !== me) || U[me]).id;
+    pickAprovador('Quem valida o relatório?', `Relatório do processo <b>${esc(pcod(p))}</b>. Até a validação ele sai como <b>MINUTA</b>.`, r.validador || def, (id, ate) => {
+      Object.assign(r, {st:'pendente', validador:id, ate, pedidoPor:me, pedidoEm:nowISO(), ajuste:null, hash:''}); logP(p, `pediu a validação do relatório a ${first(id)}`);
+      notify(id, `pediu a validação do relatório do processo ${esc(pcod(p))}${ate ? ' até ' + fmtD(ate) : ''}`, p.id, null); save(); render(); }, {prazo:true, prazoLabel:'Validar até', botao:'Pedir validação'});
+    return; }
+  if(tg.closest('[data-relok]')){ e.stopPropagation(); if(me !== r.validador) return; Object.assign(r, {st:'aprovado', em:nowISO(), dataRef:TODAY, ajuste:null}); r.hash = relHash(p); logP(p, 'validou o relatório do processo');
+    notify(r.pedidoPor, `validou o relatório do processo ${esc(pcod(p))}. Já pode enviar ao cliente.`, p.id, null); save(); render(); toast('Relatório validado'); return; }
+  if(tg.closest('[data-relajuste]')){ e.stopPropagation(); const txt = prompt('O que precisa ajustar no relatório?'); if(txt === null) return;
+    Object.assign(r, {st:'rascunho', ajuste:{por:me, em:nowISO(), txt:txt.trim() || 'ver comentários'}}); logP(p, `pediu ajustes no relatório: ${txt}`); notify(r.pedidoPor, `pediu ajustes no relatório do processo ${esc(pcod(p))}: ${esc(txt)}`, p.id, null); save(); render(); return; }
+  if(tg.closest('[data-relcancel]')){ e.stopPropagation(); r.st = 'rascunho'; logP(p, 'cancelou o pedido de validação do relatório'); save(); render(); return; }
+  if(tg.closest('[data-relreabrir]')){ e.stopPropagation(); r.st = 'rascunho'; r.hash = ''; logP(p, 'voltou o relatório para minuta'); save(); render(); return; }
+}, true);
+addEventListener('resize', () => { if(ui.drawer && ui.dtab === 'relatorio') relPreview(); });
+
 /* ---------- Cadastros: editor da parametrização ---------- */
 let peEd = null;
 function paramEditor(k){
@@ -5222,7 +5751,7 @@ document.addEventListener('click', e => {
   if(tg.closest('[data-avgo]')){ const cli = $('#avCli').value.trim(), emp = $('#avEmp').value.trim(); if(!cli || !emp){ toast('Preencha cliente e obra'); return; }
     const mod = $('#avMod').value, resp = $('#avResp').value; const prop = {id:'av-' + uid(), codigo:'Avulso', cliente:cli, grupo:cli, emp, objeto:MODELOS[mod].nome, valor:0, status:'aprovada', resp, modelo:mod, itens:[]};
     const p = mkProcess(prop, mod, resp, $('#avPrazo').value, me); p.codigo = nextCode('PROC-', S.procs); p.status = $('#avSt').value; const sv = $('#avSrv') ? $('#avSrv').value.trim() : ''; if(sv || mod === 'sem'){ p.servico = sv || 'Processo'; p.prop.objeto = p.servico; } if(mod === 'sem') p.orgao = ''; p.log[0].txt = mod === 'sem' ? 'criou o processo sem proposta e sem modelo de tarefas' : `criou o processo sem proposta (modelo “${MODELOS[mod].nome}”)`; S.procs.push(p); rebuildProps();
-    notify(resp, mod === 'sem' ? `abriu o processo ${p.codigo} (${esc(emp)}) e deixou você como responsável` : `abriu o processo ${p.codigo} (${esc(emp)}) e atribuiu as tarefas a você`, p.id, null); save(); closeTask(); ui.view = 'proc'; render(); openDrawer('proc', p.id); toast(p.codigo + ' criado'); return; }
+    notify(resp, mod === 'sem' ? `abriu o processo ${pcod(p)} (${esc(emp)}) e deixou você como responsável` : `abriu o processo ${pcod(p)} (${esc(emp)}) e atribuiu as tarefas a você`, p.id, null); save(); closeTask(); ui.view = 'proc'; render(); openDrawer('proc', p.id); toast(pcod(p) + ' criado'); return; }
   { const g = tg.closest('[data-chart]'); if(g){ ui.chartMode = g.dataset.chart; render(); return; } }
   { const g = tg.closest('[data-lst]'); if(g){ ui.lSt = ui.lSt === g.dataset.lst ? '' : g.dataset.lst; render(); return; } }
   if(tg.closest('[data-lpend]')){ $('#pendLic')?.scrollIntoView({behavior:'smooth', block:'center'}); return; }
@@ -5284,8 +5813,8 @@ document.addEventListener('click', e => {
       const p = mkProcess(pr, $('#npModelo').value, $('#npResp').value, $('#npPrazo').value, me); if($('#npModelo').value === 'sem'){ p.servico = pr.tipo || String(pr.objeto || '').split('\n')[0].slice(0, 80) || 'Processo'; p.orgao = ''; p.log[0].txt = `criou o processo a partir da proposta ${pr.codigo} (sem modelo de tarefas)`; }
       p.codigo = nextCode('PROC-', S.procs);
       S.procs.push(p); pr.procId = p.id;
-      notify(p.resp, `abriu o processo ${p.codigo} (${esc(pr.emp)}) e atribuiu as tarefas a você`, p.id, null);
-      save(); closeTask(); ui.view = 'proc'; openDrawer('proc', p.id); render(); toast(`${p.codigo} criado com ${p.tarefas.length} tarefas`); return;
+      notify(p.resp, `abriu o processo ${pcod(p)} (${esc(pr.emp)}) e atribuiu as tarefas a você`, p.id, null);
+      save(); closeTask(); ui.view = 'proc'; openDrawer('proc', p.id); render(); toast(`${pcod(p)} criado com ${p.tarefas.length} tarefas`); return;
     }
     if(!ui.task) return;
     const [p, t] = curTask();
@@ -5322,7 +5851,7 @@ document.addEventListener('click', e => {
     (S.lics || []).forEach(l => { if(l.procId === p.id){ const pr = propById(p.propId) || p.prop || {}; l.procId = null; l.obra = l.obra || pr.emp || ''; l.cliente = l.cliente || pr.cliente || ''; } if(l.renovProcId === p.id) delete l.renovProcId; });
     S.procs = S.procs.filter(x => x !== p); ui.delConfirm = null; if(typeof rebuildProps === 'function') rebuildProps();
     const pr = propById(p.propId); if(pr && pr.procId === p.id) pr.procId = null;
-    save(); closeDrawer(); render(); toast(p.codigo + ' excluído'); return; }
+    save(); closeDrawer(); render(); toast(pcod(p) + ' excluído'); return; }
   if(tg.closest('[data-stop]')) return;
   if(tg.closest('[data-descedit]')){ descEdit = true; renderDrawer(); $('#drawer .edarea')?.focus(); return; }
   if(tg.closest('[data-desccancel]')){ descEdit = false; renderDrawer(); return; }
@@ -5417,8 +5946,9 @@ document.addEventListener('change', e => {
   if(tg.dataset.pf){
     const p = procById(ui.drawer.id), k = tg.dataset.pf, v = tg.value;
     if(p[k] === v) return;
+    if(k === 'status'){ procMudarStatus(p, v); return; }
     if(k === 'status') logP(p, `mudou o status do processo para “${PS[v].l}”`);
-    else if(k === 'resp'){ logP(p, `passou a responsabilidade do processo para ${first(v)}`); notify(v, `passou o processo ${esc(p.codigo)} para você`, p.id, null); }
+    else if(k === 'resp'){ logP(p, `passou a responsabilidade do processo para ${first(v)}`); notify(v, `passou o processo ${esc(pcod(p))} para você`, p.id, null); }
     else if(k === 'protocolo') logP(p, `registrou o protocolo “${v}”`);
     else if(k === 'prazo') logP(p, `mudou o prazo final para ${fmtD(v)}`);
     else logP(p, `alterou ${k}`);
@@ -5504,7 +6034,7 @@ document.addEventListener('drop', e => { const col = e.target.closest?.('.mcol')
   const d = e.dataTransfer.getData('text/plain'); if(!d.startsWith('mat:')) return; const m = matById(d.slice(4)); if(m && m.status !== col.dataset.mcol){ setMatStatus(m, col.dataset.mcol); save(); render(); toast(`${m.codigo} → ${MS[m.status].l}`); } });
 document.addEventListener('drop', e => { const col = e.target.closest?.('.col,.pcol'); if(!col) return; e.preventDefault();
   const p = procById(e.dataTransfer.getData('text/plain')); $$('.col,.pcol').forEach(x => x.classList.remove('over'));
-  if(p && p.status !== col.dataset.col){ const old = p.status; logP(p, `mudou o status do processo para “${PS[col.dataset.col].l}”`); p.status = col.dataset.col; save(); render(); toast(`${p.codigo} → ${PS[p.status].l}`); afterStatus(p, old); } });
+  if(p && p.status !== col.dataset.col) procMudarStatus(p, col.dataset.col, true); });
 
 boot();
 
@@ -5517,7 +6047,8 @@ boot();
     {k:'tree', sel:'.pwrap:not(.notree)', mq:'(min-width:1181px)', unit:'px', min:170, max:560},
     {k:'plan', sel:'.plan', mq:'(min-width:1001px)', unit:'px', min:220, max:640},
     {k:'mleft', sel:'#layer .mbody', mq:'(min-width:861px)', unit:'%', min:28, max:80},
-    {k:'modal', sel:'#layer .modal:not(.small)', mq:'(min-width:861px)', unit:'px', min:640, max:3000, edge:true}
+    {k:'modal', sel:'#layer .modal:not(.small)', mq:'(min-width:861px)', unit:'px', min:640, max:3000, edge:true},
+    {k:'drawer', sel:'#drawer', mq:'(min-width:861px)', unit:'px', min:560, max:3000, edgeL:true}
   ];
   const aplicar = () => R.forEach(r => st[r.k] != null ? root.style.setProperty('--rz-' + r.k, st[r.k] + r.unit) : root.style.removeProperty('--rz-' + r.k));
   const gapDe = c => parseFloat(getComputedStyle(c).columnGap) || 0;
@@ -5526,10 +6057,10 @@ boot();
       document.querySelectorAll(r.sel).forEach(c => {
         let h = [...c.children].find(x => x.classList.contains('rzh'));
         if(!on){ if(h) h.style.display = 'none'; return; }
-        if(!h){ h = document.createElement('div'); h.className = 'rzh' + (r.edge ? ' edge' : ''); h.dataset.rz = r.k; h.title = 'Arraste para ajustar a largura | duplo clique para restaurar';
+        if(!h){ h = document.createElement('div'); h.className = 'rzh' + (r.edge ? ' edge' : '') + (r.edgeL ? ' edgel' : ''); h.dataset.rz = r.k; h.title = 'Arraste para ajustar a largura | duplo clique para restaurar';
           if(getComputedStyle(c).position === 'static') c.style.position = 'relative'; c.appendChild(h); }
         h.style.display = '';
-        if(r.edge) return;
+        if(r.edge || r.edgeL) return;
         const f = c.firstElementChild; if(!f || f === h) return;
         const x = f.getBoundingClientRect().right - c.getBoundingClientRect().left + gapDe(c) / 2 - 4;
         h.style.left = x + 'px';
@@ -5546,13 +6077,13 @@ boot();
     try{ h.setPointerCapture(e.pointerId); }catch(_){}
     h.classList.add('on'); document.body.classList.add('rzing');
     const mover = ev => {
-      let v = r.edge ? w0 + (ev.clientX - x0) * 2 : ev.clientX - cr.left - gap / 2;
+      let v = r.edge ? w0 + (ev.clientX - x0) * 2 : r.edgeL ? w0 - (ev.clientX - x0) : ev.clientX - cr.left - gap / 2;
       if(r.unit === '%') v = v / cr.width * 100;
-      if(r.edge) v = Math.min(v, innerWidth - 24);
+      if(r.edge || r.edgeL) v = Math.min(v, innerWidth - 24);
       v = Math.max(r.min, Math.min(r.max, v)); st[r.k] = Math.round(v * 10) / 10; aplicar(); posicionar();
     };
     const soltar = () => { h.removeEventListener('pointermove', mover); h.removeEventListener('pointerup', soltar); h.removeEventListener('pointercancel', soltar);
-      h.classList.remove('on'); document.body.classList.remove('rzing'); try{ localStorage.setItem(LS, JSON.stringify(st)); }catch(_){} };
+      h.classList.remove('on'); document.body.classList.remove('rzing'); try{ localStorage.setItem(LS, JSON.stringify(st)); }catch(_){} dispatchEvent(new Event('resize')); };
     h.addEventListener('pointermove', mover); h.addEventListener('pointerup', soltar); h.addEventListener('pointercancel', soltar);
   }, true);
   document.addEventListener('click', e => { if(e.target.closest && e.target.closest('.rzh')){ e.stopPropagation(); e.preventDefault(); } }, true);
