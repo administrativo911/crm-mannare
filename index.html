@@ -1244,6 +1244,25 @@ input[type="checkbox"]{border-radius:3px!important}
 .eqm input{margin:0}
 /* ---------- material: pausado ---------- */
 .mcard .tmr.pz{color:#52525B;background:#F4F4F5;padding:1px 6px;font-size:12px}
+
+/* ---------- Minhas tarefas por processo ---------- */
+.mplist{display:flex;flex-direction:column;gap:10px}
+.mpcard{background:var(--ui-panel,#fff);border:1px solid var(--line);transition:border-color .15s}
+.mpcard:hover,.mpcard.open{border-color:var(--z-300,#D4D4D8)}
+.mpcard.mplate{border-left:3px solid #D92D20}
+.mph{display:grid;grid-template-columns:18px minmax(0,1fr) 170px 170px 130px;gap:14px;align-items:center;padding:14px 16px;cursor:pointer}
+.mpcar{color:var(--muted);font-size:13px}
+.mpt{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.mpt b{font-size:15px;color:var(--ink)}
+.mpcod{font-size:12px;font-weight:600;color:var(--m-azul,#4948d1);background:var(--m-azul-t05,#F7F7FF);padding:1px 6px}
+.mpcnt{display:flex;flex-direction:column;line-height:1.25}.mpcnt b{font-size:18px;color:var(--ink)}
+.mpflags{display:flex;flex-direction:column;gap:3px;align-items:flex-start}
+.mpf{font-size:12px;font-weight:600;padding:1px 7px}
+.mpf.red{color:#B42318;background:#FEE4E2}.mpf.amb{color:#8A6200;background:#FFF4D9}
+.mpprog{display:flex;gap:8px;align-items:center}.mpprog .bar{flex:1;height:5px;background:var(--z-100,#F4F4F5)}.mpprog .bar i{display:block;height:100%;background:var(--m-azul,#4948d1)}
+.mpbody{border-top:1px solid var(--line)}
+.mpbody .mine-row:first-child{border-top:0}
+@media (max-width:900px){.mph{grid-template-columns:18px minmax(0,1fr) auto}.mpflags,.mpprog{display:none}}
 /* ---------- painéis redimensionáveis ---------- */
 @media (min-width:1181px){.app{grid-template-columns:var(--rz-side,260px) minmax(0,1fr)!important}.pwrap:not(.notree){grid-template-columns:var(--rz-tree,250px) minmax(0,1fr)!important}}
 @media (min-width:1001px){.plan{grid-template-columns:var(--rz-plan,300px) minmax(0,1fr)!important}}
@@ -1877,25 +1896,42 @@ function renderMine(){
   const names = ['Atrasadas', 'Para hoje', 'Próximas', 'Sem prazo'];
   const colors = ['#B42318', '#8A6200', '#0000E0', '#4B4E66'];
   const kc = {tarefa:'#0000FF', subtarefa:'#6666FF', 'comentário':'#FDCA40'};
-  let html = '';
-  for(let b = 0; b < 4; b++){
-    const its = items.filter(i => bucket(i) === b).sort((a, c) => (a.prazo || '').localeCompare(c.prazo || ''));
-    if(!its.length) continue;
-    html += `<div class="tlist"><div class="tgh" style="color:${colors[b]}">${names[b]} <span class="sub">${its.length}</span></div>` + its.map(i => {
-      const pr = propById(i.p.propId);
+  const rowHtml = i => {
       const key = i.k === 'subtarefa' ? `data-chk-sub="${i.p.id}|${i.t.id}|${i.s.id}"` : i.k === 'tarefa' ? `data-chk-task="${i.p.id}|${i.t.id}"` : `data-chk-com="${i.p.id}|${i.t.id}|${i.c.id}"`;
       const titulo = i.k === 'comentário' ? `“${esc(i.titulo.length > 90 ? i.titulo.slice(0, 90) + '…' : i.titulo)}” <span class="sub">de ${esc(first(i.c.autor))}</span>` : esc(i.titulo);
       return `<div class="mine-row" data-open="${i.p.id}|${i.t.id}">
         <span class="sq ${i.feito ? 'done' : ''}" style="border-color:${kc[i.k]}" ${key} title="Marcar como feito"></span>
         <div><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">${tag(i.k, kc[i.k])}<b>${titulo}</b></div>
-          <div class="sub" style="margin-top:3px">${esc(i.p.codigo)} | ${esc(pr.emp)}${i.k !== 'tarefa' ? ' / ' + esc(i.t.titulo) : ''}</div></div>
+          ${i.k !== 'tarefa' ? `<div class="sub" style="margin-top:3px">em ${esc(i.t.titulo)}</div>` : ''}</div>
         <span>${i.k === 'tarefa' ? pill(TS[i.t.status].l, TS[i.t.status].c) : ''}</span>
-        <span style="min-width:70px;text-align:right">${dueHtml(i.prazo, i.feito)}</span></div>`;
-    }).join('') + '</div>';
-  }
+        <span style="min-width:70px;text-align:right">${dueHtml(i.prazo, i.feito)}</span></div>`; };
+  /* um card por processo; clicar abre as tarefas daquele processo */
+  ui.mineOpen = ui.mineOpen || {};
+  const grupos = {};
+  items.forEach(i => { (grupos[i.p.id] = grupos[i.p.id] || {p:i.p, its:[]}).its.push(i); });
+  const prazoMin = g => g.its.map(i => i.prazo).filter(Boolean).sort()[0] || '9999';
+  const lista = Object.values(grupos).map(g => Object.assign(g, {at:g.its.filter(i => bucket(i) === 0).length, hj:g.its.filter(i => bucket(i) === 1).length, pz:prazoMin(g)}))
+    .sort((x, y) => (y.at > 0) - (x.at > 0) || x.pz.localeCompare(y.pz) || String(x.p.codigo).localeCompare(String(y.p.codigo)));
+  const html = lista.map(g => {
+    const p = g.p, pr = propById(p.propId) || {}, aberto = !!ui.mineOpen[p.id];
+    const tot = p.tarefas.length, conc = p.tarefas.filter(t => t.status === 'concluida').length;
+    const its = g.its.slice().sort((x, y) => bucket(x) - bucket(y) || (x.prazo || '9').localeCompare(y.prazo || '9'));
+    const cont = ['tarefa', 'subtarefa', 'comentário'].map(k => { const n = g.its.filter(i => i.k === k).length; return n ? `${n} ${k === 'comentário' ? (n > 1 ? 'comentários' : 'comentário') : k + (n > 1 ? 's' : '')}` : ''; }).filter(Boolean).join(' · ');
+    return `<div class="mpcard ${aberto ? 'open' : ''} ${g.at ? 'mplate' : ''}">
+      <div class="mph" data-mineproc="${p.id}" role="button" aria-expanded="${aberto}">
+        <span class="mpcar">${aberto ? '▾' : '▸'}</span>
+        <div class="mpmain"><div class="mpt"><span class="mpcod">${esc(p.codigo)}</span><b>${esc(pr.emp || '')}</b></div>
+          <div class="sub">${esc(p.servico || '')}${pr.cliente ? ' | ' + esc(pr.cliente) : ''}</div></div>
+        <div class="mpcnt"><b>${g.its.length}</b><span class="sub">${cont}</span></div>
+        <div class="mpflags">${g.at ? `<span class="mpf red">${g.at} atrasada${g.at > 1 ? 's' : ''}</span>` : ''}${g.hj ? `<span class="mpf amb">${g.hj} para hoje</span>` : ''}${!g.at && !g.hj && g.pz !== '9999' ? `<span class="sub">próximo prazo ${fmtD(g.pz)}</span>` : ''}${g.pz === '9999' ? '<span class="sub">sem prazo</span>' : ''}</div>
+        <div class="mpprog" title="Andamento do processo: ${conc} de ${tot} tarefas concluídas"><div class="bar"><i style="width:${tot ? conc * 100 / tot : 0}%"></i></div><span class="sub">${conc}/${tot}</span></div>
+      </div>
+      ${aberto ? `<div class="mpbody">${its.map(rowHtml).join('')}</div>` : ''}</div>`;
+  }).join('');
   $('#view').innerHTML = `<div class="pagehead"><div><h1>Minhas tarefas</h1><p>Tarefas, subtarefas e comentários atribuídos a ${esc(first(me))}, de todos os processos.</p></div><span class="spacer"></span>
-    <div class="seg"><button data-mf="aberto" class="${ui.mineFilter === 'aberto' ? 'on' : ''}">Em aberto</button><button data-mf="feito" class="${ui.mineFilter === 'feito' ? 'on' : ''}">Concluídas</button></div></div>
-    ${revisoesMine()}${matsMine()}${html || (revisoesMine() ? '' : '<div class="blk empty">Nada por aqui. Tudo em dia.</div>')}<div style="height:40px"></div>`;
+    ${html ? `<button class="btn sm ghost" data-mineall style="margin-right:8px">${Object.keys(grupos).every(k => ui.mineOpen[k]) ? 'Recolher todos' : 'Expandir todos'}</button>` : ''}<div class="seg"><button data-mf="aberto" class="${ui.mineFilter === 'aberto' ? 'on' : ''}">Em aberto</button><button data-mf="feito" class="${ui.mineFilter === 'feito' ? 'on' : ''}">Concluídas</button></div></div>
+    ${revisoesMine()}${matsMine()}${html ? `<div class="mplist">${html}</div>` : ''}${html ? '' : (revisoesMine() ? '' : '<div class="blk empty">Nada por aqui. Tudo em dia.</div>')}<div style="height:40px"></div>`;
+  ui._mineIds = Object.keys(grupos);
 }
 
 /* ---------- Drawer (proposta ou processo) ---------- */
@@ -5066,6 +5102,14 @@ document.addEventListener('click', e => {
   if(tg.closest('.modal')) e.stopPropagation();
 }, true);
 document.addEventListener('change', e => { const tg = e.target; if(!eqEd || !tg.dataset || tg.dataset.eqm === undefined) return; e.stopPropagation(); tg.closest('.eqm').classList.toggle('on', tg.checked); }, true);
+
+
+/* ---------- Minhas tarefas: abrir/fechar card do processo ---------- */
+document.addEventListener('click', e => {
+  const tg = e.target; if(!tg.closest) return; let el;
+  if((el = tg.closest('[data-mineproc]'))){ e.stopPropagation(); const id = el.dataset.mineproc; ui.mineOpen = ui.mineOpen || {}; ui.mineOpen[id] = !ui.mineOpen[id]; renderMine(); return; }
+  if(tg.closest('[data-mineall]')){ e.stopPropagation(); const ids = ui._mineIds || [], abrir = !ids.every(k => ui.mineOpen[k]); ids.forEach(k => ui.mineOpen[k] = abrir); renderMine(); return; }
+}, true);
 
 /* ---------- Cadastros: editor da parametrização ---------- */
 let peEd = null;
