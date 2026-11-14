@@ -1393,6 +1393,18 @@ input[type="checkbox"]{border-radius:3px!important}
 .crbody{display:flex;align-items:flex-start}
 .crleft{flex:none;overflow-x:auto;border-right:1px solid var(--line)}
 .crin{width:1506px}
+/* visões da tabela do cronograma */
+.crwrap.v-plan .crr{grid-template-columns:32px 24px 38px 240px 64px 92px 112px 112px 100px 46px!important}
+.crwrap.v-plan .crr:not(.vazio):not(.add)>span:nth-child(10),.crwrap.v-plan .crr:not(.vazio):not(.add)>span:nth-child(11),.crwrap.v-plan .crr:not(.vazio):not(.add)>span:nth-child(12),.crwrap.v-plan .crr:not(.vazio):not(.add)>span:nth-child(13),.crwrap.v-plan .crr:not(.vazio):not(.add)>span:nth-child(14),.crwrap.v-plan .crr:not(.vazio):not(.add)>span:nth-child(15){display:none!important}
+.crwrap.v-plan .crin{width:860px}
+.crwrap.v-acomp .crr{grid-template-columns:32px 24px 240px 64px 112px 112px 112px 112px 64px!important}
+.crwrap.v-acomp .crr:not(.vazio):not(.add)>span:nth-child(3),.crwrap.v-acomp .crr:not(.vazio):not(.add)>span:nth-child(6),.crwrap.v-acomp .crr:not(.vazio):not(.add)>span:nth-child(9),.crwrap.v-acomp .crr:not(.vazio):not(.add)>span:nth-child(13),.crwrap.v-acomp .crr:not(.vazio):not(.add)>span:nth-child(14),.crwrap.v-acomp .crr:not(.vazio):not(.add)>span:nth-child(15),.crwrap.v-acomp .crr:not(.vazio):not(.add)>span:nth-child(16){display:none!important}
+.crwrap.v-acomp .crin{width:872px}
+.crwrap.v-lb .crr{grid-template-columns:32px 24px 240px 64px 112px 112px 96px 96px 60px!important}
+.crwrap.v-lb .crr:not(.vazio):not(.add)>span:nth-child(3),.crwrap.v-lb .crr:not(.vazio):not(.add)>span:nth-child(6),.crwrap.v-lb .crr:not(.vazio):not(.add)>span:nth-child(9),.crwrap.v-lb .crr:not(.vazio):not(.add)>span:nth-child(10),.crwrap.v-lb .crr:not(.vazio):not(.add)>span:nth-child(11),.crwrap.v-lb .crr:not(.vazio):not(.add)>span:nth-child(12),.crwrap.v-lb .crr:not(.vazio):not(.add)>span:nth-child(16){display:none!important}
+.crwrap.v-lb .crin{width:836px}
+.crwrap.v-tudo .crr{grid-template-columns:32px 24px 38px 240px 64px 92px 112px 112px 100px 112px 112px 64px 96px 96px 60px 46px!important}
+.crwrap.v-tudo .crin{width:1400px}
 .crr .c-dv,.crr.hd .c-dv{justify-content:center!important;padding:0 4px!important;text-align:center}
 .crr .c-dv.dsv{background:#FBFBFD}.crr.hd .c-dv.dsv{background:#EFF1F7}
 .crr.hd .c-d,.crr.hd .c-c{justify-content:flex-end;text-align:right}
@@ -1400,6 +1412,25 @@ input[type="checkbox"]{border-radius:3px!important}
 .crr.proj .c-nome{padding-left:6px}
 .crr .c-n{cursor:pointer;user-select:none}.crr.sel .c-n{background:#4948d1;color:#fff;font-weight:700}
 .crr.hd .c-n{cursor:pointer}
+.lbbody{padding:14px 18px;display:flex;flex-direction:column;gap:18px;max-height:78vh;overflow:auto}
+.lbsec{display:flex;flex-direction:column;gap:8px}.lbh{display:flex;gap:12px;align-items:center;flex-wrap:wrap}.lbh label{display:flex;gap:6px;align-items:center;font-size:12.5px}.lbh select{border:1px solid var(--line);padding:4px 6px;font:inherit;font-size:13px;max-width:280px}
+.lbtab{width:100%;border-collapse:collapse;font-size:12.5px}.lbtab th{background:#F7F8FC;font-weight:600;font-size:11.5px;color:#3B3B4F;text-align:left;padding:6px 8px;border-bottom:1px solid var(--line)}.lbtab td{padding:5px 8px;border-bottom:1px solid #EEF0F4}.lbtab .c{text-align:center}
+.lbtab tr.on td{background:#EEF2FF}.lbtab tr.res td{font-weight:700;background:#FAFAFC}.lbtab tr.mud td{background:#FFFBF0}.lbtab tr.mud.res td{background:#FFF6E0}
+.lbtab th.ga{background:#E9ECF6}.lbtab th.gb{background:#E7F5EE}.lbtab.cmp th{text-align:center}
+.lbnome{border:1px solid transparent;background:transparent;font:inherit;font-size:13px;padding:3px 5px;width:100%;font-weight:600}.lbnome:hover{border-color:var(--line)}.lbnome:focus{outline:0;border-color:var(--m-azul,#4948d1);background:#fff}
+.lbtabw{max-height:46vh;overflow:auto;border:1px solid var(--line)}.lbtabw thead th{position:sticky;top:0;z-index:1}.lbtabw thead tr:nth-child(2) th{top:29px}
+.lbres{display:flex;gap:10px;flex-wrap:wrap}.lbres>div{border:1px solid var(--line);padding:6px 10px;display:flex;flex-direction:column;gap:2px;font-size:13px;min-width:120px}.lbres>div b{font-size:14px}
+.crviews button{font-size:12px}
+.crwrap{container-type:inline-size;container-name:crono}
+.crnm{display:none;position:absolute;font-size:11px;color:#3B3B4F;white-space:nowrap;z-index:3;pointer-events:none;line-height:12px}
+@container crono (max-width: 1150px){
+  .crbody{flex-direction:column;align-items:stretch}
+  .crleft{width:100%!important;max-width:none!important;border-right:0;border-bottom:2px solid var(--line)}
+  .crsplit{display:none}
+  .crright{width:100%}
+  .crnm{display:block}
+  .crtool{row-gap:8px}
+}
 .crselinfo{font-size:11.5px;font-weight:600;color:#4948d1;background:#EEF2FF;padding:3px 8px;white-space:nowrap}
 .c-c{justify-content:flex-end;padding-right:6px;flex-direction:column;align-items:flex-end!important;justify-content:center!important;line-height:1.1;font-size:12px}
 .crmes2{display:block;font-size:10px;color:var(--muted);white-space:nowrap}
@@ -1446,7 +1477,7 @@ input[type="checkbox"]{border-radius:3px!important}
 .crhoje{position:absolute;top:0;bottom:0;border-left:2px dashed #D92D20;z-index:4}
 .crsvg{position:absolute;left:0;top:0;z-index:3;pointer-events:none;overflow:visible}.crsvg path{fill:none;stroke:#3B3B4F;stroke-width:1.1;pointer-events:stroke}
 .crleg .crhelp{display:block;flex-basis:100%}
-.crleft{max-width:calc(100% - 180px)}
+.crleft{max-width:calc(100% - 220px)}
 .crwrap.full .crleft{max-width:calc(100% - 260px)}
 .crleg{display:flex;gap:14px;flex-wrap:wrap;align-items:center;padding:8px 10px;border-top:1px solid var(--line);font-size:11.5px;color:var(--muted)}.crleg span{display:inline-flex;gap:6px;align-items:center}.crleg .crb{height:9px}
 /* ---------- painéis redimensionáveis ---------- */
@@ -5950,7 +5981,9 @@ function crSoma(v, n){ let d = v, k = Math.abs(n), st = n >= 0 ? 1 : -1, g = 0; 
 function crConta(a, b){ if(!a || !b) return 0; if(b < a) return -crConta(b, a) + (crUtil(a) && crUtil(b) ? 0 : 0); let n = 0, d = a, g = 0; while(d <= b && g++ < 5000){ if(crUtil(d)) n++; d = crAdd(d, 1); } return n; }
 const crMax = (a, b) => !a ? b : !b ? a : a > b ? a : b, crMin = (a, b) => !a ? b : !b ? a : a < b ? a : b;
 const CR_TIPOS = {TI:'Término-a-início', II:'Início-a-início', TT:'Término-a-término', IT:'Início-a-término'}, CR_EN = {FS:'TI', SS:'II', FF:'TT', SF:'IT'};
-const crDe = o => { const c = o.crono = o.crono || {}; c.tarefas = c.tarefas || []; c.ini = c.ini || (o.datas && o.datas.iniPlan) || TODAY; return c; };
+const crDe = o => { const c = o.crono = o.crono || {}; c.tarefas = c.tarefas || []; c.ini = c.ini || (o.datas && o.datas.iniPlan) || TODAY;
+  if(!c.bases){ const ant = [...(c.basesAnt || []), ...(c.base ? [c.base] : [])]; c.bases = ant.map((b, i) => Object.assign({}, b, {id:b.id || ('lb' + i + '_' + (b.em || '').replace(/\D/g, '')), nome:b.nome || `Linha de base ${i + 1}`})); if(c.bases.length) c.baseAtiva = c.bases[c.bases.length - 1].id; delete c.basesAnt; }
+  c.base = c.bases.find(b => b.id === c.baseAtiva) || null; return c; };
 const crNovaT = o => Object.assign({id:uid(), nome:'', modo:'auto', dur:1, marco:false, nivel:0, preds:[], restr:'', ini:'', fim:'', iniReal:'', fimReal:'', fechado:false}, o || {});
 function crPredTxt(cr, t){ const T = cr.tarefas; let ix = null; return (t.preds || []).map(p => { const i = T.findIndex(x => x.id === p.id); let alvo;
   if(i >= 0) alvo = String(i + 1); else if(p.id[0] === 'S' && procById(p.id.slice(1))) alvo = pcod(procById(p.id.slice(1))); else { ix = ix || crIdx(); const x = ix[p.id]; if(!x) return ''; alvo = `${pcod(x.p)}:${x.i + 1}`; }
@@ -6011,9 +6044,9 @@ function crMerged(comp){ const ids = new Set(comp.map(x => x.id)), T = [], bt = 
     T.push({id:'S' + p.id, nome:procNome(p), _proc:p, nivel:0, modo:'auto', dur:0, marco:false, restr:c.ini, fechado:!!ui.crLFech[p.id], preds:(p.deps || []).filter(d => ids.has(d)).map(d => ({id:'S' + d, tipo:'TI', lag:+((p.depLag || {})[d] || 0)}))});
     if(c.tarefas.length) c.tarefas.forEach(t => T.push(Object.assign({}, t, {nivel:t.nivel + 1, _proc:p})));
     else T.push(crNovaT({id:'P' + p.id, nome:p.servico || 'Processo', dur:crDurPadrao(p), nivel:1, _proc:p, _ph:true}));
-    if(c.base){ Object.assign(bt, c.base.t); bs.push(c.base); } });
-  bs.sort((a, b) => a.em.localeCompare(b.em));
-  return {ini:ini || TODAY, tarefas:T, base:bs.length ? {em:bs[bs.length - 1].em, por:bs[bs.length - 1].por, t:bt} : null, _comp:comp};
+    c.bases.forEach(b => { const g = bt[b.id] = bt[b.id] || {id:b.id, nome:b.nome, em:b.em, por:b.por, t:{}}; Object.assign(g.t, b.t); if(b.em < g.em) g.em = b.em; }); if(c.baseAtiva !== undefined) bs.push(c.baseAtiva); });
+  const bases = Object.values(bt).sort((a, b) => a.em.localeCompare(b.em)), ativa = bs.find(id => id && bt[id]) || (bs.some(id => id === '') ? '' : (bases[bases.length - 1] || {}).id);
+  return {ini:ini || TODAY, tarefas:T, bases, baseAtiva:ativa, base:bt[ativa] || null, _comp:comp};
 }
 function crCalcCtx(o, cr, comp){ comp = comp || (o.tarefas ? crComp(o) : [o]); if(comp.length < 2) return crCalc(cr); const C = crCalc(crMerged(comp)), info = crInfo(cr); return {R:C.R, resumo:info.resumo, pai:info.pai, ini0:C.ini0}; }
 const crRdo = (o, cr) => crCalcCtx(o, cr).R;
@@ -6082,6 +6115,7 @@ function crHtml(o, ref){
     const lb = cr.base && cr.base.t[t.id];
     if(lb){ h += lb.dur === 0 && t.marco ? `<div class="crmk lbm" style="left:${x(lb.ini) - 5}px;top:${y + 20}px" title="Linha de base: ${fd(lb.ini)}"></div>` : `<div class="crb lbb" style="left:${x(lb.ini)}px;top:${y + 20}px;width:${x(lb.fim) - x(lb.ini) + DW}px" title="Linha de base: ${fd(lb.ini)} → ${fd(lb.fim)}"></div>`; }
     if(!rs && !t.marco) h += `<div class="crb ${t.modo === 'manual' ? 'man' : ''}" style="left:${x(r.ini)}px;top:${y + 5}px;width:${x(r.fim) - x(r.ini) + DW}px" title="${esc(t.nome)}: ${fd(r.ini)} → ${fd(r.fim)} (${r.dur} d úteis)"></div>`;
+    h += `<span class="crnm" style="left:${x(r.fim) + DW + (t.marco ? 12 : 4) + (t.marco ? 30 : 0)}px;top:${y + 2}px">${esc(t.nome || '')}</span>`;
     const ri = rs ? r.iniReal : t.iniReal, rf = rs ? r.fimReal : t.fimReal;
     if(ri && !t.marco){ const f = rf || TODAY; h += `<div class="crb real ${rf ? '' : 'run'}" style="left:${x(ri)}px;top:${y + 26}px;width:${Math.max(DW, x(f) - x(ri) + DW)}px" title="Real: ${fd(ri)} → ${rf ? fd(rf) : 'em andamento'}"></div>`; }
     if(t.marco && rf) h += `<div class="crmk real" style="left:${x(rf) - 5}px;top:${y + 24}px" title="Marco atingido em ${fd(rf)}"></div>`;
@@ -6095,7 +6129,8 @@ function crHtml(o, ref){
   function idxOf(TT, id){ return TT.findIndex(z => z.id === id); }
   const H = Math.max(vis.length, 1) * RH + Y0;
   const full = ui.crFull === ref;
-  return `<div class="crwrap ${full ? 'full' : ''}" data-cr="${ref}">
+  const view = ui.crView || 'plan', CRVW = {plan:860,acomp:872,lb:836,tudo:1400};
+  return `<div class="crwrap ${full ? 'full' : ''} v-${view}" data-cr="${ref}">
     <div class="crtool"><b class="crtit">${isL ? 'Cronograma do licenciamento' : 'Cronograma'}</b>
       ${!ref.startsWith('m:') && comp.length > 1 ? `<div class="seg"><button data-crmodo="${o.id}|p" class="${isL ? '' : 'on'}">Este processo</button><button data-crmodo="${o.id}|L" class="${isL ? 'on' : ''}">Licenciamento completo <span class="n">${comp.length}</span></button></div>` : ''}
       ${isL ? '' : `<label class="crl">Início ${ref.startsWith('m:') ? 'do material' : 'do processo'}<input type="date" data-crcfg="${ref}|ini" value="${cr.ini}"></label>`}
@@ -6105,14 +6140,15 @@ function crHtml(o, ref){
       <button class="btn sm ghost" data-cract="${ref}|link" title="Vincular as tarefas selecionadas em sequência (término-a-início)">🔗</button><button class="btn sm ghost" data-cract="${ref}|unlink" title="Desvincular: remove as ligações entre as selecionadas (ou todas as ligações, se só uma estiver selecionada)">⛓✕</button><button class="btn sm ghost" data-cract="${ref}|modo" title="Alternar automática/manual nas selecionadas">⟳/📌</button>
       ${selSet.size > 1 ? `<span class="crselinfo">${selSet.size} selecionadas</span>` : ''}
       <button class="btn sm ghost" data-cract="${ref}|up" title="Mover para cima">↑</button><button class="btn sm ghost" data-cract="${ref}|down" title="Mover para baixo">↓</button><button class="btn sm ghost danger" data-cract="${ref}|del" title="Excluir a tarefa selecionada">✕</button>
-      <span class="crsep"></span><button class="btn sm ${cr.base ? 'ghost' : ''}" data-crlb="${ref}|set" title="Salva as datas planejadas de agora para comparar depois">${cr.base ? '↻ Atualizar linha de base' : '▭ Definir linha de base'}</button>${cr.base ? `<span class="crlbinfo" title="Definida por ${esc(first(cr.base.por))}">LB: ${fd(cr.base.em.slice(0, 10))}${(() => { const tot = Object.keys(cr.base.t).length; let at = 0; T.forEach(t => { const v = crVarLB(cr, t, R[t.id]); if(v > 0 && !resumo[T.indexOf(t)]) at++; }); return at ? ` | <b style="color:#B42318">${at} atrasada${at > 1 ? 's' : ''}</b>` : ''; })()}</span><button class="btn sm ghost" data-crlb="${ref}|del" title="Apagar a linha de base">✕ LB</button>` : ''}
+      <span class="crsep"></span><button class="btn sm ${(cr.bases || []).length ? 'ghost' : ''}" data-crlb="${ref}|set" title="Salva as datas planejadas de agora como uma nova linha de base">▭ Salvar linha de base</button>${(cr.bases || []).length ? `<button class="btn sm" data-lbabrir="${ref}" title="Ver, escolher e comparar as linhas de base salvas">Linhas de base <span class="n">${cr.bases.length}</span></button>` : ''}${cr.base ? `<span class="crlbinfo" title="Salva por ${esc(first(cr.base.por))} em ${fd(cr.base.em.slice(0, 10))}">comparando com <b>${esc(cr.base.nome || 'LB')}</b>${(() => { const tot = Object.keys(cr.base.t).length; let at = 0; T.forEach(t => { const v = crVarLB(cr, t, R[t.id]); if(v > 0 && !resumo[T.indexOf(t)]) at++; }); return at ? ` | <b style="color:#B42318">${at} atrasada${at > 1 ? 's' : ''}</b>` : ''; })()}</span>` : ''}
       <button class="btn sm ghost" data-ferabrir title="Feriados e recessos da Mannare">Feriados</button>
       <span class="crsep"></span><button class="btn sm ghost" data-cract="${ref}|importar">${ref.startsWith('m:') ? 'Trazer checklists' : isL ? 'Trazer tarefas dos processos' : 'Trazer tarefas do processo'}</button>
+      <div class="seg crviews" title="Colunas da tabela">${[['plan', 'Planejamento'], ['acomp', 'Acompanhamento'], ['lb', 'Linha de base'], ['tudo', 'Completa']].map(([v, l]) => `<button data-crview="${v}" class="${view === v ? 'on' : ''}">${l}</button>`).join('')}</div>
       <span class="spacer"></span>${(() => { let ta = '', tb = ''; T.forEach(t => { const r = R[t.id]; ta = crMin(ta, r.ini); tb = crMax(tb, r.fim); }); if(!T.length) return '';
         return `<span class="crtot" title="Do início da primeira tarefa ao término da última"><b>Duração total:</b> ${crCorridos(ta, tb)} dias corridos | <b>${crMesesTxt(ta, tb)}</b> | ${crConta(ta, tb)} dias úteis <span class="sub">(${fd(ta)} → ${fd(tb)})</span></span>`; })()}
       <div class="seg">${Object.keys(CR_ZOOM).map(z => `<button data-crzoom="${z}" class="${zoom === z ? 'on' : ''}">${z === 'dia' ? 'Dias' : z === 'semana' ? 'Semanas' : 'Meses'}</button>`).join('')}</div>
       <button class="btn sm" data-crfull="${ref}">${full ? '✕ Fechar tela cheia' : '⤢ Tela cheia'}</button></div>
-    <div class="crbody"><div class="crleft" style="width:${ui.crL || 620}px"><div class="crin">
+    <div class="crbody"><div class="crleft" style="width:${ui.crL || (CRVW[view] + 2)}px"><div class="crin">
         <div class="crr hd"><span class="c-n" data-crall="${ref}" title="Selecionar todas">Id</span><span class="c-i" title="Indicadores">ⓘ</span><span class="c-m" title="Modo da tarefa">Modo</span><span class="c-nome">Nome da tarefa</span><span class="c-d">Duração</span><span class="c-c" title="Dias corridos, do início ao término (conta fins de semana e feriados)">Dias corridos</span><span class="c-dt">Início plan.</span><span class="c-dt">Término plan.</span><span class="c-p">Predecessoras</span><span class="c-dt">Início real</span><span class="c-dt">Término real</span><span class="c-dv dsv" title="Desvio do término real (ou de hoje, se atrasada) em relação ao término planejado, em dias úteis">Desvio</span><span class="c-dt lb">Início da linha de base</span><span class="c-dt lb">Término da linha de base</span><span class="c-dv" title="Variação do término planejado em relação à linha de base (dias úteis)">Var. LB</span><span class="c-mk">Marco</span></div>${linha0}
         ${linhas || `<div class="crr vazio"><span class="sub" style="padding:8px 10px">Nenhuma tarefa. Use <b>+ Tarefa</b> ou <b>${ref.startsWith('m:') ? 'Trazer checklists' : 'Trazer tarefas do processo'}</b>.</span></div>`}
         <div class="crr add"><input data-cradd="${ref}" placeholder="+ Digite o nome de uma nova tarefa e Enter"></div></div></div>
@@ -6236,22 +6272,86 @@ document.addEventListener('click', e => {
       toast(k ? `${k} tarefa(s) trazida(s) em sequência (1 dia útil cada). Ajuste durações e ligações.` : 'Nada novo para trazer'); }
     crSalvar(ref); return; }
 }, true);
-document.addEventListener('click', e => { const el = e.target.closest && e.target.closest('[data-crlb]'); if(!el) return; e.stopPropagation(); const [ref, act] = el.dataset.crlb.split('|'), o = ntOwner(ref), cr = crDe(o);
-  if(ref.startsWith('L:')){ const comp = crComp(o);
-    if(act === 'del'){ if(!confirm(`Apagar a linha de base dos ${comp.length} processos do licenciamento?`)) return; comp.forEach(p => { crDe(p).base = null; logP(p, 'apagou a linha de base (licenciamento)'); }); crSalvar(ref); return; }
-    if(!confirm(`Gravar a linha de base dos ${comp.length} processos com as datas planejadas de agora?`)) return; const {R} = crCalc(crMerged(comp));
-    comp.forEach(p => { const c = crDe(p); if(!c.tarefas.length) return; if(c.base) (c.basesAnt = c.basesAnt || []).push(c.base); c.base = {em:nowISO(), por:me, t:Object.fromEntries(c.tarefas.map(t => [t.id, {ini:R[t.id].ini, fim:R[t.id].fim, dur:R[t.id].dur}]))}; logP(p, 'gravou a linha de base (licenciamento completo)'); });
-    crSalvar(ref); toast('Linha de base gravada'); return; }
-  if(act === 'del'){ if(!confirm('Apagar a linha de base deste cronograma?')) return; cr.base = null; (ref[0] === 'm' ? logT : logP)(o, 'apagou a linha de base do cronograma'); crSalvar(ref); return; }
-  if(!cr.tarefas.length){ toast('Inclua tarefas antes de definir a linha de base'); return; }
-  if(cr.base && !confirm(`Substituir a linha de base de ${fmtDateBR(cr.base.em.slice(0, 10))} pelas datas planejadas de agora? A anterior fica guardada no histórico.`)) return;
-  const R = crRdo(o, cr); if(cr.base) (cr.basesAnt = cr.basesAnt || []).push(cr.base);
-  cr.base = {em:nowISO(), por:me, t:Object.fromEntries(cr.tarefas.map(t => [t.id, {ini:R[t.id].ini, fim:R[t.id].fim, dur:R[t.id].dur}]))};
-  (ref[0] === 'm' ? logT : logP)(o, `${cr.basesAnt && cr.basesAnt.length ? 'atualizou' : 'definiu'} a linha de base do cronograma`); crSalvar(ref); toast('Linha de base salva'); }, true);
+document.addEventListener('click', e => { const el = e.target.closest && e.target.closest('[data-crlb]'); if(!el) return; e.stopPropagation(); const [ref] = el.dataset.crlb.split('|'); crLBNova(ref); }, true);
+function crLBNova(ref, depois){
+  const o = ntOwner(ref), isL = ref.startsWith('L:'), comp = ref[0] === 'm' ? [o] : crComp(o), alvo = isL ? comp : [o];
+  if(!alvo.some(x => crDe(x).tarefas.length)){ toast('Inclua tarefas antes de salvar a linha de base'); return; }
+  const n = Math.max(0, ...alvo.map(x => crDe(x).bases.length)) + 1, nome = prompt('Nome da linha de base:', `Linha de base ${n} | ${fmtDateBR(TODAY)}`); if(nome === null) return;
+  const R = isL || (ref[0] !== 'm' && comp.length > 1) ? crCalc(crMerged(comp)).R : crCalc(crDe(o)).R, id = 'lb' + uid(), em = nowISO();
+  alvo.forEach(x => { const c = crDe(x); if(!c.tarefas.length) return; c.bases.push({id, nome:nome.trim() || `Linha de base ${n}`, em, por:me, t:Object.fromEntries(c.tarefas.map(t => [t.id, {ini:R[t.id].ini, fim:R[t.id].fim, dur:R[t.id].dur}]))}); c.baseAtiva = id;
+    (x.tarefas ? logP : logT)(x, `salvou a linha de base “${nome.trim()}”${isL ? ' (licenciamento completo)' : ''}`); });
+  crSalvar(ref); toast('Linha de base salva'); if(depois) setTimeout(depois, 50);
+}
+/* gerenciador: ver, escolher, renomear, excluir e comparar linhas de base */
+function crLBCtx(ref){ const o = ntOwner(ref), isL = ref.startsWith('L:'), comp = ref[0] === 'm' ? [o] : crComp(o);
+  const cr = isL ? crMerged(comp) : crDe(o), info = crInfo(cr), R = isL ? crCalc(cr).R : crCalcCtx(o, cr, comp).R; return {o, isL, comp, cr, T:info.T, resumo:info.resumo, R}; }
+function crLBFonte(ctx, f){ const {T, R, resumo, cr} = ctx, base = {};
+  if(f === 'atual') T.forEach(t => base[t.id] = {ini:R[t.id].ini, fim:R[t.id].fim});
+  else if(f === 'real') T.forEach((t, i) => { if(resumo[i]) return; if(t.iniReal || t.fimReal) base[t.id] = {ini:t.iniReal, fim:t.fimReal}; });
+  else { const b = (cr.bases || []).find(x => x.id === f); if(b) Object.assign(base, b.t); }
+  T.forEach((t, i) => { if(!resumo[i] || f === 'atual') return; let a = '', z = '', todos = true, algum = false; for(let j = i + 1; j < T.length && T[j].nivel > t.nivel; j++){ if(resumo[j]) continue; const v = base[T[j].id]; if(!v){ todos = false; continue; } algum = true; a = crMin(a, v.ini); if(v.fim) z = crMax(z, v.fim); else todos = false; } if(algum) base[t.id] = {ini:a, fim:f === 'real' && !todos ? '' : z}; });
+  return base; }
+const crDU = (a, b) => !a || !b ? null : a === b ? 0 : b > a ? crConta(a, b) - 1 : -(crConta(b, a) - 1);
+const crDUtxt = v => v === null ? '<span class="sub">—</span>' : v > 0 ? `<b style="color:#B42318">+${v}d</b>` : v < 0 ? `<b style="color:#067647">${v}d</b>` : '<span class="sub">0</span>';
+function crLBModal(ref){
+  const ctx = crLBCtx(ref), {cr, T, resumo} = ctx, bases = cr.bases || [], fd = v => v ? `${v.slice(8)}/${v.slice(5, 7)}/${v.slice(2, 4)}` : '';
+  const st = ui.lbCmp = ui.lbCmp && ui.lbCmp.ref === ref ? ui.lbCmp : {ref, a:cr.baseAtiva || (bases[0] || {}).id || 'atual', b:'atual', so:false};
+  if(st.a !== 'atual' && st.a !== 'real' && !bases.some(b => b.id === st.a)) st.a = (bases[0] || {}).id || 'atual';
+  const nomeF = f => f === 'atual' ? 'Planejado atual' : f === 'real' ? 'Realizado' : ((bases.find(b => b.id === f) || {}).nome || '?');
+  const opts = sel => [...bases.map(b => [b.id, `${b.nome} (${fd(b.em.slice(0, 10))})`]), ['atual', 'Planejado atual'], ['real', 'Realizado']].map(([v, l]) => `<option value="${v}" ${sel === v ? 'selected' : ''}>${esc(l)}</option>`).join('');
+  const A = crLBFonte(ctx, st.a), B = crLBFonte(ctx, st.b), atual = crLBFonte(ctx, 'atual');
+  const tot = m => { let a = '', z = ''; T.forEach((t, i) => { if(resumo[i]) return; const v = m[t.id]; if(v){ a = crMin(a, v.ini); z = crMax(z, v.fim); } }); return {a, z}; };
+  const tA = tot(A), tB = tot(B), tAt = tot(atual);
+  let mud = 0, atr = 0, adi = 0, nov = 0, sai = 0;
+  const linhas = T.map((t, i) => { const a = A[t.id], b = B[t.id], di = crDU(a && a.ini, b && b.ini), df = crDU(a && a.fim, b && b.fim), muda = (di || df) || (!a !== !b);
+    if(!resumo[i]){ if(!a && b) nov++; else if(a && !b && st.b !== 'real') sai++; if(df > 0) atr++; if(df < 0) adi++; if(muda) mud++; }
+    if(st.so && !muda) return '';
+    return `<tr class="${resumo[i] ? 'res' : ''} ${muda ? 'mud' : ''}"><td class="c">${i + 1}</td><td style="padding-left:${8 + t.nivel * 14}px">${esc(t.nome || '')}${!a && b ? ' <span class="ctag">nova</span>' : ''}${a && !b && st.b !== 'real' ? ' <span class="ctag late">fora</span>' : ''}</td>
+      <td class="c">${fd(a && a.ini)}</td><td class="c">${fd(a && a.fim)}</td><td class="c">${fd(b && b.ini)}</td><td class="c">${fd(b && b.fim)}</td><td class="c">${crDUtxt(di)}</td><td class="c">${crDUtxt(df)}</td></tr>`; }).join('');
+  const lista = bases.map(b => { const tb = tot(b.t), v = crDU(tb.z, tAt.z);
+    return `<tr class="${cr.baseAtiva === b.id ? 'on' : ''}"><td class="c"><input type="radio" name="lbativa" data-lbativa="${ref}|${b.id}" ${cr.baseAtiva === b.id ? 'checked' : ''} title="Mostrar no cronograma"></td>
+      <td><input class="lbnome" data-lbnome="${ref}|${b.id}" value="${esc(b.nome)}"></td><td class="c">${(() => { const d = new Date(b.em); return isNaN(d) ? '' : d.toLocaleDateString('pt-BR') + ' ' + d.toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'}); })()}</td><td>${esc(first(b.por))}</td><td class="c">${Object.keys(b.t).length}</td>
+      <td class="c">${fd(tb.z)}</td><td class="c" title="Término planejado atual em relação ao término desta linha de base">${crDUtxt(v === null ? null : v)}</td>
+      <td class="c" style="white-space:nowrap"><button class="btn sm ghost" data-lbcmp="${ref}|${b.id}">Comparar</button><button class="x" data-lbdel="${ref}|${b.id}" title="Excluir">✕</button></td></tr>`; }).join('');
+  let f = $('#lbLayer'); if(!f){ f = document.createElement('div'); f.id = 'lbLayer'; document.body.appendChild(f); }
+  f.innerHTML = `<div class="mlayer" style="z-index:400"><div class="modal" style="width:min(1180px,96vw)">
+    <div class="mhead"><b style="color:var(--ink);font-size:16px;font-family:var(--kanit);text-transform:uppercase;font-weight:500">Linhas de base</b><span class="sub" style="margin-left:10px">${esc(ctx.isL ? 'Licenciamento completo | ' + ctx.comp.length + ' processos' : ref[0] === 'm' ? (ctx.o.titulo || ctx.o.codigo) : pcod(ctx.o) + ' | ' + (ctx.o.servico || ''))}</span><span class="spacer"></span><button class="btn sm" data-lbnova="${ref}">▭ Salvar nova agora</button><button class="btn ghost" data-lbcl>✕</button></div>
+    <div class="lbbody">
+      <div class="lbsec"><div class="lbh"><b>Salvas</b><span class="sub">A marcada aparece no cronograma (barra cinza e colunas de linha de base). Clique no nome para renomear.</span></div>
+        ${bases.length ? `<table class="lbtab"><thead><tr><th style="width:56px">Mostrar</th><th>Nome</th><th style="width:150px">Salva em</th><th style="width:90px">Por</th><th style="width:64px">Tarefas</th><th style="width:96px">Término do projeto</th><th style="width:104px">Planejado atual x LB</th><th style="width:140px"></th></tr></thead><tbody>${lista}
+          <tr class="${!cr.baseAtiva ? 'on' : ''}"><td class="c"><input type="radio" name="lbativa" data-lbativa="${ref}|" ${!cr.baseAtiva ? 'checked' : ''}></td><td colspan="7" class="sub">Não mostrar linha de base no cronograma</td></tr></tbody></table>` : '<div class="sub">Nenhuma linha de base salva.</div>'}</div>
+      <div class="lbsec"><div class="lbh"><b>Comparar</b>
+          <label>De <select id="lbA" data-lbsel="a">${opts(st.a)}</select></label><span>→</span><label>Para <select id="lbB" data-lbsel="b">${opts(st.b)}</select></label>
+          <label class="sub" style="display:flex;gap:5px;align-items:center"><input type="checkbox" data-lbso ${st.so ? 'checked' : ''}> só o que mudou</label></div>
+        <div class="lbres"><div><span class="sub">Término do projeto</span><b>${fd(tA.z) || '—'} → ${fd(tB.z) || '—'}</b>${crDUtxt(crDU(tA.z, tB.z))}</div>
+          <div><span class="sub">Duração total (dias úteis)</span><b>${tA.a && tA.z ? crConta(tA.a, tA.z) : '—'} → ${tB.a && tB.z ? crConta(tB.a, tB.z) : '—'}</b></div>
+          <div><span class="sub">Tarefas com mudança</span><b>${mud}</b></div><div><span class="sub">Término mais tarde</span><b style="color:#B42318">${atr}</b></div><div><span class="sub">Término mais cedo</span><b style="color:#067647">${adi}</b></div>${nov ? `<div><span class="sub">Novas</span><b>${nov}</b></div>` : ''}${sai ? `<div><span class="sub">Fora de “${esc(nomeF(st.b))}”</span><b>${sai}</b></div>` : ''}</div>
+        <div class="lbtabw"><table class="lbtab cmp"><thead><tr><th rowspan="2" style="width:36px">Id</th><th rowspan="2">Tarefa</th><th colspan="2" class="ga">${esc(nomeF(st.a))}</th><th colspan="2" class="gb">${esc(nomeF(st.b))}</th><th colspan="2">Diferença (dias úteis)</th></tr>
+          <tr><th class="ga">Início</th><th class="ga">Término</th><th class="gb">Início</th><th class="gb">Término</th><th>Início</th><th>Término</th></tr></thead><tbody>${linhas || '<tr><td colspan="8" class="sub" style="padding:12px">Nenhuma diferença.</td></tr>'}</tbody></table></div></div>
+    </div></div></div>`;
+}
+function crLBAplicar(ref, fn){ const o = ntOwner(ref), alvo = ref.startsWith('L:') ? crComp(o) : [o]; alvo.forEach(x => fn(crDe(x), x)); save(); crRender(ref); crLBModal(ref); }
+document.addEventListener('click', e => { const tg = e.target; if(!tg.closest) return; let el;
+  if((el = tg.closest('[data-lbabrir]'))){ e.stopPropagation(); ui.lbCmp = null; crLBModal(el.dataset.lbabrir); return; }
+  if(!tg.closest('#lbLayer')) return; e.stopPropagation();
+  if(tg.closest('[data-lbcl]') || tg.classList.contains('mlayer')){ $('#lbLayer').remove(); return; }
+  if((el = tg.closest('[data-lbnova]'))){ const ref = el.dataset.lbnova; crLBNova(ref, () => crLBModal(ref)); return; }
+  if((el = tg.closest('[data-lbcmp]'))){ const [ref, id] = el.dataset.lbcmp.split('|'); ui.lbCmp = Object.assign(ui.lbCmp || {ref}, {ref, a:id, b:'atual'}); crLBModal(ref); return; }
+  if((el = tg.closest('[data-lbdel]'))){ const [ref, id] = el.dataset.lbdel.split('|'); const b = (crLBCtx(ref).cr.bases || []).find(x => x.id === id); if(!confirm(`Excluir a linha de base “${b ? b.nome : ''}”?`)) return;
+    crLBAplicar(ref, (c, x) => { c.bases = c.bases.filter(y => y.id !== id); if(c.baseAtiva === id) c.baseAtiva = (c.bases[c.bases.length - 1] || {}).id || ''; (x.tarefas ? logP : logT)(x, `excluiu a linha de base “${b ? b.nome : ''}”`); }); return; }
+}, true);
+document.addEventListener('change', e => { const tg = e.target; if(!tg.closest || !tg.closest('#lbLayer')) return; e.stopPropagation(); let k;
+  if((k = tg.dataset.lbativa) !== undefined){ const [ref, id] = k.split('|'); crLBAplicar(ref, c => { if(!id || c.bases.some(b => b.id === id)) c.baseAtiva = id; }); return; }
+  if((k = tg.dataset.lbnome) !== undefined){ const [ref, id] = k.split('|'); const nome = tg.value.trim(); if(!nome) return; crLBAplicar(ref, c => { const b = c.bases.find(y => y.id === id); if(b) b.nome = nome; }); return; }
+  if(tg.dataset.lbsel){ ui.lbCmp[tg.dataset.lbsel] = tg.value; crLBModal(ui.lbCmp.ref); return; }
+  if(tg.dataset.lbso !== undefined){ ui.lbCmp.so = tg.checked; crLBModal(ui.lbCmp.ref); return; }
+}, true);
+document.addEventListener('keydown', e => { if(e.key === 'Escape' && $('#lbLayer')){ $('#lbLayer').remove(); e.stopPropagation(); } }, true);
+document.addEventListener('click', e => { const el = e.target.closest && e.target.closest('[data-crview]'); if(!el) return; e.stopPropagation(); ui.crView = el.dataset.crview; ui.crL = 0; try{ localStorage.removeItem('mannare.crL'); }catch(_){} const w = el.closest('.crwrap'); if(w) crRender(w.dataset.cr); }, true);
 document.addEventListener('pointerdown', e => { const h = e.target.closest && e.target.closest('[data-crsplit]'); if(!h) return; e.preventDefault(); const L = h.previousElementSibling, x0 = e.clientX, w0 = L.offsetWidth; h.setPointerCapture(e.pointerId);
   const mv = ev => { ui.crL = Math.max(260, Math.min(1400, w0 + ev.clientX - x0)); L.style.width = ui.crL + 'px'; }; const up = () => { h.removeEventListener('pointermove', mv); h.removeEventListener('pointerup', up); try{ localStorage.setItem('mannare.crL', ui.crL); }catch(_){} };
   h.addEventListener('pointermove', mv); h.addEventListener('pointerup', up); }, true);
-try{ ui.crL = +localStorage.getItem('mannare.crL') || 0 || undefined; }catch(_){}
+try{ ui.crL = +localStorage.getItem('mannare.crL') || 0; }catch(_){}
 document.addEventListener('keydown', e => { if(e.key === 'Escape' && ui.crFull){ const ref = ui.crFull; ui.crFull = null; const f = $('#crFull'); if(f) f.remove(); if(ref.startsWith('m:')) renderMat(); else renderDrawer(); e.stopPropagation(); } }, true);
 function crAposRender(){ ['p', 'm'].forEach(() => {}); $$('.crwrap[data-cr]').forEach(w => { const r = $('.crright', w), h = $('.crhoje', w); if(r && h && !r.dataset.rolou){ r.scrollLeft = h.offsetLeft > 0 && h.offsetLeft < r.scrollWidth ? Math.max(0, h.offsetLeft - 120) : 0; r.dataset.rolou = 1; } }); }
 renderDrawer = (function(base){ return function(){ base.apply(this, arguments); if(ui.dtab === 'crono') crAposRender(); }; })(renderDrawer);
