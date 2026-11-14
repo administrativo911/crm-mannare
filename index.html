@@ -1980,21 +1980,21 @@ body{background:var(--sx-canvas) fixed!important;font:400 14px/1.5 var(--font-sa
 /* ======================= RAIL QUE EXPANDE POR INTEIRO (empurra o conteúdo) ======================= */
 @media (min-width:761px){
   .app{transition:grid-template-columns .26s cubic-bezier(.2,0,0,1)!important}
-  .app:has(.side:hover),.app:has(.side:focus-within){grid-template-columns:264px minmax(0,1fr)!important}
+  .app:has(.side:hover),.app:has(.side :focus-visible){grid-template-columns:264px minmax(0,1fr)!important}
   .side{width:auto!important;overflow:hidden!important;overflow-y:auto!important}
   .side .nav,.side .sside,.sidebox #btnSair{transition:width .26s cubic-bezier(.2,0,0,1),background-color .15s!important}
   .side .logo{transition:width .26s cubic-bezier(.2,0,0,1),height .26s cubic-bezier(.2,0,0,1)!important}
   .side .leg{display:block!important;height:0;margin:0!important;padding:0 0 0 4px!important;opacity:0;overflow:hidden;white-space:nowrap;font-size:12px!important;font-weight:600!important;color:var(--sx-text-3)!important;transition:opacity .15s,height .26s}
   /* logo completa em proporção real (390×51): largura 224px, altura automática */
-  .side:hover .logo,.side:focus-within .logo{width:224px!important;max-width:224px!important;height:auto!important;aspect-ratio:390/51;object-fit:contain!important;object-position:left center!important;margin:8px 0 22px 2px!important}
-  .side:hover .leg,.side:focus-within .leg{height:28px;opacity:1;padding-top:10px!important}
-  .side:hover .nav,.side:focus-within .nav{width:224px!important;gap:12px!important}
-  .side:hover .nav .tx,.side:focus-within .nav .tx{position:static!important;width:auto!important;height:auto!important;clip:auto!important;overflow:visible!important;font-size:14px;font-weight:600}
-  .side:hover .nav .n,.side:focus-within .nav .n,.side:hover .nav [id^="n"]:not(:empty),.side:focus-within .nav [id^="n"]:not(:empty){position:static!important;margin-left:auto;border-width:0!important}
-  .side:hover .sside,.side:focus-within .sside{width:224px!important;gap:10px;background:var(--sx-sunken)!important}
-  .side:hover .sside input,.side:focus-within .sside input{width:100%;opacity:1}
+  .side:hover .logo,.side:has(:focus-visible) .logo{width:224px!important;max-width:224px!important;height:auto!important;aspect-ratio:390/51;object-fit:contain!important;object-position:left center!important;margin:8px 0 22px 2px!important}
+  .side:hover .leg,.side:has(:focus-visible) .leg{height:28px;opacity:1;padding-top:10px!important}
+  .side:hover .nav,.side:has(:focus-visible) .nav{width:224px!important;gap:12px!important}
+  .side:hover .nav .tx,.side:has(:focus-visible) .nav .tx{position:static!important;width:auto!important;height:auto!important;clip:auto!important;overflow:visible!important;font-size:14px;font-weight:600}
+  .side:hover .nav .n,.side:has(:focus-visible) .nav .n,.side:hover .nav [id^="n"]:not(:empty),.side:has(:focus-visible) .nav [id^="n"]:not(:empty){position:static!important;margin-left:auto;border-width:0!important}
+  .side:hover .sside,.side:has(:focus-visible) .sside{width:224px!important;gap:10px;background:var(--sx-sunken)!important}
+  .side:hover .sside input,.side:has(:focus-visible) .sside input{width:100%;opacity:1}
   .side .sside:focus-within{width:224px!important;box-shadow:none!important;background:#fff!important}
-  .side:hover .sidebox #btnSair,.side:focus-within .sidebox #btnSair{width:224px!important;border-radius:14px!important;justify-content:flex-start!important;padding:0 16px!important;font-size:13.5px!important}
+  .side:hover .sidebox #btnSair,.side:has(:focus-visible) .sidebox #btnSair{width:224px!important;border-radius:14px!important;justify-content:flex-start!important;padding:0 16px!important;font-size:13.5px!important}
   .side:hover .nav:not(.on):hover{background:var(--sx-hover)!important}
 }
 
@@ -2132,7 +2132,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--mn-azul)!important;ba
 .mhead>.btn.ghost:last-child,.dhead>.btn.ghost:last-child,
 .x:not([data-mmup]):not([data-peup]):not([data-peiup]):not([data-trkren]):not([data-veredit]):not([data-ntsub]),.plx,.dwx{
   position:relative;display:inline-flex!important;align-items:center!important;justify-content:center!important;align-self:center!important;vertical-align:middle;
-  width:32px!important;height:32px!important;min-width:32px!important;min-height:32px!important;padding:0!important;border:0!important;border-radius:999px!important;
+  width:var(--x-size,36px)!important;height:var(--x-size,36px)!important;min-width:var(--x-size,36px)!important;min-height:var(--x-size,36px)!important;padding:0!important;border:0!important;border-radius:999px!important;
   background:transparent!important;box-shadow:none!important;color:var(--sx-text-3)!important;font-size:0!important;line-height:0!important;cursor:pointer;transition:background-color .15s,color .15s}
 .mhead>.btn.ghost:last-child::before,.dhead>.btn.ghost:last-child::before,
 .x:not([data-mmup]):not([data-peup]):not([data-peiup]):not([data-trkren]):not([data-veredit]):not([data-ntsub])::before,.plx::before{
@@ -2206,6 +2206,118 @@ table.atable tbody tr:hover td{background:#FAFBFE!important}
   .blk,.acard,.dkpi,.dcard,.mcard,.mpcard,.btn,.nav,.modal,.side,input,select,textarea{border:1px solid CanvasText!important}
   .nav.on{outline:2px solid Highlight!important}
 }
+
+/* =====================================================================
+   v11 · ajustes da crítica e da auditoria
+   ===================================================================== */
+:root{
+  --sx-pencil:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z'/%3E%3Cpath d='m15 5 4 4'/%3E%3C/svg%3E");
+  --sx-dots:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'%3E%3Ccircle cx='5' cy='12' r='2'/%3E%3Ccircle cx='12' cy='12' r='2'/%3E%3Ccircle cx='19' cy='12' r='2'/%3E%3C/svg%3E");
+  --target-desktop:36px; --target-touch:44px; --x-size:36px;
+}
+
+/* ---------- alvos de toque: 36px (44px no celular) ---------- */
+.mhead>.btn.ghost:last-child,.dhead>.btn.ghost:last-child,.x,.plx,.dwx,.cmx,.srow .x,.tmft .x{
+  width:36px!important;height:36px!important;min-width:36px!important;min-height:36px!important}
+.dplay{width:36px!important;height:36px!important}
+.dfil,.fchips button{height:36px!important}
+.cal .hd button{width:36px!important;height:36px!important}
+.dlink,.link{display:inline-flex;align-items:center;min-height:36px}
+.dchk,.sq,.plchk{position:relative}
+.dchk::after,.sq::after,.plchk::after{content:"";position:absolute;inset:-9px!important}
+
+/* ---------- foco visível em todos os fundos ---------- */
+.nav.on:focus-visible{outline:2px solid #FFFFFF!important;outline-offset:-5px!important;box-shadow:0 0 0 3px var(--mn-azul)!important}
+.tab.on:focus-visible,.seg button.on:focus-visible,.dfil.on:focus-visible{outline:2px solid var(--mn-ink)!important;outline-offset:3px!important}
+.x:focus-visible,.plx:focus-visible,.cmx:focus-visible,.dwx:focus-visible,.dplay:focus-visible,
+.mhead>.btn.ghost:last-child:focus-visible,.dhead>.btn.ghost:last-child:focus-visible{outline:2px solid var(--mn-azul)!important;outline-offset:2px!important}
+.dent .dplay:focus-visible,.dtimer .dplay:focus-visible{outline-color:#fff!important}
+
+/* ---------- cards azuis: gráfico e cronômetro legíveis ---------- */
+.dent .bars .b{background:rgba(255,255,255,.55)!important}
+.dent .bars .bc.cur .b{background:rgba(255,255,255,.7)!important}
+.dent .dlegend .lg-pend{background:rgba(255,255,255,.55)!important}
+.dent .dlegend,.dtimer .dthint,.dtimer .dcs{color:#FFFFFF!important}
+.dtimer .dclock.dim{color:rgba(255,255,255,.85)!important}
+
+/* ---------- KPIs sem espaço morto ---------- */
+.dw[data-dw^="kpi_"]:not(.fixo) .dkpi{min-height:168px!important}
+
+/* ---------- abas: sem moldura; contador de pendência suave ---------- */
+.tabs,.dtabs,.feedtabs{border:0!important;padding:0!important}
+.tab .n[style*="D92D20"]{background:#FEE4E2!important;color:#A21C11!important}
+.tab.on .n[style*="D92D20"]{background:#fff!important;color:#A21C11!important}
+
+/* ---------- versões do material: pílulas e controles circulares iguais ---------- */
+.vertag{border:0!important;border-radius:999px!important;padding:3px 10px!important;font-size:12px!important;
+  background:color-mix(in srgb,var(--c) 12%,#fff)!important;color:color-mix(in srgb,var(--c) 70%,#000)!important}
+.vtags{display:inline-flex;gap:6px;flex-wrap:wrap}
+.vtags .vertag{margin-left:0!important}
+.x[data-trkren],.x[data-veredit]{display:inline-flex!important;align-items:center!important;justify-content:center!important;font-size:0!important;line-height:0!important;padding:0!important;color:var(--sx-text-3)!important}
+.x[data-trkren]::before,.x[data-veredit]::before{content:"";width:15px;height:15px;background:currentColor;-webkit-mask:var(--sx-pencil) center/contain no-repeat;mask:var(--sx-pencil) center/contain no-repeat}
+.x[data-trkren]:hover,.x[data-veredit]:hover{background:var(--sx-hover)!important;color:var(--mn-azul)!important}
+.verbtns{gap:4px!important;align-items:center}
+.trkh{gap:8px!important}
+
+/* ---------- Kanban mais legível ---------- */
+.pboard{grid-auto-columns:minmax(260px,1fr)!important}
+.mst{white-space:normal!important;line-height:1.3!important}
+.mcard{padding:14px 16px!important}
+.mcard .mt{font-size:14.5px!important;line-height:1.3!important}
+.mcard .mtipo,.mcard .mm,.mcard .mf{font-size:13px!important}
+.mcard .mf .late{background:#FEE4E2!important;color:#A21C11!important;border-radius:999px!important;padding:1px 8px!important;font-weight:700!important}
+
+/* ---------- cabeçalho de página: botões alinhados ---------- */
+.pagehead{align-items:flex-end!important}
+.pagehead>.btn,.pagehead>.btn.sm{min-height:38px!important;font-size:13.5px!important;padding:0 16px!important;align-self:flex-end}
+
+/* ---------- botão "Mais" só existe no celular ---------- */
+.nav-more{display:none!important}
+
+/* ======================= CELULAR ======================= */
+@media (max-width:760px){
+  /* barra presa na base, sólida, sem cobrir conteúdo */
+  .side{position:fixed!important;left:0!important;right:0!important;bottom:0!important;top:auto!important;height:auto!important;
+    display:flex!important;flex-direction:row!important;flex-wrap:nowrap!important;justify-content:space-around!important;align-items:stretch!important;
+    padding:6px 8px calc(6px + env(safe-area-inset-bottom))!important;border-radius:20px 20px 0 0!important;background:#FFFFFF!important;
+    box-shadow:0 -8px 30px rgba(14,16,48,.10)!important;overflow:visible!important;gap:2px!important;-webkit-mask-image:none!important;mask-image:none!important;z-index:40!important}
+  .main{padding-bottom:calc(88px + env(safe-area-inset-bottom))!important}
+  .toast{bottom:calc(96px + env(safe-area-inset-bottom))!important}
+  /* 4 destinos principais + Mais */
+  .side .nav{display:none!important}
+  .side .nav[data-view="dash"],.side .nav[data-view="proc"],.side .nav[data-view="mine"],.side .nav[data-view="lic"],.side .nav-more{display:flex!important}
+  .side .nav{flex:1 1 0!important;width:auto!important;min-width:0!important;height:auto!important;min-height:52px!important;padding:6px 2px!important;
+    flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:3px!important;border-radius:14px!important}
+  .side .nav .tx{position:static!important;width:auto!important;height:auto!important;clip:auto!important;overflow:hidden!important;text-overflow:ellipsis;max-width:100%;font-size:11px!important;font-weight:600!important;line-height:1.2}
+  .side .nav.on{background:var(--mn-ink)!important;color:#fff!important}
+  .side .nav .n,.side .nav [id^="n"]:not(:empty){position:absolute!important;top:2px!important;right:calc(50% - 22px)!important}
+  .nav-more .ic{background:currentColor;-webkit-mask:var(--sx-dots) center/contain no-repeat;mask:var(--sx-dots) center/contain no-repeat}
+  /* "Mais" aberto: painel com todos os destinos */
+  .side.more-open{flex-wrap:wrap!important;justify-content:flex-start!important;padding-top:14px!important;box-shadow:0 -20px 60px rgba(14,16,48,.25)!important}
+  .side.more-open .nav{display:flex!important;flex:0 0 calc(25% - 2px)!important}
+  .side.more-open .nav-more{order:99}
+  .side.more-open::before{content:"";position:fixed;inset:0 0 auto 0;height:100vh;transform:translateY(-100%);background:rgba(14,16,48,.32);pointer-events:none}
+  /* botões do topo: mesmo estilo, uma linha, largura igual */
+  .pagehead{flex-wrap:wrap!important;gap:8px!important}
+  .pagehead>div:first-child{flex:1 1 100%!important}
+  .pagehead>.btn,.pagehead>.btn.sm,.pagehead>.btn.ghost{flex:1 1 0!important;min-width:0!important;min-height:56px!important;padding:8px 4px!important;
+    flex-direction:column!important;gap:4px!important;font-size:12px!important;line-height:1.2!important;white-space:normal!important;text-align:center;
+    background:#fff!important;box-shadow:var(--sx-shadow-btn)!important;border-radius:16px!important;color:var(--sx-text)!important}
+  .pagehead>.seg{flex:1 1 100%!important;justify-content:space-between}
+  .pagehead>.seg button{flex:1 1 0;justify-content:center}
+  /* KPIs compactos */
+  .dw[data-dw^="kpi_"]:not(.fixo) .dkpi{min-height:0!important}
+  .dkpi{padding:16px 18px!important}
+  .dkv>.tnum,.dkv>span:first-child,.acard .v{font-size:28px!important}
+  :root{--x-size:44px}
+  /* alvos de 44px */
+  .x,.plx,.cmx,.dwx,.dplay,.mhead>.btn.ghost:last-child,.dhead>.btn.ghost:last-child{width:44px!important;height:44px!important;min-width:44px!important;min-height:44px!important}
+  .dfil,.fchips button,.btn{min-height:44px!important}
+  .dchk::after,.sq::after,.plchk::after{inset:-13px!important}
+  /* abas roláveis */
+  .tabs,.feedtabs,.dtabs{flex-wrap:nowrap!important;overflow-x:auto!important;scrollbar-width:none}
+  .tab{white-space:nowrap!important;min-height:44px}
+}
 </style>
 </head>
 <body>
@@ -2228,6 +2340,7 @@ table.atable tbody tr:hover td{background:#FAFBFE!important}
     <button class="nav" data-view="integ"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2h2v5H7zM15 2h2v5h-2zM5 7h14v4a7 7 0 0 1-6 6.9V22h-2v-4.1A7 7 0 0 1 5 11z"/></svg><span class="tx">Integrações</span></button>
     <button class="nav" data-view="fin"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h4v9H3zM10 3h4v18h-4zM17 8h4v13h-4z"/></svg><span class="tx">Financeiro</span><span id="nFin"></span></button>
     <button class="nav" data-view="cad"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h4v4H3zM9 5h12v2H9zM3 10h4v4H3zM9 11h12v2H9zM3 16h4v4H3zM9 17h12v2H9z"/></svg><span class="tx">Cadastros</span></button>
+    <button class="nav nav-more" type="button" aria-expanded="false" aria-controls="side"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"></svg><span class="tx">Mais</span></button>
     <div class="sidebox"><button class="btn sm ghost" id="btnSair">Sair</button></div>
   </nav>
   <div class="main">
@@ -7833,7 +7946,23 @@ boot();
     });
     /* estado selecionado de segmentados, filtros e abas */
     root.querySelectorAll('.seg button,.fchips button,.dfil,.subviews button').forEach(function(b){ b.setAttribute('aria-pressed', String(b.classList.contains('on'))); });
-    root.querySelectorAll('.tabs .tab,.feedtabs .tab,.dtabs .tab').forEach(function(b){ b.setAttribute('role', 'tab'); b.setAttribute('aria-selected', String(b.classList.contains('on'))); if(b.parentElement) b.parentElement.setAttribute('role', 'tablist'); });
+    var tabSeq = 0;
+    root.querySelectorAll('.tabs,.feedtabs,.dtabs').forEach(function(list){
+      var tabs = list.querySelectorAll(':scope > .tab'); if(!tabs.length) return;
+      list.setAttribute('role', 'tablist');
+      var panel = list.nextElementSibling;
+      if(panel && !panel.matches('.tabs,.feedtabs,.dtabs,script,style')){
+        if(!panel.id) panel.id = 'tabpanel-' + (++tabSeq) + '-' + Math.random().toString(36).slice(2, 7);
+        panel.setAttribute('role', 'tabpanel');
+      } else panel = null;
+      tabs.forEach(function(b){
+        var on = b.classList.contains('on');
+        if(!b.id) b.id = 'tab-' + (++tabSeq) + '-' + Math.random().toString(36).slice(2, 7);
+        b.setAttribute('role', 'tab'); b.setAttribute('aria-selected', String(on)); b.tabIndex = on ? 0 : -1;
+        if(panel){ b.setAttribute('aria-controls', panel.id); if(on) panel.setAttribute('aria-labelledby', b.id); }
+      });
+      if(!list.querySelector(':scope > .tab.on')) tabs[0].tabIndex = 0;
+    });
     document.querySelectorAll('.nav').forEach(function(n){ if(n.classList.contains('on')) n.setAttribute('aria-current', 'page'); else n.removeAttribute('aria-current'); if(n.classList.contains('off')) n.setAttribute('aria-disabled', 'true'); });
     /* títulos de card como títulos de verdade (1.3.1) */
     root.querySelectorAll('.dct').forEach(function(h){ h.setAttribute('role', 'heading'); h.setAttribute('aria-level', '2'); });
@@ -7849,6 +7978,31 @@ boot();
       e.preventDefault(); t.click();
     }
   });
+
+  /* setas do teclado nas abas (padrão WAI-ARIA) */
+  document.addEventListener('keydown', function(e){
+    var t = e.target; if(!t || !t.matches || !t.matches('[role="tab"]')) return;
+    var list = t.closest('[role="tablist"]'); if(!list) return;
+    var tabs = Array.prototype.slice.call(list.querySelectorAll(':scope > [role="tab"]')), i = tabs.indexOf(t);
+    if(e.key === 'ArrowRight' || e.key === 'ArrowDown') i = (i + 1) % tabs.length;
+    else if(e.key === 'ArrowLeft' || e.key === 'ArrowUp') i = (i - 1 + tabs.length) % tabs.length;
+    else if(e.key === 'Home') i = 0; else if(e.key === 'End') i = tabs.length - 1; else return;
+    e.preventDefault(); var nx = tabs[i];
+    var sig = Array.prototype.map.call(nx.attributes, function(a){ return a.name.indexOf('data-') === 0 ? '[' + a.name + '="' + a.value + '"]' : ''; }).join('');
+    nx.click();
+    setTimeout(function(){ var again = document.contains(nx) ? nx : (sig ? document.querySelector('.tab' + sig) : null); if(again){ again.tabIndex = 0; again.focus(); } }, 180);
+  });
+
+  /* botão "Mais" da barra inferior (celular) */
+  var sideEl = document.getElementById('side');
+  document.addEventListener('click', function(e){
+    var more = e.target.closest && e.target.closest('.nav-more');
+    if(more){ var open = !sideEl.classList.contains('more-open'); sideEl.classList.toggle('more-open', open); more.setAttribute('aria-expanded', String(open)); return; }
+    if(sideEl.classList.contains('more-open') && (e.target.closest('.nav') || !e.target.closest('#side'))){
+      sideEl.classList.remove('more-open'); var mb = sideEl.querySelector('.nav-more'); if(mb) mb.setAttribute('aria-expanded', 'false');
+    }
+  });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && sideEl.classList.contains('more-open')){ sideEl.classList.remove('more-open'); var mb = sideEl.querySelector('.nav-more'); if(mb){ mb.setAttribute('aria-expanded', 'false'); mb.focus(); } } });
 
   /* ---------- modais e gaveta: foco entra, fica preso e volta (2.4.3) ---------- */
   var layer = document.getElementById('layer'), drawer = document.getElementById('drawer'), app = document.querySelector('.app');
