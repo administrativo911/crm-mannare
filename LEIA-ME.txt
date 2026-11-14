@@ -1,0 +1,21 @@
+CRM MANNARE — APP DE CELULAR (PWA)
+
+O que tem nesta pasta
+  index.html            o CRM (mesmo arquivo de antes, já preparado para virar app)
+  manifest.webmanifest  nome, cores e ícones do app
+  sw.js                 permite instalar e abre o app mais rápido
+  icons/                ícones do app (Android, iPhone e computador)
+
+Como publicar
+  1. Copie TODOS estes arquivos para a mesma pasta onde hoje está o CRM,
+     ao lado do config.js que já existe (não substitua o config.js).
+  2. O endereço precisa ser HTTPS (ex.: https://crm.mannare.com.br).
+  3. No Supabase > Authentication > URL Configuration, confira se o endereço
+     do CRM está em "Site URL" e "Redirect URLs".
+  4. Sempre que publicar uma versão nova do index.html, abra o sw.js e troque
+     'mannare-v1' por 'mannare-v2' (depois v3...). Assim todos recebem a versão nova.
+
+Como instalar no celular
+  Android (Chrome): abra o endereço > menu (⋮) > "Instalar app" ou "Adicionar à tela inicial".
+  iPhone (Safari):  abra o endereço > botão Compartilhar > "Adicionar à Tela de Início".
+  Computador (Chrome/Edge): ícone de instalar na barra de endereço.
