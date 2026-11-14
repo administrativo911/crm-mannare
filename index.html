@@ -2,7 +2,14 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#EEF4FF">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Mannare">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <title>CRM | Mannare</title>
 <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAEp0lEQVR42u1aW2gcVRg+58xtd7Mxu0lj0rQmNRKNGkhTsK2CaQVJBSmVItZ6JVbwxQuCFC+oFJ8qWqgVVFAKIlgEFaJECk1U2oeaEhNlY1akadpsYpJtu3GT7O7MnDm/D2VpGpKd7MxOzmR3vsdl5uz/f/Pfvn8GIQ8ePHjwULrAhTqotSnof3zXzTt3bAk9uqnOt9WvkDDBWJQlXJa9hhAsLr7PMECTRBygBmR0CilJxAFRwL74jB6NTauDW5/pf9pJAkQ7Nwd8Ajry6m1PPbKz+q3qsNRsyQAB+xBCSCY4KEsomP29plJuuTSp9jsdAZYJ+Phg0779u2oOh8rFBqeMk8Rr5LiKgPpan9j76eaeW+t87cVQA/IioL0tVNHzSevlpXJ5rYKs9MIHt4WrvvugZcDMeWpAhjGgBTGOIMEVERAuF/G3h1uGggGhJtd1jAFlDKgokYLkLmPIcAUBPx1rPW7mfLbNyQQHiyoF3uhsuO+eu8qfLdZByJSAd55vOFnMk2BOAl7at7FVlkiwZAl4Zf/Gj7gatwpdICcBvIed1egCyxLwxEM1m0pBDS5LQMf2cAdv4xgDfhFwe31gG28CJJHwE0O1VXKznYNVjSUnLmuDY1OZPwAQYIywKGB5cY4zAINgfEOxYwBGmV8I/z48e9K1ctgMQyPzP3Yeih6InJ/PWD2jIijiL95ufq6+VrnTYKBTCposET81QBMFLDO4liIEY4EaoC3uHDoF9VRfouvo17GBvAkgBNtqQRNxbdiO8wgh9N8chY7t4RfrqpU2q2dMXtFGEUIDttVgvtApU91Q5asqpPWWiqDdCqzIJFAIBwyGNAvdgy5Mg4LsA3gNMRjnbyMDRBdsfYm1CFhwCM8eLgpYybu34+u1jRCLBLgF1AA1fw1xfWtlsNwPclkCAADs5W5h1mJ2IZDcrZ44OMUpbiCAMcTWdApw0wIYY1zSBCyspGsZgCymgN1RuGAOQG4HHIuA1dDiFlpihtubITcsRbJvkleFAJ1C2hVFyuFUXLbQff9L/EhLY9kZQAgwQpgQLDAGRtag7JMBhIAxZPgVUq7pLA0IgUCweO6v5K/1tT7x0mTG8kC0LiSRdSGpyWYEMUsEvH5spBsh1G31jxs3+KUDe9a3399WscdE7GAABJKIFYFgSaeQoQaosoQDlTdJt/gVUmmzbmhcNkIj42m9cYPvjh1bQi/zTCGd5ibA0SK4eAfIA1eTepwbAYpM/Dydn5mlF4cvpP7mRoCqsTTnpz/a05c4X7JiKDqa+nn03wzlRoAk8qsByXk6/lsk2ct1EjTbxjiJoZFU9/tfjp1e86OwFcQTerSnL3FC0xlfLYBXgeClvkj785+5rnc/u9CLeIshs41sgbTCDcPc1FUt0nko+qYr1KDZPs6Jvr/3tci943HVKBo5vFLEptVzew9GNp+NJOdc8XZ4JeuoAvb77gdeGNw9ndBY0S1EzPDhV2O7736s72ErzjseAWZa3Crm08b00ROxJ9/7/OKplbQ6bgTEE/qEprO5pb41zLYvs4+vVY0lUyq7EptSB84MznxzvGvyh/7obAp58ODBgwcPHuzif5eG1GvPnSKuAAAAAElFTkSuQmCC">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -2023,7 +2030,8 @@ h1,h2,.dhead h2,.ttitle,.dct,.blk h3,.sect h4,.ccard .ct,.mhead b,.side .leg,.ms
 .ttitle{font:600 22px/1.3 var(--font-sans)!important}
 .dct,.blk h3,.sect h4,.ccard .ct,.dkt{font:600 14px/1.35 var(--font-sans)!important;color:var(--sx-text)!important}
 .mhead b{font:600 14px/1.4 var(--font-sans)!important}
-.dcs,.dks,.dkl,.dkf,.sub,.hint{color:var(--sx-text-3)!important;font-size:13px!important}
+.dcs,.dks,.dkl,.dkf,.sub:not([style*="color"]),.hint:not([style*="color"]){color:var(--sx-text-3)!important}
+.dcs,.dks,.dkl,.dkf,.sub,.hint{font-size:13px!important}
 .dkv>.tnum,.dkv>span:first-child,.acard .v,.dbig .tnum{font-family:var(--font-display)!important;font-weight:500!important;letter-spacing:-.02em!important;color:var(--sx-text)!important}
 .dkv>.tnum,.dkv>span:first-child,.acard .v{font-size:34px!important;line-height:1.1!important}
 .dclock{font-family:var(--font-display)!important;font-weight:500!important}
@@ -2285,7 +2293,7 @@ table.atable tbody tr:hover td{background:#FAFBFE!important}
   .toast{bottom:calc(96px + env(safe-area-inset-bottom))!important}
   /* 4 destinos principais + Mais */
   .side .nav{display:none!important}
-  .side .nav[data-view="dash"],.side .nav[data-view="proc"],.side .nav[data-view="mine"],.side .nav[data-view="lic"],.side .nav-more{display:flex!important}
+  .side .nav[data-view="dash"],.side .nav[data-view="mine"],.side .nav[data-view="plan"],.side .nav[data-view="proc"],.side .nav-more{display:flex!important}
   .side .nav{flex:1 1 0!important;width:auto!important;min-width:0!important;height:auto!important;min-height:52px!important;padding:6px 2px!important;
     flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:3px!important;border-radius:14px!important}
   .side .nav .tx{position:static!important;width:auto!important;height:auto!important;clip:auto!important;overflow:hidden!important;text-overflow:ellipsis;max-width:100%;font-size:11px!important;font-weight:600!important;line-height:1.2}
@@ -2318,6 +2326,22 @@ table.atable tbody tr:hover td{background:#FAFBFE!important}
   .tabs,.feedtabs,.dtabs{flex-wrap:nowrap!important;overflow-x:auto!important;scrollbar-width:none}
   .tab{white-space:nowrap!important;min-height:44px}
 }
+
+/* ---------- card de próxima reunião (azul): textos auxiliares brancos ---------- */
+.meetnext{border-radius:var(--sx-r-inner)!important;padding:16px 18px!important;box-shadow:var(--sx-shadow-hl)!important;border:0!important}
+.meetnext:not(.agora),.meetnext:not(.agora) .mnt,.meetnext:not(.agora) .mnd,.meetnext:not(.agora) .big{color:#FFFFFF!important}
+.meetnext:not(.agora) .sub{color:#FFFFFF!important;opacity:.92!important}
+.meetnext.agora,.meetnext.agora .sub,.meetnext.agora .mnt,.meetnext.agora .mnd{color:#0B0B1A!important;opacity:1!important}
+.meetnext .btn.meetgo{background:#fff!important;color:var(--mn-azul)!important;border-radius:999px!important}
+.meetnext :focus-visible{outline-color:#fff!important}
+
+/* ---------- app instalado (PWA): respeita a área do relógio/notch ---------- */
+@media (display-mode:standalone){
+  .top,header.top{padding-top:calc(16px + env(safe-area-inset-top))!important}
+  .side{padding-top:calc(18px + env(safe-area-inset-top))!important}
+  body{overscroll-behavior-y:none}
+}
+@media (display-mode:standalone) and (max-width:760px){ .side{padding-top:6px!important} }
 </style>
 </head>
 <body>
@@ -2328,17 +2352,17 @@ table.atable tbody tr:hover td{background:#FAFBFE!important}
     <label class="sside"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M10 2a8 8 0 0 1 6.3 12.9l5.4 5.4-1.4 1.4-5.4-5.4A8 8 0 1 1 10 2zm0 2a6 6 0 1 0 0 12 6 6 0 0 0 0-12z"/></svg><input id="gq" placeholder="Buscar" aria-label="Buscar no CRM"><kbd aria-hidden="true">/</kbd></label>
     <div class="leg">Menu principal</div>
     <button class="nav" data-view="dash"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3h8v8H3zM13 3h4a4 4 0 0 1 4 4v4h-8zM3 13h8v8H3zM13 13h8v8h-8z"/></svg><span class="tx">Dashboard</span></button>
-    <button class="nav" data-view="prop"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 2h9l5 5v15H5zM14 2v5h5" /><path d="M8 11h8v2H8zM8 15h8v2H8z" fill="#fff"/></svg><span class="tx">Propostas</span></button>
-    <button class="nav" data-view="proc"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 5h8l2 2h10v13H2z"/></svg><span class="tx">Processos</span><span id="nProc"></span></button>
     <button class="nav" data-view="mine"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M3 3h18v18H3zm4.5 9.2 3 3 6-6-1.4-1.4-4.6 4.6-1.6-1.6z"/></svg><span class="tx">Minhas tarefas</span><span id="nMine"></span></button>
     <button class="nav" data-view="plan"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2h2v2h6V2h2v2h4v18H3V4h4zm-2 8v10h14V10zm2 2h4v4H7z"/></svg><span class="tx">Planejador</span></button>
+    <button class="nav" data-view="prop"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 2h9l5 5v15H5zM14 2v5h5" /><path d="M8 11h8v2H8zM8 15h8v2H8z" fill="#fff"/></svg><span class="tx">Propostas</span></button>
+    <button class="nav" data-view="fin"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h4v9H3zM10 3h4v18h-4zM17 8h4v13h-4z"/></svg><span class="tx">Financeiro</span><span id="nFin"></span></button>
+    <button class="nav" data-view="proc"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 5h8l2 2h10v13H2z"/></svg><span class="tx">Processos</span><span id="nProc"></span></button>
     <button class="nav" data-view="mat"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3h16v12l-6 6H4zM14 15v6l6-6z"/></svg><span class="tx">Material técnico</span><span id="nMat"></span></button>
     <div class="leg">Acompanhamento</div>
     <button class="nav" data-view="lic"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2a10 10 0 1 1 0 20 10 10 0 0 1 0-20zm-1.5 13.6 6.3-6.3-1.4-1.4-4.9 4.9-2.2-2.2-1.4 1.4z"/></svg><span class="tx">Licenças</span><span id="nLic"></span></button>
     <button class="nav" data-view="team"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h6v6H5zM14 5h5v5h-5zM2 13h12v7H2zM15 13h7v7h-7z"/></svg><span class="tx">Equipe</span></button>
     <div class="leg">Geral</div>
     <button class="nav" data-view="integ"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2h2v5H7zM15 2h2v5h-2zM5 7h14v4a7 7 0 0 1-6 6.9V22h-2v-4.1A7 7 0 0 1 5 11z"/></svg><span class="tx">Integrações</span></button>
-    <button class="nav" data-view="fin"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h4v9H3zM10 3h4v18h-4zM17 8h4v13h-4z"/></svg><span class="tx">Financeiro</span><span id="nFin"></span></button>
     <button class="nav" data-view="cad"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h4v4H3zM9 5h12v2H9zM3 10h4v4H3zM9 11h12v2H9zM3 16h4v4H3zM9 17h12v2H9z"/></svg><span class="tx">Cadastros</span></button>
     <button class="nav nav-more" type="button" aria-expanded="false" aria-controls="side"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"></svg><span class="tx">Mais</span></button>
     <div class="sidebox"><button class="btn sm ghost" id="btnSair">Sair</button></div>
@@ -7885,6 +7909,12 @@ boot();
   document.addEventListener('click', e => { if(e.target.closest && e.target.closest('.rzh')){ e.stopPropagation(); e.preventDefault(); } }, true);
   document.addEventListener('dblclick', e => { const h = e.target.closest && e.target.closest('.rzh'); if(!h) return; e.stopPropagation(); delete st[h.dataset.rz]; aplicar(); posicionar(); try{ localStorage.setItem(LS, JSON.stringify(st)); }catch(_){} }, true);
 })();
+</script>
+<script id="mannare-pwa">
+/* registra o service worker (app instalável e abertura rápida) */
+if('serviceWorker' in navigator && location.protocol === 'https:'){
+  window.addEventListener('load', function(){ navigator.serviceWorker.register('sw.js').catch(function(e){ console.warn('SW:', e); }); });
+}
 </script>
 <script id="mannare-a11y">
 /* ==========================================================================
