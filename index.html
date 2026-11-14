@@ -1480,6 +1480,29 @@ input[type="checkbox"]{border-radius:3px!important}
 .crleft{max-width:calc(100% - 220px)}
 .crwrap.full .crleft{max-width:calc(100% - 260px)}
 .crleg{display:flex;gap:14px;flex-wrap:wrap;align-items:center;padding:8px 10px;border-top:1px solid var(--line);font-size:11.5px;color:var(--muted)}.crleg span{display:inline-flex;gap:6px;align-items:center}.crleg .crb{height:9px}
+
+/* ---------- versões por peça ---------- */
+.trkgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:12px;margin-top:10px}
+.trk{border:1px solid var(--line);padding:10px 12px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.trkh{display:flex;gap:6px;align-items:center}.trkh b{font-size:14px}
+.vits{display:flex;flex-direction:column;gap:6px}
+.vit{border:1px solid #EEF0F4;padding:6px 8px;display:flex;flex-direction:column;gap:4px;background:#fff}
+.vit.st-alterado{background:#F3FBF6;border-color:#CDEFD9}.vit.st-mantido{background:#F4F5FE;border-color:#D7DAF8}
+.vit-h{display:flex;gap:6px;align-items:center;flex-wrap:wrap}.vn{font-weight:700;color:#274b9a;min-width:16px}
+.vit select{border:1px solid var(--line);font:inherit;font-size:12px;padding:2px 4px;color:var(--c);font-weight:600;background:#fff}
+.vit input[type=date]{border:1px solid var(--line);font:inherit;font-size:12px;padding:1px 3px}
+.vit textarea,.vit>input{width:100%;border:1px solid transparent;background:transparent;font:inherit;font-size:13px;padding:3px 5px;resize:none;overflow:hidden;color:var(--ink)}
+.vit textarea:hover,.vit>input:hover{border-color:var(--line)}.vit textarea:focus,.vit>input:focus{outline:0;border-color:var(--m-azul,#4948d1);background:#fff}
+.vit textarea:not(.alttxt){color:#6B7085;font-size:12.5px}.vit>input{font-size:12.5px;font-style:italic}
+.vit.ro{gap:2px;font-size:12.5px}
+.nd{font-size:11px;font-weight:600;color:#B54708;background:#FFF4D9;padding:1px 6px;white-space:nowrap}
+.altst{font-size:11px;font-weight:600;color:var(--c)}
+.altadd{width:100%;border:1px dashed var(--line);background:transparent;font:inherit;font-size:13px;padding:7px 9px;resize:none}.altadd:focus{outline:0;border-color:var(--m-azul,#4948d1)}
+.verrow2{border-top:1px solid #F1F1F3;padding:4px 0}.verrow2>summary{display:flex;gap:8px;align-items:center;cursor:pointer;font-size:12.5px;flex-wrap:wrap}.verrow2 .vit{margin:4px 0 0 18px}
+.vtags{display:inline-flex;gap:6px;margin-left:8px}
+.apk{border:1px solid var(--line);margin-bottom:10px}.apkh{display:flex;gap:8px;align-items:center;padding:8px 10px;background:#F7F8FC;border-bottom:1px solid var(--line)}
+.apki{display:flex;gap:8px;align-items:flex-start;padding:6px 10px;border-bottom:1px solid #F1F1F3;font-size:13px;cursor:pointer}.apki.ja{opacity:.55;cursor:default}.apki input{margin-top:3px}
+#mrelFrame{border:0;display:block;transform-origin:0 0;background:#fff;height:1123px}
 /* ---------- painéis redimensionáveis ---------- */
 @media (min-width:1181px){.app{grid-template-columns:var(--rz-side,260px) minmax(0,1fr)!important}.pwrap:not(.notree){grid-template-columns:var(--rz-tree,250px) minmax(0,1fr)!important}}
 @media (min-width:1001px){.plan{grid-template-columns:var(--rz-plan,300px) minmax(0,1fr)!important}}
@@ -4355,6 +4378,7 @@ function minhasAprovacoes(){
   const out = [];
   S.procs.forEach(p => (p.tarefas || []).forEach(t => { if(t.aprov && t.aprov.st === 'pendente' && t.aprov.aprovador === me) out.push({tipo:'Tarefa', titulo:t.titulo, sub:pcod(p) + ' | ' + (propById(p.propId) || {}).emp, go:`task|${p.id}|${t.id}`, em:t.aprov.pedidoEm, por:t.aprov.pedidoPor}); }));
   S.procs.forEach(p => { const r = p.rel; if(r && r.st === 'pendente' && r.validador === me) out.push({tipo:'Relatório', titulo:'Relatório do processo ' + pcod(p), sub:(propById(p.propId) || {}).emp || '', go:`proc|${p.id}|relatorio`, em:r.pedidoEm, por:r.pedidoPor}); });
+  (S.mats || []).forEach(m => { const r = m.relAlt; if(r && r.st === 'pendente' && r.validador === me) out.push({tipo:'Relatório', titulo:'Relatório de alterações ' + m.codigo, sub:m.titulo || '', go:`mat|${m.id}|rel`, em:r.pedidoEm, por:r.pedidoPor}); });
   (S.mats || []).forEach(m => { if(m.status === 'validacao' && aprovFor(m) === me) out.push({tipo:'Material técnico', titulo:m.titulo || m.codigo, sub:m.codigo, go:`mat|${m.id}`, em:'', por:(m.resp || [])[0]}); });
   (S.propsDb || []).forEach(p => { if(p.aprov && p.aprov.st === 'pendente' && aprovadorDe(p) === me) out.push({tipo:'Proposta', titulo:p.emp || p.cliente || p.codigo, sub:p.codigo, go:`prop|${p.id}|aprovacao`, em:p.aprov.pedidoEm, por:p.aprov.pedidoPor}); });
   return out;
@@ -4380,7 +4404,7 @@ function irPara(go){
   const [k, a, b] = go.split('|'); closeTask();
   if(k === 'task'){ ui.view = 'proc'; render(); openDrawer('proc', a); openTask(a, b); }
   else if(k === 'proc'){ ui.view = 'proc'; render(); openDrawer('proc', a, b || undefined); }
-  else if(k === 'mat'){ ui.view = 'mat'; render(); openMat(a); }
+  else if(k === 'mat'){ ui.view = 'mat'; render(); if(b) ui.mtab = b; openMat(a); }
   else if(k === 'prop'){ ui.view = 'prop'; render(); openDrawer('prop', a, b || 'dados'); }
 }
 
@@ -5696,9 +5720,9 @@ function relCorpo(p, assinar){
   h += `<div class="close"><div class="att">Atenciosamente,</div><div class="sg"><div class="sigbox">${img ? `<img src="${img}" alt="">` : ''}</div><div class="ln"></div><div class="rz">${esc(EMPRESA.razao)}</div><div>CNPJ nº ${esc(EMPRESA.cnpj)}</div>${v.nome ? `<div class="nm">${esc(v.nome)}</div>` : ''}${v.cargo ? `<div>${esc(v.cargo)}</div>` : ''}</div></div>`;
   return h;
 }
-function relHtml(p, modo){
-  const ok = relValido(p), minuta = !ok, corpo = relCorpo(p, ok), font = modo === 'prev' ? '' : (($('#fontcss') || {}).textContent || '');
-  const nome = `Relatório ${pcod(p)} | ${(propById(p.propId) || {}).emp || ''}`.replace(/[\\/:*?"<>|]+/g, '-');
+function relHtml(p, modo){ const ok = relValido(p); return timbradoDoc(relCorpo(p, ok), !ok, modo, `Relatório ${pcod(p)} | ${(propById(p.propId) || {}).emp || ''}`); }
+function timbradoDoc(corpo, minuta, modo, nome){
+  const font = modo === 'prev' ? '' : (($('#fontcss') || {}).textContent || ''); nome = String(nome || 'Relatório').replace(/[\\/:*?"<>|]+/g, '-');
   const css = `*{box-sizing:border-box}html,body{margin:0}body{font:300 10pt/1.75 Sora,"Segoe UI",Arial,sans-serif;color:#1d2238;-webkit-print-color-adjust:exact;print-color-adjust:exact}b{font-weight:600}
 main{padding:0 22mm}.title{font:500 16pt/1.3 Kanit,Arial,sans-serif;color:#274b9a;text-align:right;margin:0 0 6mm;letter-spacing:.03em}.date{text-align:right}
 .to{font:500 13pt/1.3 Kanit,Arial,sans-serif;color:#274b9a;margin:2mm 0 8mm;text-transform:uppercase;letter-spacing:.02em}
@@ -5905,35 +5929,163 @@ async function ntExportar(ref){
 }
 renderDrawer = (function(base){ return function(){ base.apply(this, arguments); if(ui.dtab === 'notas') ntAutoAltura(); }; })(renderDrawer);
 
-/* ============ Material técnico: versões ============ */
+/* ============ Material técnico: versões por peça (projeto, memorial…) com alterações item a item ============ */
 const VER_ST = {edicao:['em edição', '#0000FF'], validacao:['em validação', '#C99500'], entregue:['entregue', '#12B76A'], substituida:['substituída', '#9A9DB0']};
-function matVers(m){ if(!m.versoes || !m.versoes.length) m.versoes = [{id:uid(), n:1, st:m.status === 'entregue' ? 'entregue' : 'edicao', ini:m.criadoEm || nowISO(), por:(m.log[m.log.length - 1] || {}).por || me, obs:'Versão inicial'}]; return m.versoes; }
-const matVer = m => { const vs = matVers(m); return vs[vs.length - 1]; };
+const ALT_ST = {pendente:['Pendente', '#B54708'], alterado:['Alterado', '#067647'], mantido:['Mantido sem alteração', '#3538CD']};
 const verLbl = v => 'V' + String(v.n).padStart(2, '0');
-function matVerTag(m){ const v = matVer(m), [l, c] = VER_ST[v.st] || VER_ST.edicao; return `<span class="vertag" style="--c:${c}" title="Versão ${v.n} ${l}">${verLbl(v)} <i>${l}</i></span>`; }
-function matNovaVersao(m, motivo){ const vs = matVers(m), at = vs[vs.length - 1]; if(at.st !== 'entregue') at.st = 'substituida'; at.fim = at.fim || nowISO();
-  const v = {id:uid(), n:at.n + 1, st:'edicao', ini:nowISO(), por:me, obs:motivo || ''}; vs.push(v); logT(m, `abriu a versão ${verLbl(v)}${motivo ? ': ' + motivo : ''}`); return v; }
-function matVerSync(m, old, st){ const v = matVer(m);
-  if(st === 'validacao') v.st = 'validacao';
-  else if(st === 'entregue'){ v.st = 'entregue'; v.fim = nowISO(); v.entPor = me; }
-  else if(old === 'entregue' && ['elaboracao', 'ajustes'].includes(st)) matNovaVersao(m, 'reaberto após a entrega');
-  else if(v.st === 'validacao') v.st = 'edicao'; }
-function matVerHtml(m){ const vs = matVers(m), at = vs[vs.length - 1];
-  return `<div class="verbox"><div class="verh"><b>Versão em edição</b>${matVerTag(m)}<span class="spacer"></span><button class="btn sm" data-mnovaver>${ic('mais', 'sm')} Nova versão</button></div>
-    <label class="f" style="margin:8px 0 0">O que muda nesta versão<input data-mverobs="${at.id}" value="${esc(at.obs || '')}" placeholder="Ex.: atende a nota devolutiva 01 (itens 2 e 4)"></label>
-    ${vs.length > 1 ? `<details class="verhist"><summary>Histórico de versões (${vs.length})</summary>${vs.slice().reverse().map(v => { const [l, c] = VER_ST[v.st] || VER_ST.edicao; return `<div class="verrow"><b>${verLbl(v)}</b><span class="ntst" style="--c:${c}">${l}</span><span class="sub">${fmtD((v.ini || '').slice(0, 10))}${v.fim ? ' → ' + fmtD(v.fim.slice(0, 10)) : ''} | ${esc(first(v.por))}</span><span class="sub" style="flex:1">${esc(v.obs || '')}</span>${v.link ? `<a class="link" href="${esc(v.link)}" target="_blank" rel="noopener">arquivo</a>` : ''}</div>`; }).join('')}</details>` : ''}</div>`; }
-document.addEventListener('click', e => { if(!e.target.closest || !e.target.closest('[data-mnovaver]')) return; e.stopPropagation(); const m = matById(ui.mat); if(!m) return;
-  const mot = prompt(`Abrir a versão ${verLbl({n:matVer(m).n + 1})}. O que muda nela?`, ntPend(m) ? 'Atendimento à nota devolutiva' : ''); if(mot === null) return;
-  const at = matVer(m); if(m.arquivo && !at.link) at.link = m.arquivo; matNovaVersao(m, mot.trim()); save(); renderMat(); render(); toast(`${verLbl(matVer(m))} em edição`); }, true);
-document.addEventListener('change', e => { const tg = e.target; if(!tg.dataset || tg.dataset.mverobs === undefined) return; e.stopPropagation(); const m = matById(ui.mat); const v = m && matVers(m).find(x => x.id === tg.dataset.mverobs); if(v){ v.obs = tg.value.trim(); save(); } }, true);
+function matTrilhas(m){
+  if(!m.trilhas || !m.trilhas.length){ const vs = m.versoes || [], ini = m.criadoEm || nowISO(), st = m.status === 'entregue' ? 'entregue' : 'edicao';
+    m.trilhas = ['Projeto', 'Memorial'].map((nome, k) => ({id:uid(), nome, versoes:k === 0 && vs.length ? vs.map(v => Object.assign({}, v, {itens:v.itens || []})) : [{id:uid(), n:1, st, ini, por:(m.log[m.log.length - 1] || {}).por || me, obs:'Versão inicial', itens:[]}]})); }
+  m.trilhas.forEach(t => t.versoes.forEach(v => { v.itens = v.itens || []; })); return m.trilhas; }
+const trkAt = t => t.versoes[t.versoes.length - 1];
+const matVer = m => trkAt(matTrilhas(m)[0]);
+function matVers(m){ return matTrilhas(m)[0].versoes; }
+function matVerTag(m){ return matTrilhas(m).map(t => { const v = trkAt(t), [l, c] = VER_ST[v.st] || VER_ST.edicao; return `<span class="vertag" style="--c:${c}" title="${esc(t.nome)} ${verLbl(v)} ${l}">${esc(t.nome)} ${verLbl(v)}</span>`; }).join(''); }
+function matNovaVersaoT(m, t, motivo){ const at = trkAt(t); if(at.st !== 'entregue') at.st = 'substituida'; at.fim = at.fim || nowISO();
+  const v = {id:uid(), n:at.n + 1, st:'edicao', ini:nowISO(), por:me, obs:motivo || '', itens:[]}; t.versoes.push(v); logT(m, `abriu ${t.nome} ${verLbl(v)}${motivo ? ': ' + motivo : ''}`); return v; }
+function matNovaVersao(m, motivo){ return matNovaVersaoT(m, matTrilhas(m)[0], motivo); }
+function matVerSync(m, old, st){ matTrilhas(m).forEach(t => { const v = trkAt(t);
+  if(st === 'validacao'){ if(v.st === 'edicao') v.st = 'validacao'; }
+  else if(st === 'entregue'){ if(v.st === 'edicao' || v.st === 'validacao'){ v.st = 'entregue'; v.fim = nowISO(); v.entPor = me; } }
+  else if(v.st === 'validacao') v.st = 'edicao'; }); }
+const altKey = (m, t, v, it) => `${m.id}|${t.id}|${v.id}${it ? '|' + it.id : ''}`;
+function altAchar(k){ const [mid, tid, vid, iid] = k.split('|'), m = matById(mid), t = m && matTrilhas(m).find(x => x.id === tid), v = t && t.versoes.find(x => x.id === vid), it = v && iid ? v.itens.find(x => x.id === iid) : null; return {m, t, v, it}; }
+function altItemHtml(m, t, v, it, k, ro){
+  const [sl, sc] = ALT_ST[it.st || 'pendente'], key = altKey(m, t, v, it);
+  if(ro) return `<div class="vit ro"><div class="vit-h"><span class="vn">${k + 1}</span><span class="altst" style="--c:${sc}">${sl}</span>${it.origem ? `<span class="nd">${esc(it.origem.label)}</span>` : ''}<span class="sub">${it.data ? fmtD(it.data) : ''}</span></div>${it.pend ? `<div class="sub">${esc(it.pend)}</div>` : ''}<div>${esc(it.txt || '—')}</div>${it.com ? `<div class="sub"><i>${esc(it.com)}</i></div>` : ''}</div>`;
+  return `<div class="vit st-${it.st || 'pendente'}"><div class="vit-h"><span class="vn">${k + 1}</span><select data-altf="${key}|st" style="--c:${sc}">${Object.entries(ALT_ST).map(([s2, [l]]) => `<option value="${s2}" ${it.st === s2 ? 'selected' : ''}>${l}</option>`).join('')}</select>${it.origem ? `<span class="nd" title="Item da ${esc(it.origem.label)}">${esc(it.origem.label)}</span>` : ''}<span class="spacer"></span><label class="sub" title="Data da alteração">Data <input type="date" data-altf="${key}|data" value="${it.data || ''}"></label><button class="x" data-altdel="${key}" title="Excluir">✕</button></div>
+    ${it.origem || it.pend ? `<textarea rows="1" data-altf="${key}|pend" placeholder="Exigência (item da nota / notificação)">${esc(it.pend || '')}</textarea>` : ''}
+    <textarea rows="1" class="alttxt" data-altf="${key}|txt" placeholder="O que foi alterado">${esc(it.txt || '')}</textarea>
+    <input data-altf="${key}|com" value="${esc(it.com || '')}" placeholder="Comentário (ex.: analista aceitou manter sem a modificação)"></div>`;
+}
+function matVerHtml(m){
+  const ts = matTrilhas(m);
+  return `<div class="verbox"><div class="verh"><b>Versões</b><span class="sub">cada peça com numeração própria</span><span class="spacer"></span><button class="btn sm ghost" data-trknova title="Adicionar outra peça com versões próprias (ex.: planta de situação)">${ic('mais', 'sm')} Peça</button></div>
+    <div class="trkgrid">${ts.map(t => { const v = trkAt(t), [l, c] = VER_ST[v.st] || VER_ST.edicao, feitos = v.itens.filter(i => i.st && i.st !== 'pendente').length, base = altKey(m, t, v);
+      return `<div class="trk"><div class="trkh"><b>${esc(t.nome)}</b><button class="x" data-trkren="${m.id}|${t.id}" title="Renomear a peça">✎</button><span class="vertag" style="--c:${c}">${verLbl(v)} <i>${l}</i></span><span class="spacer"></span><button class="btn sm" data-trkver="${m.id}|${t.id}">${ic('mais', 'sm')} Nova versão</button></div>
+        <label class="f" style="margin:0">O que muda nesta versão<input data-verobs="${base}" value="${esc(v.obs || '')}" placeholder="Ex.: atende a nota devolutiva 01"></label>
+        ${v.n > 1 || v.itens.length ? `<div class="prog">Alterações da ${verLbl(v)}<div class="bar" style="flex:1"><i style="width:${v.itens.length ? feitos * 100 / v.itens.length : 0}%;background:#12B76A"></i></div>${feitos} de ${v.itens.length}</div>
+          <div class="vits">${v.itens.map((it, k) => altItemHtml(m, t, v, it, k)).join('')}</div>
+          <textarea rows="1" class="altadd" data-altadd="${base}" placeholder="+ Digite a alteração e Enter (pode colar uma lista)"></textarea>
+          <a class="link" data-altpuxar="${base}">⇄ Puxar itens da notificação…</a>` : `<div class="sub">Versão inicial. A lista de alterações começa na V02: use <b>Nova versão</b> quando houver revisão.</div>`}
+        ${t.versoes.length > 1 ? `<details class="verhist"><summary>Histórico (${t.versoes.length})</summary>${t.versoes.slice().reverse().map(x => { const [l2, c2] = VER_ST[x.st] || VER_ST.edicao;
+          return `<details class="verrow2"><summary><b>${verLbl(x)}</b><span class="ntst" style="--c:${c2}">${l2}</span><span class="sub">${fmtD((x.ini || '').slice(0, 10))}${x.fim ? ' → ' + fmtD(x.fim.slice(0, 10)) : ''} | ${esc(first(x.por))} | ${x.n === 1 && !x.itens.length ? 'versão inicial' : x.itens.length + ' alteraç' + (x.itens.length === 1 ? 'ão' : 'ões')}</span>${x.obs && x.n > 1 ? `<span class="sub">| ${esc(x.obs)}</span>` : ''}</summary>${x.itens.length ? x.itens.map((it, k) => altItemHtml(m, t, x, it, k, true)).join('') : ''}</details>`; }).join('')}</details>` : ''}</div>`; }).join('')}</div></div>`;
+}
+function altAddLinhas(v, txt){ String(txt).split(/\n+/).map(l => l.replace(/^\s*(\d+[.)-]|[-•*])\s*/, '').trim()).filter(Boolean).forEach(l => v.itens.push({id:uid(), pend:'', txt:l, st:'pendente', data:'', com:''})); }
+function altRender(){ save(); renderMat(); render(); }
+document.addEventListener('click', e => { const tg = e.target; if(!tg.closest) return; let el;
+  if((el = tg.closest('[data-trkver]'))){ e.stopPropagation(); const [mid, tid] = el.dataset.trkver.split('|'), m = matById(mid), t = matTrilhas(m).find(x => x.id === tid);
+    const mot = prompt(`Abrir ${t.nome} ${verLbl({n:trkAt(t).n + 1})}. O que muda nela?`, ntPend(m) ? 'Atendimento à nota devolutiva' : ''); if(mot === null) return;
+    const at = trkAt(t); if(m.arquivo && !at.link) at.link = m.arquivo; matNovaVersaoT(m, t, mot.trim()); altRender(); toast(`${t.nome} ${verLbl(trkAt(t))} em edição`); return; }
+  if((el = tg.closest('[data-trkren]'))){ e.stopPropagation(); const [mid, tid] = el.dataset.trkren.split('|'), m = matById(mid), t = matTrilhas(m).find(x => x.id === tid); const n = prompt('Nome da peça:', t.nome); if(!n || !n.trim()) return; t.nome = n.trim(); altRender(); return; }
+  if(tg.closest('[data-trknova]')){ e.stopPropagation(); const m = matById(ui.mat); const n = prompt('Nome da nova peça (ex.: Planta de situação):'); if(!n || !n.trim()) return;
+    matTrilhas(m).push({id:uid(), nome:n.trim(), versoes:[{id:uid(), n:1, st:'edicao', ini:nowISO(), por:me, obs:'Versão inicial', itens:[]}]}); logT(m, `incluiu a peça “${n.trim()}” no controle de versões`); altRender(); return; }
+  if((el = tg.closest('[data-altdel]'))){ e.stopPropagation(); const {v, it} = altAchar(el.dataset.altdel); if((it.txt || it.pend) && !confirm('Excluir esta alteração?')) return; v.itens = v.itens.filter(x => x !== it); altRender(); return; }
+  if((el = tg.closest('[data-altpuxar]'))){ e.stopPropagation(); altPuxarModal(el.dataset.altpuxar); return; }
+}, true);
+document.addEventListener('change', e => { const tg = e.target; if(!tg.dataset) return;
+  if(tg.dataset.altf !== undefined){ e.stopPropagation(); const parts = tg.dataset.altf.split('|'), f = parts.pop(), {m, it} = altAchar(parts.join('|')); if(!it) return; it[f] = tg.value;
+    if(f === 'st'){ if(tg.value !== 'pendente' && !it.data) it.data = TODAY; it.stPor = me; logT(m, `marcou a alteração “${(it.txt || it.pend || '').slice(0, 50)}” como ${ALT_ST[tg.value][0].toLowerCase()}`); altRender(); } else save(); return; }
+  if(tg.dataset.verobs !== undefined){ e.stopPropagation(); const {v} = altAchar(tg.dataset.verobs); if(v){ v.obs = tg.value.trim(); save(); } return; }
+}, true);
+document.addEventListener('keydown', e => { const tg = e.target; if(!tg.dataset || tg.dataset.altadd === undefined || e.key !== 'Enter' || e.shiftKey) return; e.preventDefault(); e.stopPropagation();
+  const v0 = tg.value.trim(); if(!v0) return; const {v} = altAchar(tg.dataset.altadd); altAddLinhas(v, v0); const k = tg.dataset.altadd; altRender(); setTimeout(() => { const x = $(`[data-altadd="${k}"]`); if(x) x.focus(); }, 0); }, true);
+document.addEventListener('paste', e => { const tg = e.target; if(!tg.dataset || tg.dataset.altadd === undefined) return; const t = (e.clipboardData || window.clipboardData).getData('text'); if(!/\n/.test(t)) return;
+  e.preventDefault(); e.stopPropagation(); const {v} = altAchar(tg.dataset.altadd); altAddLinhas(v, t); altRender(); toast('Lista colada como alterações'); }, true);
+document.addEventListener('input', e => { const tg = e.target; if(tg.tagName === 'TEXTAREA' && (tg.dataset.altf !== undefined || tg.dataset.altadd !== undefined)){ tg.style.height = 'auto'; tg.style.height = tg.scrollHeight + 'px'; } }, true);
+function altAutoAltura(){ $$('#layer .vit textarea, #layer .altadd').forEach(t => { t.style.height = 'auto'; t.style.height = (t.scrollHeight || 30) + 'px'; }); }
+/* puxar itens das notificações / notas devolutivas */
+const ntLabel = (n, it) => { const nn = `${n.tipo === 'devolutiva' ? 'NDV' : 'ND'}${String(n.num || 1).padStart(2, '0')}`; if(!it) return nn; if(it.pai){ const pai = n.itens.find(x => x.id === it.pai); return `${nn} · ${pai ? ntItemNum(n, pai) : ''}${ntItemNum(n, it).replace(')', '')}`; } return `${nn} · ${ntItemNum(n, it)}`; };
+function altFontes(m){ const out = [{ref:'m:' + m.id, nome:'Material', notas:m.notas || []}]; const pp = m.procId && procById(m.procId); if(pp && (pp.notas || []).length) out.push({ref:'p:' + pp.id, nome:'Processo ' + pcod(pp), notas:pp.notas}); return out.filter(f => f.notas.length); }
+function altPuxarModal(base){
+  const {m, t, v} = altAchar(base), ja = new Set(t.versoes.flatMap(x => x.itens).filter(i => i.origem).map(i => i.origem.item)), fs = altFontes(m);
+  let f = $('#altLayer'); if(!f){ f = document.createElement('div'); f.id = 'altLayer'; document.body.appendChild(f); }
+  f.innerHTML = `<div class="mlayer" style="z-index:400"><div class="modal small" style="width:min(760px,96vw)"><div class="mhead"><b style="color:var(--ink);font-size:16px;font-family:var(--kanit);text-transform:uppercase;font-weight:500">Puxar itens para ${esc(t.nome)} ${verLbl(v)}</b><span class="spacer"></span><button class="btn ghost" data-altcl>✕</button></div>
+    <div style="padding:14px 18px;max-height:64vh;overflow:auto">${fs.length ? fs.map(fo => fo.notas.slice().sort((a, b) => (a.data || '').localeCompare(b.data || '')).map(n => `<div class="apk"><div class="apkh"><b>${esc(ntTitulo(n))}</b><span class="sub">${esc(fo.nome)}${n.orgao ? ' | ' + esc(n.orgao) : ''}</span><span class="spacer"></span><a class="link" data-altall="${n.id}">marcar todos</a></div>
+      ${ntOrdem(n).filter(it => !ntFilhos(n, it).length).map(it => `<label class="apki ${ja.has(it.id) ? 'ja' : ''}"><input type="checkbox" data-altpick="${fo.ref}|${n.id}|${it.id}" data-nota="${n.id}" ${ja.has(it.id) ? 'disabled' : ''}><span class="nd">${esc(ntLabel(n, it))}</span><span>${esc(it.txt || '')}${ja.has(it.id) ? ' <span class="sub">(já está nesta peça)</span>' : ''}${it.ok ? ' <span class="ctag ok">resolvida na notificação</span>' : ''}</span></label>`).join('')}</div>`).join('')).join('') : '<div class="sub">Nenhuma notificação ou nota devolutiva registrada no material' + (m.procId ? ' nem no processo vinculado' : '') + '. Registre na aba Notificações.</div>'}</div>
+    <div class="mfoot"><span class="sub">Cada item vira uma alteração com a exigência preenchida; descreva o que foi alterado.</span><span class="spacer"></span><button class="btn" data-altcl>Cancelar</button><button class="btn primary" data-altok="${base}">Adicionar à ${esc(t.nome)} ${verLbl(v)}</button></div></div></div>`;
+}
+document.addEventListener('click', e => { const tg = e.target; if(!tg.closest || !tg.closest('#altLayer')) return; e.stopPropagation(); let el;
+  if(tg.closest('[data-altcl]') || tg.classList.contains('mlayer')){ $('#altLayer').remove(); return; }
+  if((el = tg.closest('[data-altall]'))){ $$(`#altLayer [data-nota="${el.dataset.altall}"]:not(:disabled)`).forEach(c => c.checked = true); return; }
+  if((el = tg.closest('[data-altok]'))){ const {m, t, v} = altAchar(el.dataset.altok); let k = 0;
+    $$('#altLayer [data-altpick]:checked').forEach(c => { const [ref, nid, iid] = c.dataset.altpick.split('|'), o = ntOwner(ref), n = (o.notas || []).find(x => x.id === nid), it = n && n.itens.find(x => x.id === iid); if(!it) return;
+      const pai = it.pai && n.itens.find(x => x.id === it.pai);
+      v.itens.push({id:uid(), pend:(pai ? pai.txt + ' | ' : '') + (it.txt || ''), txt:'', st:'pendente', data:'', com:it.com || '', origem:{ref, nota:nid, item:iid, label:ntLabel(n, it)}}); k++; });
+    $('#altLayer').remove(); if(k){ logT(m, `puxou ${k} item(ns) da notificação para ${t.nome} ${verLbl(v)}`); altRender(); toast(`${k} item(ns) adicionado(s)`); } return; }
+}, true);
+
+/* ============ Relatório de alterações do material (timbrado, minuta e validação) ============ */
+const MREL_SEC = [['ident', 'Identificação'], ['versoes', 'Controle de versões'], ['notas', 'Atendimento às notificações / notas devolutivas'], ['outras', 'Outras alterações'], ['obs', 'Considerações finais']];
+function mrelDe(m){ const r = m.relAlt = m.relAlt || {}; r.sec = r.sec || Object.fromEntries(MREL_SEC.map(([k]) => [k, true])); r.escopo = r.escopo || 'atual'; r.titulo = r.titulo || 'Relatório de alterações do material técnico'; r.obs = r.obs || ''; r.st = r.st || 'rascunho'; return r; }
+function mrelVersoes(m, r){ const out = []; matTrilhas(m).forEach(t => t.versoes.forEach((v, i) => { if(r.escopo === 'todas' ? v.n > 1 || v.itens.length : i === t.versoes.length - 1) out.push({t, v}); })); return out; }
+function mrelCorpo(m, assinar){
+  const r = mrelDe(m), on = k => !!r.sec[k], hoje = r.st === 'aprovado' && r.dataRef ? r.dataRef : TODAY, pp = m.procId && procById(m.procId), d = m.dados || {};
+  let n = 0; const bar = t => `<h2 class="bar"><span class="n">${String(++n).padStart(2, '0')}</span>${esc(t.toUpperCase())}</h2>`;
+  const kv = rows => `<table class="kv">${rows.filter(x => x[1]).map(([k, v]) => `<tr><th>${esc(k)}</th><td>${v}</td></tr>`).join('')}</table>`;
+  const sit = it => { const [l] = ALT_ST[it.st || 'pendente']; return `<span class="st st-${it.st || 'pendente'}">${l}</span>`; };
+  const cli = d.cliente || ((pp && propById(pp.propId)) || {}).cliente || '';
+  let h = `<div class="title">${esc(r.titulo)}</div><div class="date">Fortaleza, ${dataExtenso(hoje)}.</div><div class="to">${cli ? 'À ' + esc(String(cli).replace(/\.+$/, '')) + '.' : ''}</div>`;
+  const vs = mrelVersoes(m, r), itens = vs.flatMap(({t, v}) => v.itens.map(it => ({t, v, it})));
+  if(on('ident')) h += bar('Identificação') + kv([['Material', esc(m.titulo || '')], ['Código', esc(m.codigo)], ['Tipo', esc(m.tipo || '')], ['Cliente', esc(cli)], ['Imóvel / obra', esc(d.imovel || '')], ['Matrícula', esc(d.matricula || '')], ['Processo', pp ? esc(pcod(pp) + ' | ' + (pp.servico || '') + (pp.orgao ? ' | ' + pp.orgao : '')) : esc(d.nprocesso || '')], ['Versões atuais', matTrilhas(m).map(t => `${esc(t.nome)} ${verLbl(trkAt(t))}`).join(' | ')]]);
+  if(on('versoes')) h += bar('Controle de versões') + `<table class="val et"><thead><tr><th>Peça</th><th class="c">Versão</th><th class="c">Período</th><th class="c">Situação</th><th class="c">Alterações</th><th>Descrição</th></tr></thead><tbody>${matTrilhas(m).flatMap(t => t.versoes.map(v => `<tr><td>${esc(t.nome)}</td><td class="c"><b>${verLbl(v)}</b></td><td class="c">${fmtDateBR((v.ini || '').slice(0, 10))}${v.fim ? ' a ' + fmtDateBR(v.fim.slice(0, 10)) : ''}</td><td class="c">${(VER_ST[v.st] || VER_ST.edicao)[0]}</td><td class="c">${v.itens.length || (v.n === 1 ? '—' : 0)}</td><td>${esc(v.n === 1 && !v.itens.length ? 'Versão inicial' : v.obs || '')}</td></tr>`)).join('')}</tbody></table>`;
+  if(on('notas')){ const notas = []; const add = o => (o.notas || []).forEach(nt => { if(!notas.some(x => x.n.id === nt.id)) notas.push({n:nt, o}); }); add(m); if(pp) (pp.notas || []).forEach(nt => { if(itens.some(x => x.it.origem && x.it.origem.nota === nt.id)) notas.push({n:nt, o:pp}); });
+    const blocos = notas.sort((a, b) => (a.n.data || '').localeCompare(b.n.data || '')).map(({n: nt}) => { const linhas = ntOrdem(nt).filter(it => !ntFilhos(nt, it).length).map(ni => { const alts = itens.filter(x => x.it.origem && x.it.origem.item === ni.id), pai = ni.pai && nt.itens.find(x => x.id === ni.pai);
+        const alt = alts.length ? alts.map(x => `${esc(x.it.txt || '—')}<div class="ob">${esc(x.t.nome)} ${verLbl(x.v)}</div>`).join('<hr>') : '<span class="ob">—</span>';
+        const data = alts.map(x => x.it.data).filter(Boolean).sort().pop(), st = alts.length ? sit(alts.find(x => (x.it.st || 'pendente') === 'pendente') ? {st:'pendente'} : alts.some(x => x.it.st === 'alterado') ? {st:'alterado'} : alts[0].it) : `<span class="st st-${ni.ok ? 'alterado' : 'pendente'}">${ni.ok ? 'Atendido' : 'Pendente'}</span>`;
+        const com = [...alts.map(x => x.it.com), alts.length || !r.comNota ? '' : ni.com].filter(Boolean);
+        return `<tr><td class="c"><b>${esc(ntLabel(nt, ni).split(' · ')[1] || '')}</b></td><td>${pai ? `<span class="ob">${esc(pai.txt)}</span><br>` : ''}${esc(ni.txt || '')}</td><td>${alt}</td><td class="c">${data ? fmtDateBR(data) : '—'}</td><td class="c">${st}</td><td>${com.map(c => esc(c)).join('<br>') || ''}</td></tr>`; }).join('');
+      const c = ntConta(nt);
+      return `<p style="margin:3mm 0 1.5mm"><b>${esc(NT_TIPO[nt.tipo])} ${String(nt.num || 1).padStart(2, '0')}</b>${nt.data ? ' de ' + fmtDateBR(nt.data) : ''}${nt.orgao ? ' | ' + esc(nt.orgao) : ''}</p><table class="val alt"><thead><tr><th class="c" style="width:12mm">Item</th><th style="width:38mm">Exigência</th><th>Alteração realizada</th><th class="c" style="width:20mm">Data</th><th class="c" style="width:22mm">Situação</th><th style="width:34mm">Comentários</th></tr></thead><tbody>${linhas}</tbody></table>`; });
+    if(blocos.length) h += bar('Atendimento às notificações / notas devolutivas') + blocos.join(''); }
+  const outras = itens.filter(x => !x.it.origem);
+  if(on('outras') && outras.length) h += bar('Outras alterações') + `<table class="val alt"><thead><tr><th style="width:24mm">Peça / versão</th><th>Alteração realizada</th><th class="c" style="width:20mm">Data</th><th class="c" style="width:22mm">Situação</th><th style="width:38mm">Comentários</th></tr></thead><tbody>${outras.map(x => `<tr><td>${esc(x.t.nome)} ${verLbl(x.v)}</td><td>${x.it.pend ? `<span class="ob">${esc(x.it.pend)}</span><br>` : ''}${esc(x.it.txt || '—')}</td><td class="c">${x.it.data ? fmtDateBR(x.it.data) : '—'}</td><td class="c">${sit(x.it)}</td><td>${esc(x.it.com || '')}</td></tr>`).join('')}</tbody></table>`;
+  if(on('obs') && r.obs.trim()) h += bar('Considerações finais') + r.obs.split(/\n+/).filter(x => x.trim()).map(x => `<p class="ind">${mdP(x)}</p>`).join('');
+  const val = U[r.validador] || U[(m.resp || []).find(x => U[x])] || {}, img = assinar && (S.assin || {})[val.id];
+  h += `<div class="close"><div class="att">Atenciosamente,</div><div class="sg"><div class="sigbox">${img ? `<img src="${img}" alt="">` : ''}</div><div class="ln"></div><div class="rz">${esc(EMPRESA.razao)}</div><div>CNPJ nº ${esc(EMPRESA.cnpj)}</div>${val.nome ? `<div class="nm">${esc(val.nome)}</div>` : ''}${val.cargo ? `<div>${esc(val.cargo)}</div>` : ''}</div></div>`;
+  return `<style>table.val.alt td{font-size:9pt}table.val.alt hr{border:0;border-top:1px dashed #b9c1d9;margin:1.2mm 0}.st{display:inline-block;font-size:8pt;font-weight:600;padding:.3mm 2mm;border-radius:1mm}.st-alterado{background:#dff3e7;color:#0b5a2e}.st-mantido{background:#e4e6fb;color:#2b2f99}.st-pendente{background:#fdf0d5;color:#8a4b00}</style>` + h;
+}
+const mrelValido = m => { const r = mrelDe(m); return r.st === 'aprovado' && r.hash === relHashStr(mrelCorpo(m, false)); };
+const mrelHtml = (m, modo) => { const ok = mrelValido(m); return timbradoDoc(mrelCorpo(m, ok), !ok, modo, `Alterações ${m.codigo} | ${m.titulo || ''}`); };
+function mrelStatusHtml(m){ const r = mrelDe(m), ok = mrelValido(m), v = r.validador;
+  if(ok) return `<div class="aprovbox ok"><div style="flex:1"><b>✓ Validado por ${esc(U[v] ? U[v].nome : v)}</b><div class="sub">${fmtWhen(r.em)} | pode ser enviado ao cliente</div></div><button class="btn sm ghost" data-mrel="reabrir">Voltar a minuta</button></div>`;
+  if(r.st === 'pendente') return `<div class="aprovbox pend"><div style="flex:1"><b>Minuta aguardando validação de ${esc(U[v] ? U[v].nome : v)}${r.ate ? ' até ' + fmtD(r.ate) : ''}</b><div class="sub">pedido por ${esc(first(r.pedidoPor))} ${fmtWhen(r.pedidoEm)}</div></div>${me === v ? '<button class="btn sm" data-mrel="ajuste">Pedir ajustes</button><button class="btn sm primary" data-mrel="ok">Validar relatório</button>' : '<button class="btn sm ghost" data-mrel="cancelar">Cancelar pedido</button>'}</div>`;
+  return `<div class="aprovbox"><div style="flex:1"><b>Minuta</b><div class="sub">${r.st === 'aprovado' ? 'O conteúdo mudou depois da validação e voltou a ser minuta. ' : ''}${r.ajuste ? `Ajustes pedidos por ${esc(first(r.ajuste.por))}: “${esc(r.ajuste.txt)}”. ` : ''}Sai com a marca d’água MINUTA até ser validado.</div></div><button class="btn sm primary" data-mrel="pedir">Pedir validação</button></div>`; }
+function mrelTabHtml(m){ const r = mrelDe(m);
+  return `${mrelStatusHtml(m)}<div class="relgrid" style="grid-template-columns:1fr"><div class="relopts">
+    <label class="f">Título<input class="inp" data-mrelf="titulo" value="${esc(r.titulo)}"></label>
+    <div class="sub" style="font-weight:700;margin:10px 0 4px">Incluir</div>${MREL_SEC.map(([k, l]) => `<label class="relck"><input type="checkbox" data-mrelsec="${k}" ${r.sec[k] ? 'checked' : ''}>${l}</label>`).join('')}
+    <div class="sub" style="font-weight:700;margin:10px 0 4px">Versões</div><label class="relck"><input type="radio" name="mrelesc" data-mrelesc="atual" ${r.escopo === 'atual' ? 'checked' : ''}>Só a versão atual de cada peça</label><label class="relck"><input type="radio" name="mrelesc" data-mrelesc="todas" ${r.escopo === 'todas' ? 'checked' : ''}>Todas as revisões (V02 em diante)</label>
+    <label class="relck" style="margin-top:6px"><input type="checkbox" data-mrelcom ${r.comNota ? 'checked' : ''}>Nos itens sem alteração, mostrar o comentário da notificação</label>
+    ${r.sec.obs ? `<label class="f" style="margin-top:8px">Considerações finais<textarea class="inp" data-mrelf="obs" rows="3">${esc(r.obs)}</textarea></label>` : ''}
+    <div style="margin-top:10px"><button class="btn primary sm" data-mrel="abrir">${ic('doc', 'sm')} Abrir para imprimir / PDF</button></div></div>
+    <div class="relprev"><div class="relscale"><iframe id="mrelFrame" title="Prévia do relatório"></iframe></div></div></div>`; }
+function mrelPreview(){ const fr = $('#mrelFrame'), m = matById(ui.mat); if(!fr || !m) return; const wrap = fr.parentElement, W = 794, sc = Math.min(1, (wrap.parentElement.clientWidth - 2) / W);
+  fr.style.width = W + 'px'; fr.style.transform = `scale(${sc})`; fr.onload = () => { try{ const h = fr.contentDocument.documentElement.scrollHeight; fr.style.height = h + 'px'; wrap.style.height = (h * sc) + 'px'; }catch(_){} }; fr.srcdoc = mrelHtml(m, 'prev'); }
+let mrelT = 0;
+document.addEventListener('input', e => { const tg = e.target; if(!tg.dataset || tg.dataset.mrelf === undefined) return; e.stopPropagation(); const m = matById(ui.mat); mrelDe(m)[tg.dataset.mrelf] = tg.value; clearTimeout(mrelT); mrelT = setTimeout(mrelPreview, 350); }, true);
+document.addEventListener('change', e => { const tg = e.target; if(!tg.dataset || !tg.closest || !tg.closest('#layer')) return; const m = matById(ui.mat); if(!m) return; const r = mrelDe(m);
+  if(tg.dataset.mrelf !== undefined){ e.stopPropagation(); r[tg.dataset.mrelf] = tg.value; save(); renderMat(); return; }
+  if(tg.dataset.mrelsec !== undefined){ e.stopPropagation(); r.sec[tg.dataset.mrelsec] = tg.checked; save(); renderMat(); return; }
+  if(tg.dataset.mrelesc !== undefined){ e.stopPropagation(); r.escopo = tg.dataset.mrelesc; save(); renderMat(); return; }
+  if(tg.dataset.mrelcom !== undefined){ e.stopPropagation(); r.comNota = tg.checked; save(); renderMat(); return; } }, true);
+document.addEventListener('click', e => { const el = e.target.closest && e.target.closest('[data-mrel]'); if(!el) return; e.stopPropagation(); const m = matById(ui.mat); if(!m) return; const r = mrelDe(m), a = el.dataset.mrel;
+  if(a === 'abrir'){ const w = window.open('', '_blank'); if(w){ w.document.open(); w.document.write(mrelHtml(m, 'tela')); w.document.close(); } else toast('Permita pop-ups para abrir o relatório'); logT(m, `abriu o relatório de alterações${mrelValido(m) ? ' validado' : ' (minuta)'}`); save(); return; }
+  if(a === 'pedir'){ const def = (USERS.find(u => u.id !== me && (S.equipe.find(x => x.email.toLowerCase() === u.id) || {}).papel === 'socio') || USERS.find(u => u.id !== me) || U[me]).id;
+    pickAprovador('Quem valida o relatório?', `Relatório de alterações de <b>${esc(m.codigo)}</b>. Até a validação ele sai como <b>MINUTA</b>.`, r.validador || def, (id, ate) => { Object.assign(r, {st:'pendente', validador:id, ate, pedidoPor:me, pedidoEm:nowISO(), ajuste:null, hash:''}); logT(m, `pediu a validação do relatório de alterações a ${first(id)}`); notifyMat(id, `pediu a validação do relatório de alterações de “${esc(m.titulo || m.codigo)}”`, m); save(); renderMat(); render(); }, {prazo:true, prazoLabel:'Validar até', botao:'Pedir validação'}); return; }
+  if(a === 'ok'){ if(me !== r.validador) return; Object.assign(r, {st:'aprovado', em:nowISO(), dataRef:TODAY, ajuste:null}); r.hash = relHashStr(mrelCorpo(m, false)); logT(m, 'validou o relatório de alterações'); notifyMat(r.pedidoPor, `validou o relatório de alterações de “${esc(m.titulo || m.codigo)}”`, m); save(); renderMat(); render(); toast('Relatório validado'); return; }
+  if(a === 'ajuste'){ const t = prompt('O que precisa ajustar no relatório?'); if(t === null) return; Object.assign(r, {st:'rascunho', ajuste:{por:me, em:nowISO(), txt:t.trim() || 'ver comentários'}}); logT(m, `pediu ajustes no relatório de alterações: ${t}`); notifyMat(r.pedidoPor, `pediu ajustes no relatório de alterações: ${esc(t)}`, m); save(); renderMat(); render(); return; }
+  if(a === 'cancelar' || a === 'reabrir'){ r.st = 'rascunho'; r.hash = ''; logT(m, a === 'cancelar' ? 'cancelou o pedido de validação do relatório' : 'voltou o relatório de alterações para minuta'); save(); renderMat(); render(); return; }
+}, true);
 /* modal do material: abas Dados | Notificações */
 renderMat = (function(base){ return function(){ base.apply(this, arguments); const m = matById(ui.mat); if(!m) return;
   const L = $('#layer .mleft'), tt = L && $('.ttitle', L); if(!tt) return; const pend = ntPend(m), tab = ui.mtab || 'dados';
-  $('#layer .mhead span').insertAdjacentHTML('afterend', ' ' + matVerTag(m));
-  tt.insertAdjacentHTML('afterend', `<div class="tabs mtabs" style="padding:0;margin:0 0 14px"><button class="tab ${tab === 'dados' ? 'on' : ''}" data-mtab="dados">Dados</button><button class="tab ${tab === 'crono' ? 'on' : ''}" data-mtab="crono">Cronograma</button><button class="tab ${tab === 'notas' ? 'on' : ''}" data-mtab="notas">Notificações / notas devolutivas${pend ? ` <span class="n" style="background:#D92D20">${pend}</span>` : (m.notas || []).length ? ` <span class="n">${m.notas.length}</span>` : ''}</button></div>`);
+  $('#layer .mhead span').insertAdjacentHTML('afterend', ' <span class="vtags">' + matVerTag(m) + '</span>');
+  tt.insertAdjacentHTML('afterend', `<div class="tabs mtabs" style="padding:0;margin:0 0 14px"><button class="tab ${tab === 'dados' ? 'on' : ''}" data-mtab="dados">Dados</button><button class="tab ${tab === 'crono' ? 'on' : ''}" data-mtab="crono">Cronograma</button><button class="tab ${tab === 'rel' ? 'on' : ''}" data-mtab="rel">Relatório</button><button class="tab ${tab === 'notas' ? 'on' : ''}" data-mtab="notas">Notificações / notas devolutivas${pend ? ` <span class="n" style="background:#D92D20">${pend}</span>` : (m.notas || []).length ? ` <span class="n">${m.notas.length}</span>` : ''}</button></div>`);
   if(tab === 'notas'){ L.classList.add('tnotas'); L.insertAdjacentHTML('beforeend', `<div class="ntwrap">${ntHtml(m, 'm')}</div>`); ntAutoAltura(); }
   else if(tab === 'crono'){ L.classList.add('tnotas'); L.insertAdjacentHTML('beforeend', `<div class="ntwrap">${ui.crFull === 'm:' + m.id ? '<div class="sub" style="padding:14px">O cronograma está aberto em tela cheia.</div>' : crHtml(m, 'm:' + m.id)}</div>`); crAposRender(); }
-  else { const pr = $('.props', L); if(pr) pr.insertAdjacentHTML('afterend', matVerHtml(m)); }
+  else if(tab === 'rel'){ L.classList.add('tnotas'); L.insertAdjacentHTML('beforeend', `<div class="ntwrap">${mrelTabHtml(m)}</div>`); mrelPreview(); }
+  else { const pr = $('.props', L); if(pr) pr.insertAdjacentHTML('afterend', matVerHtml(m)); altAutoAltura(); }
 }; })(renderMat);
 document.addEventListener('click', e => { const el = e.target.closest && e.target.closest('[data-mtab]'); if(!el) return; e.stopPropagation(); ui.mtab = el.dataset.mtab; renderMat(); }, true);
 
