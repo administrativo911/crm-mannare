@@ -2376,23 +2376,115 @@ table.atable tbody tr:hover td{background:#FAFBFE!important}
 .ibx-row.unread .ibx-n{background:var(--mn-azul);border-color:var(--mn-azul);color:#fff}
 .ibx-when{font-size:13px;color:var(--sx-text-3);text-align:right;white-space:nowrap}
 .ibx-row.unread .ibx-when{color:var(--sx-text);font-weight:600}
-.ibx-acts{display:flex;gap:2px;opacity:0;transition:opacity .15s}
-.ibx-row:hover .ibx-acts,.ibx-row:focus-within .ibx-acts{opacity:1}
-@media (hover:none){.ibx-acts{opacity:1}}
-.ibx-act{width:36px;height:36px;border:0;border-radius:999px!important;background:transparent;color:var(--sx-text-3);display:inline-grid;place-items:center;cursor:pointer}
-.ibx-act:hover{background:#fff;color:var(--mn-azul);box-shadow:var(--sx-shadow-btn)!important}
+.ibx-row:hover,.ibx-row:focus-within{background:#EEF0F4!important;box-shadow:none!important}
+.ibx-acts{position:absolute;right:10px;top:50%;transform:translateY(-50%);display:flex;align-items:center;gap:4px;opacity:0;z-index:2;transition:opacity .12s}
+.ibx-row:hover .ibx-acts,.ibx-row:focus-within .ibx-acts{opacity:1;pointer-events:auto}
+.ibx-row:hover .ibx-n,.ibx-row:hover .ibx-when,.ibx-row:focus-within .ibx-n,.ibx-row:focus-within .ibx-when{visibility:hidden}
+.ibx-clear{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 14px;border:0;border-radius:10px!important;background:#0B0B1A;color:#fff;font:600 14px/1 var(--font-sans);cursor:pointer;white-space:nowrap}
+.ibx-clear .ic{width:16px!important;height:16px!important;color:#fff!important}
+.ibx-clear:hover{background:#26263A}
+.ibx-clear:active{transform:translateY(1px)}
+.ibx-clear:focus-visible{outline:2px solid var(--mn-azul)!important;outline-offset:2px!important}
+.ibx-act{width:36px;height:36px;border:0;border-radius:10px!important;background:transparent;color:var(--sx-text-2);display:inline-grid;place-items:center;cursor:pointer}
+.ibx-act:hover{background:#fff;color:var(--sx-text);box-shadow:var(--sx-shadow-btn)!important}
 .ibx-act.danger:hover{background:var(--sx-error-bg);color:var(--sx-error-icon)}
 .ibx-act:focus-visible{outline:2px solid var(--mn-azul)!important;outline-offset:1px!important}
 .ibx-empty{padding:48px 16px;text-align:center;color:var(--sx-text-3);font-size:14px}
-@media (max-width:1100px){.ibx-row{grid-template-columns:14px minmax(140px,34%) 28px minmax(0,1fr) auto 56px}.ibx-acts{grid-column:1/-1;justify-content:flex-end;opacity:1}}
+@media (max-width:1100px){.ibx-row{grid-template-columns:14px minmax(140px,34%) 28px minmax(0,1fr) auto 56px}}
 @media (max-width:760px){
   .ibx-card{padding:4px 4px 12px}
   .ibx-tab{min-width:120px}
   .ibx-row{grid-template-columns:12px 28px minmax(0,1fr) auto;grid-template-areas:"st av tit when" "st av msg n" ". . acts acts";gap:4px 10px;padding:12px 10px}
   .ibx-st{grid-area:st;align-self:start;margin-top:5px}.ibx-av{grid-area:av;align-self:start}.ibx-tit{grid-area:tit}.ibx-msg{grid-area:msg;white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
-  .ibx-when{grid-area:when}.ibx-n{grid-area:n;justify-self:end}.ibx-acts{grid-area:acts;justify-content:flex-end;opacity:1}
+  .ibx-when{grid-area:when}.ibx-n{grid-area:n;justify-self:end}.ibx-acts{grid-area:acts;position:static;transform:none;justify-content:flex-end;opacity:1;pointer-events:auto;margin-top:6px}
+  .ibx-row:hover .ibx-n,.ibx-row:hover .ibx-when,.ibx-row:focus-within .ibx-n,.ibx-row:focus-within .ibx-when{visibility:visible}
+  .ibx-clear{height:44px}
   .ibx-act{width:44px;height:44px}
 }
+
+/* =====================================================================
+   v12 · cartão de perfil, conversas, tipografia, agenda, quadro, conferência
+   ===================================================================== */
+/* ---------- cartão de perfil: status sem corte ---------- */
+.pop{width:min(460px,calc(100vw - 24px))!important;border-radius:22px!important;box-shadow:var(--sx-shadow-float)!important}
+.pop .hd{gap:14px!important;padding:18px!important;background:var(--sx-sunken)!important;align-items:flex-start}
+.pop .ph{width:64px!important;height:64px!important;border-radius:16px!important}
+.pop .nm{font:600 18px/1.25 var(--font-sans)!important}
+.pop .hd>div:last-child{min-width:0}
+.pop [data-ustatus]{flex:1 1 auto;min-width:0;width:100%;min-height:36px;padding:0 12px;border:1px solid var(--sx-field);border-radius:999px;background:#fff;font-size:13px;text-overflow:ellipsis}
+.pop .hd .stchip{flex:none}
+.pop .bd{padding:14px 18px 16px!important}
+.pop .ln{min-height:36px}
+/* ---------- conversas: nome alinhado com a foto ---------- */
+.cm{align-items:flex-start!important;gap:12px!important}
+.cm>.avw{margin-top:0!important}
+.cm .bx{padding:0 0 10px!important;background:transparent!important}
+.cm .hd{display:flex!important;align-items:center!important;min-height:28px;gap:8px!important;margin:0 0 4px!important}
+.cm .hd b{font-size:14px!important;line-height:1.2}
+.crr{align-items:flex-start!important}
+.crb .hd{display:flex!important;align-items:center!important;min-height:26px;gap:8px}
+.ckcm .hd{min-height:22px;align-items:center!important;display:flex}
+/* ---------- tipografia: sem Kanit/caixa alta forçados no meio das telas ---------- */
+[style*="text-transform:uppercase"]{text-transform:none!important;letter-spacing:0!important}
+[style*="font-family:var(--kanit)"]{font-family:var(--font-sans)!important;font-weight:600!important}
+.sect h4,.rsc h4,.cfsec h4,.blk h3{font:700 15px/1.35 var(--font-sans)!important;color:var(--sx-text)!important;margin:0 0 8px!important;letter-spacing:0!important}
+.sect p{font-size:14px;line-height:1.55;color:var(--sx-text-2)}
+.cfhead b{display:block;font:600 18px/1.3 var(--font-sans)!important;color:var(--sx-text)!important;margin-bottom:2px}
+.cfrow{font-size:14px!important;min-height:40px;border-top-color:var(--sx-divider)!important}
+.dsub .seg button.on .n{background:#FFFFFF!important;color:var(--mn-ink)!important}
+.dsub .seg button .n{background:var(--mn-azul-soft)!important;color:var(--mn-azul)!important;font-weight:700}
+.crhead b,.crtop b{text-transform:none!important;letter-spacing:0!important}
+/* ---------- agenda: blocos padronizados ---------- */
+.pev.reu{background:#EEF0FF!important;border:0!important;border-left:3px solid var(--mn-azul)!important;color:var(--sx-text)!important;border-radius:8px!important;cursor:pointer!important;padding:4px 30px 4px 8px!important;gap:1px!important;transition:background-color .15s,box-shadow .15s}
+.pev.reu:hover,.pev.reu:focus-visible{background:#E2E5FF!important;box-shadow:var(--sx-shadow-btn)!important;z-index:4}
+.pev.reu:focus-visible{outline:2px solid var(--mn-azul)!important;outline-offset:1px!important}
+.pev.reu b{font:600 12px/1.25 var(--font-sans)!important;color:var(--sx-text)!important;text-transform:none!important}
+.pev.reu span{font:500 11px/1.25 var(--font-sans)!important;color:var(--sx-text-2)!important;opacity:1!important}
+.pev.reu.curto{padding:2px 30px 2px 8px!important}
+.pev.reu.curto span{display:none}
+.pev .pevlink,.pev.curto .pevlink{position:absolute!important;top:3px;right:3px;margin:0!important;width:22px;height:22px;padding:0!important;border-radius:999px!important;display:inline-grid!important;place-items:center;font-size:0!important;background:var(--mn-azul)!important;box-shadow:none!important}
+.pev .pevlink svg{width:12px;height:12px}
+.pev.blk{border-radius:8px!important}
+.pev.reu.estreito{padding:3px 5px!important}
+.pev.reu.estreito .pevlink{display:none!important}
+/* detalhe do evento */
+.gevpop{position:fixed;z-index:120;width:min(400px,calc(100vw - 16px));max-height:calc(100vh - 24px);overflow:auto;background:#fff;border-radius:18px;box-shadow:var(--sx-shadow-float),0 0 0 1px rgba(14,16,48,.06);padding:14px 18px 14px;font:400 14px/1.45 var(--font-sans);color:var(--sx-text)}
+.gev-hd{display:flex;align-items:center;gap:6px;margin:0 -6px 8px 0}
+.gev-src{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--sx-text-3)}
+.gev-src svg{width:20px;height:20px}
+.gev-src i{width:1px;height:14px;background:var(--sx-divider)}
+.gev-ib{width:32px;height:32px;border:0;border-radius:999px;background:transparent;color:var(--sx-text-3);display:inline-grid;place-items:center;cursor:pointer;font-size:20px;line-height:1}
+.gev-ib svg{width:16px;height:16px}
+.gev-ib:hover{background:var(--sx-hover);color:var(--sx-text)}
+.gev-x:hover{background:var(--sx-error-bg);color:var(--sx-error-icon)}
+.gev-t{font:600 20px/1.3 var(--font-sans);margin:0 0 8px;color:var(--sx-text)}
+.gev-when{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;font-size:14px;margin-bottom:6px}
+.gev-time b{font-weight:400;color:var(--sx-text-3)}
+.gev-dur{color:var(--sx-text-3);font-size:13px}
+.gev-row{display:flex;gap:10px;align-items:flex-start;padding:7px 0;font-size:14px}
+.gev-row>svg,.gev-ft svg{width:16px;height:16px;flex:none;margin-top:2px;color:var(--sx-text-3)}
+.gev-muted{color:var(--sx-text-3)}
+.gev-meet{display:flex;align-items:center;justify-content:center;gap:8px;min-height:40px;margin:8px 0 6px;border-radius:10px;background:var(--mn-ink);color:#fff!important;font-weight:600;text-decoration:none}
+.gev-meet svg{width:18px;height:18px}
+.gev-meet:hover{background:#26263A}
+.gev-meet:focus-visible{outline:2px solid var(--mn-azul)!important;outline-offset:2px!important}
+.gev-chips{display:flex;flex-wrap:wrap;gap:6px}
+.gev-chip{padding:2px 10px;border-radius:999px;background:var(--sx-sunken);font-size:12.5px}
+.gev-desc{white-space:pre-wrap;word-break:break-word}
+.gev-ft{display:flex;align-items:center;gap:8px;border-top:1px solid var(--sx-divider);margin-top:8px;padding-top:10px;font-size:13px}
+.gev-ft .gev-muted{display:inline-flex;gap:6px;align-items:center}
+/* ---------- quadro: última coluna visível enquanto arrasta ---------- */
+body.arrastando .pboard{-webkit-mask-image:none!important;mask-image:none!important;scroll-behavior:auto}
+body.arrastando .pcol{transition:background-color .15s}
+.pcol.over{outline:2px dashed var(--mn-azul)!important;outline-offset:-2px;background:#EEF0FF!important}
+/* ---------- conferência final no modelo ---------- */
+.cfmod{margin-top:16px;padding:16px 18px;border-radius:16px!important;background:var(--sx-sunken);display:flex;flex-direction:column;gap:8px}
+.cfmod-hd{display:flex;gap:12px;align-items:flex-start}
+.cfmod-hd>div{flex:1}
+.cfmod-hd b{font:700 15px/1.35 var(--font-sans);display:block;margin-bottom:2px}
+.cfmod textarea{min-height:120px;line-height:1.6!important;background:#fff!important}
+.cfh4{display:flex!important;align-items:center;gap:10px;flex-wrap:wrap}
+.cfmodlink{font-size:13px!important;font-weight:600!important;border:0;background:none;padding:0;cursor:pointer;margin-left:auto}
 </style>
 </head>
 <body>
@@ -5737,7 +5829,7 @@ function lanes(evs){
 function evHtml(ev, meu){
   const top = ev.a / 60 * PH, h = Math.max(18, (ev.b - ev.a) / 60 * PH - 2), estreito = ev.n >= 3 || planDias().length === 7 && ev.n >= 2, pos = `top:${top}px;height:${h}px;left:calc(${ev.lane / ev.n * 100}% + 2px);width:calc(${100 / ev.n}% - 4px)`;
   if(ev.tipo === 'reu'){ const e = ev.e, curto = h < 34;
-    return `<div class="pev reu ${curto ? 'curto' : ''} ${estreito ? 'estreito' : ''}" style="${pos}" title="${esc(e.titulo)} | ${hm(ev.a)}–${hm(ev.b)}"><b>${esc(e.titulo)}</b>${curto ? '' : `<span>${hm(ev.a)} – ${hm(ev.b)}</span>`}${e.link ? `<a href="${esc(e.link)}" target="_blank" rel="noopener" class="pevlink" title="Entrar na reunião">${MEET_IC}${ev.n >= 3 ? '' : ' Entrar'}</a>` : ''}</div>`; }
+    return `<div class="pev reu ${curto ? 'curto' : ''} ${estreito ? 'estreito' : ''}" style="${pos}" data-gev="${typeof gevReg === 'function' ? gevReg(e) : ''}" tabindex="0" role="button" title="${esc(e.titulo)} | ${hm(ev.a)}–${hm(ev.b)}"><b>${esc(e.titulo)}</b>${curto ? '' : `<span>${hm(ev.a)} – ${hm(ev.b)}</span>`}${e.link ? `<a href="${esc(e.link)}" target="_blank" rel="noopener" class="pevlink" title="Entrar na reunião">${MEET_IC}${ev.n >= 3 ? '' : ' Entrar'}</a>` : ''}</div>`; }
   const x = ev.x, it = x.ref ? itemDe(x.ref) : null, k = it ? it.k : 'livre', curto = h < 34;
   return `<div class="pev blk ${it && it.feito ? 'done' : ''} ${curto ? 'curto' : ''}" style="${pos};--c:${KCOR[k]}" data-plblk="${x.id}" ${meu ? 'draggable="true"' : ''} title="${esc(x.titulo)}">
     <b>${it && it.feito ? '✓ ' : ''}${esc(it ? it.titulo : x.titulo)}</b>${curto ? '' : `<span>${hm(ev.a)} – ${hm(ev.b)}${it ? ' | ' + esc(it.onde) : ''}</span>`}${meu ? '<i class="prz" data-plrz></i>' : ''}</div>`;
@@ -7429,14 +7521,80 @@ const CF_AUTO = [
   ['rel', 'Relatório ao cliente validado', p => [relValido(p), p.rel && p.rel.st === 'pendente' ? 'aguardando validação' : relValido(p) ? '' : 'ainda é minuta'], 'relatorio'],
   ['drive', 'Pasta no Drive registrada', p => [!!p.drive, p.drive ? '' : 'sem link'], 'drive']];
 const CF_MAN = [['conferida', 'Licença conferida (titular, endereço, área, atividade e validade)'], ['condic', 'Condicionantes da licença lidas e repassadas ao cliente'], ['arquivo', 'Documentos finais salvos na pasta do Drive'], ['entregue', 'Licença e relatório enviados ao cliente'], ['fin', 'Financeiro conferido (parcelas da proposta em dia)']];
+/* Conferência final por serviço: padrão de cada licença (editável no modelo, em Cadastros > Modelos) */
+const CONF_PADRAO = {
+  alvara:[
+    ['alv_titular', 'Alvará: requerente, CNPJ/CPF e responsável legal iguais aos do processo'],
+    ['alv_end', 'Endereço, inscrições de IPTU e matrícula conferem com a consulta de adequabilidade'],
+    ['alv_areas', 'Área do terreno e área construída do alvará conferem com o projeto aprovado e o quadro de áreas'],
+    ['alv_uso', 'Uso/atividade, nº de pavimentos, blocos e unidades conferem com o projeto aprovado'],
+    ['alv_vagas', 'Quantitativo de vagas confere com o projeto e o parecer da AMC (quando houver)'],
+    ['alv_rt', 'Responsáveis técnicos e ART/RRT de projeto e execução corretos no alvará'],
+    ['alv_validade', 'Validade do alvará e prazo de início da obra registrados no painel de Licenças'],
+    ['alv_cond', 'Condicionantes e termos de compromisso lidos e repassados ao cliente'],
+    ['alv_projeto', 'Projeto aprovado (carimbado) e alvará salvos na pasta do Drive'],
+    ['alv_placa', 'Cliente orientado sobre placa de obra e documentos que devem ficar na obra'],
+    ['alv_envio', 'Alvará, projeto aprovado e relatório enviados ao cliente'],
+    ['fin', 'Financeiro conferido (parcelas da proposta em dia)']],
+  licenca:[
+    ['amb_titular', 'Licença: titular, CNPJ/CPF e endereço do empreendimento conferem'],
+    ['amb_ativ', 'Atividade/CNAE, porte e potencial poluidor conferem com o requerido'],
+    ['amb_validade', 'Validade registrada no painel de Licenças (renovação 120 dias antes do vencimento)'],
+    ['amb_cond', 'Condicionantes listadas com responsável e prazo, e repassadas ao cliente'],
+    ['amb_monit', 'Relatórios de monitoramento exigidos informados ao cliente (periodicidade)'],
+    ['arquivo', 'Licença e estudo ambiental salvos na pasta do Drive'],
+    ['entregue', 'Licença e relatório enviados ao cliente'],
+    ['fin', 'Financeiro conferido (parcelas da proposta em dia)']],
+  habitese:[
+    ['hab_area', 'Área construída final confere com o alvará e o projeto aprovado'],
+    ['hab_unid', 'Nº de unidades, endereço e numeração predial conferem'],
+    ['hab_bomb', 'Certificado do Corpo de Bombeiros vigente e anexado'],
+    ['hab_averb', 'Cliente orientado sobre a averbação da construção no cartório'],
+    ['arquivo', 'Habite-se e documentos de conclusão salvos na pasta do Drive'],
+    ['entregue', 'Habite-se e relatório enviados ao cliente'],
+    ['fin', 'Financeiro conferido (parcelas da proposta em dia)']],
+  registro:[
+    ['lot_reg', 'Registro do loteamento lançado na matrícula (nº do R/AV conferido)'],
+    ['lot_lotes', 'Quadras, lotes e áreas conferem com o projeto aprovado'],
+    ['lot_matr', 'Matrículas individuais dos lotes abertas e conferidas'],
+    ['lot_garantia', 'Garantia/caução e cronograma de infraestrutura registrados'],
+    ['arquivo', 'Certidões e matrículas salvas na pasta do Drive'],
+    ['entregue', 'Certidões e relatório enviados ao cliente'],
+    ['fin', 'Financeiro conferido (parcelas da proposta em dia)']],
+  demolicao:[
+    ['dem_area', 'Área demolida confere com a autorização e o levantamento'],
+    ['dem_resid', 'Destinação de resíduos comprovada conforme o PGRCC'],
+    ['dem_averb', 'Cliente orientado sobre a averbação da demolição no cartório e na matrícula'],
+    ['arquivo', 'Autorização e comprovantes salvos na pasta do Drive'],
+    ['entregue', 'Autorização e relatório enviados ao cliente'],
+    ['fin', 'Financeiro conferido (parcelas da proposta em dia)']],
+  material:[
+    ['mat_final', 'Versão final validada internamente e pelo cliente'],
+    ['mat_art', 'ART/RRT do material emitida e paga'],
+    ['mat_arq', 'PDF final e arquivos editáveis salvos na pasta do Drive'],
+    ['entregue', 'Material enviado ao cliente'],
+    ['fin', 'Financeiro conferido (parcelas da proposta em dia)']]
+};
+function cfPadraoKey(k){
+  if(CONF_PADRAO[k]) return k;
+  const n = String((MODELOS[k] || {}).nome || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+  return /alvar/.test(n) ? 'alvara' : /ambient/.test(n) ? 'licenca' : /habite/.test(n) ? 'habitese' : /loteament/.test(n) ? 'registro' : /demoli/.test(n) ? 'demolicao' : /material/.test(n) ? 'material' : '';
+}
+function cfManDoModelo(k, soPadrao){
+  const cust = !soPadrao && k && (S.cfg.confModelo || {})[k];
+  if(cust && cust.length) return cust.map(x => [x.id, x.txt]);
+  const pk = cfPadraoKey(k); return pk ? CONF_PADRAO[pk] : CF_MAN;
+}
+const cfMan = p => cfManDoModelo(p && p.modelo);
+
 const cfDe = p => { const c = p.conf = p.conf || {}; c.man = c.man || {}; c.extras = c.extras || []; return c; };
-function cfConta(p){ const c = cfDe(p); let t = 0, f = 0; CF_AUTO.forEach(a => { t++; if(a[2](p)[0]) f++; }); CF_MAN.forEach(([k]) => { t++; if((c.man[k] || {}).ok) f++; }); c.extras.forEach(x => { t++; if(x.ok) f++; }); return {t, f}; }
+function cfConta(p){ const c = cfDe(p); let t = 0, f = 0; CF_AUTO.forEach(a => { t++; if(a[2](p)[0]) f++; }); cfMan(p).forEach(([k]) => { t++; if((c.man[k] || {}).ok) f++; }); c.extras.forEach(x => { t++; if(x.ok) f++; }); return {t, f}; }
 function cfHtml(p){
   const c = cfDe(p), {t, f} = cfConta(p), tudo = f === t, mark = o => o && o.ok ? `<span class="sub">${esc(first(o.por))} | ${fmtD((o.em || '').slice(0, 10))}</span>` : '';
   return `<div class="cfhead"><div style="flex:1"><b>Conferência final</b><div class="sub">Os itens automáticos se marcam sozinhos conforme o processo anda. Os manuais são conferidos por quem fecha o processo.</div></div>
       <div class="prog" style="width:200px"><div class="bar" style="flex:1"><i style="width:${t ? f * 100 / t : 0}%;background:${tudo ? '#12B76A' : '#0000FF'}"></i></div><b>${f}/${t}</b></div></div>
     <div class="sect cfsec"><h4>Verificado pelo sistema</h4>${CF_AUTO.map(([k, l, fn, tab]) => { const [ok, det] = fn(p); return `<div class="cfrow ${ok ? 'ok' : ''}"><span class="cfck">${ok ? '✓' : ''}</span><span style="flex:1">${l}${det ? ` <span class="sub">| ${esc(det)}</span>` : ''}</span>${ok ? '' : `<a class="link" data-dtab="${tab}">resolver →</a>`}</div>`; }).join('')}</div>
-    <div class="sect cfsec"><h4>Conferido pela equipe</h4>${CF_MAN.map(([k, l]) => { const o = c.man[k]; return `<label class="cfrow ${o && o.ok ? 'ok' : ''}"><input type="checkbox" data-cfman="${p.id}|${k}" ${o && o.ok ? 'checked' : ''}><span style="flex:1">${l}</span>${mark(o)}</label>`; }).join('')}
+    <div class="sect cfsec"><h4>Conferido pela equipe</h4>${cfMan(p).map(([k, l]) => { const o = c.man[k]; return `<label class="cfrow ${o && o.ok ? 'ok' : ''}"><input type="checkbox" data-cfman="${p.id}|${k}" ${o && o.ok ? 'checked' : ''}><span style="flex:1">${l}</span>${mark(o)}</label>`; }).join('')}
       ${c.extras.map(x => `<label class="cfrow ${x.ok ? 'ok' : ''}"><input type="checkbox" data-cfx="${p.id}|${x.id}" ${x.ok ? 'checked' : ''}><span style="flex:1">${esc(x.txt)}</span>${mark(x)}<button class="x" data-cfxdel="${p.id}|${x.id}" title="Remover item">✕</button></label>`).join('')}
       <input class="cfadd" data-cfadd="${p.id}" placeholder="+ Incluir outro item de conferência (Enter)"></div>
     <label class="f">Observações da conferência<textarea class="inp" rows="3" data-cfobs="${p.id}" placeholder="Ex.: licença emitida com prazo de 2 anos; cliente ciente das condicionantes 3 e 5.">${esc(c.obs || '')}</textarea></label>
@@ -7445,7 +7603,7 @@ function cfHtml(p){
 document.addEventListener('change', e => { const tg = e.target; if(!tg.dataset) return; let k;
   if((k = tg.dataset.cfman) !== undefined || (k = tg.dataset.cfx) !== undefined){ e.stopPropagation(); const [pid, id] = k.split('|'), p = procById(pid), c = cfDe(p);
     const o = tg.dataset.cfman !== undefined ? (c.man[id] = c.man[id] || {}) : c.extras.find(x => x.id === id); if(!o) return; o.ok = tg.checked; o.por = me; o.em = nowISO();
-    logP(p, `${tg.checked ? 'conferiu' : 'desmarcou'} na conferência final: ${tg.dataset.cfman !== undefined ? CF_MAN.find(x => x[0] === id)[1] : o.txt}`); save(); renderDrawer(); return; }
+    logP(p, `${tg.checked ? 'conferiu' : 'desmarcou'} na conferência final: ${tg.dataset.cfman !== undefined ? (cfMan(p).find(x => x[0] === id) || [0, id])[1] : o.txt}`); save(); renderDrawer(); return; }
   if((k = tg.dataset.cfobs) !== undefined){ e.stopPropagation(); cfDe(procById(k)).obs = tg.value; save(); return; }
   if((k = tg.dataset.semlic) !== undefined){ e.stopPropagation(); const p = procById(k); p.semLicenca = tg.checked; logP(p, tg.checked ? 'marcou que o processo não gera licença' : 'desmarcou “não gera licença”'); save(); render(); return; }
 }, true);
@@ -8056,14 +8214,16 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
       var f = faixa(g.ult.em);
       if(f !== faixaAtual){ if(faixaAtual) html += '</div>'; html += '<h2 class="ibx-day">' + f + '</h2><div class="ibx-list">'; faixaAtual = f; }
       var autor = autorDe(g.ult), msg = g.ult.txt.replace(/^<b>[^<]+<\/b>\s*/, '');
+      var envelope = g.un
+        ? '<button class="ibx-act" data-ibxread="' + g.k + '" aria-label="Marcar como lida" title="Marcar como lida">' + ICO.mailOpen + '</button>'
+        : '<button class="ibx-act" data-ibxunread="' + g.k + '" aria-label="Marcar como não lida" title="Marcar como não lida">' + ICO.mail + '</button>';
       var acoes = t === 'removidas'
-        ? '<button class="ibx-act" data-ibxrestore="' + g.k + '" aria-label="Restaurar" title="Restaurar">' + ICO.restore + '</button>'
-        : t === 'outro' ? ''
-        : (g.un ? '<button class="ibx-act" data-ibxread="' + g.k + '" aria-label="Marcar como lida" title="Marcar como lida">' + ICO.check + '</button>'
-                : '<button class="ibx-act" data-ibxunread="' + g.k + '" aria-label="Marcar como não lida" title="Marcar como não lida">' + ICO.dot + '</button>')
+        ? '<button class="ibx-clear" data-ibxrestore="' + g.k + '">' + ICO.restore + ' Restaurar</button>'
+        : t === 'outro' ? '<button class="ibx-clear" data-ibx="' + g.k + '">Abrir</button>'
+        : envelope
           + (t === 'tarde' ? '<button class="ibx-act" data-ibxnow="' + g.k + '" aria-label="Trazer de volta agora" title="Trazer de volta agora">' + ICO.back + '</button>'
-                           : '<button class="ibx-act" data-ibxlater="' + g.k + '" aria-label="Lembrar amanhã às 8h" title="Lembrar amanhã às 8h">' + ICO.clock + '</button>')
-          + '<button class="ibx-act danger" data-ibxdel="' + g.k + '" aria-label="Remover" title="Remover">' + ICO.trash + '</button>';
+                           : '<button class="ibx-act" data-ibxlater="' + g.k + '" aria-label="Lembrar amanhã às 8h" title="Lembrar amanhã às 8h">' + ICO.snooze + '</button>')
+          + '<button class="ibx-clear" data-ibxdel="' + g.k + '" aria-label="Limpar (mover para Removidas)">' + ICO.check + ' Limpar</button>';
       html += '<div class="ibx-row ' + (g.un ? 'unread' : '') + '" data-ibx="' + g.k + '" role="button" tabindex="0" aria-label="' + esc(g.alvo.tit) + (g.un ? ', ' + g.un + ' não lida(s)' : '') + '">'
         + '<span class="ibx-st" style="--c:' + g.alvo.cor + '" title="' + esc(g.alvo.st) + '"></span>'
         + '<span class="ibx-tit">' + esc(g.alvo.tit) + '</span>'
@@ -8090,6 +8250,9 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
   };
 
   var ICO = {
+    mail:'<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M2 5h20v14H2zm2.4 2L12 12l7.6-5zM4 8.5V17h16V8.5l-8 5.3z"/></svg>',
+    mailOpen:'<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2 22 8.5V20H2V8.5zm0 2.4L4.6 9.2 12 14l7.4-4.8zM4 11v7h16v-7l-8 5.2z"/></svg>',
+    snooze:'<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 3a9 9 0 1 1 0 18 9 9 0 0 1 0-18zm0 2a7 7 0 1 0 0 14 7 7 0 0 0 0-14zm-2.5 4h5v1.6L11.9 14h2.6v1.5h-5v-1.6l2.6-3.4H9.5zM4.2 2.3l1.4 1.4L2.8 6.5 1.4 5.1zm15.6 0 2.8 2.8-1.4 1.4-2.8-2.8z"/></svg>',
     check:'<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 16.2 5.3 12l-1.4 1.4 5.6 5.6L20.1 8.4 18.7 7z"/></svg>',
     dot:'<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/></svg>',
     clock:'<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2a10 10 0 1 1 0 20 10 10 0 0 1 0-20zm0 2a8 8 0 1 0 0 16 8 8 0 0 0 0-16zm1 3v4.6l3.2 3.2-1.4 1.4L11 12.4V7z"/></svg>',
@@ -8144,6 +8307,166 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
     if(ui.view === 'inbox') window.renderInbox();
   }; })(render);
   if(typeof DB !== 'undefined' && DB.ready) render();
+})();
+</script>
+<script id="mannare-extras">
+/* ==========================================================================
+   MANNARE CRM · extras (agenda estilo ClickUp, arraste com rolagem,
+   conferência final editável no modelo de serviço)
+   ========================================================================== */
+(function(){
+  'use strict';
+
+  /* ======================================================================
+     1. AGENDA: detalhe do evento ao clicar (estilo ClickUp)
+     ====================================================================== */
+  var GEV = {};
+  window.gevReg = function(e){
+    var k = 'g' + Math.abs(String((e.id || '') + (e.inicio || (e.data + 'T' + e.hora)) + e.titulo).split('').reduce(function(a, c){ return (a * 31 + c.charCodeAt(0)) | 0; }, 7));
+    GEV[k] = e; return k;
+  };
+  var MES = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'];
+  var SEM = ['domingo', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado'];
+  function iniFim(e){
+    var ini = e.inicio ? new Date(e.inicio) : new Date(e.data + 'T' + (e.hora || '00:00') + ':00-03:00');
+    var fim = e.fim ? new Date(e.fim) : (e.horaFim ? new Date(e.data + 'T' + e.horaFim + ':00-03:00') : new Date(ini.getTime() + 3600e3));
+    return [ini, fim];
+  }
+  var hhmm = function(d){ return d.toLocaleTimeString('pt-BR', {timeZone:'America/Fortaleza', hour:'2-digit', minute:'2-digit', hour12:false}); };
+  function dur(a, b){ var m = Math.round((b - a) / 60000); return m < 60 ? m + ' min' : (m % 60 ? Math.floor(m / 60) + 'h' + (m % 60) : (m / 60) + 'h'); }
+  var IC = {
+    cal:'<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="17" rx="3" fill="#fff" stroke="#1A73E8" stroke-width="2"/><path d="M3 9h18" stroke="#1A73E8" stroke-width="2"/><path d="M8 2v4M16 2v4" stroke="#1A73E8" stroke-width="2" stroke-linecap="round"/><text x="12" y="18" font-size="7" text-anchor="middle" fill="#1A73E8" font-family="Arial" font-weight="700">31</text></svg>',
+    clock:'<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+    globe:'<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>',
+    video:'<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="m16 10 6-3v10l-6-3z"/></svg>',
+    users:'<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18.5 20a6.5 6.5 0 0 0-3-5.5"/></svg>',
+    pin:'<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>',
+    txt:'<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>',
+    ext:'<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>',
+    copy:'<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></svg>'
+  };
+  var lastFocus = null;
+  function fecharEvento(){ var p = document.getElementById('gevpop'); if(p){ p.remove(); if(lastFocus && document.contains(lastFocus)) lastFocus.focus(); } }
+  function abrirEvento(el){
+    var e = GEV[el.dataset.gev]; if(!e) return;
+    fecharEvento(); lastFocus = el;
+    var r = iniFim(e), ini = r[0], fim = r[1];
+    var dia = SEM[ini.getDay()] + ', ' + ini.getDate() + ' ' + MES[ini.getMonth()] + ' ' + ini.getFullYear();
+    var part = e.participantes || e.convidados || e.attendees || [];
+    if(typeof part === 'string') part = part.split(/[,;]\s*/).filter(Boolean);
+    var partHtml = Array.isArray(part) && part.length ? part.slice(0, 8).map(function(x){ var n = typeof x === 'string' ? x : (x.nome || x.name || x.email || ''); return '<span class="gev-chip">' + esc(n) + '</span>'; }).join('') + (part.length > 8 ? '<span class="gev-chip">+' + (part.length - 8) + '</span>' : '') : '';
+    var desc = e.descricao || e.desc || e.description || '';
+    var abrirG = e.htmlLink || e.url || '';
+    var html = '<div class="gev-hd"><span class="gev-src">' + IC.cal + '<span>Evento</span><i></i><span>Google Agenda</span></span><span class="spacer"></span>'
+      + (e.link ? '<button class="gev-ib" data-gevcopy="' + esc(e.link) + '" aria-label="Copiar link da reunião" title="Copiar link da reunião">' + IC.copy + '</button>' : '')
+      + '<button class="gev-ib gev-x" data-gevclose aria-label="Fechar">×</button></div>'
+      + '<h3 class="gev-t" id="gevTit">' + esc(e.titulo || 'Evento') + '</h3>'
+      + '<div class="gev-when"><span>' + dia + '</span><span class="gev-time">' + hhmm(ini) + ' <b>→</b> ' + hhmm(fim) + '</span><span class="gev-dur">' + dur(ini, fim) + '</span></div>'
+      + '<div class="gev-row">' + IC.globe + '<span><b>GMT-3</b> Fortaleza</span></div>'
+      + (e.link ? '<a class="gev-meet" href="' + esc(e.link) + '" target="_blank" rel="noopener">' + IC.video + ' Entrar no Google Meet</a>' : '<div class="gev-row gev-muted">' + IC.video + '<span>Sem link de reunião</span></div>')
+      + (partHtml ? '<div class="gev-row">' + IC.users + '<span class="gev-chips">' + partHtml + '</span></div>' : '')
+      + '<div class="gev-row ' + (e.local ? '' : 'gev-muted') + '">' + IC.pin + '<span>' + (e.local ? esc(e.local) : 'Sem local ou sala') + '</span></div>'
+      + '<div class="gev-row ' + (desc ? '' : 'gev-muted') + '">' + IC.txt + '<span class="gev-desc">' + (desc ? esc(String(desc).replace(/<[^>]+>/g, ' ')).slice(0, 600) : 'Sem descrição') + '</span></div>'
+      + '<div class="gev-ft"><span class="gev-muted">' + IC.clock + ' ' + (ini > new Date() ? (typeof faltaTxt === 'function' ? faltaTxt({ini:ini, data:e.data, horaFim:e.horaFim}).t : '') : 'já começou') + '</span><span class="spacer"></span>'
+      + (abrirG ? '<a class="btn sm" href="' + esc(abrirG) + '" target="_blank" rel="noopener">' + IC.ext + ' Abrir na Google Agenda</a>' : '') + '</div>';
+    var pop = document.createElement('div'); pop.id = 'gevpop'; pop.className = 'gevpop'; pop.setAttribute('role', 'dialog'); pop.setAttribute('aria-labelledby', 'gevTit'); pop.innerHTML = html;
+    document.body.appendChild(pop);
+    var rc = el.getBoundingClientRect(), W = pop.offsetWidth, H = pop.offsetHeight, vw = innerWidth, vh = innerHeight;
+    var left = rc.right + 10; if(left + W > vw - 12) left = rc.left - W - 10; if(left < 12) left = Math.max(12, Math.min(vw - W - 12, rc.left));
+    var top = Math.min(Math.max(12, rc.top - 8), vh - H - 12);
+    if(vw < 761){ left = 8; top = Math.max(8, vh - H - 8); }
+    pop.style.left = left + 'px'; pop.style.top = top + 'px';
+    var x = pop.querySelector('[data-gevclose]'); if(x) x.focus();
+  }
+  document.addEventListener('click', function(ev){
+    var t = ev.target; if(!t.closest) return;
+    var pop = document.getElementById('gevpop');
+    if(pop && pop.contains(t)){
+      var c = t.closest('[data-gevcopy]'); if(c){ ev.preventDefault(); (navigator.clipboard ? navigator.clipboard.writeText(c.dataset.gevcopy) : Promise.reject()).then(function(){ toast('Link copiado'); }, function(){ toast(c.dataset.gevcopy); }); return; }
+      if(t.closest('[data-gevclose]')) fecharEvento();
+      return;
+    }
+    var el = t.closest('.pev.reu[data-gev]');
+    if(el && !t.closest('.pevlink')){ ev.stopPropagation(); abrirEvento(el); return; }
+    if(pop) fecharEvento();
+  }, true);
+  document.addEventListener('keydown', function(ev){
+    if(ev.key === 'Escape' && document.getElementById('gevpop')){ ev.stopPropagation(); fecharEvento(); return; }
+    var t = ev.target; if((ev.key === 'Enter' || ev.key === ' ') && t.matches && t.matches('.pev.reu[data-gev]')){ ev.preventDefault(); abrirEvento(t); }
+  }, true);
+  window.addEventListener('resize', fecharEvento);
+  document.addEventListener('scroll', function(ev){ var p = document.getElementById('gevpop'); if(p && !p.contains(ev.target)) fecharEvento(); }, true);
+
+  /* ======================================================================
+     2. QUADRO: rolagem automática enquanto arrasta um cartão
+     ====================================================================== */
+  var drag = {on:false, x:0, y:0, raf:0};
+  function passo(){
+    if(!drag.on){ drag.raf = 0; return; }
+    var board = document.querySelector('.pboard, .mboard');
+    if(board){
+      var r = board.getBoundingClientRect(), zona = 110, vel = 0;
+      if(drag.y > r.top - 40 && drag.y < r.bottom + 40){
+        if(drag.x > r.right - zona) vel = Math.min(1, (drag.x - (r.right - zona)) / zona);
+        else if(drag.x < r.left + zona) vel = -Math.min(1, ((r.left + zona) - drag.x) / zona);
+      }
+      if(vel) board.scrollLeft += vel * 22;
+    }
+    var zv = 80; if(drag.y > innerHeight - zv) window.scrollBy(0, 14); else if(drag.y < zv) window.scrollBy(0, -14);
+    drag.raf = requestAnimationFrame(passo);
+  }
+  document.addEventListener('dragstart', function(e){ if(e.target.closest && e.target.closest('.mcard, .pk, [draggable="true"]')){ drag.on = true; if(!drag.raf) drag.raf = requestAnimationFrame(passo); document.body.classList.add('arrastando'); } }, true);
+  document.addEventListener('dragover', function(e){ if(drag.on){ drag.x = e.clientX; drag.y = e.clientY; } }, true);
+  ['dragend', 'drop'].forEach(function(n){ document.addEventListener(n, function(){ drag.on = false; document.body.classList.remove('arrastando'); }, true); });
+
+  /* ======================================================================
+     3. CONFERÊNCIA FINAL dentro do modelo de serviço
+     ====================================================================== */
+  var hash = function(s){ return 'c' + Math.abs(String(s).split('').reduce(function(a, c){ return (a * 33 + c.charCodeAt(0)) | 0; }, 5381)).toString(36); };
+  function confPadraoTxt(k){ return cfManDoModelo(k, true).map(function(x){ return x[1]; }); }
+  /* editor dentro do modal do modelo */
+  if(typeof modModalHtml === 'function'){
+    modModalHtml = (function(base){ return function(){
+      base.apply(this, arguments);
+      var e = modEdit; if(!e) return;
+      if(!e.conf){ e.conf = cfManDoModelo(e.novo ? '' : e.k).map(function(x){ return x[1]; }); }
+      var lay = document.querySelector('#layer .modal'); if(!lay) return;
+      var foot = lay.querySelector('.mfoot'), corpo = foot && foot.previousElementSibling; if(!corpo) return;
+      var custom = !!((S.cfg.confModelo || {})[e.k]);
+      var html = '<div class="cfmod"><div class="cfmod-hd"><div><b>Conferência final</b><div class="sub">O que a equipe confere antes de concluir um processo deste serviço. Um item por linha. Os itens automáticos (tarefas, notificações, licença no painel, materiais, relatório e Drive) continuam sendo verificados pelo sistema.</div></div>'
+        + '<button class="btn sm ghost" data-confreset ' + (custom || e.confEditado ? '' : 'disabled') + '>Restaurar padrão</button></div>'
+        + '<textarea class="inp" data-mmconf rows="' + Math.max(5, e.conf.length + 1) + '" aria-label="Itens da conferência final, um por linha">' + esc(e.conf.join('\n')) + '</textarea>'
+        + '<div class="sub">' + e.conf.length + ' item(ns). Vale para todos os processos deste serviço, inclusive os que já estão abertos; o que já foi conferido continua marcado.</div></div>';
+      var pe = corpo.querySelector('.pebox'); if(pe) pe.insertAdjacentHTML('beforebegin', html); else corpo.insertAdjacentHTML('beforeend', html);
+    }; })(modModalHtml);
+  }
+  if(typeof lerMod === 'function'){
+    lerMod = (function(base){ return function(){ base.apply(this, arguments); lerConf(); }; })(lerMod);
+  }
+  function lerConf(){ var ta = document.querySelector('#layer [data-mmconf]'); if(ta && modEdit){ var v = ta.value.split('\n').map(function(s){ return s.replace(/^\s*[-•□✓]\s*/, '').trim(); }).filter(Boolean); if(v.join('|') !== (modEdit.conf || []).join('|')) modEdit.confEditado = true; modEdit.conf = v; } }
+  /* salvar antes do handler original fechar o modal */
+  window.addEventListener('click', function(ev){
+    var t = ev.target; if(!t.closest || !modEdit || !t.closest('#layer')) return;
+    if(t.closest('[data-confreset]')){ ev.stopPropagation(); ev.preventDefault(); if(typeof lerMod === 'function') lerMod(); modEdit.conf = confPadraoTxt(modEdit.novo ? '' : modEdit.k); modEdit.confEditado = false; modEdit.confReset = true; modModalHtml(); return; }
+    if(t.closest('[data-mmsave]')){
+      lerConf(); var e = modEdit, k = e.k, padrao = confPadraoTxt(e.novo ? '' : k);
+      S.cfg.confModelo = S.cfg.confModelo || {};
+      if(!e.conf || !e.conf.length || e.conf.join('|') === padrao.join('|')){ delete S.cfg.confModelo[k]; }
+      else {
+        var antigos = {}; cfManDoModelo(k).forEach(function(x){ antigos[x[1]] = x[0]; });
+        S.cfg.confModelo[k] = e.conf.map(function(txt){ return {id:antigos[txt] || hash(txt), txt:txt}; });
+      }
+    }
+  }, true);
+  /* atalho dentro do processo: editar os itens no modelo */
+  if(typeof cfHtml === 'function'){
+    cfHtml = (function(base){ return function(p){
+      var h = base.apply(this, arguments), k = p && p.modelo, m = k && MODELOS[k];
+      if(m && k !== 'sem') h = h.replace('<h4>Conferido pela equipe</h4>', '<h4 class="cfh4">Conferido pela equipe <button class="link cfmodlink" data-cfmod="' + esc(k) + '">Editar itens no modelo “' + esc(m.nome) + '”</button></h4>');
+      return h;
+    }; })(cfHtml);
+  }
+  document.addEventListener('click', function(ev){ var el = ev.target.closest && ev.target.closest('[data-cfmod]'); if(!el) return; ev.stopPropagation(); ev.preventDefault(); modModal(el.dataset.cfmod); }, true);
 })();
 </script>
 <script id="mannare-a11y">
