@@ -1343,6 +1343,101 @@ input[type="checkbox"]{border-radius:3px!important}
 .garr{fill:none;stroke:#6941C6;stroke-width:1.6}.garr.bad{stroke:#D92D20;stroke-dasharray:4 3}
 .gsvg path{pointer-events:stroke}
 .gleg{display:flex;gap:18px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin:10px 0 40px;align-items:center}.gleg span{display:inline-flex;gap:6px;align-items:center}
+
+/* ---------- acompanhamento de notificações ---------- */
+.ntbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+.ntcard{border:1px solid var(--line);background:var(--ui-panel,#fff);margin-bottom:12px}
+.nth{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:10px 14px;cursor:pointer;background:#F7F8FC;border-bottom:1px solid var(--line)}
+.ntcard.fech .nth{border-bottom:0}
+.nth b{font-size:13.5px;letter-spacing:.02em}
+.ntst{font-size:11.5px;font-weight:600;color:var(--c);background:color-mix(in srgb,var(--c) 12%,#fff);padding:1px 8px;white-space:nowrap}
+.ntmeta{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;padding:10px 14px;border-bottom:1px solid var(--line)}
+.ntmeta label{display:flex;flex-direction:column;gap:3px;font-size:11.5px;color:var(--muted)}
+.ntmeta input,.ntmeta select{border:1px solid var(--line);padding:4px 6px;font:inherit;font-size:13px;background:#fff;color:var(--ink)}
+.nttab{width:100%;border-collapse:collapse;font-size:13px}
+.nttab th{background:#274b9a;color:#fff;font:500 11.5px/1.3 Kanit,Arial,sans-serif;letter-spacing:.05em;text-align:left;padding:7px 8px}
+.nttab td{border-bottom:1px solid #EEF0F5;padding:4px 6px;vertical-align:top}
+.nttab td.nn{font-weight:700;color:#274b9a;text-align:center;padding-top:9px}
+.nttab tr.sub td.nn{font-weight:600;color:var(--muted)}
+.nttab tr.sub td:nth-child(2){padding-left:22px}
+.nttab tr.pai td{background:#FAFAFB}.nttab tr.pai td:nth-child(2) textarea{font-weight:600}
+.nttab tr.ok td{background:#E3F5E8}.nttab tr.ok textarea{color:#0B5A2E}
+.nttab td.ck{text-align:center;padding-top:9px}.nttab td.ck input{width:17px;height:17px;accent-color:#12B76A;cursor:pointer}
+.ntcnt{font-size:12px;font-weight:700;color:#067647}
+.nttab textarea{width:100%;border:1px solid transparent;background:transparent;font:inherit;font-size:13px;line-height:1.45;padding:4px 5px;resize:none;overflow:hidden;color:var(--ink);min-height:30px}
+.nttab textarea:hover{border-color:var(--line)}.nttab textarea:focus{border-color:var(--m-azul,#4948d1);background:#fff;outline:0}
+.nttab select{border:1px solid transparent;background:transparent;font:inherit;font-size:12.5px;padding:4px 2px;max-width:105px;margin-top:2px}.nttab select:hover{border-color:var(--line)}
+.nttab td.ac{white-space:nowrap;padding-top:7px}.nttab td.ac .x{font-size:11px}
+.ntadd{padding:8px 14px}.ntadd textarea{width:100%;border:1px dashed var(--line);background:transparent;font:inherit;font-size:13px;padding:7px 9px;resize:none;color:var(--ink)}.ntadd textarea:focus{outline:0;border-color:var(--m-azul,#4948d1)}
+.mleft.tnotas>*:not(.ttitle):not(.mtabs):not(.ntwrap){display:none!important}
+/* ---------- versões do material ---------- */
+.vertag{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:var(--c);border:1px solid color-mix(in srgb,var(--c) 35%,#fff);background:color-mix(in srgb,var(--c) 8%,#fff);padding:1px 6px;white-space:nowrap;letter-spacing:.02em}
+.vertag i{font-style:normal;font-weight:500}
+.mhead .vertag{margin-left:8px}
+.verbox{border:1px solid var(--line);padding:10px 12px;margin:0 0 14px}
+.verh{display:flex;gap:10px;align-items:center}
+.verhist{margin-top:8px}.verhist summary{cursor:pointer;font-size:12.5px;font-weight:600;color:var(--m-azul,#4948d1)}
+.verrow{display:flex;gap:10px;align-items:center;padding:5px 0;border-top:1px solid #F1F1F3;font-size:12.5px}
+
+/* ---------- notificação: link ---------- */
+.ntdrive{display:inline-flex;gap:4px;align-items:center;font-size:12px;font-weight:600;color:var(--m-azul,#4948d1);text-decoration:none;border:1px solid var(--line);background:#fff;padding:2px 8px}
+.ntdrive:hover{border-color:var(--m-azul,#4948d1)}
+/* ---------- cronograma (Project) ---------- */
+.crwrap{border:1px solid var(--line);background:var(--ui-panel,#fff);font-size:12.5px}
+.crwrap.full{position:fixed;inset:12px;z-index:300;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(10,12,40,.35)}
+.crwrap.full .crbody{flex:1;overflow:auto}
+.crtool{display:flex;gap:6px;align-items:center;flex-wrap:wrap;padding:8px 10px;border-bottom:1px solid var(--line);background:#F7F8FC}
+.crtit{font-family:var(--kanit);font-weight:500;text-transform:uppercase;letter-spacing:.04em;margin-right:6px}
+.crl{display:flex;gap:6px;align-items:center;font-size:12px;color:var(--muted)}.crl input{border:1px solid var(--line);padding:3px 5px;font:inherit;font-size:12.5px}
+.crsep{width:1px;height:22px;background:var(--line);margin:0 4px}
+.crbody{display:flex;align-items:flex-start}
+.crleft{flex:none;overflow-x:auto;border-right:1px solid var(--line)}
+.crin{width:1406px}
+.crr .c-dt.lb{background:#F6F6F8}.crr.hd .c-dt.lb{background:#ECECF1}
+.crb.lbb{height:5px;background:#9A9AA6;border:0;z-index:1}.crmk.lbm{width:9px;height:9px;background:#9A9AA6}
+.crlbinfo{font-size:11.5px;color:var(--muted);white-space:nowrap}
+.feradd{display:flex;gap:6px;align-items:center;flex-wrap:wrap}.feradd input:not([type=checkbox]){border:1px solid var(--line);padding:5px 7px;font:inherit;font-size:13px}.feradd #ferN{flex:1;min-width:180px}
+.ferrow{display:flex;gap:12px;align-items:center;padding:6px 0;border-bottom:1px solid #F1F1F3;font-size:13px}.ferrow>span:first-child{min-width:110px}
+.crsplit{flex:none;width:6px;align-self:stretch;cursor:col-resize;background:#F1F1F4}.crsplit:hover{background:var(--m-azul,#4948d1)}
+.crright{flex:1;min-width:0;overflow-x:auto}
+.crr{display:grid;grid-template-columns:32px 24px 38px 230px 64px 112px 112px 96px 96px 60px 100px 112px 112px 46px 56px;height:34px;align-items:center;border-bottom:1px solid #EEF0F4}
+.crr>span{height:100%;display:flex;align-items:center;border-right:1px solid #F1F2F6;min-width:0;overflow:hidden}
+.crr.hd{height:44px;background:#F7F8FC;font-weight:600;font-size:11.5px;color:#3B3B4F;border-bottom:1px solid var(--line)}.crr.hd>span{padding:0 6px;line-height:1.15}
+.crr.sel{background:#EEF2FF}.crr.res{background:#FAFAFC}.crr.res .c-nome input{font-weight:700}
+.crr.vazio,.crr.add{display:block;height:auto;border-bottom:0}.crr.add input{width:100%;border:0;border-top:1px dashed var(--line);padding:8px 10px;font:inherit;background:transparent}.crr.add input:focus{outline:0;background:#FAFAFF}
+.c-n{justify-content:center;color:var(--muted);font-size:11.5px;background:#F7F8FC}
+.c-i,.c-m,.c-mk{justify-content:center}.c-dv{justify-content:flex-end;padding-right:6px}
+.crr input:not([type=checkbox]){width:100%;height:100%;border:1px solid transparent;background:transparent;font:inherit;font-size:12.5px;padding:0 6px;color:var(--ink)}
+.crr input[type=date]{padding:0 2px 0 6px;font-size:12px}
+.crr input:not([type=checkbox]):hover{border-color:#E1E3EA}.crr input:focus{outline:0;border-color:var(--m-azul,#4948d1)!important;background:#fff}
+.crr input[type=checkbox]{width:15px;height:15px;accent-color:#3B3B4F}
+.c-d input{text-align:right}
+.crro{padding:0 6px;color:#3B3B4F;font-size:12px}
+.crproc{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink);text-decoration:none;padding:0 4px}.crproc:hover{text-decoration:underline}
+.crph2{font-size:10px;font-weight:600;color:#B54708;background:#FFF4D9;padding:0 5px;margin-right:4px;white-space:nowrap}
+.crmodo{border:0;background:none;cursor:pointer;font-size:14px;padding:2px 6px}.crmodo:hover{background:#ECECF2}
+.crtog{border:0;background:none;cursor:pointer;color:var(--muted);padding:0 3px 0 0;font-size:11px}
+.c-nome{gap:0}
+.crgin{position:relative}
+.crgh{position:relative;height:44px;border-bottom:1px solid var(--line);background:#F7F8FC}
+.crmes{position:absolute;top:0;height:20px;line-height:20px;font-size:11px;font-weight:600;padding-left:5px;border-left:1px solid #DADDE6;border-bottom:1px solid #E6E8EF;white-space:nowrap;overflow:hidden}
+.crdia{position:absolute;top:20px;height:24px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:9px;line-height:1.05;color:var(--muted);border-left:1px solid #EEF0F4}.crdia b{font-size:10px;color:#3B3B4F;font-weight:500}.crdia.nw{background:#EFEFF3}
+.crsem{position:absolute;top:24px;font-size:10px;color:var(--muted);border-left:1px solid #DADDE6;padding-left:3px;height:20px}
+.crgb{position:relative}
+.crnw{position:absolute;top:0;bottom:0;background:#F3F3F6}.crnw.fer{background:#FCE9E8}
+.crsel{position:absolute;left:0;right:0;height:34px;background:rgba(73,72,209,.07);pointer-events:none}
+.crb{position:absolute;height:12px;background:#4F81BD;border:1px solid #3A6496;z-index:2}
+.crb.man{background:#B9D7F5;border:1px dashed #3A6496}
+.crb.sum{height:6px;background:#2B2B3A;border:0}.crb.sum::before,.crb.sum::after{content:'';position:absolute;top:0;border:5px solid transparent;border-top:7px solid #2B2B3A;height:0}.crb.sum::before{left:0;border-left:0}.crb.sum::after{right:0;border-right:0}
+.crb.real{height:6px;background:#12B76A;border:0}.crb.real.run{background:linear-gradient(90deg,#12B76A 80%,#A6E9C8)}
+.crmk{position:absolute;width:13px;height:13px;background:#2B2B3A;transform:rotate(45deg);z-index:3}.crmk.real{width:9px;height:9px;background:#12B76A}
+.crlbl{position:absolute;font-size:10.5px;color:#3B3B4F;white-space:nowrap;z-index:3}
+.crhoje{position:absolute;top:0;bottom:0;border-left:2px dashed #D92D20;z-index:4}
+.crsvg{position:absolute;left:0;top:0;z-index:3;pointer-events:none;overflow:visible}.crsvg path{fill:none;stroke:#3B3B4F;stroke-width:1.1;pointer-events:stroke}
+.crleg .crhelp{display:block;flex-basis:100%}
+.crleft{max-width:calc(100% - 180px)}
+.crwrap.full .crleft{max-width:calc(100% - 260px)}
+.crleg{display:flex;gap:14px;flex-wrap:wrap;align-items:center;padding:8px 10px;border-top:1px solid var(--line);font-size:11.5px;color:var(--muted)}.crleg span{display:inline-flex;gap:6px;align-items:center}.crleg .crb{height:9px}
 /* ---------- painéis redimensionáveis ---------- */
 @media (min-width:1181px){.app{grid-template-columns:var(--rz-side,260px) minmax(0,1fr)!important}.pwrap:not(.notree){grid-template-columns:var(--rz-tree,250px) minmax(0,1fr)!important}}
 @media (min-width:1001px){.plan{grid-template-columns:var(--rz-plan,300px) minmax(0,1fr)!important}}
@@ -1883,6 +1978,7 @@ function filteredProcs(){
     if(ui.fServ && p.modelo !== ui.fServ) return false;
     if(ui.fMine && !people(p).includes(me)) return false;
     if(ui.fAlert && !alertOf(p)[ui.fAlert]) return false;
+    if(ui.pSt && (ui.pSt === 'abertos' ? !isOpen(p) : p.status !== ui.pSt)) return false;
     return true;
   });
 }
@@ -1936,6 +2032,7 @@ function renderProcs(){
       <input type="search" id="pq" placeholder="Buscar por cliente, obra, código ou protocolo" value="${esc(ui.q)}">
       <select id="pResp"><option value="">Todas as pessoas</option>${USERS.map(u => `<option value="${u.id}" ${ui.fResp === u.id ? 'selected' : ''}>${esc(u.nome)}</option>`).join('')}</select>
       <select id="pServ"><option value="">Todos os serviços</option>${Object.entries(MODELOS).map(([k, m]) => `<option value="${k}" ${ui.fServ === k ? 'selected' : ''}>${m.nome}</option>`).join('')}</select>
+      <select id="pSt"><option value="">Todos os status</option><option value="abertos" ${ui.pSt === 'abertos' ? 'selected' : ''}>Em aberto (sem concluídos/arquivados)</option>${PROC_ST.map(st => `<option value="${st.k}" ${ui.pSt === st.k ? 'selected' : ''}>${st.l}</option>`).join('')}</select>
       <label class="sub" style="display:flex;gap:6px;align-items:center;font-weight:700"><input type="checkbox" id="pMine" ${ui.fMine ? 'checked' : ''}> só onde tenho tarefa</label>
     </div>`;
   let body;
@@ -1945,7 +2042,7 @@ function renderProcs(){
     const tabs = `<div class="seg" style="margin-bottom:14px"><button data-fst="" class="${!ui.fStatus ? 'on' : ''}">Todos <span class="n">${list.length}</span></button>${PROC_ST.map(s => { const n = list.filter(p => p.status === s.k).length; return n ? `<button data-fst="${s.k}" class="${ui.fStatus === s.k ? 'on' : ''}">${s.l} <span class="n">${n}</span></button>` : ''; }).join('')}</div>`;
     body = tabs + `<div class="rows">${shown.map(procRow).join('') || '<div class="blk empty">Nenhum processo com esses filtros.</div>'}</div>`;
   } else {
-    body = `<div class="pboard">${PROC_ST.map(st => {
+    body = `<div class="pboard">${PROC_ST.filter(st => !ui.pSt || (ui.pSt === 'abertos' ? isOpen({status:st.k}) : st.k === ui.pSt)).map(st => {
       const ps = list.filter(p => p.status === st.k), dark = ['#FDCA40', '#C99500'].includes(st.c);
       return `<div class="pcol" data-col="${st.k}"><div class="mh"><span class="mst" style="--c:${st.c}">${st.l}</span><span class="sub mcnt">${ps.length}</span></div>
         ${ps.map(p => { const pr = propById(p.propId) || p.prop || {}, g = progress(p), lc = lateCount(p), a = tramAtual(p), nd = nextDue(p);
@@ -2062,7 +2159,7 @@ function drawerProp(pr){
 function drawerProc(p){
   const pr = propById(p.propId);
   const ncom = p.coms.length;
-  const tabs = [['tarefas', 'Tarefas', p.tarefas.filter(t => t.status !== 'concluida').length], ['descricao', 'Descrição', 0], ['drive', 'Pasta no Drive', 0], ['tramitacao', 'Tramitação', (p.tram || []).length], ['licenca', 'Licença', isOpen(p) ? 0 : licsOf(p).length], ['comentarios', 'Comentários', ncom], ['vinculos', 'Vínculos', procPred(p).length + procSuc(p).length], ['material', 'Material técnico', matsDoProc(p).length], ['relatorio', 'Relatório', 0], ['atividade', 'Atividade', 0], ['proposta', 'Proposta', 0]];
+  const tabs = [['tarefas', 'Tarefas', p.tarefas.filter(t => t.status !== 'concluida').length], ['descricao', 'Descrição', 0], ['drive', 'Pasta no Drive', 0], ['tramitacao', 'Tramitação', (p.tram || []).length], ['licenca', 'Licença', isOpen(p) ? 0 : licsOf(p).length], ['comentarios', 'Comentários', ncom], ['notas', 'Notificações', ntPend(p)], ['crono', 'Cronograma', 0], ['vinculos', 'Vínculos', procPred(p).length + procSuc(p).length], ['material', 'Material técnico', matsDoProc(p).length], ['relatorio', 'Relatório', 0], ['atividade', 'Atividade', 0], ['proposta', 'Proposta', 0]];
   let body = '';
   if(ui.dtab === 'tarefas'){
     const grupos = TASK_ST.map(st => {
@@ -2092,6 +2189,11 @@ function drawerProc(p){
   } else if(ui.dtab === 'comentarios'){
     body = `<div class="sect" style="padding:0;overflow:hidden"><div class="feed" style="max-height:none">${feedHtml(p.coms, null)}</div>${composerHtml('proc')}</div>
       <p class="hint">Comentários gerais do processo. Para assuntos de uma etapa, comente dentro da tarefa.</p>`;
+  } else if(ui.dtab === 'notas'){
+    body = ntHtml(p, 'p');
+  } else if(ui.dtab === 'crono'){
+    const crRef = ((ui.crModo || {})[p.id] === 'L' && crComp(p).length > 1 ? 'L:' : 'p:') + p.id;
+    body = ui.crFull === crRef ? `<div class="crwrap crph" data-crph="${crRef}"><div class="sub" style="padding:14px">O cronograma está aberto em tela cheia.</div></div>` : crHtml(p, crRef);
   } else if(ui.dtab === 'vinculos'){
     body = vincHtml(p);
   } else if(ui.dtab === 'material'){
@@ -2865,13 +2967,13 @@ function matCard(m){
   return `<div class="mcard" draggable="true" data-mat="${m.id}">
     <div class="mt">${esc(m.titulo)}</div>
     <div class="mm">${m.objetivo || m.historico ? `<span title="Tem descrição">${ic('lista', 'sm')}</span>` : ''}<span title="Checklist">${ic('check', 'sm')} ${c.f}/${c.t}</span>${m.coms.length ? `<span>${ic('comentario', 'sm')} ${m.coms.length}</span>` : ''}${run ? `<span class="tmr on"><i></i><span ${liveAttr(m)}>${fmtClock(timeTotal(m))}</span></span>` : timeTotal(m) ? `<span>${ic('relogio', 'sm')} ${fmtDur(timeTotal(m))}</span>` : ''}</div>
-    ${matPausaHtml(m) ? `<div class="mm" style="margin-top:4px">${matPausaHtml(m)}</div>` : ''}${m.procId && procById(m.procId) ? `<div class="ptags" style="margin-top:6px"><span class="ctag" title="Processo vinculado">${ic('pasta', 'sm')} ${esc(pcod(procById(m.procId)))}</span>${orgaoTag(procById(m.procId))}</div>` : ''}
+    <div class="ptags" style="margin-top:6px">${matVerTag(m)}${ntTag(m)}</div>${matPausaHtml(m) ? `<div class="mm" style="margin-top:4px">${matPausaHtml(m)}</div>` : ''}${m.procId && procById(m.procId) ? `<div class="ptags" style="margin-top:6px"><span class="ctag" title="Processo vinculado">${ic('pasta', 'sm')} ${esc(pcod(procById(m.procId)))}</span>${orgaoTag(procById(m.procId))}</div>` : ''}
     <div class="mf">${avs(m.resp)}${m.prazo ? `<span class="sub">${ic('relogio', 'sm')} ${dueHtml(m.prazo, m.status === 'entregue')}</span>` : ''}${m.prio !== 'normal' ? `<span class="flag" style="color:${PRIO[m.prio].c}">${ic('bandeira', 'sm')} ${PRIO[m.prio].l}</span>` : ''}</div>
     <div class="tags" style="margin-top:8px">${tag(m.tipo, '#6666FF')}</div></div>`;
 }
 function renderMats(){
   const q = norm(ui.mq || '');
-  const list = (S.mats || []).filter(m => matNoGrupo(m) && (!q || norm([m.codigo, m.titulo, m.tipo, m.dados.cliente, m.dados.matricula].join(' ')).includes(q)) && (!ui.mResp || respTem(m.resp, ui.mResp)) && (!ui.mTipo || m.tipo === ui.mTipo));
+  const list = (S.mats || []).filter(m => matNoGrupo(m) && (!q || norm([m.codigo, m.titulo, m.tipo, m.dados.cliente, m.dados.matricula].join(' ')).includes(q)) && (!ui.mResp || respTem(m.resp, ui.mResp)) && (!ui.mTipo || m.tipo === ui.mTipo) && (!ui.mSt || (ui.mSt === 'abertos' ? m.status !== 'entregue' : m.status === ui.mSt)));
   $('#view').innerHTML = `<div class="pagehead"><div><h1>Material técnico</h1><p>Retificações, remembramentos, pareceres e demais peças técnicas. A aprovação final é de ${esc(first(aprovMat()))} (validação interna).</p></div></div>
     <div class="pwrap"><div>${matTreeHtml()}</div><div class="pmain">${(ui.mSel || {}).g ? `<div class="crumb"><a class="link" data-mtall>Todos</a> / ${ui.mSel.e ? `<a class="link" data-mtg="${esc(ui.mSel.g)}">${esc(ui.mSel.g)}</a> / <b>${esc(ui.mSel.e)}</b>` : `<b>${esc(ui.mSel.g)}</b>`}</div>` : ''}<div class="filters"><input type="search" id="mq" placeholder="Buscar por título, cliente ou matrícula" value="${esc(ui.mq || '')}">
       <select id="mResp"><option value="">Todas as pessoas</option>${optsResp(ui.mResp, true)}</select>
@@ -4165,7 +4267,7 @@ function setMatStatus(m, st, escolhido){
   }
   const old = m.status; m.status = st; logT(m, `mudou o status para “${MS[st].l}”`);
   if(MAT_TIMER.includes(st)) startTimer(null, m, me); else if(MAT_TIMER.includes(old)) stopTimers(m, `parou o cronômetro ao mudar para “${MS[st].l}”`);
-  matPausa(m, old, st);
+  matPausa(m, old, st); matVerSync(m, old, st);
   const aprov = aprovFor(m);
   if(st === 'validacao'){ const ate = m.validacao && m.validacao.ate; logT(m, `pediu a validação de ${first(aprov)}${ate ? ' até ' + fmtD(ate) : ''}`); notifyMat(aprov, `enviou “${esc(m.titulo)}” para a sua validação interna${ate ? ' (entregar até ' + fmtD(ate) + ')' : ''}`, m); }
   if(old === 'validacao' && m.validacao){ m.validacao.fim = nowISO(); m.validacao.resultado = st; }
@@ -5228,7 +5330,7 @@ function procDatasHtml(p){ const d = pdat(p), dv = procDesvio(p), pend = procPre
   return `<div class="pdatas"><div class="pdh"><b>Cronograma</b>${dv !== null ? `<span class="pdv ${dv > 0 ? 'late' : 'ok'}">${dv > 0 ? `${dv} dia${dv > 1 ? 's' : ''} além do planejado` : dv === 0 ? 'no prazo planejado' : `${-dv} dia${dv < -1 ? 's' : ''} antes do planejado`}</span>` : ''}
     ${pend.length ? `<span class="pdv late" title="Predecessoras ainda abertas">aguarda ${pend.map(x => esc(pcod(x))).join(', ')}</span>` : ''}</div>
     <div class="fields" style="margin:0">${PDATAS.map(([k, l]) => `<label class="f">${l}<input type="date" data-pd="${k}" value="${d[k] || ''}"></label>`).join('')}</div></div>`; }
-function procCronoHtml(p){ const d = pdat(p), dv = procDesvio(p), pend = procPred(p).filter(x => isOpen(x)); let o = '';
+function procCronoHtml(p){ const d = pdat(p), dv = procDesvio(p), pend = procPred(p).filter(x => isOpen(x)); let o = ntTag(p);
   if(d.fimPlan && !d.fimReal) o += `<span class="ctag ${dv > 0 ? 'late' : ''}" title="Final planejado${d.iniPlan ? ' | início planejado ' + fmtD(d.iniPlan) : ''}">${ic('relogio', 'sm')}${dv > 0 ? `+${dv}d` : 'até ' + fmtD(d.fimPlan)}</span>`;
   if(d.fimReal) o += `<span class="ctag ok" title="Finalizado em ${fmtD(d.fimReal)}">✓ ${fmtD(d.fimReal)}</span>`;
   return o; }
@@ -5259,7 +5361,7 @@ function vincHtml(p){
       <datalist id="vLista">${livres.map(x => `<option value="${esc(procNome(x))}">`).join('')}</datalist></div>` : '';
   return `<div class="vbar"><div class="vmenu"><button class="vbtn" data-vmenu>⇄ Vincular itens ou adicionar dependências</button>${ui.vmenu ? `<div class="vdrop">
       <button data-vmodo="rel">⇄ Vincular um processo</button><hr><button data-vmodo="bloq"><i class="vi red">–</i>Este processo bloqueia…</button><button data-vmodo="bloqpor"><i class="vi amb">!</i>Este processo está bloqueado por…</button><hr><button data-vmodo="relac"><i class="vi blu">⟳</i>Relacionamento…</button></div>` : ''}</div>
-      <span class="spacer"></span><button class="btn sm ghost" data-vgantt="${esc(pr.emp || '')}">${ic('quadro', 'sm')} Gantt do empreendimento</button></div>
+      <span class="spacer"></span>${crComp(p).length > 1 ? `<button class="btn sm" data-crlic="${p.id}">Cronograma do licenciamento (${crComp(p).length})</button>` : ''}<button class="btn sm ghost" data-vgantt="${esc(pr.emp || '')}">${ic('quadro', 'sm')} Gantt do empreendimento</button></div>
     ${picker}
     ${pend.length ? `<div class="aprovbox pend" style="margin:10px 0"><div style="flex:1"><b>Bloqueado por ${pend.length} processo${pend.length > 1 ? 's' : ''} ainda aberto${pend.length > 1 ? 's' : ''}</b><div class="sub">${pend.map(x => esc(pcod(x)) + ' (' + PS[x.status].l + ')').join(', ')}</div></div></div>` : ''}
     <div class="tabs vtabs" style="padding:0;margin:12px 0 10px"><button class="tab ${ui.vtab === 'rel' ? 'on' : ''}" data-vtab="rel">Relacionadas${rel.length ? ` <span class="n">${rel.length}</span>` : ''}</button><button class="tab ${ui.vtab === 'dep' ? 'on' : ''}" data-vtab="dep">Dependências${pre.length + suc.length ? ` <span class="n">${pre.length + suc.length}</span>` : ''}</button><button class="tab ${ui.vtab === 'relac' ? 'on' : ''}" data-vtab="relac">⟳ Relacionamento${rc.length ? ` <span class="n">${rc.length}</span>` : ''}</button></div>
@@ -5434,7 +5536,7 @@ const MAT_ALERTS = [['prazo7', 'relogio', 'Prazos nos próximos 7 dias', 'Confer
 function matRow(m){
   const c = matCount(m), st = MS[m.status], pp = m.procId ? procById(m.procId) : null, run = runningOf(m).length, x = matGrupo(m);
   return `<div class="rowc matr" data-mat="${m.id}">
-    <div><div class="sub" style="font-weight:700">${esc(m.codigo)} | ${esc(x.g)}</div><div class="nm">${esc(m.titulo || '(sem título)')}</div><div class="tags">${tag(m.tipo, '#6666FF')}${x.e ? tag(x.e, '#9A9DB0') : ''}</div></div>
+    <div><div class="sub" style="font-weight:700">${esc(m.codigo)} | ${esc(x.g)}</div><div class="nm">${esc(m.titulo || '(sem título)')}</div><div class="tags">${matVerTag(m)}${tag(m.tipo, '#6666FF')}${x.e ? tag(x.e, '#9A9DB0') : ''}${ntTag(m)}</div></div>
     <div><div class="lb">Status</div>${pill(st.l, st.c)}${m.status === 'revisao' ? `<div style="margin-top:4px">${matPausaHtml(m)}</div>` : ''}</div>
     <div><div class="lb">Checklist</div><div class="vv">${ring(c.t ? Math.round(c.f * 100 / c.t) : 0, 34, '#0000FF', '')} ${c.f}/${c.t}</div></div>
     <div><div class="lb">Processo</div><div class="vv" style="display:block">${pp ? `${esc(pcod(pp))}<div class="sub">${orgaoTag(pp)}</div>` : '<span class="sub">sem vínculo</span>'}</div></div>
@@ -5444,20 +5546,21 @@ function matRow(m){
 renderMats = (function(){ return function(){
   ui.mMode = ui.mMode || 'quadro';
   const q = norm(ui.mq || ''), hideT = !!ui.mHideTree;
-  const base = (S.mats || []).filter(m => (hideT || matNoGrupo(m)) && (!q || norm([m.codigo, m.titulo, m.tipo, m.dados.cliente, m.dados.matricula, m.procId && procById(m.procId) ? pcod(procById(m.procId)) : ''].join(' ')).includes(q)) && (!ui.mResp || respTem(m.resp, ui.mResp)) && (!ui.mTipo || m.tipo === ui.mTipo));
+  const base = (S.mats || []).filter(m => (hideT || matNoGrupo(m)) && (!q || norm([m.codigo, m.titulo, m.tipo, m.dados.cliente, m.dados.matricula, m.procId && procById(m.procId) ? pcod(procById(m.procId)) : ''].join(' ')).includes(q)) && (!ui.mResp || respTem(m.resp, ui.mResp)) && (!ui.mTipo || m.tipo === ui.mTipo) && (!ui.mSt || (ui.mSt === 'abertos' ? m.status !== 'entregue' : m.status === ui.mSt)));
   const al = MAT_ALERTS.find(a => a[0] === ui.mAlert), list = al ? base.filter(al[4]) : base;
   const alerts = `<div class="alerts four">${MAT_ALERTS.map(([k, i, l, w, f]) => { const n = base.filter(f).length;
     return `<div class="acard ${ui.mAlert === k ? 'on' : ''}" data-malert="${k}"><div class="top2"><span class="ico">${ic(i)}</span>${n ? `<span class="w">${ic('alerta', 'sm')} ${w}</span>` : ''}</div><div class="v">${n}</div><div class="ft">${l} <span>${ic('seta', 'sm')}</span></div></div>`; }).join('')}</div>`;
   const filtros = `<div class="filters"><input type="search" id="mq" placeholder="Buscar por título, cliente, matrícula ou protocolo" value="${esc(ui.mq || '')}">
       <select id="mResp"><option value="">Todas as pessoas</option>${optsResp(ui.mResp, true)}</select>
-      <select id="mTipo"><option value="">Todos os tipos</option>${MAT_TIPOS.map(t => `<option ${ui.mTipo === t ? 'selected' : ''}>${t}</option>`).join('')}</select></div>`;
+      <select id="mTipo"><option value="">Todos os tipos</option>${MAT_TIPOS.map(t => `<option ${ui.mTipo === t ? 'selected' : ''}>${t}</option>`).join('')}</select>
+      <select id="mSt"><option value="">Todos os status</option><option value="abertos" ${ui.mSt === 'abertos' ? 'selected' : ''}>Em aberto (sem entregues)</option>${MAT_ST.map(st => `<option value="${st.k}" ${ui.mSt === st.k ? 'selected' : ''}>${st.l}</option>`).join('')}</select></div>`;
   let body;
   if(ui.mMode === 'lista'){
     const tabs = `<div class="seg" style="margin-bottom:14px"><button data-mfst="" class="${!ui.mFst ? 'on' : ''}">Todos <span class="n">${list.length}</span></button>${MAT_ST.map(st => { const n = list.filter(m => m.status === st.k).length; return n ? `<button data-mfst="${st.k}" class="${ui.mFst === st.k ? 'on' : ''}">${st.l} <span class="n">${n}</span></button>` : ''; }).join('')}</div>`;
     const shown = ui.mFst ? list.filter(m => m.status === ui.mFst) : list;
     body = tabs + `<div class="rows">${shown.sort((a, b) => MAT_ST.findIndex(x => x.k === a.status) - MAT_ST.findIndex(x => x.k === b.status) || (a.prazo || '9').localeCompare(b.prazo || '9')).map(matRow).join('') || '<div class="blk empty">Nenhum material com esses filtros.</div>'}</div>`;
   } else {
-    body = `<div class="mboard">${MAT_ST.map(st => { const ms = list.filter(m => m.status === st.k);
+    body = `<div class="mboard">${MAT_ST.filter(st => !ui.mSt || (ui.mSt === 'abertos' ? st.k !== 'entregue' : st.k === ui.mSt)).map(st => { const ms = list.filter(m => m.status === st.k);
       return `<div class="mcol" data-mcol="${st.k}"><div class="mh"><span class="mst" style="--c:${st.c}">${st.l}</span><span class="sub mcnt">${ms.length}</span></div>
         ${ms.map(matCard).join('')}
         <div class="madd"><input data-madd="${st.k}" placeholder="+ Adicionar material"></div></div>`; }).join('')}</div>
@@ -5535,7 +5638,9 @@ function relCorpo(p, assinar){
   const tl = relTram(p).filter(t => !r.excl.includes(t.id));
   if(on('tram') && tl.length) h += bar('Histórico de tramitação') + `<table class="val tr"><thead><tr><th style="width:30mm">Data</th><th>Movimentação</th></tr></thead><tbody>${tl.map(t => `<tr${t.acao === 'exigencia' ? ' class="ex"' : ''}><td>${fmtDH(t.em)}</td><td><b>${esc(t.de)}</b> ${esc((TRAM_AC[t.acao] || TRAM_AC.outro).l)}${t.acao === 'encaminhou' && t.para ? ' para <b>' + esc(t.para) + '</b>' : ''}${t.obs ? `<div class="ob">${esc(t.obs)}</div>` : ''}</td></tr>`).join('')}</tbody></table>`;
   const ex = tl.filter(t => t.acao === 'exigencia');
-  if(on('notif') && (ex.length || p.status === 'notificado')) h += bar('Notificações e exigências') + (ex.length ? `<ol class="al">${ex.map(t => `<li><b>${fmtDateBR(t.em)}</b> | ${esc(t.de)}${t.obs ? ': ' + esc(t.obs) : ''}</li>`).join('')}</ol>` : '') + (p.status === 'notificado' ? `<p class="ind">O processo encontra-se notificado e a Mannare está providenciando o atendimento às exigências.</p>` : '');
+  if(on('notif') && (p.notas || []).length) h += bar('Notificações e exigências') + (p.notas || []).slice().sort((a, b) => (a.data || '').localeCompare(b.data || '')).map(n => { const c = ntConta(n), [stl] = ntStatus(n);
+      return `<p style="margin:3mm 0 1.5mm"><b>${esc(NT_TIPO[n.tipo])} ${String(n.num || 1).padStart(2, '0')}</b>${n.data ? ' de ' + fmtDateBR(n.data) : ''}${n.orgao ? ' | ' + esc(n.orgao) : ''} | <b>${esc(stl)}</b> (${c.f} de ${c.t} itens atendidos)</p><table class="val et"><tbody>${ntOrdem(n).map(it => `<tr${ntOk(n, it) ? '' : ' class="pd"'}><td class="ck">${ntOk(n, it) ? '✓' : '○'}</td><td>${it.pai ? '&nbsp;&nbsp;&nbsp;' : ''}<b>${ntItemNum(n, it)}</b> ${esc(it.txt)}${it.com ? `<div class="ob">${esc(it.com)}</div>` : ''}</td><td class="c">${ntOk(n, it) ? 'atendido' : 'em atendimento'}</td></tr>`).join('')}</tbody></table>`; }).join('');
+  else if(on('notif') && (ex.length || p.status === 'notificado')) h += bar('Notificações e exigências') + (ex.length ? `<ol class="al">${ex.map(t => `<li><b>${fmtDateBR(t.em)}</b> | ${esc(t.de)}${t.obs ? ': ' + esc(t.obs) : ''}</li>`).join('')}</ol>` : '') + (p.status === 'notificado' ? `<p class="ind">O processo encontra-se notificado e a Mannare está providenciando o atendimento às exigências.</p>` : '');
   if(on('etapas') && p.tarefas.length){ const ok = p.tarefas.filter(t => t.status === 'concluida'), pend = p.tarefas.filter(t => t.status !== 'concluida');
     h += bar('Etapas do serviço') + `<table class="val et"><tbody>${ok.map(t => `<tr><td class="ck">✓</td><td>${esc(t.titulo.replace(/^Parametrização \| /, 'Conferência | '))}</td><td class="c">concluída</td></tr>`).join('')}${r.etapasPend ? pend.map(t => `<tr class="pd"><td class="ck">○</td><td>${esc(t.titulo.replace(/^Parametrização \| /, 'Conferência | '))}</td><td class="c">${t.status === 'andamento' ? 'em andamento' : 'a realizar'}</td></tr>`).join('') : ''}</tbody></table>`; }
   const ms = matsDoProc(p);
@@ -5639,6 +5744,439 @@ document.addEventListener('click', e => {
   if(tg.closest('[data-relreabrir]')){ e.stopPropagation(); r.st = 'rascunho'; r.hash = ''; logP(p, 'voltou o relatório para minuta'); save(); render(); return; }
 }, true);
 addEventListener('resize', () => { if(ui.drawer && ui.dtab === 'relatorio') relPreview(); });
+
+
+/* ============ Acompanhamento de notificações e notas devolutivas (processos e materiais) ============ */
+const NT_TIPO = {notificacao:'Notificação', devolutiva:'Nota devolutiva'};
+const ntOwner = ref => { const [k, id] = String(ref).split(':'); return k === 'm' ? matById(id) : procById(id); };
+const ntRefOf = (o, kind) => (kind === 'm' ? 'm:' : 'p:') + o.id;
+const ntLista = o => o.notas = o.notas || [];
+const ntFilhos = (n, it) => n.itens.filter(x => x.pai === it.id);
+const ntOk = (n, it) => { const f = ntFilhos(n, it); return f.length ? f.every(x => x.ok) : !!it.ok; };
+const ntConta = n => { const folhas = n.itens.filter(it => !ntFilhos(n, it).length); return {t:folhas.length, f:folhas.filter(x => x.ok).length}; };
+const ntStatus = n => { const c = ntConta(n); if(c.t && c.f === c.t) return ['Atendida', '#12B76A']; if(n.respEm) return ['Respondida ao órgão', '#00A9CC']; return ['Em atendimento', '#F79009']; };
+const ntPend = o => (o.notas || []).reduce((a, n) => { const c = ntConta(n); return a + (c.t - c.f); }, 0);
+const ntTitulo = (n, o) => `${NT_TIPO[n.tipo].toUpperCase()} ${String(n.num || 1).padStart(2, '0')}${n.data ? ' - ' + fmtDateBR(n.data) : ''}`;
+function ntTag(o){ const n = ntPend(o); return n ? `<span class="ctag late" title="Pendências de notificação / nota devolutiva em aberto">${ic('alerta', 'sm')} ${n} pendência${n > 1 ? 's' : ''}</span>` : ''; }
+function ntNova(o, tipo){ const ls = ntLista(o), num = ls.filter(n => n.tipo === tipo).length + 1;
+  const n = {id:uid(), tipo, num, data:TODAY, orgao:o.orgao || (o.dados && '') || '', prazo:'', respEm:'', aberta:true, itens:[], criadoPor:me, em:nowISO()}; ls.push(n); return n; }
+function ntItemNum(n, it){ if(it.pai){ const irm = n.itens.filter(x => x.pai === it.pai); return String.fromCharCode(97 + irm.indexOf(it)) + ')'; } return String(n.itens.filter(x => !x.pai).indexOf(it) + 1); }
+function ntOrdem(n){ const out = []; n.itens.filter(x => !x.pai).forEach(it => { out.push(it); ntFilhos(n, it).forEach(f => out.push(f)); }); return out; }
+function ntHtml(o, kind){
+  const ref = ntRefOf(o, kind), ls = ntLista(o), pend = ntPend(o);
+  const topo = `<div class="ntbar"><div><b>Notificações e notas devolutivas</b><div class="sub">${ls.length ? `${ls.length} documento${ls.length > 1 ? 's' : ''} | ${pend ? `<b style="color:#B42318">${pend} pendência${pend > 1 ? 's' : ''} em aberto</b>` : 'nenhuma pendência em aberto'}` : 'Registre aqui cada notificação do órgão ou nota devolutiva e acompanhe item a item.'}</div></div><span class="spacer"></span>
+    <button class="btn sm primary" data-ntnova="${ref}|notificacao">${ic('mais', 'sm')} Notificação</button><button class="btn sm" data-ntnova="${ref}|devolutiva">${ic('mais', 'sm')} Nota devolutiva</button>
+    <button class="btn sm ghost" data-ntimp="${ref}" title="Importar do modelo de planilha (uma aba por notificação)">Importar planilha</button>${ls.length ? `<button class="btn sm ghost" data-ntexp="${ref}">Exportar planilha</button>` : ''}<input type="file" accept=".xlsx,.xls" data-ntfile="${ref}" hidden></div>`;
+  const aviso = kind === 'p' && pend && o.status !== 'notificado' ? `<div class="banner" style="background:#FFF4D9;color:#7A5300;margin-bottom:12px;display:flex;gap:10px;align-items:center">Há pendências em aberto, mas o processo está como “${esc(PS[o.status].l)}”.<span class="spacer"></span><button class="btn sm" data-ntst="${o.id}">Mudar para Notificado</button></div>` : '';
+  const cards = ls.slice().sort((a, b) => (b.data || '').localeCompare(a.data || '')).map(n => { const c = ntConta(n), [stl, stc] = ntStatus(n), k = `${ref}|${n.id}`, venc = n.prazo && !n.respEm && c.f < c.t ? diffDays(n.prazo) : null;
+    const linhas = ntOrdem(n).map(it => { const sub = !!it.pai, filhos = ntFilhos(n, it), ok = ntOk(n, it), ik = `${k}|${it.id}`, cf = filhos.length ? filhos.filter(x => x.ok).length : 0;
+      return `<tr class="${ok ? 'ok' : ''} ${sub ? 'sub' : ''} ${filhos.length ? 'pai' : ''}"><td class="nn">${ntItemNum(n, it)}</td>
+        <td><textarea rows="1" data-ntf="${ik}|txt" placeholder="Pendência">${esc(it.txt)}</textarea></td>
+        <td class="ck">${filhos.length ? `<span class="ntcnt" title="Resolvida quando todos os subitens estiverem">${cf}/${filhos.length}</span>` : `<input type="checkbox" data-ntok="${ik}" ${it.ok ? 'checked' : ''}>`}</td>
+        <td><textarea rows="1" data-ntf="${ik}|com" placeholder="Comentário / como foi atendido">${esc(it.com || '')}</textarea></td>
+        <td><select data-ntf="${ik}|resp" title="Responsável"><option value="">—</option>${optsResp(it.resp || '')}</select></td>
+        <td class="ac">${sub ? '' : `<button class="x" data-ntsub="${ik}" title="Adicionar subitem (a, b, c…)">+a)</button>`}<button class="x" data-ntdel="${ik}" title="Excluir">✕</button></td></tr>`; }).join('');
+    return `<div class="ntcard ${n.aberta === false ? 'fech' : ''}"><div class="nth" data-nttog="${k}"><span class="mpcar">${n.aberta === false ? '▸' : '▾'}</span><b>${esc(ntTitulo(n, o))}</b>${n.orgao ? `<span class="orgtag" style="--oc:${ORG_COR[String(n.orgao).toUpperCase()] || '#52525B'}">${esc(n.orgao)}</span>` : ''}
+        <span class="ntst" style="--c:${stc}">${stl}</span>${venc !== null ? `<span class="ctag ${venc < 0 ? 'late' : venc <= 3 ? 'late' : ''}">${venc < 0 ? `resposta atrasada ${-venc}d` : venc === 0 ? 'responder hoje' : `responder em ${venc}d`}</span>` : ''}
+        ${n.link ? `<a class="ntdrive" href="${esc(n.link)}" target="_blank" rel="noopener" title="Abrir a notificação no Drive">${ic('pasta', 'sm')} Drive</a>` : ''}<span class="spacer"></span><div class="prog" style="width:150px"><div class="bar" style="flex:1"><i style="width:${c.t ? c.f * 100 / c.t : 0}%;background:#12B76A"></i></div>${c.f}/${c.t}</div></div>
+      ${n.aberta === false ? '' : `<div class="ntmeta"><label>Tipo<select data-ntm="${k}|tipo">${Object.entries(NT_TIPO).map(([v, l]) => `<option value="${v}" ${n.tipo === v ? 'selected' : ''}>${l}</option>`).join('')}</select></label>
+        <label>Nº<input type="number" min="1" data-ntm="${k}|num" value="${n.num || 1}" style="width:64px"></label><label>Data<input type="date" data-ntm="${k}|data" value="${n.data || ''}"></label>
+        <label>Órgão / emissor<input data-ntm="${k}|orgao" value="${esc(n.orgao || '')}" placeholder="SEUMA, AMC, cartório…" style="width:150px"></label><label>Prazo de resposta<input type="date" data-ntm="${k}|prazo" value="${n.prazo || ''}"></label>
+        <label>Respondida em<input type="date" data-ntm="${k}|respEm" value="${n.respEm || ''}"></label>
+        <label style="flex:1;min-width:220px">Link no Drive<span style="display:flex;gap:6px"><input data-ntm="${k}|link" value="${esc(n.link || '')}" placeholder="https://drive.google.com/…" style="flex:1">${n.link ? `<a class="btn sm" href="${esc(n.link)}" target="_blank" rel="noopener" title="Abrir no Drive">${ic('pasta', 'sm')}</a>` : ''}</span></label><span class="spacer"></span><button class="btn sm ghost danger" data-ntrm="${k}">Excluir</button></div>
+        <table class="nttab"><thead><tr><th style="width:44px">ITEM</th><th>PENDÊNCIA</th><th style="width:84px">RESOLVIDA</th><th>COMENTÁRIO</th><th style="width:110px">RESP.</th><th style="width:62px"></th></tr></thead><tbody>${linhas || '<tr><td colspan="6" class="sub" style="padding:10px">Nenhuma pendência ainda.</td></tr>'}</tbody></table>
+        <div class="ntadd"><textarea rows="1" data-ntadd="${k}" placeholder="+ Adicionar pendência (Enter). Pode colar uma lista: linhas que começam com a), b)… viram subitens."></textarea></div>`}</div>`; }).join('');
+  return topo + aviso + (cards || '');
+}
+function ntRender(ref){ if(String(ref).startsWith('m:')) renderMat(); else renderDrawer(); render(); }
+function ntAcha(k){ const [r, nid, iid] = k.split('|'); const o = ntOwner(r); const n = o && ntLista(o).find(x => x.id === nid); const it = n && iid ? n.itens.find(x => x.id === iid) : null; return {r, o, n, it}; }
+const ntLog = (r, o, txt) => r.startsWith('m:') ? logT(o, txt) : logP(o, txt);
+function ntAddLinhas(n, txt){ let ultimo = n.itens.filter(x => !x.pai).slice(-1)[0] || null;
+  txt.split(/\n+/).map(l => l.trim()).filter(Boolean).forEach(l => { const m = l.match(/^([a-z])\)\s*(.*)$/i), num = l.match(/^\d+[.)-]?\s+(.*)$/);
+    if(m && ultimo) n.itens.push({id:uid(), pai:ultimo.id, txt:m[2], ok:false, com:''});
+    else { ultimo = {id:uid(), pai:'', txt:num ? num[1] : l, ok:false, com:''}; n.itens.push(ultimo); } }); }
+document.addEventListener('click', e => {
+  const tg = e.target; if(!tg.closest) return; let el;
+  if((el = tg.closest('[data-ntnova]'))){ e.stopPropagation(); const [r, tipo] = el.dataset.ntnova.split('|'), o = ntOwner(r); const n = ntNova(o, tipo); ntLog(r, o, `registrou a ${NT_TIPO[tipo].toLowerCase()} ${String(n.num).padStart(2, '0')}`); save(); ntRender(r); setTimeout(() => { const x = $(`[data-ntadd$="${n.id}"]`); if(x) x.focus(); }, 0); return; }
+  if((el = tg.closest('[data-nttog]'))){ if(tg.closest('select,input,button,label')) return; e.stopPropagation(); const {r, n} = ntAcha(el.dataset.nttog); n.aberta = n.aberta === false; save(); ntRender(r); return; }
+  if((el = tg.closest('[data-ntrm]'))){ e.stopPropagation(); const {r, o, n} = ntAcha(el.dataset.ntrm); if(!confirm(`Excluir ${ntTitulo(n, o)} e todas as pendências dela?`)) return; o.notas = o.notas.filter(x => x !== n); ntLog(r, o, `excluiu ${ntTitulo(n, o).toLowerCase()}`); save(); ntRender(r); return; }
+  if((el = tg.closest('[data-ntsub]'))){ e.stopPropagation(); const {r, n, it} = ntAcha(el.dataset.ntsub); const f = {id:uid(), pai:it.id, txt:'', ok:false, com:''}; const fs = ntFilhos(n, it), pos = n.itens.indexOf(fs.length ? fs[fs.length - 1] : it); n.itens.splice(pos + 1, 0, f); save(); ntRender(r); setTimeout(() => { const x = $(`[data-ntf$="${f.id}|txt"]`); if(x) x.focus(); }, 0); return; }
+  if((el = tg.closest('[data-ntdel]'))){ e.stopPropagation(); const {r, n, it} = ntAcha(el.dataset.ntdel); const fs = ntFilhos(n, it); if((it.txt || fs.length) && !confirm(fs.length ? 'Excluir o item e os subitens?' : 'Excluir esta pendência?')) return; n.itens = n.itens.filter(x => x !== it && x.pai !== it.id); save(); ntRender(r); return; }
+  if((el = tg.closest('[data-ntst]'))){ e.stopPropagation(); const p = procById(el.dataset.ntst); if(p) procMudarStatus(p, 'notificado'); return; }
+  if((el = tg.closest('[data-ntimp]'))){ e.stopPropagation(); const f = $(`[data-ntfile="${el.dataset.ntimp}"]`); if(f) f.click(); return; }
+  if((el = tg.closest('[data-ntexp]'))){ e.stopPropagation(); ntExportar(el.dataset.ntexp); return; }
+}, true);
+document.addEventListener('change', e => {
+  const tg = e.target; if(!tg.dataset) return;
+  if(tg.dataset.ntok !== undefined){ e.stopPropagation(); const {r, o, n, it} = ntAcha(tg.dataset.ntok); it.ok = tg.checked; it.okEm = tg.checked ? nowISO() : ''; it.okPor = tg.checked ? me : '';
+    ntLog(r, o, `${it.ok ? 'resolveu' : 'reabriu'} o item ${ntItemNum(n, it)} da ${ntTitulo(n, o).toLowerCase()}`); save(); ntRender(r); return; }
+  if(tg.dataset.ntf !== undefined){ e.stopPropagation(); const parts = tg.dataset.ntf.split('|'), fld = parts.pop(); const {r, it} = ntAcha(parts.join('|')); it[fld] = tg.value; save(); if(fld === 'resp'){ ntRender(r); } return; }
+  if(tg.dataset.ntm !== undefined){ e.stopPropagation(); const parts = tg.dataset.ntm.split('|'), fld = parts.pop(); const {r, n} = ntAcha(parts.join('|')); n[fld] = fld === 'num' ? Math.max(1, +tg.value || 1) : tg.value; save(); ntRender(r); return; }
+  if(tg.dataset.ntfile !== undefined){ e.stopPropagation(); const f = tg.files && tg.files[0]; if(f) ntImportar(tg.dataset.ntfile, f); tg.value = ''; return; }
+}, true);
+document.addEventListener('keydown', e => {
+  const tg = e.target; if(!tg.dataset) return;
+  if(tg.dataset.ntadd !== undefined && e.key === 'Enter' && !e.shiftKey){ e.preventDefault(); e.stopPropagation(); const v = tg.value.trim(); if(!v) return; const {r, n} = ntAcha(tg.dataset.ntadd); ntAddLinhas(n, v); save(); ntRender(r); setTimeout(() => { const x = $(`[data-ntadd="${tg.dataset.ntadd}"]`); if(x) x.focus(); }, 0); return; }
+  if((tg.dataset.ntf !== undefined) && e.key === 'Enter' && !e.shiftKey){ e.preventDefault(); tg.blur(); }
+}, true);
+document.addEventListener('paste', e => { const tg = e.target; if(!tg.dataset || tg.dataset.ntadd === undefined) return; const t = (e.clipboardData || window.clipboardData).getData('text'); if(!/\n/.test(t)) return;
+  e.preventDefault(); e.stopPropagation(); const {r, n} = ntAcha(tg.dataset.ntadd); ntAddLinhas(n, t); save(); ntRender(r); toast('Lista colada como pendências'); }, true);
+document.addEventListener('input', e => { const tg = e.target; if(tg.tagName === 'TEXTAREA' && (tg.dataset.ntf !== undefined || tg.dataset.ntadd !== undefined)){ tg.style.height = 'auto'; tg.style.height = tg.scrollHeight + 'px'; } }, true);
+function ntAutoAltura(){ $$('.nttab textarea').forEach(t => { t.style.height = 'auto'; t.style.height = (t.scrollHeight || 30) + 'px'; }); }
+/* planilha: SheetJS carregada sob demanda */
+let xlsxProm = null;
+function xlsxLib(){ if(window.XLSX) return Promise.resolve(window.XLSX); if(!xlsxProm) xlsxProm = new Promise((ok, no) => { const sc = document.createElement('script'); sc.src = 'https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js'; sc.onload = () => ok(window.XLSX); sc.onerror = () => { xlsxProm = null; no(new Error('Não foi possível carregar o leitor de planilhas (sem internet?)')); }; document.head.appendChild(sc); }); return xlsxProm; }
+document.addEventListener('click', e => { if(e.target.closest && e.target.closest('.ntdrive')) e.stopPropagation(); }, true);
+const ntBool = v => v === true || /^(true|verdadeiro|sim|x|ok|1|✓|✔)$/i.test(String(v == null ? '' : v).trim());
+function ntLerAba(rows, nomeAba){
+  let ti = rows.findIndex(r => r.some(c => /notifica|devolutiv|nota\s*t[eé]cnica/i.test(String(c || '')))), hi = rows.findIndex(r => r.some(c => /^\s*pend[êe]ncia/i.test(String(c || ''))));
+  if(hi < 0) return null;
+  const titulo = ti >= 0 ? String(rows[ti].find(c => /notifica|devolutiv|nota/i.test(String(c || '')))) : nomeAba;
+  const hd = rows[hi].map(c => norm(String(c || '').trim())), col = re => hd.findIndex(h => re.test(h));
+  const cI = col(/^item/), cP = col(/^pendencia/), cR = col(/^resolvid|^atendid|^status/), cC = col(/^coment|^obs/), cResp = col(/^resp/);
+  const dm = titulo.match(/(\d{1,2})[\/.](\d{1,2})[\/.](\d{2,4})/), nm = titulo.match(/(?:notifica[cç][aã]o|nota[^0-9]*|nd)\s*0*(\d+)/i) || nomeAba.match(/0*(\d+)/);
+  const n = {id:uid(), tipo:/devolutiv/i.test(titulo + ' ' + nomeAba) ? 'devolutiva' : 'notificacao', num:nm ? +nm[1] : 1, data:dm ? `${dm[3].length === 2 ? '20' + dm[3] : dm[3]}-${dm[2].padStart(2, '0')}-${dm[1].padStart(2, '0')}` : '', orgao:'', prazo:'', respEm:'', aberta:true, itens:[], importado:titulo};
+  let ultimo = null;
+  rows.slice(hi + 1).forEach(r => { const txt = String(r[cP] == null ? '' : r[cP]).trim(), num = cI >= 0 ? String(r[cI] == null ? '' : r[cI]).trim() : '', com = cC >= 0 ? String(r[cC] == null ? '' : r[cC]).trim() : '';
+    if(!txt && !com) return; const ok = cR >= 0 && ntBool(r[cR]);
+    const sm = txt.match(/^([a-z])\)\s*(.*)$/i);
+    if(!num && sm && ultimo) n.itens.push({id:uid(), pai:ultimo.id, txt:sm[2], ok, com});
+    else if(!num && !txt && ultimo){ const alvo = n.itens[n.itens.length - 1]; alvo.com = [alvo.com, com].filter(Boolean).join('\n'); }
+    else { ultimo = {id:uid(), pai:'', txt:txt.replace(/^\d+[.)-]?\s+/, ''), ok, com}; n.itens.push(ultimo); } });
+  return n.itens.length ? n : null;
+}
+async function ntImportar(ref, file){
+  try{ const X = await xlsxLib(), wb = X.read(await file.arrayBuffer(), {type:'array'}), o = ntOwner(ref); let k = 0;
+    wb.SheetNames.forEach(nm => { const rows = X.utils.sheet_to_json(wb.Sheets[nm], {header:1, raw:true, defval:null}); const n = ntLerAba(rows, nm); if(n){ ntLista(o).push(n); k++; } });
+    if(!k){ toast('Não encontrei a tabela (ITEM | PENDÊNCIA | RESOLVIDA | COMENTÁRIO) na planilha'); return; }
+    ntLog(ref, o, `importou ${k} notificação(ões) da planilha “${file.name}”`); save(); ntRender(ref); toast(`${k} notificação(ões) importada(s)`); }
+  catch(err){ toast(err.message || 'Erro ao ler a planilha'); }
+}
+async function ntExportar(ref){
+  try{ const X = await xlsxLib(), o = ntOwner(ref), wb = X.utils.book_new(), emp = ref.startsWith('p:') ? ((propById(o.propId) || {}).emp || '') : (o.dados.imovel || o.titulo || '');
+    ntLista(o).slice().sort((a, b) => (a.data || '').localeCompare(b.data || '')).forEach(n => { const rows = [[], [`${ntTitulo(n, o)}${emp ? ' (' + emp + ')' : ''}`], ['ITEM', 'PENDÊNCIA', 'RESOLVIDA', 'COMENTÁRIO', 'RESPONSÁVEL']];
+      ntOrdem(n).forEach(it => rows.push([it.pai ? '' : ntItemNum(n, it), it.pai ? `${ntItemNum(n, it)} ${it.txt}` : it.txt, ntOk(n, it), it.com || '', it.resp ? first(it.resp) : '']));
+      const ws = X.utils.aoa_to_sheet(rows); ws['!cols'] = [{wch:6}, {wch:48}, {wch:11}, {wch:70}, {wch:14}]; ws['!merges'] = [{s:{r:1, c:0}, e:{r:1, c:4}}];
+      X.utils.book_append_sheet(wb, ws, `${n.tipo === 'devolutiva' ? 'NDV' : 'ND'}${String(n.num || 1).padStart(2, '0')}`.slice(0, 31)); });
+    X.writeFile(wb, `Acompanhamento ${ref.startsWith('p:') ? pcod(o) : o.codigo} ${emp}`.replace(/[\\/:*?"<>|]+/g, '-').trim() + '.xlsx'); }
+  catch(err){ toast(err.message || 'Erro ao gerar a planilha'); }
+}
+renderDrawer = (function(base){ return function(){ base.apply(this, arguments); if(ui.dtab === 'notas') ntAutoAltura(); }; })(renderDrawer);
+
+/* ============ Material técnico: versões ============ */
+const VER_ST = {edicao:['em edição', '#0000FF'], validacao:['em validação', '#C99500'], entregue:['entregue', '#12B76A'], substituida:['substituída', '#9A9DB0']};
+function matVers(m){ if(!m.versoes || !m.versoes.length) m.versoes = [{id:uid(), n:1, st:m.status === 'entregue' ? 'entregue' : 'edicao', ini:m.criadoEm || nowISO(), por:(m.log[m.log.length - 1] || {}).por || me, obs:'Versão inicial'}]; return m.versoes; }
+const matVer = m => { const vs = matVers(m); return vs[vs.length - 1]; };
+const verLbl = v => 'V' + String(v.n).padStart(2, '0');
+function matVerTag(m){ const v = matVer(m), [l, c] = VER_ST[v.st] || VER_ST.edicao; return `<span class="vertag" style="--c:${c}" title="Versão ${v.n} ${l}">${verLbl(v)} <i>${l}</i></span>`; }
+function matNovaVersao(m, motivo){ const vs = matVers(m), at = vs[vs.length - 1]; if(at.st !== 'entregue') at.st = 'substituida'; at.fim = at.fim || nowISO();
+  const v = {id:uid(), n:at.n + 1, st:'edicao', ini:nowISO(), por:me, obs:motivo || ''}; vs.push(v); logT(m, `abriu a versão ${verLbl(v)}${motivo ? ': ' + motivo : ''}`); return v; }
+function matVerSync(m, old, st){ const v = matVer(m);
+  if(st === 'validacao') v.st = 'validacao';
+  else if(st === 'entregue'){ v.st = 'entregue'; v.fim = nowISO(); v.entPor = me; }
+  else if(old === 'entregue' && ['elaboracao', 'ajustes'].includes(st)) matNovaVersao(m, 'reaberto após a entrega');
+  else if(v.st === 'validacao') v.st = 'edicao'; }
+function matVerHtml(m){ const vs = matVers(m), at = vs[vs.length - 1];
+  return `<div class="verbox"><div class="verh"><b>Versão em edição</b>${matVerTag(m)}<span class="spacer"></span><button class="btn sm" data-mnovaver>${ic('mais', 'sm')} Nova versão</button></div>
+    <label class="f" style="margin:8px 0 0">O que muda nesta versão<input data-mverobs="${at.id}" value="${esc(at.obs || '')}" placeholder="Ex.: atende a nota devolutiva 01 (itens 2 e 4)"></label>
+    ${vs.length > 1 ? `<details class="verhist"><summary>Histórico de versões (${vs.length})</summary>${vs.slice().reverse().map(v => { const [l, c] = VER_ST[v.st] || VER_ST.edicao; return `<div class="verrow"><b>${verLbl(v)}</b><span class="ntst" style="--c:${c}">${l}</span><span class="sub">${fmtD((v.ini || '').slice(0, 10))}${v.fim ? ' → ' + fmtD(v.fim.slice(0, 10)) : ''} | ${esc(first(v.por))}</span><span class="sub" style="flex:1">${esc(v.obs || '')}</span>${v.link ? `<a class="link" href="${esc(v.link)}" target="_blank" rel="noopener">arquivo</a>` : ''}</div>`; }).join('')}</details>` : ''}</div>`; }
+document.addEventListener('click', e => { if(!e.target.closest || !e.target.closest('[data-mnovaver]')) return; e.stopPropagation(); const m = matById(ui.mat); if(!m) return;
+  const mot = prompt(`Abrir a versão ${verLbl({n:matVer(m).n + 1})}. O que muda nela?`, ntPend(m) ? 'Atendimento à nota devolutiva' : ''); if(mot === null) return;
+  const at = matVer(m); if(m.arquivo && !at.link) at.link = m.arquivo; matNovaVersao(m, mot.trim()); save(); renderMat(); render(); toast(`${verLbl(matVer(m))} em edição`); }, true);
+document.addEventListener('change', e => { const tg = e.target; if(!tg.dataset || tg.dataset.mverobs === undefined) return; e.stopPropagation(); const m = matById(ui.mat); const v = m && matVers(m).find(x => x.id === tg.dataset.mverobs); if(v){ v.obs = tg.value.trim(); save(); } }, true);
+/* modal do material: abas Dados | Notificações */
+renderMat = (function(base){ return function(){ base.apply(this, arguments); const m = matById(ui.mat); if(!m) return;
+  const L = $('#layer .mleft'), tt = L && $('.ttitle', L); if(!tt) return; const pend = ntPend(m), tab = ui.mtab || 'dados';
+  $('#layer .mhead span').insertAdjacentHTML('afterend', ' ' + matVerTag(m));
+  tt.insertAdjacentHTML('afterend', `<div class="tabs mtabs" style="padding:0;margin:0 0 14px"><button class="tab ${tab === 'dados' ? 'on' : ''}" data-mtab="dados">Dados</button><button class="tab ${tab === 'crono' ? 'on' : ''}" data-mtab="crono">Cronograma</button><button class="tab ${tab === 'notas' ? 'on' : ''}" data-mtab="notas">Notificações / notas devolutivas${pend ? ` <span class="n" style="background:#D92D20">${pend}</span>` : (m.notas || []).length ? ` <span class="n">${m.notas.length}</span>` : ''}</button></div>`);
+  if(tab === 'notas'){ L.classList.add('tnotas'); L.insertAdjacentHTML('beforeend', `<div class="ntwrap">${ntHtml(m, 'm')}</div>`); ntAutoAltura(); }
+  else if(tab === 'crono'){ L.classList.add('tnotas'); L.insertAdjacentHTML('beforeend', `<div class="ntwrap">${ui.crFull === 'm:' + m.id ? '<div class="sub" style="padding:14px">O cronograma está aberto em tela cheia.</div>' : crHtml(m, 'm:' + m.id)}</div>`); crAposRender(); }
+  else { const pr = $('.props', L); if(pr) pr.insertAdjacentHTML('afterend', matVerHtml(m)); }
+}; })(renderMat);
+document.addEventListener('click', e => { const el = e.target.closest && e.target.closest('[data-mtab]'); if(!el) return; e.stopPropagation(); ui.mtab = el.dataset.mtab; renderMat(); }, true);
+
+
+/* ============ Cronograma (no estilo do MS Project) ============ */
+/* calendário: segunda a sexta, menos feriados nacionais e de Fortaleza/CE */
+const crD = v => new Date(v + 'T00:00:00Z'), crS = d => d.toISOString().slice(0, 10);
+const crAdd = (v, n) => { const d = crD(v); d.setUTCDate(d.getUTCDate() + n); return crS(d); };
+function crPascoa(y){ const a = y % 19, b = Math.floor(y / 100), c = y % 100, d = Math.floor(b / 4), e = b % 4, f = Math.floor((b + 8) / 25), g = Math.floor((b - f + 1) / 3), h = (19 * a + b - d - g + 15) % 30, i = Math.floor(c / 4), k = c % 4, l = (32 + 2 * e + 2 * i - h - k) % 7, m = Math.floor((a + 11 * h + 22 * l) / 451), mes = Math.floor((h + l - 7 * m + 114) / 31), dia = ((h + l - 7 * m + 114) % 31) + 1;
+  return `${y}-${String(mes).padStart(2, '0')}-${String(dia).padStart(2, '0')}`; }
+const CR_FIXOS = [['01-01', 'Confraternização Universal'], ['03-19', 'São José (CE)'], ['03-25', 'Data Magna do Ceará'], ['04-13', 'Aniversário de Fortaleza'], ['04-21', 'Tiradentes'], ['05-01', 'Dia do Trabalho'], ['08-15', 'N. Sra. da Assunção (Fortaleza)'], ['09-07', 'Independência'], ['10-12', 'N. Sra. Aparecida'], ['11-02', 'Finados'], ['11-15', 'Proclamação da República'], ['11-20', 'Consciência Negra'], ['12-25', 'Natal']];
+const crFerC = {};
+function crFeriados(y){ if(crFerC[y]) return crFerC[y]; const f = new Map(CR_FIXOS.map(([d, n]) => [`${y}-${d}`, n])); const e = crPascoa(y);
+  [[-48, 'Carnaval'], [-47, 'Carnaval'], [-2, 'Sexta-feira Santa'], [60, 'Corpus Christi']].forEach(([k, n]) => f.set(crAdd(e, k), n)); crFerExtra().forEach(x => { if(x.anual) f.set(`${y}-${x.d.slice(5)}`, x.nome || 'Feriado extra'); else if(x.d.startsWith(y + '-')) f.set(x.d, x.nome || 'Feriado extra'); }); return crFerC[y] = f; }
+const crFerExtra = () => ((S.cfg || {}).feriadosExtra || []).map(x => typeof x === 'string' ? {id:x, d:x, nome:'Feriado extra', anual:false} : x).filter(x => x && x.d);
+function crFerLimpar(){ Object.keys(crFerC).forEach(k => delete crFerC[k]); }
+function crFerModal(){
+  const ls = crFerExtra().sort((a, b) => (a.anual ? '0000' + a.d.slice(4) : a.d).localeCompare(b.anual ? '0000' + b.d.slice(4) : b.d)), y = +TODAY.slice(0, 4);
+  const fixos = [...crFeriados(y).entries()].filter(([d]) => !ls.some(x => (x.anual ? `${y}-${x.d.slice(5)}` : x.d) === d)).sort();
+  let f = $('#ferLayer'); if(!f){ f = document.createElement('div'); f.id = 'ferLayer'; document.body.appendChild(f); }
+  f.innerHTML = `<div class="mlayer" style="z-index:400"><div class="modal small" style="width:min(620px,100%)">
+    <div class="mhead"><b style="color:var(--ink);font-size:16px;font-family:var(--kanit);text-transform:uppercase;font-weight:500">Feriados e recessos</b><span class="spacer"></span><button class="btn ghost" data-fercl>✕</button></div>
+    <div style="padding:16px 18px;display:flex;flex-direction:column;gap:12px;max-height:70vh;overflow:auto">
+      <p class="sub" style="margin:0">Dias sem expediente da Mannare além dos feriados nacionais e de Fortaleza/CE. Valem para todos os cronogramas.</p>
+      <div class="feradd"><input type="date" id="ferD" value=""><input id="ferN" placeholder="Nome (ex.: Recesso de fim de ano)"><label class="sub" style="display:flex;gap:5px;align-items:center;white-space:nowrap"><input type="checkbox" id="ferA"> todo ano</label><button class="btn sm primary" data-feradd>Adicionar</button></div>
+      <div class="sub" style="font-size:11.5px">Para um recesso de vários dias, escolha a data inicial e preencha <b>até</b>: <input type="date" id="ferAte" style="border:1px solid var(--line);padding:2px 4px;font:inherit;font-size:12px"></div>
+      <div><b style="font-size:13px">Cadastrados (${ls.length})</b>${ls.map(x => `<div class="ferrow"><span>${x.anual ? `${x.d.slice(8)}/${x.d.slice(5, 7)} <span class="ctag">todo ano</span>` : fmtDateBR(x.d)}</span><span style="flex:1">${esc(x.nome || '')}</span><button class="x" data-ferdel="${esc(x.id)}" title="Remover">✕</button></div>`).join('') || '<div class="sub" style="padding:6px 0">Nenhum feriado extra.</div>'}</div>
+      <details><summary class="sub" style="cursor:pointer;font-weight:600">Feriados já considerados em ${y} (${fixos.length})</summary>${fixos.map(([d, n]) => `<div class="ferrow"><span>${fmtDateBR(d)}</span><span style="flex:1" class="sub">${esc(n)}</span></div>`).join('')}</details>
+    </div></div></div>`;
+}
+function crFerSalvar(lst){ S.cfg.feriadosExtra = lst; crFerLimpar(); save(); crFerModal(); $$('.crwrap[data-cr]').forEach(w => crRender(w.dataset.cr)); }
+document.addEventListener('click', e => {
+  const tg = e.target; if(!tg.closest) return; let el;
+  if(tg.closest('[data-ferabrir]')){ e.stopPropagation(); crFerModal(); return; }
+  if(!tg.closest('#ferLayer')) return; e.stopPropagation();
+  if(tg.closest('[data-fercl]') || tg.classList.contains('mlayer')){ $('#ferLayer').remove(); return; }
+  if(tg.closest('[data-feradd]')){ const d = $('#ferD').value, ate = $('#ferAte').value, nome = $('#ferN').value.trim() || 'Feriado extra', anual = $('#ferA').checked; if(!d){ toast('Escolha a data'); return; }
+    const lst = crFerExtra(); let k = 0; for(let x = d; x <= (ate && ate >= d ? ate : d) && k < 60; x = crAdd(x, 1), k++) if(!lst.some(y => y.d === x)) lst.push({id:uid(), d:x, nome, anual});
+    crFerSalvar(lst); toast(k > 1 ? `${k} dias adicionados` : 'Feriado adicionado'); return; }
+  if((el = tg.closest('[data-ferdel]'))){ crFerSalvar(crFerExtra().filter(x => x.id !== el.dataset.ferdel)); return; }
+}, true);
+const crUtil = v => { const w = crD(v).getUTCDay(); return w !== 0 && w !== 6 && !crFeriados(+v.slice(0, 4)).has(v); };
+const crProx = v => { let k = 0; while(!crUtil(v) && k++ < 30) v = crAdd(v, 1); return v; };
+function crSoma(v, n){ let d = v, k = Math.abs(n), st = n >= 0 ? 1 : -1, g = 0; while(k > 0 && g++ < 5000){ d = crAdd(d, st); if(crUtil(d)) k--; } return d; }
+function crConta(a, b){ if(!a || !b) return 0; if(b < a) return -crConta(b, a) + (crUtil(a) && crUtil(b) ? 0 : 0); let n = 0, d = a, g = 0; while(d <= b && g++ < 5000){ if(crUtil(d)) n++; d = crAdd(d, 1); } return n; }
+const crMax = (a, b) => !a ? b : !b ? a : a > b ? a : b, crMin = (a, b) => !a ? b : !b ? a : a < b ? a : b;
+const CR_TIPOS = {TI:'Término-a-início', II:'Início-a-início', TT:'Término-a-término', IT:'Início-a-término'}, CR_EN = {FS:'TI', SS:'II', FF:'TT', SF:'IT'};
+const crDe = o => { const c = o.crono = o.crono || {}; c.tarefas = c.tarefas || []; c.ini = c.ini || (o.datas && o.datas.iniPlan) || TODAY; return c; };
+const crNovaT = o => Object.assign({id:uid(), nome:'', modo:'auto', dur:1, marco:false, nivel:0, preds:[], restr:'', ini:'', fim:'', iniReal:'', fimReal:'', fechado:false}, o || {});
+function crPredTxt(cr, t){ const T = cr.tarefas; let ix = null; return (t.preds || []).map(p => { const i = T.findIndex(x => x.id === p.id); let alvo;
+  if(i >= 0) alvo = String(i + 1); else if(p.id[0] === 'S' && procById(p.id.slice(1))) alvo = pcod(procById(p.id.slice(1))); else { ix = ix || crIdx(); const x = ix[p.id]; if(!x) return ''; alvo = `${pcod(x.p)}:${x.i + 1}`; }
+  return `${alvo}${p.tipo !== 'TI' || p.lag ? p.tipo : ''}${p.lag ? (p.lag > 0 ? '+' : '') + p.lag + 'd' : ''}`; }).filter(Boolean).join(';'); }
+const crProcPorCod = c => { const n = norm(String(c).trim()); return S.procs.find(x => norm(pcod(x)) === n || norm(x.codigo || '') === n || norm(x.protocolo || '') === n); };
+function crPredParse(cr, t, txt){ const T = cr.tarefas, out = [], erros = [];
+  const SUF = '(TI|II|TT|IT|FS|SS|FF|SF)?([+-]\\d+)?(D|DU|DIAS?)?';
+  String(txt || '').split(/[;,]/).map(x => x.trim()).filter(Boolean).forEach(x => { const u = x.toUpperCase().replace(/\s+/g, ''); let m = u.match(new RegExp('^(\\d+)' + SUF + '$')), alvo = null;
+    if(m) alvo = T[+m[1] - 1];
+    else if((m = u.match(new RegExp('^(.+?):(\\d+)' + SUF + '$')))){ const pp = crProcPorCod(m[1]); alvo = pp ? crDe(pp).tarefas[+m[2] - 1] : null; m = [m[0], m[2], m[3], m[4]]; }
+    else { const mm = u.match(new RegExp('^(.+?)' + SUF + '$')); const pp = mm && crProcPorCod(mm[1]); if(pp){ alvo = {id:'S' + pp.id}; m = [mm[0], '', mm[2], mm[3]]; } }
+    if(!alvo || alvo.id === t.id || alvo.id === 'S' + ((t._proc || {}).id || '')){ erros.push(x); return; }
+    out.push({id:alvo.id, tipo:CR_EN[m[2]] || m[2] || 'TI', lag:m[3] ? +m[3] : 0}); });
+  return {out, erros}; }
+function crInfo(cr){ const T = cr.tarefas, resumo = T.map((t, i) => i + 1 < T.length && T[i + 1].nivel > t.nivel), pai = T.map((t, i) => { for(let j = i - 1; j >= 0; j--) if(T[j].nivel < t.nivel) return j; return -1; }); return {T, resumo, pai}; }
+function crCalc(cr){
+  crFerCheck(); const {T, resumo, pai} = crInfo(cr), ini0 = crProx(cr.ini || TODAY), R = {}, idx = {};
+  T.forEach((t, i) => { idx[t.id] = i; R[t.id] = {ini:ini0, fim:ini0, dur:0, marco:false}; });
+  const cand = (pr, tipo, lag, D) => { if(!pr) return null; if(tipo === 'II') return crProx(crSoma(crProx(pr.ini), lag));
+    if(tipo === 'TT' || tipo === 'IT'){ const f = tipo === 'TT' ? crSoma(pr.fim, lag) : crSoma(pr.ini, lag - (D ? 1 : 0)); return D ? crSoma(crProx(f), -(D - 1)) : crProx(f); }
+    return crProx(crSoma(D === 0 ? pr.fim : crSoma(pr.fim, 1), lag)); };
+  let ok = false;
+  for(let pass = 0; pass < 120 && !ok; pass++){
+    ok = true; const antes = JSON.stringify(R);
+    T.forEach((t, i) => { if(resumo[i]) return; let lo = ini0; if(t.restr) lo = crMax(lo, crProx(t.restr));
+      for(let a = pai[i]; a >= 0; a = pai[a]){ if(T[a].restr) lo = crMax(lo, crProx(T[a].restr)); } for(let a = pai[i]; a >= 0; a = pai[a]) (T[a].preds || []).forEach(p => { if(p.tipo === 'TI' || p.tipo === 'II'){ const c = cand(R[p.id], p.tipo, p.lag, 1); if(c) lo = crMax(lo, c); } });
+      let ini, fim, D;
+      if(t.modo === 'manual'){ ini = t.ini || lo; D = t.marco ? 0 : t.fim ? Math.max(1, crConta(ini, t.fim)) : Math.max(1, t.dur | 0); fim = t.marco ? ini : (t.fim || crSoma(crProx(ini), D - 1)); }
+      else { D = t.marco ? 0 : Math.max(1, t.dur | 0); ini = lo; (t.preds || []).forEach(p => { if(idx[p.id] === undefined) return; const c = cand(R[p.id], p.tipo, p.lag, D); if(c) ini = crMax(ini, c); }); ini = crProx(ini); fim = D ? crSoma(ini, D - 1) : ini; }
+      R[t.id] = {ini, fim, dur:D, marco:!!t.marco}; });
+    for(let i = T.length - 1; i >= 0; i--){ if(!resumo[i]) continue; let a = '', b = '', ra = '', rb = '', todos = true;
+      for(let j = i + 1; j < T.length && T[j].nivel > T[i].nivel; j++){ const r = R[T[j].id]; a = crMin(a, r.ini); b = crMax(b, r.fim); if(!resumo[j]){ ra = crMin(ra, T[j].iniReal); if(!T[j].fimReal) todos = false; else rb = crMax(rb, T[j].fimReal); } }
+      R[T[i].id] = {ini:a || ini0, fim:b || ini0, dur:crConta(a || ini0, b || ini0), resumo:true, iniReal:ra, fimReal:todos ? rb : ''}; }
+    ok = JSON.stringify(R) === antes;
+  }
+  if(!ok) T.forEach(t => { if((t.preds || []).length) R[t.id].erro = 'As predecessoras formam um ciclo'; });
+  return {R, resumo, pai, ini0};
+}
+let crFerSig = '';
+function crFerCheck(){ const sg = JSON.stringify((S.cfg || {}).feriadosExtra || []); if(sg !== crFerSig){ crFerSig = sg; crFerLimpar(); } }
+
+/* ---- licenciamento completo: processos ligados viram um cronograma só ---- */
+function crIdx(){ const m = {}; S.procs.forEach(p => (((p.crono || {}).tarefas) || []).forEach((t, i) => m[t.id] = {p, i})); return m; }
+function crComp(p){ if(!p || !p.tarefas) return [p]; const ix = crIdx(), viz = new Map(S.procs.map(x => [x.id, new Set()]));
+  const liga = (a, b) => { if(a === b || !viz.has(a) || !viz.has(b)) return; viz.get(a).add(b); viz.get(b).add(a); };
+  S.procs.forEach(x => { (x.deps || []).forEach(d => liga(x.id, d)); (((x.crono || {}).tarefas) || []).forEach(t => (t.preds || []).forEach(pr => { const o = pr.id[0] === 'S' ? procById(pr.id.slice(1)) : (ix[pr.id] || {}).p; if(o) liga(x.id, o.id); })); });
+  const vis = new Set([p.id]), fila = [p.id]; while(fila.length){ const a = fila.shift(); (viz.get(a) || []).forEach(b => { if(!vis.has(b)){ vis.add(b); fila.push(b); } }); }
+  const ids = [...vis], grau = {}, key = i => { const x = procById(i); return (x.crono && x.crono.ini) || (x.datas && x.datas.iniPlan) || '9'; }, ordem = [];
+  ids.forEach(i => grau[i] = (procById(i).deps || []).filter(d => vis.has(d)).length);
+  const livres = ids.filter(i => !grau[i]).sort((a, b) => key(a).localeCompare(key(b)));
+  while(livres.length){ const a = livres.shift(); ordem.push(a); ids.forEach(b => { if((procById(b).deps || []).includes(a) && --grau[b] === 0){ livres.push(b); livres.sort((x, y) => key(x).localeCompare(key(y))); } }); }
+  ids.forEach(i => { if(!ordem.includes(i)) ordem.push(i); });
+  return ordem.map(procById);
+}
+const crDurPadrao = p => { const d = pdat(p); return d.iniPlan && d.fimPlan ? Math.max(1, crConta(d.iniPlan, d.fimPlan)) : 20; };
+function crMerged(comp){ const ids = new Set(comp.map(x => x.id)), T = [], bt = {}, bs = []; let ini = ''; ui.crLFech = ui.crLFech || {};
+  comp.forEach(p => { const c = crDe(p); ini = crMin(ini, c.ini);
+    T.push({id:'S' + p.id, nome:procNome(p), _proc:p, nivel:0, modo:'auto', dur:0, marco:false, restr:c.ini, fechado:!!ui.crLFech[p.id], preds:(p.deps || []).filter(d => ids.has(d)).map(d => ({id:'S' + d, tipo:'TI', lag:+((p.depLag || {})[d] || 0)}))});
+    if(c.tarefas.length) c.tarefas.forEach(t => T.push(Object.assign({}, t, {nivel:t.nivel + 1, _proc:p})));
+    else T.push(crNovaT({id:'P' + p.id, nome:p.servico || 'Processo', dur:crDurPadrao(p), nivel:1, _proc:p, _ph:true}));
+    if(c.base){ Object.assign(bt, c.base.t); bs.push(c.base); } });
+  bs.sort((a, b) => a.em.localeCompare(b.em));
+  return {ini:ini || TODAY, tarefas:T, base:bs.length ? {em:bs[bs.length - 1].em, por:bs[bs.length - 1].por, t:bt} : null, _comp:comp};
+}
+function crCalcCtx(o, cr, comp){ comp = comp || (o.tarefas ? crComp(o) : [o]); if(comp.length < 2) return crCalc(cr); const C = crCalc(crMerged(comp)), info = crInfo(cr); return {R:C.R, resumo:info.resumo, pai:info.pai, ini0:C.ini0}; }
+const crRdo = (o, cr) => crCalcCtx(o, cr).R;
+function crImportProc(p){ const T = crDe(p).tarefas; let ant = T.filter((t, i) => !crInfo(crDe(p)).resumo[i]).slice(-1)[0] || null, k = 0;
+  p.tarefas.forEach(tt => { if(T.some(x => x.origem === tt.id)) return; const t = crNovaT({nome:tt.titulo, origem:tt.id, preds:ant ? [{id:ant.id, tipo:'TI', lag:0}] : [], fimReal:tt.status === 'concluida' ? TODAY : ''}); if(t.fimReal) t.iniReal = TODAY; T.push(t); ant = t; k++; }); return k; }
+document.addEventListener('click', e => { const el = e.target.closest && e.target.closest('[data-crlic]'); if(!el) return; e.stopPropagation(); ui.crModo = ui.crModo || {}; ui.crModo[el.dataset.crlic] = 'L'; ui.dtab = 'crono'; renderDrawer(); crAposRender(); }, true);
+document.addEventListener('click', e => { const el = e.target.closest && e.target.closest('[data-crmodo]'); if(!el) return; e.stopPropagation();
+  const [pid, m] = el.dataset.crmodo.split('|'), p = procById(pid), oldR = (m === 'L' ? 'p:' : 'L:') + pid, novo = m + ':' + pid; ui.crModo = ui.crModo || {}; ui.crModo[pid] = m;
+  if(ui.crFull === oldR){ ui.crFull = novo; crRender(novo); } else { const box = $(`.crwrap[data-cr="${oldR}"]`); if(box){ box.outerHTML = crHtml(p, novo); crAposRender(); } } }, true);
+
+function crSync(o, kind){ if(kind === 'm' || !o || !o.tarefas) return; const comp = crComp(o), c0 = comp.length > 1 ? crMerged(comp) : crDe(o); if(!c0.tarefas.length) return; const {R} = crCalc(c0);
+  comp.forEach(p => { const c = crDe(p); if(!c.tarefas.length) return; let a = '', b = ''; c.tarefas.forEach(t => { const r = R[t.id]; if(r){ a = crMin(a, r.ini); b = crMax(b, r.fim); } }); const d = pdat(p); d.iniPlan = a; d.fimPlan = b; }); }
+function crVarLB(cr, t, r){ const b = cr.base && cr.base.t[t.id]; if(!b) return null; return r.fim === b.fim ? 0 : r.fim > b.fim ? crConta(b.fim, r.fim) - 1 : -(crConta(r.fim, b.fim) - 1); }
+function crDesvio(t, r){ if(r.resumo) return r.fimReal ? crConta(r.fim, r.fimReal) - 1 : null; if(t.fimReal) return t.fimReal > r.fim ? crConta(r.fim, t.fimReal) - 1 : -(crConta(t.fimReal, r.fim) - 1); if(TODAY > r.fim) return crConta(r.fim, TODAY) - 1; return null; }
+const CR_ZOOM = {dia:22, semana:9, mes:3.2};
+function crHtml(o, ref){
+  const isL = ref.startsWith('L:'), comp = ref.startsWith('m:') ? [o] : crComp(o);
+  const cr = isL ? crMerged(comp) : crDe(o), {T} = crInfo(cr), {R, resumo, pai} = isL ? crCalc(cr) : crCalcCtx(o, cr, comp), sel = ui.crSel, zoom = ui.crZoom || 'dia', DW = CR_ZOOM[zoom], RH = 34;
+  const vis = []; T.forEach((t, i) => { for(let a = pai[i]; a >= 0; a = pai[a]) if(T[a].fechado) return; vis.push(i); });
+  let a = T.length ? '' : cr.ini, b = T.length ? '' : cr.ini; T.forEach(t => { const r = R[t.id], lb = cr.base && cr.base.t[t.id]; a = crMin(a, r.ini); b = crMax(b, r.fim); a = crMin(a, t.iniReal); b = crMax(b, t.fimReal); if(lb){ a = crMin(a, lb.ini); b = crMax(b, lb.fim); } }); b = crMax(b, TODAY);
+  const g0 = crAdd(a, zoom === 'dia' ? -3 : -10), g1 = crAdd(b, zoom === 'dia' ? 10 : 30), nd = Math.round((crD(g1) - crD(g0)) / 864e5) + 1, W = nd * DW, x = v => Math.round((crD(v) - crD(g0)) / 864e5) * DW;
+  const fd = v => v ? `${v.slice(8)}/${v.slice(5, 7)}/${v.slice(2, 4)}` : '';
+  const k = f => `data-crf="${ref}|${f}"`;
+  const linhas = vis.map(i => { const t = T[i], r = R[t.id], rs = resumo[i], dv = crDesvio(t, r), feito = rs ? !!r.fimReal : !!t.fimReal;
+    const ind = r.erro ? `<span title="${r.erro}" style="color:#D92D20">⛔</span>` : feito ? '<span title="Concluída" style="color:#12B76A">✓</span>' : dv > 0 ? `<span title="Atrasada" style="color:#D92D20">⚠</span>` : (t.iniReal ? '<span title="Em andamento" style="color:#0000FF">◐</span>' : '');
+    const dt = (f, v, ro) => ro ? `<span class="crro">${fd(v)}</span>` : `<input type="date" ${k(t.id + '|' + f)} value="${v || ''}">`;
+    return `<div class="crr ${sel === t.id ? 'sel' : ''} ${rs ? 'res' : ''} ${t.marco ? 'mk' : ''}" data-crrow="${ref}|${t.id}">
+      <span class="c-n">${i + 1}</span><span class="c-i">${ind}</span>
+      <span class="c-m">${rs ? '<span class="crro" title="Tarefa-resumo: datas calculadas pelas subtarefas">Σ</span>' : `<button class="crmodo" ${k(t.id + '|modo')} title="${t.modo === 'manual' ? 'Agendada manualmente (clique para automática)' : 'Agendada automaticamente (clique para manual)'}">${t.modo === 'manual' ? '📌' : '⟳'}</button>`}</span>
+      <span class="c-nome" style="padding-left:${6 + t.nivel * 16}px">${rs ? `<button class="crtog" data-crtog="${ref}|${t.id}">${t.fechado ? '▸' : '▾'}</button>` : ''}${t.id[0] === 'S' && t._proc ? `<a class="link crproc" data-goproc="${t._proc.id}" title="Abrir o processo">${esc(t.nome)}</a>` : `<input ${k(t.id + '|nome')} value="${esc(t.nome)}" placeholder="${t.marco ? 'Nome do marco' : 'Nome da tarefa'}">${t._ph ? '<span class="crph2" title="Este processo ainda não tem cronograma próprio: a duração é uma estimativa. Edite para criar a primeira tarefa.">estimado</span>' : ''}`}</span>
+      <span class="c-d">${rs ? `<span class="crro">${r.dur} d</span>` : `<input ${k(t.id + '|dur')} value="${t.marco ? '0' : r.dur} d" title="Duração em dias úteis (0 = marco)">`}</span>
+      <span class="c-dt">${dt('ini', t.modo === 'manual' ? (t.ini || r.ini) : r.ini, rs)}</span><span class="c-dt">${dt('fim', r.fim, rs || t.marco)}</span>
+      ${(() => { const lb = cr.base && cr.base.t[t.id], vl = crVarLB(cr, t, r); return `<span class="c-dt lb"><span class="crro">${lb ? fd(lb.ini) : ''}</span></span><span class="c-dt lb"><span class="crro">${lb ? fd(lb.fim) : cr.base ? '<span class="sub" title="Tarefa criada depois da linha de base">nova</span>' : ''}</span></span><span class="c-dv">${vl === null ? '' : vl > 0 ? `<b style="color:#B42318">+${vl}d</b>` : vl < 0 ? `<b style="color:#067647">${vl}d</b>` : '<span class="sub">0</span>'}</span>`; })()}
+      <span class="c-p"><input ${k(t.id + '|preds')} value="${esc(crPredTxt(cr, t))}" placeholder="ex.: 2;3TI+2d"></span>
+      <span class="c-dt">${dt('iniReal', rs ? r.iniReal : t.iniReal, rs)}</span><span class="c-dt">${dt('fimReal', rs ? r.fimReal : t.fimReal, rs)}</span>
+      <span class="c-mk">${rs ? '' : `<input type="checkbox" ${k(t.id + '|marco')} ${t.marco ? 'checked' : ''} title="Marco">`}</span>
+      <span class="c-dv">${dv === null || dv === undefined ? '' : dv > 0 ? `<b style="color:#B42318">+${dv}d</b>` : dv < 0 ? `<b style="color:#067647">${dv}d</b>` : '<span class="sub">0</span>'}</span></div>`; }).join('');
+  // Gantt
+  const meses = []; { let d = g0; while(d <= g1){ const m = d.slice(0, 7), ult = crAdd(crS(new Date(Date.UTC(+m.slice(0, 4), +m.slice(5), 1))), -1), f = ult < g1 ? ult : g1; meses.push(`<span class="crmes" style="left:${x(d)}px;width:${x(f) - x(d) + DW}px">${MESN[+m.slice(5) - 1].slice(0, 3)} ${m.slice(0, 4)}</span>`); d = crAdd(f, 1); } }
+  let sub = '', fundo = '';
+  for(let i = 0; i < nd; i++){ const d = crAdd(g0, i), w = crD(d).getUTCDay(), fer = crFeriados(+d.slice(0, 4)).get(d);
+    if(zoom === 'dia') sub += `<span class="crdia ${!crUtil(d) ? 'nw' : ''}" style="left:${i * DW}px;width:${DW}px" title="${fer || ''}">${'DSTQQSS'[w]}<b>${+d.slice(8)}</b></span>`;
+    else if(zoom === 'semana' && w === 1) sub += `<span class="crsem" style="left:${i * DW}px">${d.slice(8)}/${d.slice(5, 7)}</span>`;
+    if(!crUtil(d) && zoom !== 'mes') fundo += `<i class="crnw ${fer ? 'fer' : ''}" style="left:${i * DW}px;width:${DW}px" ${fer ? `title="${esc(fer)}"` : ''}></i>`; }
+  const yOf = {}; vis.forEach((i, n) => yOf[T[i].id] = n * RH);
+  const barras = vis.map((i, n) => { const t = T[i], r = R[t.id], y = n * RH, rs = resumo[i]; let h = '';
+    if(rs) h += `<div class="crb sum" style="left:${x(r.ini)}px;top:${y + 7}px;width:${x(r.fim) - x(r.ini) + DW}px" title="${esc(t.nome)}: ${fd(r.ini)} → ${fd(r.fim)}"></div>`;
+    else if(t.marco) h += `<div class="crmk" style="left:${x(r.ini) - 7}px;top:${y + 5}px" title="Marco: ${esc(t.nome)} ${fd(r.ini)}"></div><span class="crlbl" style="left:${x(r.ini) + 12}px;top:${y + 4}px">${fd(r.ini).slice(0, 5)}</span>`;
+    const lb = cr.base && cr.base.t[t.id];
+    if(lb){ h += lb.dur === 0 && t.marco ? `<div class="crmk lbm" style="left:${x(lb.ini) - 5}px;top:${y + 20}px" title="Linha de base: ${fd(lb.ini)}"></div>` : `<div class="crb lbb" style="left:${x(lb.ini)}px;top:${y + 20}px;width:${x(lb.fim) - x(lb.ini) + DW}px" title="Linha de base: ${fd(lb.ini)} → ${fd(lb.fim)}"></div>`; }
+    if(!rs && !t.marco) h += `<div class="crb ${t.modo === 'manual' ? 'man' : ''}" style="left:${x(r.ini)}px;top:${y + 5}px;width:${x(r.fim) - x(r.ini) + DW}px" title="${esc(t.nome)}: ${fd(r.ini)} → ${fd(r.fim)} (${r.dur} d úteis)"></div>`;
+    const ri = rs ? r.iniReal : t.iniReal, rf = rs ? r.fimReal : t.fimReal;
+    if(ri && !t.marco){ const f = rf || TODAY; h += `<div class="crb real ${rf ? '' : 'run'}" style="left:${x(ri)}px;top:${y + 26}px;width:${Math.max(DW, x(f) - x(ri) + DW)}px" title="Real: ${fd(ri)} → ${rf ? fd(rf) : 'em andamento'}"></div>`; }
+    if(t.marco && rf) h += `<div class="crmk real" style="left:${x(rf) - 5}px;top:${y + 24}px" title="Marco atingido em ${fd(rf)}"></div>`;
+    return h; }).join('');
+  const setas = vis.flatMap(i => { const t = T[i]; return (t.preds || []).filter(p => yOf[p.id] !== undefined).map(p => { const q = R[p.id], r = R[t.id], qm = q.marco;
+    const xs = p.tipo === 'II' || p.tipo === 'IT' ? x(q.ini) : x(q.fim) + (qm ? 0 : DW), xe = p.tipo === 'TT' || p.tipo === 'IT' ? x(r.fim) + (r.marco ? 0 : DW) : x(r.ini);
+    const y1 = yOf[p.id] + 11, y2 = yOf[t.id] + 11, dirE = p.tipo === 'TT' || p.tipo === 'IT';
+    const mx = p.tipo === 'II' || p.tipo === 'IT' ? Math.min(xs, xe) - 8 : Math.max(xs + 8, dirE ? xe + 8 : xs + 8);
+    const d = dirE ? `M${xs} ${y1} H${mx} V${y2} H${xe + 3}` : (xe >= mx + 4 ? `M${xs} ${y1} H${mx} V${y2} H${xe - 2}` : `M${xs} ${y1} H${mx} V${y1 + (y2 > y1 ? 17 : -17)} H${xe - 10} V${y2} H${xe - 2}`);
+    return `<path d="${d}" marker-end="url(#crah)"><title>${esc(T[idxOf(T, p.id)].nome || '')} → ${esc(t.nome || '')} (${CR_TIPOS[p.tipo]}${p.lag ? ', ' + (p.lag > 0 ? '+' : '') + p.lag + 'd' : ''})</title></path>`; }); }).join('');
+  function idxOf(TT, id){ return TT.findIndex(z => z.id === id); }
+  const H = Math.max(vis.length, 1) * RH;
+  const full = ui.crFull === ref;
+  return `<div class="crwrap ${full ? 'full' : ''}" data-cr="${ref}">
+    <div class="crtool"><b class="crtit">${isL ? 'Cronograma do licenciamento' : 'Cronograma'}</b>
+      ${!ref.startsWith('m:') && comp.length > 1 ? `<div class="seg"><button data-crmodo="${o.id}|p" class="${isL ? '' : 'on'}">Este processo</button><button data-crmodo="${o.id}|L" class="${isL ? 'on' : ''}">Licenciamento completo <span class="n">${comp.length}</span></button></div>` : ''}
+      ${isL ? '' : `<label class="crl">Início ${ref.startsWith('m:') ? 'do material' : 'do processo'}<input type="date" data-crcfg="${ref}|ini" value="${cr.ini}"></label>`}
+      <span class="crsep"></span>
+      <button class="btn sm" data-cract="${ref}|nova" title="Nova tarefa abaixo da selecionada">${ic('mais', 'sm')} Tarefa</button><button class="btn sm" data-cract="${ref}|marco" title="Novo marco (duração 0)">◆ Marco</button>
+      <button class="btn sm ghost" data-cract="${ref}|out" title="Recuar para a esquerda (sobe um nível)">⇤</button><button class="btn sm ghost" data-cract="${ref}|in" title="Recuar (vira subtarefa da linha de cima; a de cima vira tarefa-resumo)">⇥</button>
+      <button class="btn sm ghost" data-cract="${ref}|up" title="Mover para cima">↑</button><button class="btn sm ghost" data-cract="${ref}|down" title="Mover para baixo">↓</button><button class="btn sm ghost danger" data-cract="${ref}|del" title="Excluir a tarefa selecionada">✕</button>
+      <span class="crsep"></span><button class="btn sm ${cr.base ? 'ghost' : ''}" data-crlb="${ref}|set" title="Salva as datas planejadas de agora para comparar depois">${cr.base ? '↻ Atualizar linha de base' : '▭ Definir linha de base'}</button>${cr.base ? `<span class="crlbinfo" title="Definida por ${esc(first(cr.base.por))}">LB: ${fd(cr.base.em.slice(0, 10))}${(() => { const tot = Object.keys(cr.base.t).length; let at = 0; T.forEach(t => { const v = crVarLB(cr, t, R[t.id]); if(v > 0 && !resumo[T.indexOf(t)]) at++; }); return at ? ` | <b style="color:#B42318">${at} atrasada${at > 1 ? 's' : ''}</b>` : ''; })()}</span><button class="btn sm ghost" data-crlb="${ref}|del" title="Apagar a linha de base">✕ LB</button>` : ''}
+      <button class="btn sm ghost" data-ferabrir title="Feriados e recessos da Mannare">Feriados</button>
+      <span class="crsep"></span><button class="btn sm ghost" data-cract="${ref}|importar">${ref.startsWith('m:') ? 'Trazer checklists' : isL ? 'Trazer tarefas dos processos' : 'Trazer tarefas do processo'}</button>
+      <span class="spacer"></span><div class="seg">${Object.keys(CR_ZOOM).map(z => `<button data-crzoom="${z}" class="${zoom === z ? 'on' : ''}">${z === 'dia' ? 'Dias' : z === 'semana' ? 'Semanas' : 'Meses'}</button>`).join('')}</div>
+      <button class="btn sm" data-crfull="${ref}">${full ? '✕ Fechar tela cheia' : '⤢ Tela cheia'}</button></div>
+    <div class="crbody"><div class="crleft" style="width:${ui.crL || 620}px"><div class="crin">
+        <div class="crr hd"><span class="c-n">Id</span><span class="c-i" title="Indicadores">ⓘ</span><span class="c-m" title="Modo da tarefa">Modo</span><span class="c-nome">Nome da tarefa</span><span class="c-d">Duração</span><span class="c-dt">Início plan.</span><span class="c-dt">Término plan.</span><span class="c-dt lb">Início da linha de base</span><span class="c-dt lb">Término da linha de base</span><span class="c-dv" title="Variação do término planejado em relação à linha de base (dias úteis)">Var. LB</span><span class="c-p">Predecessoras</span><span class="c-dt">Início real</span><span class="c-dt">Término real</span><span class="c-mk">Marco</span><span class="c-dv" title="Desvio do término em dias úteis">Desvio</span></div>
+        ${linhas || `<div class="crr vazio"><span class="sub" style="padding:8px 10px">Nenhuma tarefa. Use <b>+ Tarefa</b> ou <b>${ref.startsWith('m:') ? 'Trazer checklists' : 'Trazer tarefas do processo'}</b>.</span></div>`}
+        <div class="crr add"><input data-cradd="${ref}" placeholder="+ Digite o nome de uma nova tarefa e Enter"></div></div></div>
+      <div class="crsplit" data-crsplit title="Arraste para ajustar"></div>
+      <div class="crright"><div class="crgin" style="width:${W}px"><div class="crgh">${meses.join('')}${sub}</div>
+        <div class="crgb" style="height:${H}px">${fundo}${vis.map((i, n) => sel === T[i].id ? `<i class="crsel" style="top:${n * RH}px"></i>` : '').join('')}${barras}<i class="crhoje" style="left:${x(TODAY) + DW / 2}px" title="Hoje"></i>
+          <svg class="crsvg" width="${W}" height="${H}"><defs><marker id="crah" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0 0 L7 3.5 L0 7z" fill="#3B3B4F"/></marker></defs>${setas}</svg></div></div></div></div>
+    <div class="crleg"><span><i class="crb" style="position:static;display:inline-block;width:24px"></i> tarefa automática</span><span><i class="crb man" style="position:static;display:inline-block;width:24px"></i> manual</span><span><i class="crb sum" style="position:static;display:inline-block;width:24px"></i> resumo</span><span><i class="crmk" style="position:static;display:inline-block"></i> marco</span><span><i class="crb lbb" style="position:static;display:inline-block;width:24px"></i> linha de base</span><span><i class="crb real" style="position:static;display:inline-block;width:24px"></i> realizado</span><span><i class="crnw fer" style="position:static;display:inline-block;width:12px;height:12px"></i> feriado / fim de semana</span>
+      ${!ref.startsWith('m:') ? `<span class="sub crhelp">${isL ? `<b>Licenciamento completo:</b> cada processo é uma tarefa-resumo; a ordem vem de <b>Vínculos → bloqueado por</b> (edite as predecessoras na linha do processo). Para ligar tarefas de processos diferentes, use o número da linha aqui ou, na visão do processo, <b>protocolo:linha</b> (ex.: <b>S20200001:4</b>) ou só o protocolo para o processo inteiro.` : comp.length > 1 ? `Este processo faz parte de um licenciamento com ${comp.length} processos: as datas já consideram os processos que vêm antes.` : `Para montar um licenciamento completo (ex.: adequabilidade → licença ambiental → alvará → habite-se), ligue os processos em <b>Vínculos → bloqueado por</b>, ou ponha <b>protocolo:linha</b> nas predecessoras.`}</span>` : ''}
+      <span class="sub crhelp">Predecessoras: <b>2</b> (término-a-início), <b>3II</b> início-a-início, <b>4TT</b> término-a-término, <b>5IT</b> início-a-término; latência com <b>+2d</b> ou <b>-1d</b> (dias úteis). Duração 0 = marco. Datas em dias úteis (seg–sex, sem feriados nacionais, de Fortaleza e os cadastrados em <b>Feriados</b>). A linha de base guarda o planejado de uma data para comparar: barra cinza e coluna <b>Var. LB</b>.</span></div></div>`;
+}
+function crRender(ref){
+  const o = ntOwner(ref); if(!o) return; const ae = document.activeElement, key = ae && ae.dataset ? (ae.dataset.crf || ae.dataset.cradd) : null, isAdd = ae && ae.dataset && ae.dataset.cradd !== undefined;
+  const box = $(`.crwrap[data-cr="${ref}"]`), sl = box ? ($('.crleft', box) || {}).scrollLeft : 0, sr = box ? ($('.crright', box) || {}).scrollLeft : null;
+  if(ui.crFull === ref){ let f = $('#crFull'); if(!f){ f = document.createElement('div'); f.id = 'crFull'; document.body.appendChild(f); } f.innerHTML = crHtml(o, ref); const ph = $(`.crph[data-crph="${ref}"]`); }
+  else if(box) box.outerHTML = crHtml(o, ref);
+  const nb = $(`.crwrap[data-cr="${ref}"]`); if(nb){ const l = $('.crleft', nb), r = $('.crright', nb); if(l) l.scrollLeft = sl || 0; if(r) r.scrollLeft = sr === null ? (() => { const hx = ($('.crhoje', nb) || {offsetLeft:0}).offsetLeft; return hx > 0 && hx < r.scrollWidth ? Math.max(0, hx - 120) : 0; })() : sr; }
+  if(key){ const n = $(isAdd ? `[data-cradd="${key}"]` : `[data-crf="${key}"]`); if(n){ n.focus(); try{ if(n.select && n.type !== 'date') n.select(); }catch(_){} } }
+}
+function crSalvar(ref){ const o = ntOwner(ref); crSync(o, ref[0]); save(); setTimeout(() => crRender(ref), 0); }
+function crAcharT(key){ const parts = key.split('|'), ref = parts[0], id = parts[1], fld = parts[2]; let o = ntOwner(ref), cr = crDe(o), t = cr.tarefas.find(x => x.id === id);
+  if(!t && ref[0] !== 'm'){ if(id[0] === 'P'){ const p = procById(id.slice(1)); if(p){ o = p; cr = crDe(p); t = cr.tarefas[0]; if(!t){ t = crNovaT({nome:p.servico || 'Processo', dur:crDurPadrao(p)}); cr.tarefas.push(t); } } }
+    else { const x = crIdx()[id]; if(x){ o = x.p; cr = crDe(o); t = cr.tarefas[x.i]; } } }
+  return {ref, o, cr, t, fld}; }
+function crDurParse(v){ const m = String(v).replace(',', '.').match(/-?\d+(\.\d+)?/); return m ? Math.max(0, Math.round(+m[0])) : null; }
+document.addEventListener('change', e => {
+  const tg = e.target; if(!tg.dataset) return;
+  if(tg.dataset.crcfg !== undefined){ e.stopPropagation(); const [ref, f] = tg.dataset.crcfg.split('|'); const cr = crDe(ntOwner(ref)); cr[f] = tg.value || TODAY; crSalvar(ref); return; }
+  if(tg.dataset.crf === undefined) return; e.stopPropagation();
+  { const [r0, id0, f0] = tg.dataset.crf.split('|'); if(id0[0] === 'S'){ const p = procById(id0.slice(1)); if(!p || f0 !== 'preds') return; const M = crMerged(crComp(ntOwner(r0)));
+      const {out, erros} = crPredParse(M, M.tarefas.find(x => x.id === id0), tg.value); const ok = out.filter(x => x.id[0] === 'S'); if(out.length > ok.length) erros.push('ligações a tarefas: use a linha da tarefa');
+      const ant = [p.deps, p.depLag]; p.deps = ok.map(x => x.id.slice(1)); p.depLag = Object.fromEntries(ok.filter(x => x.lag).map(x => [x.id.slice(1), x.lag]));
+      if(ok.some(x => depAlcanca(x.id.slice(1), p.id) && x.id.slice(1) !== p.id && procPred(procById(x.id.slice(1))).some(y => y.id === p.id))){ [p.deps, p.depLag] = ant; toast('Isso criaria um ciclo entre processos'); }
+      else if(erros.length) toast('Ignorado: ' + erros.join(', ')); logP(p, 'ajustou as predecessoras do processo no cronograma do licenciamento'); crSalvar(r0); return; } }
+  const {ref, o, cr, t, fld} = crAcharT(tg.dataset.crf); if(!t) return; const v = tg.type === 'checkbox' ? tg.checked : tg.value;
+  if(fld === 'nome') t.nome = v.trim();
+  else if(fld === 'dur'){ const d = crDurParse(v); if(d === null){ toast('Duração inválida'); } else if(d === 0){ t.marco = true; } else { t.marco = false; t.dur = d; if(t.modo === 'manual' && t.ini) t.fim = crSoma(crProx(t.ini), d - 1); } }
+  else if(fld === 'marco'){ t.marco = v; if(!v && !t.dur) t.dur = 1; }
+  else if(fld === 'ini'){ if(t.modo === 'manual'){ t.ini = v; if(v && !t.marco){ t.fim = crSoma(crProx(v), Math.max(1, t.dur || 1) - 1); } } else { t.restr = v; if(v) toast('Tarefa automática: a data vira “Não iniciar antes de”'); } }
+  else if(fld === 'fim'){ const R = crRdo(o, cr), r = R[t.id]; if(v && v >= r.ini){ if(t.modo === 'manual'){ t.ini = t.ini || r.ini; t.fim = v; t.dur = crConta(t.ini, v); } else t.dur = Math.max(1, crConta(r.ini, v)); } else if(v) toast('O término não pode ser antes do início'); }
+  else if(fld === 'preds'){ const ctx = ref.startsWith('L:') ? crMerged(crComp(ntOwner(ref))) : cr; const {out, erros} = crPredParse(ctx, Object.assign({}, t, {_proc:o.tarefas ? o : null}), v); const antes = t.preds; t.preds = out; const R = o.tarefas ? crCalc(crMerged(crComp(o))).R : crCalc(cr).R; if((R[t.id] || {}).erro){ t.preds = antes; toast('Essa ligação criaria um ciclo'); } else if(erros.length) toast('Ignorado: ' + erros.join(', ')); }
+  else if(fld === 'iniReal' || fld === 'fimReal'){ t[fld] = v; if(fld === 'fimReal' && v && !t.iniReal){ const R = crRdo(o, cr); t.iniReal = t.marco ? v : R[t.id].ini <= v ? R[t.id].ini : v; } }
+  crSalvar(ref);
+}, true);
+document.addEventListener('keydown', e => {
+  const tg = e.target; if(!tg.dataset) return;
+  if(tg.dataset.cradd !== undefined && e.key === 'Enter'){ e.preventDefault(); e.stopPropagation(); const v = tg.value.trim(); if(!v) return; const ref = tg.dataset.cradd; let dono = ntOwner(ref); if(ref.startsWith('L:')){ const sid = ui.crSel || '', comp = crComp(dono); dono = 'SP'.includes(sid[0] || '-') && sid ? procById(sid.slice(1)) : ((crIdx()[sid] || {}).p || comp[comp.length - 1]); } const cr = crDe(dono); const last = cr.tarefas[cr.tarefas.length - 1];
+    const t = crNovaT({nome:v, nivel:last ? last.nivel : 0, preds:last && !crInfo(cr).resumo[cr.tarefas.length - 1] ? [{id:last.id, tipo:'TI', lag:0}] : []}); cr.tarefas.push(t); ui.crSel = t.id; crSalvar(ref); return; }
+  if(tg.dataset.crf !== undefined && e.key === 'Enter'){ e.preventDefault(); tg.blur(); }
+}, true);
+document.addEventListener('click', e => {
+  const tg = e.target; if(!tg.closest) return; let el;
+  if((el = tg.closest('[data-crf$="|modo"]'))){ e.stopPropagation(); const {ref, o, cr, t} = crAcharT(el.dataset.crf); const R = crRdo(o, cr); if(t.modo === 'manual') t.modo = 'auto'; else { t.modo = 'manual'; t.ini = R[t.id].ini; t.fim = R[t.id].fim; } crSalvar(ref); return; }
+  if((el = tg.closest('[data-crtog]'))){ e.stopPropagation(); const [ref, id] = el.dataset.crtog.split('|'); if(id[0] === 'S'){ ui.crLFech = ui.crLFech || {}; ui.crLFech[id.slice(1)] = !ui.crLFech[id.slice(1)]; crRender(ref); return; } const {t} = crAcharT(`${ref}|${id}|x`); if(!t) return; t.fechado = !t.fechado; crSalvar(ref); return; }
+  if((el = tg.closest('[data-crzoom]'))){ e.stopPropagation(); ui.crZoom = el.dataset.crzoom; const w = el.closest('.crwrap'); if(w) crRender(w.dataset.cr); return; }
+  if((el = tg.closest('[data-crfull]'))){ e.stopPropagation(); const ref = el.dataset.crfull; if(ui.crFull === ref){ ui.crFull = null; const f = $('#crFull'); if(f) f.remove(); if(ref.startsWith('m:')) renderMat(); else renderDrawer(); } else { ui.crFull = ref; const box = $(`.crwrap[data-cr="${ref}"]`); if(box) box.outerHTML = `<div class="crwrap crph" data-crph="${ref}"><div class="sub" style="padding:14px">O cronograma está aberto em tela cheia.</div></div>`; crRender(ref); } return; }
+  if((el = tg.closest('[data-crrow]'))){ const [ref, id] = el.dataset.crrow.split('|'); if(ui.crSel !== id){ ui.crSel = id; const w = el.closest('.crwrap'); $$('.crr.sel', w).forEach(r => r.classList.remove('sel')); el.classList.add('sel'); } }
+  if((el = tg.closest('[data-cract]'))){ e.stopPropagation(); const [ref, act] = el.dataset.cract.split('|'); let o = ntOwner(ref), cr = crDe(o), T = cr.tarefas, i = T.findIndex(t => t.id === ui.crSel);
+    if(ref.startsWith('L:')){ const comp = crComp(o), sid = ui.crSel || '';
+      if(act === 'importar'){ let k = 0; comp.forEach(p => { if(!crDe(p).tarefas.length) k += crImportProc(p); }); toast(k ? `${k} tarefa(s) trazida(s) dos processos que ainda não tinham cronograma` : 'Todos os processos já têm cronograma'); crSalvar(ref); return; }
+      if(sid[0] === 'S' || sid[0] === 'P'){ if(act !== 'nova' && act !== 'marco'){ toast(sid[0] === 'S' ? 'A ordem dos processos vem das predecessoras na linha do processo' : 'Edite a linha estimada para criar o cronograma do processo'); return; } o = procById(sid.slice(1)); cr = crDe(o); T = cr.tarefas; i = T.length - 1; }
+      else { const x = crIdx()[sid]; if(x){ o = x.p; cr = crDe(o); T = cr.tarefas; i = x.i; } else if(act === 'nova' || act === 'marco'){ o = comp[comp.length - 1]; cr = crDe(o); T = cr.tarefas; i = T.length - 1; } } }
+    const blocoFim = j => { let f = j; while(f + 1 < T.length && T[f + 1].nivel > T[j].nivel) f++; return f; };
+    if(act === 'nova' || act === 'marco'){ const base = i >= 0 ? T[i] : T[T.length - 1]; const t = crNovaT({nome:act === 'marco' ? 'Marco' : '', marco:act === 'marco', dur:act === 'marco' ? 0 : 1, nivel:base ? base.nivel : 0}); T.splice(i >= 0 ? i + 1 : T.length, 0, t); ui.crSel = t.id; crSalvar(ref); setTimeout(() => { const n = $(`[data-crf="${ref}|${t.id}|nome"]`); if(n){ n.focus(); n.select(); } }, 30); return; }
+    if(i < 0 && act !== 'importar'){ toast('Clique numa linha para selecionar'); return; }
+    if(act === 'in'){ if(i === 0 || T[i - 1].nivel < T[i].nivel){ toast('Não dá para recuar mais esta tarefa'); return; } const f = blocoFim(i); for(let j = i; j <= f; j++) T[j].nivel++; const paiT = T[i - 1]; if(paiT && T[i].nivel > paiT.nivel) T[i].preds = (T[i].preds || []).filter(p => p.id !== paiT.id); }
+    else if(act === 'out'){ if(!T[i].nivel){ return; } const f = blocoFim(i); for(let j = i; j <= f; j++) T[j].nivel--; }
+    else if(act === 'up' || act === 'down'){ const f = blocoFim(i), bloco = T.slice(i, f + 1);
+      if(act === 'up'){ let j = i - 1; while(j >= 0 && T[j].nivel > T[i].nivel) j--; if(j < 0 || T[j].nivel < T[i].nivel) return; T.splice(i, bloco.length); T.splice(j, 0, ...bloco); }
+      else { const n = f + 1; if(n >= T.length || T[n].nivel < T[i].nivel) return; const fn = blocoFim(n); T.splice(i, bloco.length); T.splice(i + (fn - n + 1), 0, ...bloco); } }
+    else if(act === 'del'){ const f = blocoFim(i), ids = T.slice(i, f + 1).map(t => t.id); if(!confirm(ids.length > 1 ? `Excluir a tarefa-resumo e ${ids.length - 1} subtarefa(s)?` : `Excluir “${T[i].nome || 'tarefa'}”?`)) return; T.splice(i, ids.length); T.forEach(t => t.preds = (t.preds || []).filter(p => !ids.includes(p.id))); ui.crSel = (T[i] || T[i - 1] || {}).id; }
+    else if(act === 'importar'){ let ant = T.filter(t => !crInfo(cr).resumo[T.indexOf(t)]).slice(-1)[0] || null, k = 0;
+      if(ref.startsWith('m:')) (o.checks || []).forEach(ck => { const r = crNovaT({nome:ck.nome, nivel:0}); T.push(r); ck.itens.forEach(it => { const t = crNovaT({nome:it.txt, nivel:1, preds:ant ? [{id:ant.id, tipo:'TI', lag:0}] : [], iniReal:'', fimReal:it.feito ? TODAY : ''}); T.push(t); ant = t; k++; }); });
+      else k = crImportProc(o);
+      toast(k ? `${k} tarefa(s) trazida(s) em sequência (1 dia útil cada). Ajuste durações e ligações.` : 'Nada novo para trazer'); }
+    crSalvar(ref); return; }
+}, true);
+document.addEventListener('click', e => { const el = e.target.closest && e.target.closest('[data-crlb]'); if(!el) return; e.stopPropagation(); const [ref, act] = el.dataset.crlb.split('|'), o = ntOwner(ref), cr = crDe(o);
+  if(ref.startsWith('L:')){ const comp = crComp(o);
+    if(act === 'del'){ if(!confirm(`Apagar a linha de base dos ${comp.length} processos do licenciamento?`)) return; comp.forEach(p => { crDe(p).base = null; logP(p, 'apagou a linha de base (licenciamento)'); }); crSalvar(ref); return; }
+    if(!confirm(`Gravar a linha de base dos ${comp.length} processos com as datas planejadas de agora?`)) return; const {R} = crCalc(crMerged(comp));
+    comp.forEach(p => { const c = crDe(p); if(!c.tarefas.length) return; if(c.base) (c.basesAnt = c.basesAnt || []).push(c.base); c.base = {em:nowISO(), por:me, t:Object.fromEntries(c.tarefas.map(t => [t.id, {ini:R[t.id].ini, fim:R[t.id].fim, dur:R[t.id].dur}]))}; logP(p, 'gravou a linha de base (licenciamento completo)'); });
+    crSalvar(ref); toast('Linha de base gravada'); return; }
+  if(act === 'del'){ if(!confirm('Apagar a linha de base deste cronograma?')) return; cr.base = null; (ref[0] === 'm' ? logT : logP)(o, 'apagou a linha de base do cronograma'); crSalvar(ref); return; }
+  if(!cr.tarefas.length){ toast('Inclua tarefas antes de definir a linha de base'); return; }
+  if(cr.base && !confirm(`Substituir a linha de base de ${fmtDateBR(cr.base.em.slice(0, 10))} pelas datas planejadas de agora? A anterior fica guardada no histórico.`)) return;
+  const R = crRdo(o, cr); if(cr.base) (cr.basesAnt = cr.basesAnt || []).push(cr.base);
+  cr.base = {em:nowISO(), por:me, t:Object.fromEntries(cr.tarefas.map(t => [t.id, {ini:R[t.id].ini, fim:R[t.id].fim, dur:R[t.id].dur}]))};
+  (ref[0] === 'm' ? logT : logP)(o, `${cr.basesAnt && cr.basesAnt.length ? 'atualizou' : 'definiu'} a linha de base do cronograma`); crSalvar(ref); toast('Linha de base salva'); }, true);
+document.addEventListener('pointerdown', e => { const h = e.target.closest && e.target.closest('[data-crsplit]'); if(!h) return; e.preventDefault(); const L = h.previousElementSibling, x0 = e.clientX, w0 = L.offsetWidth; h.setPointerCapture(e.pointerId);
+  const mv = ev => { ui.crL = Math.max(260, Math.min(1400, w0 + ev.clientX - x0)); L.style.width = ui.crL + 'px'; }; const up = () => { h.removeEventListener('pointermove', mv); h.removeEventListener('pointerup', up); try{ localStorage.setItem('mannare.crL', ui.crL); }catch(_){} };
+  h.addEventListener('pointermove', mv); h.addEventListener('pointerup', up); }, true);
+try{ ui.crL = +localStorage.getItem('mannare.crL') || 0 || undefined; }catch(_){}
+document.addEventListener('keydown', e => { if(e.key === 'Escape' && ui.crFull){ const ref = ui.crFull; ui.crFull = null; const f = $('#crFull'); if(f) f.remove(); if(ref.startsWith('m:')) renderMat(); else renderDrawer(); e.stopPropagation(); } }, true);
+function crAposRender(){ ['p', 'm'].forEach(() => {}); $$('.crwrap[data-cr]').forEach(w => { const r = $('.crright', w), h = $('.crhoje', w); if(r && h && !r.dataset.rolou){ r.scrollLeft = h.offsetLeft > 0 && h.offsetLeft < r.scrollWidth ? Math.max(0, h.offsetLeft - 120) : 0; r.dataset.rolou = 1; } }); }
+renderDrawer = (function(base){ return function(){ base.apply(this, arguments); if(ui.dtab === 'crono') crAposRender(); }; })(renderDrawer);
 
 /* ---------- Cadastros: editor da parametrização ---------- */
 let peEd = null;
@@ -5929,6 +6467,8 @@ document.addEventListener('change', e => {
   if(tg.dataset.tcfg){ (S.cfg.timbrado = S.cfg.timbrado || {})[tg.dataset.tcfg] = tg.value.trim(); save(); return; }
   if(tg.dataset.timg && tg.files[0]){ lerImagem(tg.files[0], 1600).then(u => { (S.cfg.timbrado = S.cfg.timbrado || {})[tg.dataset.timg] = u; save(); render(); toast('Imagem do timbrado salva'); }); return; }
   if(tg.id === 'mResp'){ ui.mResp = tg.value; render(); return; }
+  if(tg.id === 'mSt'){ ui.mSt = tg.value; render(); return; }
+  if(tg.id === 'pSt'){ ui.pSt = tg.value; ui.fStatus = ''; render(); return; }
   if(tg.id === 'mTipo'){ ui.mTipo = tg.value; render(); return; }
   if(tg.id === 'mfFile' && tg.files[0]){ resizePhoto(tg.files[0], url => { memberDraft.foto = url; $('#mfPh').innerHTML = photoBox(memberDraft, 'ph'); $('#mfNoPhoto').hidden = false; }); return; }
   if(tg.dataset.ustatus){ U[tg.dataset.ustatus].status = tg.value; save(); render(); showPop(tg.dataset.ustatus, document.querySelector(`[data-user="${tg.dataset.ustatus}"]`) || tg); toast(`${first(tg.dataset.ustatus)}: ${STATUS_U[tg.value]}`); return; }
