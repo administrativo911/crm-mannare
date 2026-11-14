@@ -1503,6 +1503,24 @@ input[type="checkbox"]{border-radius:3px!important}
 .apk{border:1px solid var(--line);margin-bottom:10px}.apkh{display:flex;gap:8px;align-items:center;padding:8px 10px;background:#F7F8FC;border-bottom:1px solid var(--line)}
 .apki{display:flex;gap:8px;align-items:flex-start;padding:6px 10px;border-bottom:1px solid #F1F1F3;font-size:13px;cursor:pointer}.apki.ja{opacity:.55;cursor:default}.apki input{margin-top:3px}
 #mrelFrame{border:0;display:block;transform-origin:0 0;background:#fff;height:1123px}
+
+/* ---------- gaveta do processo: grupos + resumo ---------- */
+.dgrps .tab .n.nred{background:#D92D20!important;color:#fff!important}
+.dgrps .tab{padding-left:18px;padding-right:18px}
+.dsub{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin:0 0 16px}
+.dsub .seg button{padding:6px 14px}
+.pdl{display:flex;gap:16px;row-gap:6px;align-items:center;flex-wrap:wrap;border:1px solid var(--line);background:#FAFAFC;padding:9px 14px;margin:-4px 0 14px;font-size:13px}
+.pdl .link{font-size:12.5px;font-weight:600;white-space:nowrap}
+.rskp{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:12px}
+.rsk{border:1px solid var(--line);background:var(--ui-panel,#fff);padding:12px 14px;display:flex;flex-direction:column;gap:5px;align-items:flex-start;cursor:pointer;min-width:0}
+.rsk:hover{border-color:var(--m-azul,#4948d1)}.rsk b{font-size:15px;line-height:1.3}
+.rscards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.rsc{border:1px solid var(--line);background:var(--ui-panel,#fff);padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.rsc h4{margin:0 0 4px;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.rsd{font-size:13.5px;line-height:1.5}
+.rsv{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:13px}
+.rstot{display:flex;justify-content:space-between;border-top:2px solid var(--navy,#0000FF);padding-top:8px;margin-top:6px;font-weight:700}
+.rsb{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto;padding-top:10px}
 /* ---------- painéis redimensionáveis ---------- */
 @media (min-width:1181px){.app{grid-template-columns:var(--rz-side,260px) minmax(0,1fr)!important}.pwrap:not(.notree){grid-template-columns:var(--rz-tree,250px) minmax(0,1fr)!important}}
 @media (min-width:1001px){.plan{grid-template-columns:var(--rz-plan,300px) minmax(0,1fr)!important}}
@@ -2188,7 +2206,7 @@ function renderMine(){
 
 /* ---------- Drawer (proposta ou processo) ---------- */
 function openDrawer(kind, id, tab){
-  ui.drawer = {kind, id}; ui.dtab = tab || (kind === 'proc' ? 'tarefas' : 'dados');
+  ui.drawer = {kind, id}; ui.dtab = tab || (kind === 'proc' ? 'resumo' : 'dados');
   $('#overlay').classList.add('on'); $('#drawer').classList.add('on'); renderDrawer();
 }
 function closeDrawer(){ ui.drawer = null; $('#overlay').classList.remove('on'); $('#drawer').classList.remove('on'); }
@@ -2224,9 +2242,11 @@ function drawerProp(pr){
 function drawerProc(p){
   const pr = propById(p.propId);
   const ncom = p.coms.length;
-  const tabs = [['tarefas', 'Tarefas', p.tarefas.filter(t => t.status !== 'concluida').length], ['descricao', 'Descrição', 0], ['drive', 'Pasta no Drive', 0], ['tramitacao', 'Tramitação', (p.tram || []).length], ['licenca', 'Licença', isOpen(p) ? 0 : licsOf(p).length], ['comentarios', 'Comentários', ncom], ['notas', 'Notificações', ntPend(p)], ['crono', 'Cronograma', 0], ['vinculos', 'Vínculos', procPred(p).length + procSuc(p).length], ['material', 'Material técnico', matsDoProc(p).length], ['relatorio', 'Relatório', 0], ['atividade', 'Atividade', 0], ['proposta', 'Proposta', 0]];
+  const grp = DGRP.find(g => g.subs.some(x => x[0] === ui.dtab)) || DGRP[0]; ui.dgrpLast = ui.dgrpLast || {}; ui.dgrpLast[grp.k] = ui.dtab;
   let body = '';
-  if(ui.dtab === 'tarefas'){
+  if(ui.dtab === 'resumo'){
+    body = procResumoHtml(p, pr);
+  } else if(ui.dtab === 'tarefas'){
     const grupos = TASK_ST.map(st => {
       const ts = p.tarefas.filter(t => t.status === st.k);
       if(!ts.length) return '';
@@ -2283,10 +2303,12 @@ function drawerProc(p){
         <label class="f">Responsável<select data-pf="resp">${USERS.map(u => `<option value="${u.id}" ${u.id === p.resp ? 'selected' : ''}>${esc(u.nome)}</option>`).join('')}</select></label>
         <label class="f">Órgão<input data-pf="orgao" value="${esc(p.orgao)}"></label>
         <label class="f">Nº do protocolo<input data-pf="protocolo" value="${esc(p.protocolo)}" placeholder="ainda não protocolado"></label>
-        <label class="f">Prazo final<input type="date" data-pf="prazo" value="${p.prazo}"></label>
+        <label class="f">Prazo do cliente<input type="date" data-pf="prazo" value="${p.prazo}" title="Data combinada com o cliente. O cronograma mostra a previsão."></label>
       </div>
-      ${procDatasHtml(p)}${valProtHtml(p)}
-      <div class="tabs" style="padding:0;margin:0 0 14px">${tabs.map(([k, l, n]) => `<button class="tab ${ui.dtab === k ? 'on' : ''}" data-dtab="${k}">${l}${n ? ` <span class="n">${n}</span>` : ''}</button>`).join('')}</div>
+      ${procDatasLinha(p)}${valProtHtml(p)}
+      <div class="tabs dgrps" style="padding:0;margin:0 0 16px">${DGRP.map(g => { const [n, red] = g.n(p); return `<button class="tab ${grp.k === g.k ? 'on' : ''}" data-dgrp="${g.k}">${g.l}${n ? ` <span class="n ${red ? 'nred' : ''}">${n}</span>` : ''}</button>`; }).join('')}</div>
+      ${grp.k === 'resumo' ? (ui.dtab === 'resumo' ? '' : `<div class="dsub"><a class="link" data-dtab="resumo">← Resumo</a><div class="seg">${grp.subs.slice(1).map(([k, l]) => `<button data-dtab="${k}" class="${ui.dtab === k ? 'on' : ''}">${l}</button>`).join('')}</div></div>`)
+        : `<div class="dsub"><div class="seg">${grp.subs.map(([k, l, fn]) => { const n = fn ? fn(p) : 0; return `<button data-dtab="${k}" class="${ui.dtab === k ? 'on' : ''}">${l}${n ? ` <span class="n">${n}</span>` : ''}</button>`; }).join('')}</div></div>`}
       ${body}
       <div class="delzone">${ui.delConfirm === p.id ? `<span class="sub" style="flex:1">Excluir ${esc(pcod(p))} com todas as tarefas, comentários e tramitação? Isso não pode ser desfeito.</span><button class="btn sm" data-delproc-no>Cancelar</button><button class="btn sm danger" data-delproc-ok="${p.id}">Sim, excluir</button>` : `<span class="spacer"></span><button class="btn sm danger" data-delproc="${p.id}">Excluir processo</button>`}</div>
     </div>`;
@@ -6508,6 +6530,42 @@ document.addEventListener('keydown', e => { if(e.key === 'Escape' && ui.crFull){
 function crAposRender(){ ['p', 'm'].forEach(() => {}); $$('.crwrap[data-cr]').forEach(w => { const r = $('.crright', w), h = $('.crhoje', w); if(r && h && !r.dataset.rolou){ r.scrollLeft = h.offsetLeft > 0 && h.offsetLeft < r.scrollWidth ? Math.max(0, h.offsetLeft - 120) : 0; r.dataset.rolou = 1; } }); }
 renderDrawer = (function(base){ return function(){ base.apply(this, arguments); if(ui.dtab === 'crono') crAposRender(); }; })(renderDrawer);
 
+
+/* ============ Gaveta do processo: 5 grupos de abas + Resumo ============ */
+const DGRP = [
+  {k:'resumo', l:'Resumo', n:() => [0], subs:[['resumo', 'Resumo'], ['descricao', 'Descrição e imóvel'], ['drive', 'Pasta no Drive'], ['vinculos', 'Vínculos'], ['proposta', 'Proposta']]},
+  {k:'exec', l:'Execução', n:p => [p.tarefas.filter(t => t.status !== 'concluida').length], subs:[['tarefas', 'Tarefas', p => p.tarefas.filter(t => t.status !== 'concluida').length], ['crono', 'Cronograma']]},
+  {k:'orgao', l:'Órgão', n:p => [ntPend(p), true], subs:[['tramitacao', 'Tramitação', p => (p.tram || []).length], ['notas', 'Notificações', p => ntPend(p)], ['licenca', 'Licença', p => licsOf(p).length]]},
+  {k:'docs', l:'Documentos', n:p => [matsDoProc(p).length], subs:[['material', 'Material técnico', p => matsDoProc(p).length], ['relatorio', 'Relatório']]},
+  {k:'conv', l:'Conversa', n:p => [p.coms.length], subs:[['comentarios', 'Comentários', p => p.coms.length], ['atividade', 'Atividade']]}];
+function procFolga(p){ const d = pdat(p); if(!p.prazo || !d.fimPlan) return null; return d.fimPlan === p.prazo ? 0 : d.fimPlan < p.prazo ? crConta(d.fimPlan, p.prazo) - 1 : -(crConta(p.prazo, d.fimPlan) - 1); }
+function procDatasLinha(p){
+  const d = pdat(p), fg = procFolga(p), dv = procDesvio(p), temCr = ((p.crono || {}).tarefas || []).length > 0, du = d.iniPlan && d.fimPlan ? crConta(d.iniPlan, d.fimPlan) : 0;
+  const real = d.fimReal ? `<b>${fmtD(d.iniReal) || '?'} → ${fmtD(d.fimReal)}</b>` : d.iniReal ? `<b>iniciado em ${fmtD(d.iniReal)}</b>` : '<b>não iniciado</b>';
+  return `<div class="pdl"><b>Cronograma</b>${d.iniPlan || d.fimPlan ? `<span>Planejado <b>${fmtD(d.iniPlan) || '?'} → ${fmtD(d.fimPlan) || '?'}</b></span>${du ? `<span class="sub">${du} dias úteis</span>` : ''}` : '<span class="sub">sem datas planejadas</span>'}<span>Real: ${real}</span>
+      ${fg !== null && !d.fimReal ? `<span class="pdv ${fg < 0 ? 'late' : 'ok'}">${fg < 0 ? `previsão ${-fg} ${fg < -1 ? 'dias úteis' : 'dia útil'} depois do prazo do cliente` : fg === 0 ? 'previsão no dia do prazo do cliente' : `previsão ${fg} ${fg > 1 ? 'dias úteis' : 'dia útil'} antes do prazo do cliente`}</span>` : ''}${dv > 0 ? `<span class="pdv late">${dv} dia${dv > 1 ? 's' : ''} além do planejado</span>` : ''}
+      <span class="spacer"></span><a class="link" data-pdedit>${ui.pdEdit ? 'fechar datas' : 'editar datas'}</a><a class="link" data-dtab="crono">abrir cronograma →</a></div>
+    ${ui.pdEdit ? `<div class="pdatas" style="margin-top:-6px"><div class="fields" style="margin:0">${PDATAS.map(([k, l]) => { const ro = temCr && (k === 'iniPlan' || k === 'fimPlan'); return `<label class="f">${l}<input type="date" data-pd="${k}" value="${d[k] || ''}" ${ro ? 'disabled title="Vem do cronograma"' : ''}></label>`; }).join('')}</div>${temCr ? '<div class="sub" style="margin-top:6px">As datas planejadas vêm do cronograma. As reais podem ser ajustadas aqui.</div>' : ''}</div>` : ''}`;
+}
+function procResumoHtml(p, pr){
+  const a = tramAtual(p), prox = p.tarefas.filter(t => t.status !== 'concluida').sort((x, y) => (x.prazo || '9').localeCompare(y.prazo || '9'))[0], np = ntPend(p);
+  const pz = (p.notas || []).filter(n => { const c = ntConta(n); return n.prazo && !n.respEm && c.f < c.t; }).map(n => n.prazo).sort()[0], dn = pz ? diffDays(pz) : null;
+  const pend = procPred(p).filter(x => isOpen(x)), pre = procPred(p), suc = procSuc(p), ms = matsDoProc(p);
+  const txt = String(p.desc || '').replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/\s+/g, ' ').trim(), im = p.imovel || {}, end = [im.endereco, im.bairro, im.cidade].filter(Boolean).join(', ');
+  const vl = (x, t) => `<div class="rsv"><i class="vdot" style="--c:${PS[x.status].c}"></i><a class="link" data-goproc="${x.id}">${esc(pcod(x))}</a><span class="sub">${t} | ${esc(x.servico || '')}</span></div>`;
+  return `<div class="rskp">
+      <div class="rsk" data-dtab="tramitacao"><span class="sub">Onde está</span><b>${a ? esc(a.setor.split(' (')[0]) : esc(p.orgao || '—')}</b>${a ? `<span class="ctag">${a.dias === 0 ? 'chegou hoje' : 'há ' + a.dias + ' dia' + (a.dias > 1 ? 's' : '')}</span>` : '<span class="sub">sem tramitação registrada</span>'}</div>
+      <div class="rsk" data-dtab="tarefas"><span class="sub">Próxima tarefa</span><b>${prox ? esc(prox.titulo) : 'Nenhuma em aberto'}</b>${prox ? `<span class="sub">${prox.resp.map(first).join(', ') || 'sem responsável'}${prox.prazo ? ' | ' + fmtD(prox.prazo) : ''}</span>` : ''}</div>
+      <div class="rsk" data-dtab="notas"><span class="sub">Notificações</span><b>${np ? `${np} pendência${np > 1 ? 's' : ''}` : (p.notas || []).length ? 'Tudo atendido' : 'Nenhuma'}</b>${dn !== null ? `<span class="ctag ${dn <= 3 ? 'late' : ''}">${dn < 0 ? `resposta atrasada ${-dn}d` : dn === 0 ? 'responder hoje' : `responder em ${dn}d`}</span>` : ''}</div>
+      <div class="rsk" data-dtab="vinculos"><span class="sub">Bloqueado por</span><b>${pend.length ? pend.map(x => esc(pcod(x))).join(', ') : 'nenhum processo'}</b>${pend.length ? `<span class="ctag late">${pend.length} em aberto</span>` : ''}</div></div>
+    <div class="rscards">
+      <div class="rsc"><h4>Descrição</h4><div class="rsd">${txt ? esc(txt.slice(0, 320)) + (txt.length > 320 ? '…' : '') : '<span class="sub">Sem descrição.</span>'}</div>${end ? `<div class="sub" style="margin-top:6px">${esc(end)}${im.matricula ? ' | matrícula ' + esc(im.matricula) : ''}</div>` : ''}
+        <div class="rsb">${p.drive ? `<a class="btn sm" href="${esc(p.drive)}" target="_blank" rel="noopener">${ic('pasta', 'sm')} Pasta no Drive ↗</a>` : `<button class="btn sm" data-dtab="drive">${ic('pasta', 'sm')} Definir pasta no Drive</button>`}<button class="btn sm ghost" data-dtab="descricao">Descrição e imóvel</button></div></div>
+      <div class="rsc"><h4>Proposta</h4>${pr ? `<div class="rsv"><b>${esc(pr.codigo)}</b>${pill(PROP_ST[pr.status].l, PROP_ST[pr.status].c, PROP_ST[pr.status].b)}</div><div class="sub">${esc(pr.emp || '')}${pr.objeto ? ' | ' + esc(pr.objeto) : ''}</div><div class="rstot"><span>Total</span><span>${brl(pr.valor)}</span></div><div class="rsb"><button class="btn sm ghost" data-dtab="proposta">Ver itens</button></div>` : '<span class="sub">Sem proposta vinculada.</span>'}</div>
+      <div class="rsc"><h4>Vínculos</h4>${pre.map(x => vl(x, 'vem antes')).join('')}${suc.map(x => vl(x, 'depende deste')).join('')}${!pre.length && !suc.length ? '<span class="sub">Nenhum processo vinculado.</span>' : ''}
+        ${ms.length ? `<div class="sub" style="margin-top:6px">${ms.length} material(is) técnico(s) vinculado(s)</div>` : ''}<div class="rsb"><button class="btn sm ghost" data-dtab="vinculos">+ Vincular</button>${crComp(p).length > 1 ? `<button class="btn sm ghost" data-crlic="${p.id}">Cronograma do licenciamento</button>` : ''}</div></div></div>`;
+}
+
 /* ---------- Cadastros: editor da parametrização ---------- */
 let peEd = null;
 function paramEditor(k){
@@ -6712,6 +6770,8 @@ document.addEventListener('click', e => {
   if((el = tg.closest('[data-newproc]'))){ e.stopPropagation(); newProcModal(el.dataset.newproc); return; }
   if((el = tg.closest('[data-goproc]'))){ ui.view = 'proc'; openDrawer('proc', el.dataset.goproc); render(); return; }
   if((el = tg.closest('[data-goprop]'))){ ui.view = 'prop'; openDrawer('prop', el.dataset.goprop); render(); return; }
+  if((el = tg.closest('[data-dgrp]'))){ const g = DGRP.find(x => x.k === el.dataset.dgrp); ui.dtab = g.k === 'resumo' ? 'resumo' : ((ui.dgrpLast || {})[g.k] || g.subs[0][0]); descEdit = false; renderDrawer(); return; }
+  if(tg.closest('[data-pdedit]')){ ui.pdEdit = !ui.pdEdit; renderDrawer(); return; }
   if((el = tg.closest('[data-dtab]'))){ ui.dtab = el.dataset.dtab; descEdit = false; renderDrawer(); return; }
   if((el = tg.closest('[data-delproc]'))){ ui.delConfirm = el.dataset.delproc; renderDrawer(); $('#drawer .dbody').scrollTop = 1e6; return; }
   if(tg.closest('[data-delproc-no]')){ ui.delConfirm = null; renderDrawer(); return; }
