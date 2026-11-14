@@ -1893,136 +1893,179 @@ table.atable tbody tr:hover td{background:var(--color-bg)!important}
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
 }
 </style>
-<style id="mannare-brand">
+<style id="mannare-clean">
 /* ==========================================================================
-   MANNARE CRM · camada de marca (v3)
-   Arquitetura SaaS B2B (densa, alinhada, bordas finas) + identidade Mannare.
-   O gradiente azul da marca aparece num só lugar: a faixa de boas-vindas.
+   MANNARE CRM · camada "clean" (v4) — referência: Brisk CRM Dashboard
+   Fundo branco, cards com borda fina e sem sombra, menu discreto,
+   títulos em caixa normal, pouca cor. O azul Mannare fica para ação e foco.
    ========================================================================== */
 :root{
-  /* marca */
-  --mn-azul:#0000FF; --mn-azul-hover:#3333FF; --mn-azul-press:#0000CC; --mn-azul-escuro:#00007A;
-  --mn-azul-suave:#CCCCFF; --mn-azul-claro:#EBEBFF; --mn-azul-texto:#0000CC;      /* #0000CC sobre #CCCCFF = 7,29:1 */
-  --mn-ciano:#00D2FF; --mn-ciano-suave:#CCF6FF; --mn-ciano-medio:#99EDFF; --mn-ciano-texto:#00566B; /* 7,15:1 */
-  --mn-amarelo:#FDCA40; --mn-amarelo-suave:#FFF4D9; --mn-amarelo-medio:#FEEAB3; --mn-amarelo-texto:#6B4700; /* 7,6:1 */
-  --mn-gradiente:linear-gradient(100deg,#00007A 0%,#0000FF 52%,#00D2FF 100%);
-
-  /* papéis atualizados */
-  --color-primary-hover:#3333FF; --color-primary-active:#0000CC; --color-primary-subtle:#CCCCFF;
-  --m-azul-hover:#3333FF; --azul-10:#EBEBFF;
-
-  /* tipografia da marca */
-  --font-display:Kanit,"Forma DJR Display",system-ui,sans-serif;
+  /* neutros (cinza puro, levemente frio) */
+  --n-0:#FFFFFF; --n-25:#FCFCFD; --n-50:#F9FAFB; --n-100:#F2F4F7; --n-200:#EAECF0; --n-300:#D0D5DD;
+  --n-500:#667085; --n-600:#475467; --n-700:#344054; --n-900:#101828;
+  /* papéis */
+  --color-bg:#FFFFFF; --color-surface:#FFFFFF; --color-surface-2:#F9FAFB;
+  --color-border:#EAECF0; --color-border-control:#D0D5DD; --color-border-hover:#98A2B3;
+  --color-text:#101828; --color-text-2:#475467; --color-text-3:#667085;
+  --color-primary:#0000FF; --color-primary-hover:#3333FF; --color-primary-active:#0000CC; --color-primary-subtle:#EBEBFF;
+  --ui-bg:#FFFFFF; --ui-surface:#FFFFFF; --ui-panel:#FFFFFF; --ui-hover:#F9FAFB; --ui-border:#EAECF0;
+  --ui-text:#101828; --ui-text-2:#475467;
+  --bg:#FFFFFF; --panel:#FFFFFF; --soft:#F9FAFB; --ink:#101828; --muted:#475467; --line:#EAECF0;
+  /* tipografia: uma família para tudo; Kanit só no título da página */
   --font-sans:"Forma DJR Display","Plus Jakarta Sans",Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
-
-  /* geometria: cards 10px, modal 12px, controles 6px */
-  --radius-md:6px; --radius-lg:10px; --radius-xl:12px;
-  --radius:6px; --r:6px; --r-sm:6px; --r-lg:10px;
-  --shadow-card:0 1px 2px rgba(15,23,42,.04),0 1px 3px rgba(15,23,42,.05);
-  --shadow-card-hover:0 2px 6px rgba(15,23,42,.07),0 1px 2px rgba(15,23,42,.05);
+  --font-display:Kanit,system-ui,sans-serif;
+  /* forma */
+  --radius-md:8px; --radius-lg:12px; --radius-xl:16px; --radius:8px; --r:8px; --r-sm:8px; --r-lg:12px;
   --control-h:34px;
 }
-body{font-family:var(--font-sans)!important}
+html,body,.app,.main{background:#FFFFFF!important}
+body{font-family:var(--font-sans)!important;font-size:14px!important;color:var(--color-text)!important}
 
-/* ---------- títulos de destaque: Kanit em caixa alta (manual da marca) ---------- */
-.pagehead h1,.welcome,.dhead h2,.plhead h2,.pltop h3{font-family:var(--font-display)!important;font-weight:600!important;text-transform:uppercase!important;letter-spacing:.01em!important;line-height:1.1!important}
-.pagehead h1,.welcome{font-size:26px!important}
-.dhead h2{font-size:20px!important}
-.dct,.blk h3,.sect h4,.ccard .ct{font-family:var(--font-display)!important;font-weight:500!important;font-size:15px!important;text-transform:uppercase!important;letter-spacing:.03em!important;line-height:1.25!important;color:var(--color-text)!important}
-.mhead b{font-family:var(--font-display)!important;font-weight:500!important;text-transform:uppercase!important;letter-spacing:.03em!important}
-/* números: Kanit, sem caixa alta */
-.acard .v,.dkv>.tnum,.dkv>span:first-child,.dbig .tnum,.dclock{font-family:var(--font-display)!important}
+/* ---------- títulos: caixa normal, tamanhos contidos ---------- */
+.pagehead h1,.welcome,.dhead h2,.plhead h2,.pltop h3,h1,h2,.ttitle,.blk h3,.sect h4,.ccard .ct,.dct,.mhead b{text-transform:none!important;letter-spacing:-.01em!important}
+.pagehead h1,.welcome{font:600 24px/1.2 var(--font-display)!important;color:var(--color-text)!important}
+.welcome span{color:inherit!important}
+.pagehead p{font-size:14px!important;color:var(--color-text-3)!important;margin-top:4px!important}
+.dhead h2{font:600 20px/1.25 var(--font-display)!important}
+.ttitle{font:600 20px/1.3 var(--font-display)!important}
+.dct,.blk h3,.sect h4,.ccard .ct{font:600 14px/1.4 var(--font-sans)!important;color:var(--color-text)!important;letter-spacing:0!important}
+.mhead b{font:600 14px/1.4 var(--font-sans)!important}
+.dcs,.dks{font-size:12.5px!important;color:var(--color-text-3)!important}
+.acard .v,.dkv>.tnum,.dkv>span:first-child,.dbig .tnum{font-family:var(--font-sans)!important;font-weight:600!important;letter-spacing:-.02em!important}
+.dkv>.tnum,.dkv>span:first-child,.acard .v{font-size:24px!important}
+.dclock{font-family:var(--font-sans)!important;font-weight:600!important}
 
-/* ---------- densidade organizada ---------- */
-.content{padding:var(--space-6) var(--space-8) var(--space-12)!important}
-.top,header.top{padding:var(--space-3) var(--space-8)!important;min-height:60px}
-.pagehead{margin-bottom:var(--space-5)!important}
-.dkpi,.dcard,.blk,.acard,.ccard,.dcol .blk{padding:var(--space-4) 18px!important}
-.dch{margin-bottom:var(--space-3)!important}
-.dw[data-dw^="kpi_"]:not(.fixo) .dkpi{min-height:184px!important}
-.btn{min-height:var(--control-h)}
-.btn.sm{min-height:28px}
-label.f input,label.f select,.inp,.filters input,.filters select,input[type="search"],.props select:not(.stsel),.props input{min-height:var(--control-h)}
+/* ---------- menu lateral ---------- */
+.side{background:#FFFFFF!important;border-right:1px solid var(--color-border)!important;padding:16px 12px!important;gap:1px!important}
+.side .logo{margin:4px 8px 18px!important;max-width:170px!important}
+.sside{height:34px!important;background:var(--n-50)!important;border:1px solid var(--color-border)!important;border-radius:8px!important;margin-bottom:6px!important;font-size:13.5px}
+.sside kbd{background:#fff!important}
+.side .leg{margin:12px 10px 4px!important;padding-top:12px;border-top:1px solid var(--color-border);font-size:12px!important;font-weight:500!important;color:var(--color-text-3)!important}
+.side .leg:first-of-type{border-top:0;padding-top:0}
+.nav{min-height:34px!important;padding:6px 10px!important;font-size:13.5px!important;font-weight:500!important;color:var(--n-700)!important;border-radius:8px!important;gap:10px!important}
+.nav .ic{color:var(--n-500)!important}
+.nav:hover{background:var(--n-50)!important;color:var(--color-text)!important}
+.nav.on{background:var(--n-100)!important;color:var(--color-text)!important;font-weight:600!important}
+.nav.on .ic{color:var(--color-primary)!important}
+.nav:active{background:var(--n-200)!important}
+.nav .n,.nav.on .n{background:#fff!important;color:var(--n-700)!important;border:1px solid var(--color-border)!important;font-weight:600!important;font-size:11.5px!important}
+.nav .n.red,.n.red{background:#FEF3F2!important;color:#B42318!important;border-color:#FECDCA!important}
+.sidebox{border-top:1px solid var(--color-border)!important;padding-top:10px!important;margin-top:auto}
 
-/* ---------- geometria e superfícies ---------- */
-.blk,.acard,.ccard,.sect,.dkpi,.dcard,.tlist,.cal,.plside,.plcal,.kcol,.pcol,.mcol,.mcard,.pcard,.kcard,.composer,.aprovbox,.rowc,.banner,.plgrid{border-radius:var(--radius-lg)!important}
-.blk,.acard,.ccard,.sect,.dkpi,.dcard,.tlist,.plside,.plcal,.mcard,.rowc{box-shadow:var(--shadow-card)!important}
-.dkpi:hover,.acard:hover,.mcard:hover,.rowc:hover{box-shadow:var(--shadow-card-hover)!important}
-.modal,.drawer{border-radius:var(--radius-xl)!important}
-.drawer{border-radius:var(--radius-xl) 0 0 var(--radius-xl)!important}
-.btn,.iconbtn,.navbtn,.chip-me,.inp,input,select,textarea,.sside,.minis,.dfil,.seg,.tab,.nav,.whopick button{border-radius:var(--radius-md)!important}
-.seg button{border-radius:4px!important}
-.dki,.cico,.acard .ico{border-radius:var(--radius-md)!important}
+/* ---------- barra superior ---------- */
+.top,header.top{background:rgba(255,255,255,.92)!important;border-bottom:1px solid var(--color-border)!important;min-height:56px!important;padding:8px 28px!important}
+.crumbs{font-size:13.5px!important;color:var(--color-text-3)!important}
+.crumbs b{color:var(--color-text)!important;font-weight:600!important}
+.navbtn,.iconbtn{width:32px!important;height:32px!important;border:1px solid var(--color-border)!important;border-radius:8px!important;background:#fff!important;color:var(--n-600)!important}
+.navbtn:hover,.iconbtn:hover{background:var(--n-50)!important;color:var(--color-text)!important;border-color:var(--color-border-control)!important}
+.chip-me{border:1px solid var(--color-border)!important;border-radius:10px!important;padding:3px 10px 3px 3px!important}
+.chip-me .nm{font-size:13px!important}.chip-me .em{font-size:11.5px!important;color:var(--color-text-3)!important}
+.sync{background:var(--n-50)!important;border:1px solid var(--color-border)!important;color:var(--n-600)!important}
 
-/* ---------- cor primária e estados ---------- */
-.btn.primary,a.btn.primary{background:var(--mn-azul)!important;border-color:var(--mn-azul)!important}
-.btn.primary:hover{background:var(--mn-azul-hover)!important;border-color:var(--mn-azul-hover)!important}
-.btn.primary:active{background:var(--mn-azul-press)!important;border-color:var(--mn-azul-press)!important}
-.nav.on{background:var(--mn-azul-suave)!important;color:var(--mn-azul-texto)!important}
-.nav.on .ic{color:var(--mn-azul)!important}
-.nav:active{background:var(--mn-azul-suave)!important}
-.seg button.on{background:var(--color-surface)!important;color:var(--mn-azul-texto)!important}
-.dfil.on,.whopick button.on,.fchips button.on{background:var(--mn-azul-suave)!important;border-color:var(--mn-azul)!important;color:var(--mn-azul-texto)!important}
-.cal .g .d.today{background:var(--mn-azul-suave)!important;color:var(--mn-azul-texto)!important}
-.cal .g .d.sel{background:var(--mn-azul)!important;color:#fff!important}
-.tab.on{color:var(--mn-azul)!important;border-bottom-color:var(--mn-azul)!important}
-.link,.dlink,.dmore{color:var(--mn-azul)!important}
-.ic{transition:color var(--duration-fast) var(--ease)}
-.iconbtn:hover .ic,.navbtn:hover{color:var(--mn-azul)}
-.iconbtn:active,.navbtn:active{background:var(--mn-azul-claro)!important}
-::selection{background:var(--mn-azul-suave)}
+/* ---------- área de conteúdo ---------- */
+.content{padding:24px 28px 48px!important}
+.pagehead{margin-bottom:20px!important;padding:0!important;background:none!important;align-items:flex-end!important}
+.pagehead::before,.pagehead::after{display:none!important}
+.pagehead .btn,.pagehead:has(.welcome) .btn{background:#fff!important;border:1px solid var(--color-border-control)!important;color:var(--n-700)!important}
+.pagehead .btn:hover{background:var(--n-50)!important}
+.pagehead .btn.primary{background:var(--color-primary)!important;border-color:var(--color-primary)!important;color:#fff!important}
 
-/* ---------- pills: azul, ciano e amarelo suaves, sempre com texto escuro ---------- */
-.pill,.tag,.dbadge,.dn,.stchip{border-radius:999px!important;font-size:12px!important;font-weight:600!important;line-height:1.5!important}
-.pill,.tag{padding:2px 10px!important}
-.nav .n,.nav.on .n,.seg button .n{background:var(--mn-azul-suave)!important;color:var(--mn-azul-texto)!important;border:0!important;font-weight:700}
-.nav.on .n{background:#fff!important}
-.dbadge,.dbadge.azul{background:var(--mn-azul-suave)!important;color:var(--mn-azul-texto)!important;border-color:transparent!important}
-.dbadge.ciano{background:var(--mn-ciano-suave)!important;color:var(--mn-ciano-texto)!important;border-color:var(--mn-ciano-medio)!important}
-.dbadge.ok{background:var(--color-success-bg)!important;color:var(--color-success)!important;border-color:#ABEFC6!important}
-.dbadge.red{background:var(--color-error-bg)!important;color:var(--color-error)!important;border-color:#FECDCA!important}
-.dn.azul{background:var(--mn-azul-suave)!important;color:var(--mn-azul-texto)!important}
-.dn.amarelo{background:var(--mn-amarelo-medio)!important;color:var(--mn-amarelo-texto)!important}
-.ftag{background:var(--mn-azul-suave)!important;color:var(--mn-azul-texto)!important;border-color:transparent!important}
-.ftag.nd{background:var(--mn-ciano-suave)!important;color:var(--mn-ciano-texto)!important;border-color:var(--mn-ciano-medio)!important}
-.apb.pend,.banner,.aprovbox.pend{background:var(--mn-amarelo-suave)!important;color:var(--mn-amarelo-texto)!important;border-color:var(--mn-amarelo-medio)!important}
-.dksub .warn b,.dkf b.warn{color:var(--mn-amarelo-texto)!important;background:var(--mn-amarelo-suave)}
-.meetnext.agora,.meetchip.agora{color:var(--color-text)!important}
+/* ---------- botões e campos ---------- */
+.btn{min-height:34px!important;padding:0 12px!important;font-size:13.5px!important;font-weight:600!important;border-radius:8px!important;border:1px solid var(--color-border-control)!important;color:var(--n-700)!important;background:#fff!important;gap:6px!important}
+.btn:hover{background:var(--n-50)!important;color:var(--color-text)!important}
+.btn:active{background:var(--n-100)!important}
+.btn.sm{min-height:28px!important;padding:0 10px!important;font-size:12.5px!important}
+.btn.primary,a.btn.primary{background:var(--color-primary)!important;border-color:var(--color-primary)!important;color:#fff!important}
+.btn.primary:hover{background:var(--color-primary-hover)!important;border-color:var(--color-primary-hover)!important}
+.btn.primary:active{background:var(--color-primary-active)!important}
+.btn.ghost{border-color:transparent!important;background:transparent!important}
+.btn.ghost:hover{background:var(--n-100)!important}
+.btn.danger{color:#B42318!important}
+label.f input,label.f select,label.f textarea,.inp,.filters input,.filters select,input[type="search"],.pladd,.props select:not(.stsel),.props input{min-height:34px!important;border:1px solid var(--color-border-control)!important;border-radius:8px!important;font-size:13.5px!important;box-shadow:0 1px 2px rgba(16,24,40,.05)!important}
+label.f input:hover,.inp:hover,.filters input:hover,.filters select:hover{border-color:var(--color-border-hover)!important}
+.minis{height:32px!important;border:1px solid var(--color-border-control)!important;border-radius:8px!important}
+.seg{background:var(--n-50)!important;border:1px solid var(--color-border)!important;border-radius:8px!important;padding:2px!important}
+.seg button{min-height:28px!important;font-size:13px!important;font-weight:600!important;color:var(--color-text-3)!important;border-radius:6px!important}
+.seg button.on{background:#fff!important;color:var(--color-text)!important;box-shadow:0 1px 2px rgba(16,24,40,.06),0 0 0 1px var(--color-border)!important}
+.seg button .n{background:var(--n-100)!important;color:var(--n-700)!important}
 
-/* ---------- faixa de boas-vindas com o gradiente da marca ---------- */
-.pagehead:has(.welcome){position:relative;overflow:hidden;isolation:isolate;background:var(--mn-gradiente);border-radius:var(--radius-xl)!important;padding:var(--space-6) 28px!important;align-items:center!important;margin-bottom:var(--space-5)!important}
-.pagehead:has(.welcome)::after{content:"";position:absolute;z-index:-1;right:8%;top:-70px;width:180px;height:180px;border:28px solid rgba(255,255,255,.14);border-radius:36px!important;transform:rotate(12deg);pointer-events:none}
-.pagehead:has(.welcome)::before{content:"";position:absolute;z-index:-1;right:-40px;bottom:-90px;width:150px;height:150px;border:22px solid rgba(255,255,255,.10);border-radius:30px!important;pointer-events:none}
-.pagehead .welcome,.pagehead:has(.welcome) h1{color:#fff!important}
-.pagehead:has(.welcome) p{color:rgba(255,255,255,.9)!important}
-.pagehead:has(.welcome) .btn,.pagehead:has(.welcome) .btn.ghost{background:#fff!important;border-color:#fff!important;color:var(--color-text)!important}
-.pagehead:has(.welcome) .btn:hover{background:var(--mn-azul-claro)!important;border-color:var(--mn-azul-claro)!important}
-.pagehead:has(.welcome) .btn.primary{background:var(--color-text)!important;border-color:var(--color-text)!important;color:#fff!important}
-.pagehead:has(.welcome) .btn:focus-visible{outline-color:#fff!important}
+/* ---------- cards: borda fina, sem sombra ---------- */
+.blk,.acard,.ccard,.sect,.dkpi,.dcard,.tlist,.cal,.plside,.plcal,.composer,.aprovbox,.rowc,.mcard,.pcard,.kcard,.banner{border:1px solid var(--color-border)!important;border-radius:12px!important;box-shadow:none!important;background:#fff!important}
+.dkpi,.dcard,.blk,.acard,.ccard,.dcol .blk{padding:16px 18px!important}
+.dkpi:hover,.acard:hover,.rowc:hover,.mcard:hover{border-color:var(--color-border-control)!important;box-shadow:none!important;background:#fff!important}
+.dcard:hover{border-color:var(--color-border)!important}
+.dch{margin-bottom:12px!important}
+.dkpi{gap:8px!important}
+.dw[data-dw^="kpi_"]:not(.fixo) .dkpi{min-height:176px!important}
+.dki{width:28px!important;height:28px!important;border:1px solid var(--color-border)!important;background:#fff!important;border-radius:8px!important;color:var(--n-600)!important}
+.dkt{font-size:13.5px!important;font-weight:600!important}
+.dkl{font-size:13px!important;color:var(--color-text-2)!important}
+.dkf{font-size:12.5px!important;border-top:1px solid var(--color-border)!important;padding-top:10px!important;color:var(--color-text-3)!important}
+.acard .ico{width:28px!important;height:28px!important;border:1px solid var(--color-border)!important;background:#fff!important}
+.acard.on{border-color:var(--color-primary)!important;box-shadow:inset 0 0 0 1px var(--color-primary)!important}
 
-/* avatar na cor #6666FF: escurece para o texto branco passar de 4,5:1 */
-.av[style*="background:#6666FF"]{background:#3333FF!important}
+/* pills e badges */
+.dbadge,.pill,.tag,.dn{border-radius:999px!important;font-size:12px!important;font-weight:600!important}
+.dbadge.azul,.dbadge{background:var(--color-primary-subtle)!important;color:#0000CC!important;border:1px solid #CCCCFF!important}
+.dbadge.ok{background:#ECFDF3!important;color:#067647!important;border:1px solid #ABEFC6!important}
+.dbadge.red{background:#FEF3F2!important;color:#B42318!important;border:1px solid #FECDCA!important}
 
-/* ---------- quadro e listas ---------- */
-.pcol{background:#F1F5F9!important;border:1px solid var(--color-border)!important}
-.mcard .mt{font-weight:700!important}
-.mst::before{width:9px!important;height:9px!important}
-table.atable th{color:var(--color-text-2)!important}
+/* ---------- dashboard ---------- */
+.dtimer,.dtimer:not(.on){border:1px solid var(--color-border)!important;background:#fff!important;box-shadow:none!important}
+.dtimer.on{border-color:var(--color-primary)!important;box-shadow:inset 0 0 0 1px var(--color-primary)!important;background:#fff!important}
+.dtimer .dclock{font-size:28px!important}
+.dtimer .dclock.dim{color:var(--color-text-3)!important}
+.dfil{height:30px!important;border:1px solid var(--color-border)!important;border-radius:8px!important;font-size:12.5px!important;color:var(--n-700)!important;background:#fff!important}
+.dfil.on{background:var(--n-100)!important;border-color:var(--color-border-control)!important;color:var(--color-text)!important}
+.dfil.on b{color:inherit!important}
+.dsem .drow{border-top:1px solid var(--color-border)!important;padding:9px 4px!important}
+.dsem .drow:hover{background:var(--n-50)!important}
+.dplay{width:26px!important;height:26px!important;border:1px solid var(--color-border)!important;color:var(--n-600)!important}
+.bars .b{background:var(--n-100)!important;border-radius:6px!important}
+.bars .b i{background:#9999FF!important}
+.bars .bc.cur .b{background:#CCCCFF!important}
+.bars .bc.cur .b i{background:var(--color-primary)!important}
+.dlegend .lg-done{background:#9999FF!important}
+.cal .g .d.today{background:var(--n-100)!important;color:var(--color-text)!important}
+.cal .g .d.sel{background:var(--color-primary)!important;color:#fff!important}
+/* tabela */
+table.atable th{background:var(--n-50)!important;color:var(--color-text-3)!important;font-size:12px!important;font-weight:500!important;border-bottom:1px solid var(--color-border)!important;padding:10px 12px!important}
+table.atable td{font-size:13.5px!important;border-bottom:1px solid var(--color-border)!important;padding:12px!important}
+table.atable tbody tr:hover td{background:var(--n-25)!important}
+.dcard .tablewrap{margin:0 -18px;border-top:1px solid var(--color-border)}
+.dcard .tablewrap table.atable th:first-child,.dcard .tablewrap table.atable td:nth-child(2){padding-left:18px!important}
+
+/* ---------- processos e listas ---------- */
+.pboard{gap:12px!important}
+.pcol{background:var(--n-50)!important;border:1px solid var(--color-border)!important;border-radius:12px!important}
+.mcard{padding:12px 14px!important}
+.mcard .mt{font-size:13.5px!important;font-weight:600!important}
+.mst{font-size:13px!important;font-weight:600!important}
+.rowc{padding:14px 18px!important}
+.tab{font-size:13.5px!important;font-weight:600!important;color:var(--color-text-3)!important}
+.tab.on{color:var(--color-text)!important;border-bottom-color:var(--color-text)!important}
+
+/* ---------- modal e gaveta ---------- */
+.modal{border-radius:16px!important;border:1px solid var(--color-border)!important;box-shadow:0 20px 24px -4px rgba(16,24,40,.08),0 8px 8px -4px rgba(16,24,40,.03)!important}
+.mlayer{background:rgba(16,24,40,.45)!important;backdrop-filter:blur(2px)!important}
+.drawer{background:#fff!important;border-radius:16px 0 0 16px!important}
+.dhead{background:#fff!important}
+.mright{background:var(--n-50)!important;border:1px solid var(--color-border)}
 
 /* ---------- celular ---------- */
 @media (max-width:1180px){
-  .top,header.top{padding:var(--space-3) var(--space-6)!important}
-  .content{padding:var(--space-5) var(--space-6) var(--space-12)!important}
+  .top,header.top{padding:8px 20px!important}
+  .content{padding:20px 20px 40px!important}
+  .side .leg{display:none!important}
 }
 @media (max-width:760px){
-  .top,header.top{padding:var(--space-2) var(--space-4)!important}
-  .content{padding:var(--space-4) var(--space-4) var(--space-12)!important}
-  .pagehead h1,.welcome{font-size:22px!important}
-  .pagehead:has(.welcome){padding:var(--space-5)!important}
-  .pagehead:has(.welcome)::after{right:-60px;top:-80px}
-  .pagehead:has(.welcome)::before{display:none}
+  .top,header.top{padding:8px 16px!important}
+  .content{padding:16px 16px 40px!important}
+  .pagehead h1,.welcome{font-size:20px!important}
+  .side{border-top:1px solid var(--color-border)!important}
+  .nav{min-height:52px!important;font-size:11px!important;flex-direction:column!important;gap:2px!important}
   .nav.on{background:transparent!important}
-  .nav.on .tx{color:var(--mn-azul-texto);font-weight:700}
+  .nav.on .tx{color:var(--color-primary)!important;font-weight:700}
 }
 </style>
 </head>
