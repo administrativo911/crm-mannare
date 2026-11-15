@@ -2866,6 +2866,31 @@ body.arrastando .pcol{transition:background-color .15s}
 .fx-opt.on{background:var(--mn-azul-soft)}
 .fx-opt.del b{color:var(--sx-error)}
 .fx-opt.inv,.fx-opt.del{padding-left:44px}
+.tree .tnode{position:relative}
+.cd-mais{all:unset;box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;margin-left:4px;flex:none;border-radius:999px!important;font:700 15px/1 var(--font-sans);color:var(--sx-text-2);cursor:pointer;opacity:0;transition:opacity .15s,background-color .15s}
+.tree .tnode:hover .cd-mais,.tree .tnode:focus-within .cd-mais,.cd-mais:focus-visible{opacity:1}
+.cd-mais:hover{background:var(--mn-ink);color:#fff}
+.cd-mais:focus-visible{outline:3px solid var(--mn-azul)!important}
+@media (hover:none){.cd-mais{opacity:1}}
+.cg-dlg.cd-pasta{width:min(520px,100%)}
+.cd-tem{background:var(--sx-sunken);border-radius:14px!important;padding:12px 14px}
+.cd-tem ul{margin:6px 0 6px;padding-left:18px;font:500 13.5px/1.6 var(--font-sans);color:var(--sx-text)}
+.cd-op{border-top:1px solid var(--sx-divider);padding-top:12px;display:flex;flex-direction:column;gap:8px}
+.cd-op h3{margin:0!important;font:600 15px var(--font-sans)!important;text-transform:none!important;letter-spacing:0!important;color:var(--sx-text)!important}
+.cd-op p{margin:0}
+.cd-op.perigo h3{color:var(--sx-error)!important}
+.cd-op .btn[disabled]{opacity:.45;cursor:not-allowed}
+.cd-op.perigo .btn{align-self:flex-start}
+.cd-rec{font:700 10.5px/1 var(--font-sans);background:#DDF7E8;color:#065F38;padding:4px 8px;border-radius:999px!important;margin-left:6px;vertical-align:2px}
+.fx-card{border-left:4px solid var(--mn-azul)!important}
+.fx-card .fx-bq{position:absolute;top:8px;right:10px}
+.fx-card .fx-nm{margin-top:2px;white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.cd-mats{display:flex!important;flex-direction:column;gap:8px;background:var(--sx-sunken);border-radius:14px!important;padding:12px 14px}
+.cd-mt{font:600 12.5px var(--font-sans);color:var(--sx-text-2)}
+.cd-mlist,.cd-mmodo{display:flex;flex-wrap:wrap;gap:8px 16px}
+.cd-mmodo[hidden]{display:none}
+.cd-mchk{display:inline-flex!important;align-items:center;gap:8px;font:500 13.5px var(--font-sans);color:var(--sx-text);cursor:pointer;flex-direction:row!important}
+.cd-mchk input{width:18px;height:18px;accent-color:var(--mn-azul);margin:0}
 </style>
 </head>
 <body>
@@ -9607,6 +9632,13 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
     if(r.length > 4) return ddd + r.slice(0, r.length - 4) + '-' + r.slice(-4);
     return ddd + r; }
   window.fmtDoc = fmtDoc; window.fmtTel = fmtTel;
+  // matrículas: "95540, 95541" -> ["95.540", "95.541"]; transcrições com letras ficam como digitadas (em maiúsculas)
+  function fmtMat(x){ x = String(x || '').trim(); if(!x) return ''; if(/^[\d.\s]+$/.test(x)){ var d = onlyDig(x); return d ? Number(d).toLocaleString('pt-BR') : ''; } return up(x); }
+  function lerMats(v){ var out = []; String(v || '').split(/[,;\/\n]+/).forEach(function(x){ var m = fmtMat(x); if(m && out.indexOf(m) < 0) out.push(m); }); return out; }
+  var rotMat = function(m){ m = String(m || '').trim(); return !m ? '' : /^\d/.test(m) ? 'MT. ' + m : m; };
+  function matDe(p){ var m = String(((p && p.imovel) || {}).matricula || '').trim(); return m && m.length <= 48 ? m : ''; }
+  function nomeProc(p){ var pr = propById(p.propId) || p.prop || {}, m = matDe(p); return (p.servico || pr.tipo || pcod(p)) + (m ? ' (' + rotMat(m) + ')' : ''); }
+  window.nomeProc = nomeProc;
   // várias pessoas no mesmo campo: formata cada número separado por / , ;
   function fmtTels(v){ return String(v || '').split(/\s*[\/;,]\s*/).map(function(x){ return onlyDig(x).length >= 10 ? fmtTel(x) : x.trim(); }).filter(Boolean).join(' / '); }
 
@@ -9626,10 +9658,24 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
   function normCli(o){ var mud = false, set = function(k, v){ if((o[k] || '') !== v){ o[k] = v; mud = true; } };
     set('nome', up(o.nome).trim()); if(o.grupo) set('grupo', up(o.grupo).trim()); if(o.contato) set('contato', up(o.contato).trim());
     if(o.cnpj && onlyDig(o.cnpj).length >= 11) set('cnpj', fmtDoc(o.cnpj)); if(o.telefone) set('telefone', fmtTels(o.telefone));
-    (o.emps || []).forEach(function(e){ ['nome', 'razao'].forEach(function(k){ if(e[k] && e[k] !== up(e[k])){ e[k] = up(e[k]); mud = true; } }); if(e.cnpj && onlyDig(e.cnpj).length >= 11 && e.cnpj !== fmtDoc(e.cnpj)){ e.cnpj = fmtDoc(e.cnpj); mud = true; } });
+    (o.emps || []).forEach(function(e){ if(e.mats){ var mm = (Array.isArray(e.mats) ? e.mats : lerMats(e.mats)).map(fmtMat).filter(Boolean); if(JSON.stringify(mm) !== JSON.stringify(e.mats)){ e.mats = mm; mud = true; } }
+      ['nome', 'razao'].forEach(function(k){ if(e[k] && e[k] !== up(e[k])){ e[k] = up(e[k]); mud = true; } }); if(e.cnpj && onlyDig(e.cnpj).length >= 11 && e.cnpj !== fmtDoc(e.cnpj)){ e.cnpj = fmtDoc(e.cnpj); mud = true; } });
     return mud; }
-  if(typeof lerCadModal === 'function') lerCadModal = (function(base){ return function(){ base.apply(this, arguments);
-    if(!cadEdit) return; if(cadEdit.t === 'cli') normCli(cadEdit.o); else if(cadEdit.o && cadEdit.o.nome) cadEdit.o.nome = up(cadEdit.o.nome).trim(); }; })(lerCadModal);
+  if(typeof lerCadModal === 'function') lerCadModal = (function(base){ return function(manterVazios){
+    var linhas = [].slice.call(document.querySelectorAll('#layer [data-ce$="|nome"]')).map(function(el){ var i = el.dataset.ce.split('|')[0], g = function(k){ return ((document.querySelector('#layer [data-ce="' + i + '|' + k + '"]') || {}).value || '').trim(); };
+      var mi = document.querySelector('#layer [data-cemat="' + i + '"]'); return {vazia:!(g('nome') || g('razao') || g('cnpj')), mats:mi ? lerMats(mi.value) : null}; });
+    base.apply(this, arguments);
+    if(!cadEdit) return;
+    if(cadEdit.t === 'cli' && document.querySelector('#layer [data-cemat]')){ var j = 0; linhas.forEach(function(l){ if(!manterVazios && l.vazia) return; var e = cadEdit.o.emps[j++]; if(e && l.mats) e.mats = l.mats; }); } if(cadEdit.t === 'cli') normCli(cadEdit.o); else if(cadEdit.o && cadEdit.o.nome) cadEdit.o.nome = up(cadEdit.o.nome).trim(); }; })(lerCadModal);
+  if(typeof cadModalHtml === 'function') cadModalHtml = (function(base){ return function(){ base.apply(this, arguments);
+    if(!cadEdit || cadEdit.t !== 'cli') return; var tb = document.querySelector('#layer .pitab'); if(!tb) return;
+    var ths = tb.querySelectorAll('thead th'); if(ths.length) ths[ths.length - 1].insertAdjacentHTML('beforebegin', '<th style="width:190px">Matrículas</th>');
+    var emps = cadEdit.o.emps && cadEdit.o.emps.length ? cadEdit.o.emps : [{}];
+    tb.querySelectorAll('tbody tr').forEach(function(tr, i){ var td = tr.lastElementChild, e = emps[i] || {};
+      td.insertAdjacentHTML('beforebegin', '<td><input class="inp" data-cemat="' + i + '" value="' + esc((e.mats || []).join(', ')) + '" placeholder="Ex.: 95.540, 95.541" aria-label="Matrículas do empreendimento"></td>'); });
+    var sub = document.querySelector('#layer .sub[style*="font-weight:700"]'); if(sub && !sub.querySelector('.cd-mhint')) sub.insertAdjacentHTML('beforeend', '<span class="cd-mhint" style="font-weight:500"> Separe as matrículas por vírgula: cada uma pode virar um processo.</span>');
+  }; })(cadModalHtml);
+  document.addEventListener('blur', function(e){ var t = e.target; if(t.matches && t.matches('[data-cemat]')) t.value = lerMats(t.value).join(', '); }, true);
   var migrado = false;
   function migrar(){ if(migrado || !DB.ready) return; migrado = true; var n = 0;
     (S.clis || []).forEach(function(c){ if(normCli(c)) n++; }); (S.servs || []).forEach(function(v){ if(v.nome && v.nome !== up(v.nome)){ v.nome = up(v.nome); n++; } });
@@ -9644,6 +9690,10 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
       groups[g][e] = (groups[g][e] || 0) + n; };
     extra(put);
     (S.clis || []).forEach(function(c){ var g = c.grupo || c.nome; put(g, '', 0); spesDe(c).forEach(function(e){ if(e.nome) put(g, e.nome, 0); }); });
+    var oc = (S.cfg && S.cfg.pastasOcultas) || {};
+    Object.keys(groups).forEach(function(g){ var k = normN(g), em = oc[k]; if(!em) return; var c = conteudo(g);
+      var novoCad = c.clis.some(function(x){ return (x.atualizadoEm || '') > em; });
+      if(!c.procs.length && !c.mats.length && !novoCad) delete groups[g]; });
     return groups;
   }
   function gruposProc(){ return montaGrupos(function(put){
@@ -9674,7 +9724,29 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
     ct.hidden = cs.value !== '__outro' && cs.options.length > 2; et.hidden = es.value !== '__outro';
     var cli = cs.value === '__outro' || cs.options.length <= 2 && !cs.value ? up(ct.value).trim() : cs.value, emp = es.value === '__outro' ? up(et.value).trim() : es.value;
     var a = document.getElementById(CAMPOS[pref][0]), b = document.getElementById(CAMPOS[pref][1]); if(a) a.value = cli; if(b) b.value = emp;
+    if(sincroniza.empAnt !== pref + cli + '|' + emp){ sincroniza.empAnt = pref + cli + '|' + emp; desenhaMats(pref); }
   }
+  function matsDoEmp(cli, emp){ var c = cliDoGrupo(cli), out = []; if(c){ var e = spesDe(c).concat(c.emps || []).find(function(x){ return normN(x.nome) === normN(emp); }); if(e && e.mats) out = out.concat(e.mats); }
+    S.procs.forEach(function(p){ var pr = propById(p.propId) || p.prop || {}; if(normN(pr.emp) === normN(emp) && normN(grupoDe(pr)) === normN(cli)) lerMats(matDe(p)).forEach(function(m){ if(out.indexOf(m) < 0) out.push(m); }); });
+    return out; }
+  function desenhaMats(pref){
+    var lbE = document.getElementById(pref + 'EmpSel'); if(!lbE) return; var host = document.getElementById(pref + 'MatsBox');
+    var cli = (document.getElementById(CAMPOS[pref][0]) || {}).value || '', emp = (document.getElementById(CAMPOS[pref][1]) || {}).value || '';
+    if(pref === 'mn'){ var mi = document.getElementById('mnMat'); if(!mi) return; var dl = document.getElementById('dlMnMat'); if(!dl){ mi.insertAdjacentHTML('afterend', '<datalist id="dlMnMat"></datalist>'); dl = document.getElementById('dlMnMat'); mi.setAttribute('list', 'dlMnMat'); mi.placeholder = 'Escolha ou digite'; }
+      dl.innerHTML = matsDoEmp(cli, emp).map(function(m){ return '<option value="' + esc(m) + '">'; }).join(''); return; }
+    if(!host){ lbE.closest('label').insertAdjacentHTML('afterend', '<div class="f cd-mats" id="' + pref + 'MatsBox" style="grid-column:1/-1"></div>'); host = document.getElementById(pref + 'MatsBox'); }
+    var ms = emp ? matsDoEmp(cli, emp) : [], marc = [].slice.call(host.querySelectorAll('[data-cdmat]:checked')).map(function(x){ return x.value; }), extra = (host.querySelector('[data-cdmatx]') || {}).value || '';
+    host.innerHTML = '<span class="cd-mt">Matrículas do empreendimento</span>' + (ms.length ? '<div class="cd-mlist">' + ms.map(function(m){ return '<label class="cd-mchk"><input type="checkbox" data-cdmat value="' + esc(m) + '" ' + (marc.indexOf(m) >= 0 ? 'checked' : '') + '> ' + esc(rotMat(m)) + '</label>'; }).join('') + '</div>' : '<span class="cg-sub">' + (emp ? 'Nenhuma matrícula cadastrada para este empreendimento.' : 'Escolha o empreendimento.') + '</span>')
+      + '<input class="inp" data-cdmatx placeholder="Outra(s) matrícula(s), separadas por vírgula" value="' + esc(extra) + '" aria-label="Outras matrículas">'
+      + '<div class="cd-mmodo" hidden><label class="cd-mchk"><input type="radio" name="cdMatModo" value="cada" checked> Um processo para cada matrícula</label><label class="cd-mchk"><input type="radio" name="cdMatModo" value="junto"> Um processo só, com todas</label></div>';
+    modoMats(pref);
+  }
+  function matsEscolhidas(pref){ var host = document.getElementById(pref + 'MatsBox'); if(!host) return []; var out = [].slice.call(host.querySelectorAll('[data-cdmat]:checked')).map(function(x){ return x.value; });
+    lerMats((host.querySelector('[data-cdmatx]') || {}).value).forEach(function(m){ if(out.indexOf(m) < 0) out.push(m); }); return out; }
+  function modoMats(pref){ var host = document.getElementById(pref + 'MatsBox'); if(!host) return; var n = matsEscolhidas(pref).length, md = host.querySelector('.cd-mmodo'); if(md) md.hidden = n < 2;
+    var b = document.querySelector('#layer [data-avgo]'); if(b){ var cada = n > 1 && (host.querySelector('[name="cdMatModo"]:checked') || {}).value === 'cada'; b.textContent = cada ? 'Criar ' + n + ' processos' : 'Criar processo'; } }
+  document.addEventListener('change', function(e){ var t = e.target; if(t.matches && (t.matches('[data-cdmat]') || t.matches('[name="cdMatModo"]'))) modoMats('av'); }, true);
+  document.addEventListener('input', function(e){ var t = e.target; if(t.matches && t.matches('[data-cdmatx]')) modoMats('av'); }, true);
   function trocaCliente(pref){
     var cs = document.getElementById(pref + 'CliSel'), es = document.getElementById(pref + 'EmpSel'), groups = pref === 'av' ? gruposProc() : gruposMat(), g = cs.value;
     var emps = groups[g] ? Object.keys(groups[g]).filter(function(e){ return e && e !== g; }).sort(function(a, b){ return a.localeCompare(b, 'pt'); }) : [];
@@ -9696,9 +9768,11 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
   document.addEventListener('input', function(e){ var t = e.target; if(t.matches && t.matches('[data-cdtxt]')){ aplicaCaixa(t, up); var s = t.closest('label').querySelector('select'); sincroniza((s.dataset.cdsel || s.dataset.cdsele)); } }, true);
 
   if(typeof avulsoModal === 'function') avulsoModal = (function(base){ return function(st0){ base.apply(this, arguments);
-    var sel = ui.view === 'proc' && ui.sel ? ui.sel : {}; instalaSeletor('av', sel);
+    var sel = ui.view === 'proc' && ui.sel ? ui.sel : {}; sincroniza.empAnt = ''; instalaSeletor('av', sel);
+    if(fxNovo){ var st = document.getElementById('avSt'); if(st){ st.value = 'naoiniciado'; st.closest('label').hidden = true; } var hd = document.querySelector('#layer .mhead b'); if(hd) hd.textContent = 'Novo processo no fluxograma'; }
     var h = document.querySelector('#layer .mhead b'); if(h && sel.e) h.textContent = 'Novo processo | ' + sel.e; }; })(avulsoModal);
-  if(typeof matNovoModal === 'function') matNovoModal = (function(base){ return function(){ base.apply(this, arguments); instalaSeletor('mn', ui.mSel || {}); }; })(matNovoModal);
+  if(typeof matNovoModal === 'function') matNovoModal = (function(base){ return function(){ base.apply(this, arguments); sincroniza.empAnt = ''; instalaSeletor('mn', ui.mSel || {}); }; })(matNovoModal);
+  document.addEventListener('click', function(e){ var t = e.target; if(t.closest && t.closest('#layer [data-tclose],#layer [data-mclose]') && (t.closest('[data-tclose]') || t.matches('[data-mclose]'))) fxNovo = null; }, true);
   // valida e completa com os dados do cadastro (razão social do cliente) antes do CRM criar
   window.addEventListener('click', function(e){
     var go = e.target.closest && e.target.closest('[data-avgo],[data-mnsave]'); if(!go) return;
@@ -9706,27 +9780,96 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
     var cli = document.getElementById(CAMPOS[pref][0]).value, emp = document.getElementById(CAMPOS[pref][1]).value;
     if(!cli){ e.stopPropagation(); toast('Escolha o cliente da lista'); document.getElementById(pref + 'CliSel').focus(); return; }
     if(pref === 'av'){ if(!emp){ e.stopPropagation(); toast('Escolha o empreendimento'); document.getElementById('avEmpSel').focus(); return; }
-      var n = S.procs.length; setTimeout(function(){ if(S.procs.length <= n) return; var p = S.procs[S.procs.length - 1], c = cliDoGrupo(cli); if(!p.prop || !c) return;
-        var spe = spesDe(c).find(function(x){ return normN(x.nome) === normN(emp); }) || {};
-        p.prop.cliente = c.nome; p.prop.cnpj = spe.cnpj || c.cnpj || ''; if(spe.razao) p.prop.razaoSpe = spe.razao; p.prop.contato = c.contato || ''; p.prop.email = c.email || ''; p.prop.telefone = c.telefone || '';
-        rebuildProps(); save(); render(); }, 0); }
+      var mats = matsEscolhidas('av'), host = document.getElementById('avMatsBox'), cada = mats.length > 1 && host && (host.querySelector('[name="cdMatModo"]:checked') || {}).value === 'cada', posNovo = fxNovo; fxNovo = null;
+      var n = S.procs.length; setTimeout(function(){ if(S.procs.length <= n) return; var p = S.procs[S.procs.length - 1], c = cliDoGrupo(cli);
+        if(p.prop && c){ var spe = spesDe(c).find(function(x){ return normN(x.nome) === normN(emp); }) || {};
+          p.prop.cliente = c.nome; p.prop.cnpj = spe.cnpj || c.cnpj || ''; if(spe.razao) p.prop.razaoSpe = spe.razao; p.prop.contato = c.contato || ''; p.prop.email = c.email || ''; p.prop.telefone = c.telefone || ''; }
+        var novos = [p];
+        if(mats.length){ p.imovel = p.imovel || {}; p.imovel.matricula = cada ? mats[0] : mats.join(' / ');
+          if(cada) mats.slice(1).forEach(function(m){ var q = mkProcess(Object.assign({}, p.prop, {id:'av-' + uid()}), p.modelo, p.resp, p.prazo, me);
+            q.codigo = nextCode('PROC-', S.procs); q.status = p.status; q.servico = p.servico; q.orgao = p.orgao; if(q.prop) q.prop.objeto = p.prop.objeto; q.log[0].txt = p.log[0].txt + ' | matrícula ' + m; q.imovel = Object.assign({}, p.imovel, {matricula:m});
+            S.procs.push(q); novos.push(q); });
+          p.log[0].txt += ' | matrícula ' + p.imovel.matricula; }
+        if(posNovo){ novos.forEach(function(x, i){ x.fx = {x:posNovo.x + i * 32, y:posNovo.y + i * (CH + 24)}; }); closeDrawer(); ui.procMode = 'fluxo'; }
+        rebuildProps(); save(); render(); if(novos.length > 1) toast(novos.length + ' processos criados, um por matrícula'); }, 0); }
   }, true);
 
   /* ---------- cartão do processo: nome do processo no título ---------- */
   function ajustaCartoes(){
     document.querySelectorAll('#view .mcard.pk[data-proc]').forEach(function(c){ var p = procById(c.dataset.proc); if(!p) return; var pr = propById(p.propId) || p.prop || {};
-      var mt = c.querySelector('.mt'), st = c.querySelector('.mtipo'); if(mt) mt.textContent = p.servico || pr.tipo || pcod(p);
+      var mt = c.querySelector('.mt'), st = c.querySelector('.mtipo'); if(mt){ mt.textContent = nomeProc(p); mt.title = nomeProc(p); }
       if(st){ st.textContent = pcod(p) + (pr.emp ? ' | ' + pr.emp : ''); st.title = (pr.cliente || '') + (pr.emp ? ' | ' + pr.emp : ''); } });
   }
+
+  /* ---------- pastas de cliente: excluir ou juntar ---------- */
+  function grupoDe(pr){ return nomeOk(pr && (pr.grupo || pr.cliente)); }
+  function conteudo(g){ var k = normN(g);
+    return {procs:S.procs.filter(function(p){ return normN(grupoDe(propById(p.propId) || p.prop || {}) || 'Sem cliente') === k; }),
+      mats:(S.mats || []).filter(function(m){ return normN(matGrupo(m).g) === k; }),
+      clis:(S.clis || []).filter(function(c){ return normN(c.grupo || c.nome) === k; }),
+      props:S.props.filter(function(pr){ return !pr.snapshot && normN(grupoDe(pr)) === k; })}; }
+  function parecidas(g, todas){ var a = normN(g).replace(/^(construtora|incorporadora|grupo)\s+/, ''); return todas.filter(function(x){ return x !== g; }).sort(function(x, y){
+      var sx = normN(x).indexOf(a) >= 0 || a.indexOf(normN(x)) >= 0 ? 0 : 1, sy = normN(y).indexOf(a) >= 0 || a.indexOf(normN(y)) >= 0 ? 0 : 1; return sx - sy || x.localeCompare(y, 'pt'); }); }
+  var pastaOv = null, pastaG = '';
+  function fecharPasta(){ if(pastaOv){ pastaOv.remove(); pastaOv = null; } }
+  function pastaModal(g, mat){
+    fecharPasta(); pastaG = g; var c = conteudo(g), todas = Object.keys(mat ? gruposMat() : gruposProc()), alvos = parecidas(g, todas), temItens = c.procs.length + c.mats.length > 0;
+    var lin = function(n, s1, sN){ return n ? '<li><b>' + n + '</b> ' + (n === 1 ? s1 : sN) + '</li>' : ''; };
+    pastaOv = document.createElement('div'); pastaOv.className = 'cg-ov';
+    pastaOv.innerHTML = '<div class="cg-dlg cd-pasta" role="dialog" aria-modal="true" aria-label="Pasta do cliente" tabindex="-1"><div class="cg-dh"><div><div class="cg-eyebrow">Pasta do cliente</div><h2>' + esc(g) + '</h2></div><button class="x" data-cdpx aria-label="Fechar">✕</button></div>'
+      + '<div class="cd-tem"><span class="cg-sub">Nesta pasta:</span><ul>' + (lin(c.procs.length, 'processo', 'processos') + lin(c.mats.length, 'material técnico', 'materiais técnicos') + lin(c.clis.length, 'cliente no cadastro', 'clientes no cadastro') + lin(c.props.length, 'proposta', 'propostas') || '<li>nada</li>') + '</ul>'
+      + (c.clis.length ? '<div class="cg-sub">' + c.clis.map(function(x){ return esc(x.nome) + (x.cnpj ? ' | ' + esc(x.cnpj) : ''); }).join('<br>') + '</div>' : '') + '</div>'
+      + '<div class="cd-op"><h3>Juntar com outra pasta <span class="cd-rec">recomendado para duplicadas</span></h3><p class="cg-sub">Leva os processos, materiais e o cadastro para a pasta escolhida. As propostas continuam como estão.</p>'
+      + '<div class="kp-form"><select data-cdalvo aria-label="Pasta de destino">' + alvos.map(function(x){ return '<option>' + esc(x) + '</option>'; }).join('') + '</select><button class="btn sm primary" data-cdjuntar ' + (alvos.length ? '' : 'disabled') + '>Juntar</button></div></div>'
+      + '<div class="cd-op perigo"><h3>Excluir pasta</h3>' + (temItens
+          ? '<p class="cg-sub">Não dá para excluir: a pasta tem ' + (c.procs.length ? c.procs.length + ' processo(s)' : '') + (c.procs.length && c.mats.length ? ' e ' : '') + (c.mats.length ? c.mats.length + ' material(is)' : '') + '. Use <b>Juntar</b> acima.</p>'
+          : '<p class="cg-sub">Some da lista de clientes de Processos e Material técnico.' + (c.clis.length ? ' O cliente também é <b>apagado do cadastro</b> (não dá para desfazer).' : '') + (c.props.length ? ' As propostas não são apagadas.' : '') + '</p>'
+            + '<label class="cg-chk"><input type="checkbox" data-cdconf> Entendi, pode excluir</label><button class="btn sm danger" data-cdexcluir disabled>Excluir pasta</button>') + '</div></div>';
+    document.body.appendChild(pastaOv); setTimeout(function(){ var f = pastaOv && pastaOv.querySelector('select,button'); if(f) f.focus(); }, 30);
+  }
+  function ocultar(g){ S.cfg.pastasOcultas = Object.assign({}, S.cfg.pastasOcultas || {}); S.cfg.pastasOcultas[normN(g)] = nowISO(); }
+  function juntar(de, para){
+    var c = conteudo(de), n = 0;
+    c.procs.forEach(function(p){ p.ovr = Object.assign({}, p.ovr || {}, {grupo:para}); if(p.prop){ p.prop.grupo = para; if(normN(p.prop.cliente) === normN(de)) p.prop.cliente = para; } logP(p, 'passou para a pasta do cliente ' + para); n++; });
+    c.mats.forEach(function(m){ if(!m.propId || !propById(m.propId)){ m.dados = m.dados || {}; m.dados.cliente = para; } n++; });
+    c.clis.forEach(function(x){ x.grupo = para; x.atualizadoEm = nowISO(); x.atualizadoPor = me; });
+    if(typeof rebuildProps === 'function') rebuildProps();
+    ocultar(de); if(normN(ui.sel.g) === normN(de)) ui.sel = {g:para, e:''}; if(ui.mSel && normN(ui.mSel.g) === normN(de)) ui.mSel = {g:para, e:''};
+    save(); render(); toast('“' + de + '” juntada com “' + para + '”');
+  }
+  function excluirPasta(g){
+    var c = conteudo(g); if(c.procs.length || c.mats.length) return;
+    S.clis = (S.clis || []).filter(function(x){ return c.clis.indexOf(x) < 0; }); ocultar(g);
+    if(normN(ui.sel.g) === normN(g)) ui.sel = {g:'', e:''}; if(ui.mSel && normN(ui.mSel.g) === normN(g)) ui.mSel = {g:'', e:''};
+    save(); render(); toast('Pasta “' + g + '” excluída');
+  }
+  function botoesPasta(){
+    document.querySelectorAll('.tree .tnode[data-tg]:not([data-te]),.tree .tnode[data-mtg]:not([data-mte])').forEach(function(n){ if(n.querySelector('.cd-mais')) return;
+      var g = n.dataset.tg || n.dataset.mtg, mat = !!n.dataset.mtg;
+      n.insertAdjacentHTML('beforeend', '<button class="cd-mais" data-cdpasta="' + esc(g) + '" data-cdmat="' + (mat ? 1 : '') + '" aria-label="Opções da pasta ' + esc(g) + '" title="Excluir ou juntar pasta">⋯</button>'); });
+  }
+  window.addEventListener('click', function(e){
+    var t = e.target; if(!t.closest) return; var el;
+    if((el = t.closest('[data-cdpasta]'))){ e.stopPropagation(); e.preventDefault(); pastaModal(el.dataset.cdpasta, !!el.dataset.cdmat); return; }
+    if(!pastaOv || !(t === pastaOv || t.closest('.cg-ov') === pastaOv)) return;
+    e.stopPropagation();
+    if(t === pastaOv || t.closest('[data-cdpx]')){ fecharPasta(); return; }
+    if(t.closest('[data-cdjuntar]')){ var alvo = pastaOv.querySelector('[data-cdalvo]').value, de = pastaG; if(!alvo) return; fecharPasta(); juntar(de, alvo); return; }
+    if(t.closest('[data-cdexcluir]')){ var g = pastaG; fecharPasta(); excluirPasta(g); return; }
+  }, true);
+  document.addEventListener('change', function(e){ if(e.target.matches && e.target.matches('[data-cdconf]') && pastaOv){ pastaOv.querySelector('[data-cdexcluir]').disabled = !e.target.checked; } }, true);
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && pastaOv){ e.stopPropagation(); fecharPasta(); } }, true);
 
   /* ==================== FLUXOGRAMA ==================== */
   var CW = 232, CH = 104;
   var TIPOS = {bloq:{l:'Bloqueio', d:'precisa terminar antes', c:'#D92D20'}, dep:{l:'Dependência', d:'usa o resultado do outro', c:'#0000FF'}, conc:{l:'Concomitância', d:'andam juntos', c:'#C99500'}};
   var fxUI = function(){ return ui.fx = ui.fx || {modo:'bloq', z:1, rel:false}; };
-  function posicoes(ps){
-    var col = {}, out = {};
-    PROC_ST.forEach(function(s, i){ col[s.k] = {x:40 + i * (CW + 56), n:0}; });
-    ps.forEach(function(p){ if(p.fx && isFinite(p.fx.x)){ out[p.id] = {x:p.fx.x, y:p.fx.y}; return; } var c = col[p.status] || col.naoiniciado; out[p.id] = {x:c.x, y:56 + c.n * (CH + 36)}; c.n++; });
+  var fxNovo = null;
+  function posicoes(ps){ // quem não tem posição vai para uma grade, abaixo dos que já foram desenhados
+    var out = {}, livres = [], maxY = 0;
+    ps.forEach(function(p){ if(p.fx && isFinite(p.fx.x)){ out[p.id] = {x:p.fx.x, y:p.fx.y}; maxY = Math.max(maxY, p.fx.y + CH + 60); } else livres.push(p); });
+    var cols = Math.max(2, Math.min(5, Math.floor(((document.querySelector('#view .pmain') || {}).clientWidth || 1100) / (CW + 80)))), y0 = maxY ? maxY + 20 : 40;
+    livres.forEach(function(p, i){ out[p.id] = {x:40 + (i % cols) * (CW + 80), y:y0 + Math.floor(i / cols) * (CH + 70)}; });
     return out;
   }
   function ligacoes(ps){
@@ -9751,10 +9894,10 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
   function linhaSvg(l, pos){ var A = pos[l.a], B = pos[l.b]; if(!A || !B) return ''; var d = caminho(A, B), id = l.t + '|' + l.a + '|' + l.b;
     return '<g class="fx-l ' + l.t + '"><path class="fx-hit" d="' + d + '" data-fxedge="' + id + '"><title>' + esc((TIPOS[l.t] || {l:'Relacionado'}).l) + ': ' + esc(pcod(procById(l.a))) + ' → ' + esc(pcod(procById(l.b))) + '</title></path>'
       + (l.t === 'conc' ? '<path class="fx-p conc2" d="' + d + '"/>' : '') + '<path class="fx-p" d="' + d + '" ' + (l.t === 'bloq' || l.t === 'dep' ? 'marker-end="url(#fxm-' + l.t + ')"' : '') + '/></g>'; }
-  function cartao(p, xy){ var pr = propById(p.propId) || p.prop || {}, st = PS[p.status] || PS.naoiniciado, bloq = procPred(p).filter(isOpen).length;
-    return '<div class="fx-card" data-fxid="' + p.id + '" style="left:' + xy.x + 'px;top:' + xy.y + 'px;--c:' + st.c + '" tabindex="0" role="button" aria-label="' + esc((p.servico || '') + ', ' + pcod(p) + ', ' + (pr.emp || '') + ', ' + st.l) + '">'
-      + '<div class="fx-top"><span class="fx-st">' + esc(st.l) + '</span>' + (bloq ? '<span class="fx-bq" title="Bloqueado por ' + bloq + ' processo(s) em aberto">bloqueado</span>' : '') + '</div>'
-      + '<b class="fx-nm">' + esc(p.servico || pr.tipo || pcod(p)) + '</b><span class="fx-sub">' + esc(pcod(p)) + (pr.emp ? ' | ' + esc(pr.emp) : '') + '</span>'
+  function cartao(p, xy){ var pr = propById(p.propId) || p.prop || {}, bloq = procPred(p).filter(isOpen).length;
+    return '<div class="fx-card" data-fxid="' + p.id + '" style="left:' + xy.x + 'px;top:' + xy.y + 'px" tabindex="0" role="button" aria-label="' + esc(nomeProc(p) + ', ' + pcod(p) + ', ' + (pr.emp || '')) + '">'
+      + (bloq ? '<span class="fx-bq" title="Bloqueado por ' + bloq + ' processo(s) em aberto">bloqueado</span>' : '')
+      + '<b class="fx-nm" title="' + esc(nomeProc(p)) + '">' + esc(nomeProc(p)) + '</b><span class="fx-sub">' + esc(pcod(p)) + (pr.emp ? ' | ' + esc(pr.emp) : '') + '</span>'
       + '<div class="fx-ft">' + (p.resp ? av(p.resp, true, true) : '') + (p.prazo ? '<span class="fx-pz">' + fmtD(p.prazo) + '</span>' : '') + '</div>'
       + '<span class="fx-h" data-fxh title="Arraste até outro cartão para ligar" aria-hidden="true"></span><span class="fx-h esq" data-fxh title="Arraste até outro cartão para ligar" aria-hidden="true"></span></div>'; }
   var fxPos = {}, fxPs = [];
@@ -9766,12 +9909,12 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
         return '<button class="fx-modo ' + k + ' ' + (u.modo === k ? 'on' : '') + '" role="radio" aria-checked="' + (u.modo === k) + '" data-fxmodo="' + k + '" title="' + esc(t.d) + '"><i></i>' + t.l + '</button>'; }).join('') + '</div>'
       + '<label class="fx-chk"><input type="checkbox" data-fxrel ' + (u.rel ? 'checked' : '') + '> Mostrar relacionados</label>'
       + '<span class="spacer"></span><div class="fx-zoom"><button class="iconbtn" data-fxz="-1" aria-label="Diminuir zoom">−</button><span>' + Math.round(u.z * 100) + '%</span><button class="iconbtn" data-fxz="1" aria-label="Aumentar zoom">+</button></div>'
-      + '<button class="btn sm" data-fxorg title="Volta os cartões para colunas por status">Organizar por status</button></div>'
-      + '<p class="fx-dica">Arraste a <b>bolinha</b> na lateral de um cartão até outro para ligar. Arraste o cartão para mudar de lugar. Clique numa linha para trocar o tipo ou remover. ' + ps.length + ' processo' + (ps.length === 1 ? '' : 's') + (ui.sel && ui.sel.g ? ' de ' + esc(ui.sel.e || ui.sel.g) : '') + '.</p>'
+      + '<button class="btn sm" data-fxorg title="Coloca os cartões em grade">Organizar em grade</button><button class="btn sm primary" data-fxnovo>+ Novo processo</button></div>'
+      + '<p class="fx-dica">Arraste a <b>bolinha</b> na lateral de um cartão até outro para ligar. Arraste o cartão para mudar de lugar. Clique numa linha para trocar o tipo ou remover. Dê dois cliques num espaço vazio para criar um processo ali. ' + ps.length + ' processo' + (ps.length === 1 ? '' : 's') + (ui.sel && ui.sel.g ? ' de ' + esc(ui.sel.e || ui.sel.g) : '') + '.</p>'
       + '<div class="fx-wrap" id="fxWrap"><div class="fx-canvas" id="fxCanvas" style="width:' + W + 'px;height:' + H + 'px;transform:scale(' + u.z + ')">'
       + '<svg class="fx-svg" width="' + W + '" height="' + H + '" aria-hidden="true"><defs>'
       + ['bloq', 'dep'].map(function(k){ return '<marker id="fxm-' + k + '" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="' + TIPOS[k].c + '"/></marker>'; }).join('')
-      + '</defs>' + PROC_ST.map(function(s, i){ return '<text class="fx-colt" x="' + (40 + i * (CW + 56)) + '" y="30">' + esc(s.l) + '</text>'; }).join('')
+      + '</defs>'
       + ls.map(function(l){ return linhaSvg(l, fxPos); }).join('') + '<path id="fxTemp" class="fx-temp" d=""/></svg>'
       + ps.map(function(p){ return cartao(p, fxPos[p.id]); }).join('')
       + (ps.length ? '' : '<div class="fx-vazio">Nenhum processo com esses filtros.</div>') + '</div></div>'
@@ -9846,8 +9989,12 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
     if((el = t.closest('[data-fxedge]'))){ ev.stopPropagation(); popLinha(ev, el.dataset.fxedge); return; }
     if((el = t.closest('[data-fxmodo]'))){ ev.stopPropagation(); fxUI().modo = el.dataset.fxmodo; render(); return; }
     if((el = t.closest('[data-fxz]'))){ ev.stopPropagation(); var u = fxUI(); u.z = Math.max(.5, Math.min(1.5, Math.round((u.z + (+el.dataset.fxz) * .1) * 10) / 10)); render(); return; }
-    if(t.closest('[data-fxorg]')){ ev.stopPropagation(); fxPs.forEach(function(p){ delete p.fx; }); save(); render(); toast('Cartões organizados por status'); return; }
+    if(t.closest('[data-fxnovo]')){ ev.stopPropagation(); var wr = document.getElementById('fxWrap'), z0 = fxUI().z, mx = 0; fxPs.forEach(function(p){ var q = fxPos[p.id]; if(q) mx = Math.max(mx, q.y + CH + 50); });
+      fxNovo = {x:Math.round(((wr ? wr.scrollLeft : 0) / z0 + 60) / 8) * 8, y:Math.max(40, mx)}; avulsoModal('naoiniciado'); return; }
+    if(t.closest('[data-fxorg]')){ ev.stopPropagation(); fxPs.forEach(function(p){ delete p.fx; }); save(); render(); toast('Cartões organizados em grade'); return; }
   }, true);
+  document.addEventListener('dblclick', function(ev){ var t = ev.target; if(!t.closest || !t.closest('#fxCanvas') || t.closest('.fx-card') || t.closest('[data-fxedge]')) return;
+    var q = ptCanvas(ev); fxNovo = {x:Math.max(0, Math.round((q.x - CW / 2) / 8) * 8), y:Math.max(16, Math.round((q.y - CH / 2) / 8) * 8)}; avulsoModal('naoiniciado'); }, true);
   document.addEventListener('change', function(ev){ if(ev.target.matches && ev.target.matches('[data-fxrel]')){ fxUI().rel = ev.target.checked; render(); } }, true);
   document.addEventListener('keydown', function(ev){
     if(ev.key === 'Escape' && fxPop){ ev.stopPropagation(); fecharFxPop(); return; }
@@ -9857,7 +10004,7 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
   /* ---------- liga tudo ao CRM ---------- */
   render = (function(base){ return function(){
     base.apply(this, arguments);
-    if(!DB.ready) return; migrar(); fecharFxPop();
+    if(!DB.ready) return; migrar(); fecharFxPop(); botoesPasta();
     if(ui.view !== 'proc') return;
     var seg = document.querySelector('#view .pagehead .seg');
     if(seg && !seg.querySelector('[data-mode="fluxo"]')) seg.insertAdjacentHTML('beforeend', '<button data-mode="fluxo" class="' + (ui.procMode === 'fluxo' ? 'on' : '') + '"><svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h7v6H3zm11 10h7v6h-7zM14 4h7v6h-7zM6.5 10v3.5c0 1.4 1.1 2.5 2.5 2.5h5v-2H9a.5.5 0 0 1-.5-.5V10z"/></svg> Fluxograma</button>');
