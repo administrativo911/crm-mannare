@@ -2787,6 +2787,86 @@ body.arrastando .pcol{transition:background-color .15s}
 @media (max-width:720px){.kp-grid,.kp-tiles{grid-template-columns:1fr 1fr}.kp-pps{grid-template-columns:1fr}.kp-cnt{margin-left:0;width:100%}.kp-v{font-size:28px}}
 @media (max-width:480px){.kp-grid{grid-template-columns:1fr}}
 </style>
+<style id="mannare-cadastro">
+/* nomes do cadastro sempre em maiúsculas (também na árvore de clientes) */
+#layer [data-cf="nome"],#layer [data-cf="grupo"],#layer [data-cf="contato"],#layer [data-ce$="|nome"],#layer [data-ce$="|razao"],.cd-outro{text-transform:uppercase}
+#layer [data-cf="nome"]::placeholder,#layer [data-ce$="|nome"]::placeholder,#layer [data-ce$="|razao"]::placeholder,.cd-outro::placeholder{text-transform:none}
+.tree .tn{text-transform:uppercase;letter-spacing:.01em}
+.cd-outro{margin-top:6px}
+.f select[disabled]{opacity:.55;cursor:not-allowed}
+
+/* ======================= FLUXOGRAMA ======================= */
+.fx-host{margin-top:4px}
+.fx-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 6px}
+.fx-lbl{font:600 12.5px var(--font-sans);color:var(--sx-text-2)}
+.fx-modos{display:flex;gap:4px;background:#fff;border-radius:999px!important;padding:4px;box-shadow:var(--sx-shadow-btn)!important}
+.fx-modo{all:unset;box-sizing:border-box;cursor:pointer;display:inline-flex;align-items:center;gap:8px;height:32px;padding:0 14px;border-radius:999px!important;font:600 13px var(--font-sans);color:var(--sx-text-2)}
+.fx-modo i,.fx-leg i,.fx-opt i{display:inline-block;width:22px;height:0;border-top:3px solid currentColor;position:relative}
+.fx-modo.bloq i,.fx-leg .bloq i,.fx-opt.bloq i{color:#D92D20}
+.fx-modo.dep i,.fx-leg .dep i,.fx-opt.dep i{color:#0000FF;border-top-style:dashed}
+.fx-modo.conc i,.fx-leg .conc i,.fx-opt.conc i{color:#C99500;border-top-style:double;border-top-width:5px}
+.fx-leg .rel i{color:#9AA0C2;border-top-style:dotted}
+.fx-modo:hover{background:var(--sx-hover);color:var(--sx-text)}
+.fx-modo.on{background:var(--mn-ink);color:#fff}
+.fx-modo.on.bloq i{color:#FF8A80}.fx-modo.on.dep i{color:#9C9CFF}.fx-modo.on.conc i{color:var(--mn-amarelo)}
+.fx-modo:focus-visible{outline:3px solid var(--mn-azul)!important;outline-offset:2px}
+.fx-chk{display:inline-flex;align-items:center;gap:6px;font:500 12.5px var(--font-sans);color:var(--sx-text-2);cursor:pointer}
+.fx-zoom{display:inline-flex;align-items:center;gap:6px;font:600 12.5px var(--font-sans);color:var(--sx-text-2)}
+.fx-zoom span{min-width:42px;text-align:center}
+.fx-dica{margin:4px 2px 10px;font:400 12.5px/1.5 var(--font-sans);color:var(--sx-text-3)}
+.fx-wrap{position:relative;overflow:auto;height:max(520px,calc(100vh - 290px));background:#fff;border-radius:var(--sx-r-card)!important;box-shadow:var(--sx-shadow)!important;
+  background-image:radial-gradient(rgba(11,11,26,.09) 1px,transparent 1px);background-size:24px 24px}
+.fx-canvas{position:relative;transform-origin:0 0;user-select:none;-webkit-user-select:none}
+.fx-svg{position:absolute;inset:0;overflow:visible}
+.fx-colt{font:700 11px var(--font-sans);letter-spacing:.06em;text-transform:uppercase;fill:#9093AD}
+.fx-p{fill:none;stroke-width:2.5;pointer-events:none}
+.fx-l.bloq .fx-p{stroke:#D92D20}
+.fx-l.dep .fx-p{stroke:#0000FF;stroke-dasharray:8 6}
+.fx-l.conc .fx-p{stroke:#C99500;stroke-width:6}
+.fx-l.conc .fx-p.conc2{stroke:#C99500}
+.fx-l.conc .fx-p:not(.conc2){stroke:#fff;stroke-width:2}
+.fx-l.rel .fx-p{stroke:#9AA0C2;stroke-dasharray:2 5;stroke-width:2}
+.fx-hit{fill:none;stroke:transparent;stroke-width:16;cursor:pointer;pointer-events:stroke}
+.fx-l:hover .fx-p{stroke-width:4}
+.fx-l.conc:hover .fx-p.conc2{stroke-width:8}
+.fx-temp{fill:none;stroke:#0B0B1A;stroke-width:2;stroke-dasharray:6 5;pointer-events:none}
+.fx-temp.bloq{stroke:#D92D20}.fx-temp.dep{stroke:#0000FF}.fx-temp.conc{stroke:#C99500}
+.fx-card{position:absolute;width:232px;height:104px;box-sizing:border-box;background:#fff;border-radius:16px!important;box-shadow:0 1px 2px rgba(14,16,48,.06),0 6px 18px rgba(14,16,48,.08)!important;
+  padding:10px 14px 8px;display:flex;flex-direction:column;gap:2px;cursor:grab;user-select:none;touch-action:none;border-left:4px solid var(--c)!important;transition:box-shadow .15s}
+.fx-card:hover{box-shadow:0 2px 4px rgba(14,16,48,.08),0 12px 28px rgba(14,16,48,.14)!important}
+.fx-card:focus-visible{outline:3px solid var(--mn-azul)!important;outline-offset:2px}
+.fx-card.fx-mov{cursor:grabbing;box-shadow:0 18px 40px rgba(14,16,48,.22)!important;z-index:5}
+.fx-card.fx-alvo{box-shadow:0 0 0 3px var(--mn-azul),0 12px 28px rgba(0,0,255,.2)!important}
+.fx-card.fx-src{box-shadow:0 0 0 3px var(--mn-ink)!important}
+.fx-top{display:flex;align-items:center;gap:6px}
+.fx-st{font:700 10.5px/1 var(--font-sans);letter-spacing:.02em;color:var(--sx-text-2);background:var(--sx-sunken);padding:4px 8px;border-radius:999px!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fx-bq{font:700 10.5px/1 var(--font-sans);color:var(--sx-error);background:var(--sx-error-bg);padding:4px 8px;border-radius:999px!important}
+.fx-nm{font:600 14px/1.3 var(--font-sans);color:var(--sx-text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:4px}
+.fx-sub{font:400 12px/1.3 var(--font-sans);color:var(--sx-text-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fx-ft{display:flex;align-items:center;gap:8px;margin-top:auto}
+.fx-pz{font:500 11.5px var(--font-sans);color:var(--sx-text-3);margin-left:auto}
+.fx-h{position:absolute;top:50%;right:-8px;width:16px;height:16px;margin-top:-8px;border-radius:50%!important;background:#fff;border:2.5px solid var(--mn-ink)!important;cursor:crosshair;opacity:0;transition:opacity .15s,transform .15s}
+.fx-h.esq{right:auto;left:-10px}
+.fx-card:hover .fx-h,.fx-card:focus-within .fx-h,.ligando .fx-h{opacity:1}
+.fx-h:hover{transform:scale(1.25);background:var(--mn-amarelo)}
+@media (hover:none){.fx-h{opacity:1}}
+.ligando .fx-card{cursor:crosshair}
+.fx-vazio{position:absolute;left:40px;top:80px;font:500 14px var(--font-sans);color:var(--sx-text-3)}
+.fx-leg{display:flex;flex-wrap:wrap;gap:8px 20px;margin:12px 2px 40px;font:400 12.5px var(--font-sans);color:var(--sx-text-3)}
+.fx-leg span{display:inline-flex;align-items:center;gap:8px}
+.fx-leg b{color:var(--sx-text);font-weight:600}
+.fx-pop{position:fixed;z-index:130;width:290px;background:#fff;border-radius:16px!important;box-shadow:var(--sx-shadow-float),0 0 0 1px rgba(14,16,48,.06)!important;padding:10px;display:flex;flex-direction:column;gap:2px}
+.fx-poph{display:flex;align-items:center;gap:8px;padding:2px 4px 8px;border-bottom:1px solid var(--sx-divider);margin-bottom:4px}
+.fx-poph b{flex:1;font:600 13.5px var(--font-sans)}
+.fx-opt{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;gap:12px;padding:8px 10px;border-radius:12px!important}
+.fx-opt span{display:flex;flex-direction:column;font:400 12px/1.35 var(--font-sans);color:var(--sx-text-3)}
+.fx-opt b{font:600 13.5px var(--font-sans);color:var(--sx-text)}
+.fx-opt:hover,.fx-opt:focus-visible{background:var(--sx-hover)}
+.fx-opt:focus-visible{outline:3px solid var(--mn-azul)!important}
+.fx-opt.on{background:var(--mn-azul-soft)}
+.fx-opt.del b{color:var(--sx-error)}
+.fx-opt.inv,.fx-opt.del{padding-left:44px}
+</style>
 </head>
 <body>
 <a class="skip" href="#view">Pular para o conteúdo</a>
@@ -9498,6 +9578,296 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
   }, true);
   document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && ov){ e.stopPropagation(); fecharCfg(); } }, true);
 
+  if(typeof DB !== 'undefined' && DB.ready) render();
+})();
+</script>
+
+<script id="mannare-cadastro">
+/* ==========================================================================
+   Cadastros e Processos
+   - Nomes do cadastro sempre em MAIÚSCULAS; CNPJ/CPF e telefone com máscara
+   - Clientes e empreendimentos do cadastro aparecem na árvore de Processos e de Material técnico
+   - Novo processo / material sem proposta puxam cliente e empreendimento da lista
+     (e já vêm preenchidos com o que estiver selecionado na árvore)
+   - Cartão do processo: nome do processo no título; abaixo "número | empreendimento"
+   - Fluxograma: todos os cartões, com ligações de bloqueio, dependência e concomitância
+   ========================================================================== */
+(function(){
+  if(typeof S === 'undefined') return;
+  var up = function(s){ return String(s == null ? '' : s).toLocaleUpperCase('pt-BR'); };
+
+  /* ---------- máscaras ---------- */
+  function fmtDoc(v){ var d = onlyDig(v).slice(0, 14);
+    if(d.length <= 11) return d.replace(/^(\d{3})(\d)/, '$1.$2').replace(/^(\d{3})\.(\d{3})(\d)/, '$1.$2.$3').replace(/\.(\d{3})(\d{1,2})$/, '.$1-$2');
+    return d.replace(/^(\d{2})(\d)/, '$1.$2').replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3').replace(/\.(\d{3})(\d)/, '.$1/$2').replace(/(\d{4})(\d{1,2})$/, '$1-$2'); }
+  function fmtTel(v){ var d = onlyDig(v); if(d.length > 11 && d.slice(0, 2) === '55') d = d.slice(2); d = d.slice(0, 11);
+    if(!d) return ''; if(d.length <= 2) return '(' + d;
+    var ddd = '(' + d.slice(0, 2) + ') ', r = d.slice(2);
+    if(d.length === 11) return ddd + r[0] + '.' + r.slice(1, 5) + '-' + r.slice(5);
+    if(r.length > 4) return ddd + r.slice(0, r.length - 4) + '-' + r.slice(-4);
+    return ddd + r; }
+  window.fmtDoc = fmtDoc; window.fmtTel = fmtTel;
+  // várias pessoas no mesmo campo: formata cada número separado por / , ;
+  function fmtTels(v){ return String(v || '').split(/\s*[\/;,]\s*/).map(function(x){ return onlyDig(x).length >= 10 ? fmtTel(x) : x.trim(); }).filter(Boolean).join(' / '); }
+
+  var NOMES = '[data-cf="nome"],[data-cf="grupo"],[data-cf="contato"],[data-ce$="|nome"],[data-ce$="|razao"],#avCli,#avEmp,#mnCli,#mnImo';
+  function aplicaCaixa(el, f){ var a = el.selectionStart, b = el.selectionEnd, v = f(el.value); if(v === el.value) return;
+    var dAntes = el.value.slice(0, a).replace(/\D/g, '').length; el.value = v;
+    if(f === up){ try{ el.setSelectionRange(a, b); }catch(_){} return; }
+    var n = 0, pos = v.length; for(var i = 0; i < v.length; i++){ if(/\d/.test(v[i])) n++; if(n >= dAntes){ pos = i + 1; break; } } if(!dAntes) pos = 0; try{ el.setSelectionRange(pos, pos); }catch(_){} }
+  document.addEventListener('input', function(e){ var t = e.target; if(!t.matches) return;
+    if(t.matches(NOMES) && (t.closest('#layer') || t.id)) aplicaCaixa(t, up);
+    else if(t.matches('[data-cf="cnpj"],[data-ce$="|cnpj"]')) aplicaCaixa(t, fmtDoc);
+    else if(t.matches('[data-cf="telefone"]') && !/[\/;,]/.test(t.value)) aplicaCaixa(t, fmtTel);
+  }, true);
+  document.addEventListener('blur', function(e){ var t = e.target; if(t.matches && t.matches('[data-cf="telefone"]')) t.value = fmtTels(t.value); }, true);
+
+  // ao salvar o cadastro: tudo que é nome em maiúsculas, documentos e telefones formatados
+  function normCli(o){ var mud = false, set = function(k, v){ if((o[k] || '') !== v){ o[k] = v; mud = true; } };
+    set('nome', up(o.nome).trim()); if(o.grupo) set('grupo', up(o.grupo).trim()); if(o.contato) set('contato', up(o.contato).trim());
+    if(o.cnpj && onlyDig(o.cnpj).length >= 11) set('cnpj', fmtDoc(o.cnpj)); if(o.telefone) set('telefone', fmtTels(o.telefone));
+    (o.emps || []).forEach(function(e){ ['nome', 'razao'].forEach(function(k){ if(e[k] && e[k] !== up(e[k])){ e[k] = up(e[k]); mud = true; } }); if(e.cnpj && onlyDig(e.cnpj).length >= 11 && e.cnpj !== fmtDoc(e.cnpj)){ e.cnpj = fmtDoc(e.cnpj); mud = true; } });
+    return mud; }
+  if(typeof lerCadModal === 'function') lerCadModal = (function(base){ return function(){ base.apply(this, arguments);
+    if(!cadEdit) return; if(cadEdit.t === 'cli') normCli(cadEdit.o); else if(cadEdit.o && cadEdit.o.nome) cadEdit.o.nome = up(cadEdit.o.nome).trim(); }; })(lerCadModal);
+  var migrado = false;
+  function migrar(){ if(migrado || !DB.ready) return; migrado = true; var n = 0;
+    (S.clis || []).forEach(function(c){ if(normCli(c)) n++; }); (S.servs || []).forEach(function(v){ if(v.nome && v.nome !== up(v.nome)){ v.nome = up(v.nome); n++; } });
+    if(n) save(); }
+
+  /* ---------- árvore: inclui clientes e empreendimentos do cadastro ---------- */
+  function montaGrupos(extra){
+    var groups = {}, chave = {};
+    var K = function(g){ g = nomeOk(g); if(!g) return ''; var n = normN(g); if(!chave[n]) chave[n] = g; return chave[n]; };
+    var put = function(g, e, n){ g = K(g); if(!g) return; e = nomeOk(e); groups[g] = groups[g] || {};
+      if(e){ var ek = Object.keys(groups[g]).find(function(x){ return normN(x) === normN(e); }); if(ek !== undefined) e = ek; }
+      groups[g][e] = (groups[g][e] || 0) + n; };
+    extra(put);
+    (S.clis || []).forEach(function(c){ var g = c.grupo || c.nome; put(g, '', 0); spesDe(c).forEach(function(e){ if(e.nome) put(g, e.nome, 0); }); });
+    return groups;
+  }
+  function gruposProc(){ return montaGrupos(function(put){
+    S.props.forEach(function(pr){ put(pr.grupo || pr.cliente, pr.emp, 0); });
+    S.procs.forEach(function(p){ var pr = propById(p.propId) || {}; put(pr.grupo || pr.cliente || 'Sem cliente', pr.emp, isOpen(p) ? 1 : 0); }); }); }
+  function gruposMat(){ return montaGrupos(function(put){
+    S.props.forEach(function(pr){ put(pr.grupo || pr.cliente, pr.emp, 0); });
+    (S.mats || []).forEach(function(m){ var x = matGrupo(m); put(x.g, x.e, m.status !== 'entregue' ? 1 : 0); }); }); }
+  treeHtml = function(){ return arvoreHtml({p:'', groups:gruposProc(), sel:ui.sel, closed:ui.closed, tq:ui.tq, todos:'Todos os processos', total:S.procs.filter(isOpen).length}); };
+  matTreeHtml = function(){ return arvoreHtml({p:'m', groups:gruposMat(), sel:ui.mSel || {}, closed:ui.mClosed || {}, tq:ui.mtq, todos:'Todos os materiais', total:(S.mats || []).filter(function(m){ return m.status !== 'entregue'; }).length}); };
+  var cliDoGrupo = function(g){ var n = normN(g); return (S.clis || []).find(function(c){ return normN(c.grupo || c.nome) === n; }) || (S.clis || []).find(function(c){ return normN(c.nome) === n; }); };
+
+  /* ---------- seletor cliente/empreendimento (usado nos dois modais) ---------- */
+  function seletorHtml(pref, groups, sel){
+    var gs = Object.keys(groups).sort(function(a, b){ return a.localeCompare(b, 'pt'); }), g0 = sel.g && groups[sel.g] ? sel.g : '';
+    var emps = g0 ? Object.keys(groups[g0]).filter(function(e){ return e && e !== g0; }).sort(function(a, b){ return a.localeCompare(b, 'pt'); }) : [];
+    var e0 = sel.e && emps.indexOf(sel.e) >= 0 ? sel.e : '';
+    return '<label class="f">Cliente<select id="' + pref + 'CliSel" data-cdsel="' + pref + '"><option value="">Escolha o cliente</option>' + gs.map(function(g){ return '<option ' + (g === g0 ? 'selected' : '') + '>' + esc(g) + '</option>'; }).join('') + '<option value="__outro">+ Outro (digitar)</option></select>'
+      + '<input class="inp cd-outro" data-cdtxt="cli" placeholder="Nome do cliente" ' + (gs.length ? 'hidden' : '') + '></label>'
+      + '<label class="f">Empreendimento<select id="' + pref + 'EmpSel" data-cdsele="' + pref + '" ' + (g0 ? '' : 'disabled') + '><option value="">' + (g0 ? 'Escolha o empreendimento' : 'Escolha o cliente primeiro') + '</option>' + emps.map(function(e){ return '<option ' + (e === e0 ? 'selected' : '') + '>' + esc(e) + '</option>'; }).join('') + (g0 ? '<option value="__outro">+ Outro (digitar)</option>' : '') + '</select>'
+      + '<input class="inp cd-outro" data-cdtxt="emp" placeholder="Nome do empreendimento" hidden></label>';
+  }
+  // espelha a escolha nos campos que o CRM já lê (#avCli/#avEmp e #mnCli/#mnImo)
+  var CAMPOS = {av:['avCli', 'avEmp'], mn:['mnCli', 'mnImo']};
+  function sincroniza(pref){
+    var box = document.getElementById(pref + 'CliSel'); if(!box) return; var lay = box.closest('#layer') || document;
+    var cs = box, es = document.getElementById(pref + 'EmpSel'), ct = cs.parentNode.querySelector('[data-cdtxt="cli"]'), et = es.parentNode.querySelector('[data-cdtxt="emp"]');
+    ct.hidden = cs.value !== '__outro' && cs.options.length > 2; et.hidden = es.value !== '__outro';
+    var cli = cs.value === '__outro' || cs.options.length <= 2 && !cs.value ? up(ct.value).trim() : cs.value, emp = es.value === '__outro' ? up(et.value).trim() : es.value;
+    var a = document.getElementById(CAMPOS[pref][0]), b = document.getElementById(CAMPOS[pref][1]); if(a) a.value = cli; if(b) b.value = emp;
+  }
+  function trocaCliente(pref){
+    var cs = document.getElementById(pref + 'CliSel'), es = document.getElementById(pref + 'EmpSel'), groups = pref === 'av' ? gruposProc() : gruposMat(), g = cs.value;
+    var emps = groups[g] ? Object.keys(groups[g]).filter(function(e){ return e && e !== g; }).sort(function(a, b){ return a.localeCompare(b, 'pt'); }) : [];
+    es.disabled = !g; es.innerHTML = '<option value="">' + (g ? (emps.length ? 'Escolha o empreendimento' : 'Nenhum cadastrado: use “Outro”') : 'Escolha o cliente primeiro') + '</option>' + emps.map(function(e){ return '<option>' + esc(e) + '</option>'; }).join('') + (g ? '<option value="__outro">+ Outro (digitar)</option>' : '');
+    if(g === '__outro'){ es.disabled = false; es.value = '__outro'; }
+    sincroniza(pref);
+  }
+  function instalaSeletor(pref, sel){
+    var a = document.getElementById(CAMPOS[pref][0]), b = document.getElementById(CAMPOS[pref][1]); if(!a || !b || document.getElementById(pref + 'CliSel')) return;
+    var la = a.closest('label'), lb = b.closest('label'); if(!la || !lb) return;
+    var w = document.createElement('div'); w.innerHTML = seletorHtml(pref, pref === 'av' ? gruposProc() : gruposMat(), sel || {});
+    la.insertAdjacentElement('beforebegin', w.children[0]); lb.insertAdjacentElement('beforebegin', w.children[0]);
+    la.hidden = true; lb.hidden = true; a.removeAttribute('list');
+    sincroniza(pref);
+  }
+  document.addEventListener('change', function(e){ var t = e.target; if(!t.matches) return;
+    if(t.matches('[data-cdsel]')){ trocaCliente(t.dataset.cdsel); if(t.value === '__outro'){ var i = t.parentNode.querySelector('[data-cdtxt]'); if(i) i.focus(); } return; }
+    if(t.matches('[data-cdsele]')){ sincroniza(t.dataset.cdsele); if(t.value === '__outro'){ var j = t.parentNode.querySelector('[data-cdtxt]'); if(j) j.focus(); } return; } }, true);
+  document.addEventListener('input', function(e){ var t = e.target; if(t.matches && t.matches('[data-cdtxt]')){ aplicaCaixa(t, up); var s = t.closest('label').querySelector('select'); sincroniza((s.dataset.cdsel || s.dataset.cdsele)); } }, true);
+
+  if(typeof avulsoModal === 'function') avulsoModal = (function(base){ return function(st0){ base.apply(this, arguments);
+    var sel = ui.view === 'proc' && ui.sel ? ui.sel : {}; instalaSeletor('av', sel);
+    var h = document.querySelector('#layer .mhead b'); if(h && sel.e) h.textContent = 'Novo processo | ' + sel.e; }; })(avulsoModal);
+  if(typeof matNovoModal === 'function') matNovoModal = (function(base){ return function(){ base.apply(this, arguments); instalaSeletor('mn', ui.mSel || {}); }; })(matNovoModal);
+  // valida e completa com os dados do cadastro (razão social do cliente) antes do CRM criar
+  window.addEventListener('click', function(e){
+    var go = e.target.closest && e.target.closest('[data-avgo],[data-mnsave]'); if(!go) return;
+    var pref = go.matches('[data-avgo]') ? 'av' : 'mn'; if(!document.getElementById(pref + 'CliSel')) return; sincroniza(pref);
+    var cli = document.getElementById(CAMPOS[pref][0]).value, emp = document.getElementById(CAMPOS[pref][1]).value;
+    if(!cli){ e.stopPropagation(); toast('Escolha o cliente da lista'); document.getElementById(pref + 'CliSel').focus(); return; }
+    if(pref === 'av'){ if(!emp){ e.stopPropagation(); toast('Escolha o empreendimento'); document.getElementById('avEmpSel').focus(); return; }
+      var n = S.procs.length; setTimeout(function(){ if(S.procs.length <= n) return; var p = S.procs[S.procs.length - 1], c = cliDoGrupo(cli); if(!p.prop || !c) return;
+        var spe = spesDe(c).find(function(x){ return normN(x.nome) === normN(emp); }) || {};
+        p.prop.cliente = c.nome; p.prop.cnpj = spe.cnpj || c.cnpj || ''; if(spe.razao) p.prop.razaoSpe = spe.razao; p.prop.contato = c.contato || ''; p.prop.email = c.email || ''; p.prop.telefone = c.telefone || '';
+        rebuildProps(); save(); render(); }, 0); }
+  }, true);
+
+  /* ---------- cartão do processo: nome do processo no título ---------- */
+  function ajustaCartoes(){
+    document.querySelectorAll('#view .mcard.pk[data-proc]').forEach(function(c){ var p = procById(c.dataset.proc); if(!p) return; var pr = propById(p.propId) || p.prop || {};
+      var mt = c.querySelector('.mt'), st = c.querySelector('.mtipo'); if(mt) mt.textContent = p.servico || pr.tipo || pcod(p);
+      if(st){ st.textContent = pcod(p) + (pr.emp ? ' | ' + pr.emp : ''); st.title = (pr.cliente || '') + (pr.emp ? ' | ' + pr.emp : ''); } });
+  }
+
+  /* ==================== FLUXOGRAMA ==================== */
+  var CW = 232, CH = 104;
+  var TIPOS = {bloq:{l:'Bloqueio', d:'precisa terminar antes', c:'#D92D20'}, dep:{l:'Dependência', d:'usa o resultado do outro', c:'#0000FF'}, conc:{l:'Concomitância', d:'andam juntos', c:'#C99500'}};
+  var fxUI = function(){ return ui.fx = ui.fx || {modo:'bloq', z:1, rel:false}; };
+  function posicoes(ps){
+    var col = {}, out = {};
+    PROC_ST.forEach(function(s, i){ col[s.k] = {x:40 + i * (CW + 56), n:0}; });
+    ps.forEach(function(p){ if(p.fx && isFinite(p.fx.x)){ out[p.id] = {x:p.fx.x, y:p.fx.y}; return; } var c = col[p.status] || col.naoiniciado; out[p.id] = {x:c.x, y:56 + c.n * (CH + 36)}; c.n++; });
+    return out;
+  }
+  function ligacoes(ps){
+    var ids = {}, out = []; ps.forEach(function(p){ ids[p.id] = 1; });
+    ps.forEach(function(p){
+      (p.deps || []).forEach(function(d){ if(ids[d]) out.push({t:'bloq', a:d, b:p.id}); });
+      (p.relac || []).forEach(function(r){ if(!ids[r.id]) return;
+        if(r.nome === 'Dependência' && r.dir === 'depende') out.push({t:'dep', a:r.id, b:p.id});
+        else if(r.nome === 'Concomitância' && p.id < r.id) out.push({t:'conc', a:p.id, b:r.id}); });
+      if(fxUI().rel){ (p.rels || []).forEach(function(r){ if(ids[r] && p.id < r) out.push({t:'rel', a:p.id, b:r}); });
+        (p.relac || []).forEach(function(r){ if(ids[r.id] && p.id < r.id && r.nome !== 'Dependência' && r.nome !== 'Concomitância') out.push({t:'rel', a:p.id, b:r.id}); }); }
+    });
+    return out;
+  }
+  function caminho(A, B){ // da borda direita de A para a borda esquerda de B (ou o inverso, se B estiver à esquerda)
+    var ax, bx, ay = A.y + CH / 2, by = B.y + CH / 2;
+    if(B.x >= A.x + CW * .6){ ax = A.x + CW; bx = B.x; } else if(A.x >= B.x + CW * .6){ ax = A.x; bx = B.x + CW; }
+    else { ax = A.x + CW / 2; bx = B.x + CW / 2; ay = A.y + (B.y > A.y ? CH : 0); by = B.y + (B.y > A.y ? 0 : CH); var dy = Math.max(40, Math.abs(by - ay) / 2) * (by > ay ? 1 : -1); return 'M' + ax + ' ' + ay + ' C' + ax + ' ' + (ay + dy) + ' ' + bx + ' ' + (by - dy) + ' ' + bx + ' ' + by; }
+    var dx = Math.max(50, Math.abs(bx - ax) / 2) * (bx >= ax ? 1 : -1);
+    return 'M' + ax + ' ' + ay + ' C' + (ax + dx) + ' ' + ay + ' ' + (bx - dx) + ' ' + by + ' ' + bx + ' ' + by;
+  }
+  function linhaSvg(l, pos){ var A = pos[l.a], B = pos[l.b]; if(!A || !B) return ''; var d = caminho(A, B), id = l.t + '|' + l.a + '|' + l.b;
+    return '<g class="fx-l ' + l.t + '"><path class="fx-hit" d="' + d + '" data-fxedge="' + id + '"><title>' + esc((TIPOS[l.t] || {l:'Relacionado'}).l) + ': ' + esc(pcod(procById(l.a))) + ' → ' + esc(pcod(procById(l.b))) + '</title></path>'
+      + (l.t === 'conc' ? '<path class="fx-p conc2" d="' + d + '"/>' : '') + '<path class="fx-p" d="' + d + '" ' + (l.t === 'bloq' || l.t === 'dep' ? 'marker-end="url(#fxm-' + l.t + ')"' : '') + '/></g>'; }
+  function cartao(p, xy){ var pr = propById(p.propId) || p.prop || {}, st = PS[p.status] || PS.naoiniciado, bloq = procPred(p).filter(isOpen).length;
+    return '<div class="fx-card" data-fxid="' + p.id + '" style="left:' + xy.x + 'px;top:' + xy.y + 'px;--c:' + st.c + '" tabindex="0" role="button" aria-label="' + esc((p.servico || '') + ', ' + pcod(p) + ', ' + (pr.emp || '') + ', ' + st.l) + '">'
+      + '<div class="fx-top"><span class="fx-st">' + esc(st.l) + '</span>' + (bloq ? '<span class="fx-bq" title="Bloqueado por ' + bloq + ' processo(s) em aberto">bloqueado</span>' : '') + '</div>'
+      + '<b class="fx-nm">' + esc(p.servico || pr.tipo || pcod(p)) + '</b><span class="fx-sub">' + esc(pcod(p)) + (pr.emp ? ' | ' + esc(pr.emp) : '') + '</span>'
+      + '<div class="fx-ft">' + (p.resp ? av(p.resp, true, true) : '') + (p.prazo ? '<span class="fx-pz">' + fmtD(p.prazo) + '</span>' : '') + '</div>'
+      + '<span class="fx-h" data-fxh title="Arraste até outro cartão para ligar" aria-hidden="true"></span><span class="fx-h esq" data-fxh title="Arraste até outro cartão para ligar" aria-hidden="true"></span></div>'; }
+  var fxPos = {}, fxPs = [];
+  function fluxoHtml(){
+    var u = fxUI(), ps = filteredProcs(); fxPs = ps; fxPos = posicoes(ps);
+    var W = 600, H = 400; ps.forEach(function(p){ var q = fxPos[p.id]; W = Math.max(W, q.x + CW + 200); H = Math.max(H, q.y + CH + 160); });
+    var ls = ligacoes(ps);
+    return '<div class="fx-bar"><span class="fx-lbl">Ligar como</span><div class="fx-modos" role="radiogroup" aria-label="Tipo de ligação">' + Object.keys(TIPOS).map(function(k){ var t = TIPOS[k];
+        return '<button class="fx-modo ' + k + ' ' + (u.modo === k ? 'on' : '') + '" role="radio" aria-checked="' + (u.modo === k) + '" data-fxmodo="' + k + '" title="' + esc(t.d) + '"><i></i>' + t.l + '</button>'; }).join('') + '</div>'
+      + '<label class="fx-chk"><input type="checkbox" data-fxrel ' + (u.rel ? 'checked' : '') + '> Mostrar relacionados</label>'
+      + '<span class="spacer"></span><div class="fx-zoom"><button class="iconbtn" data-fxz="-1" aria-label="Diminuir zoom">−</button><span>' + Math.round(u.z * 100) + '%</span><button class="iconbtn" data-fxz="1" aria-label="Aumentar zoom">+</button></div>'
+      + '<button class="btn sm" data-fxorg title="Volta os cartões para colunas por status">Organizar por status</button></div>'
+      + '<p class="fx-dica">Arraste a <b>bolinha</b> na lateral de um cartão até outro para ligar. Arraste o cartão para mudar de lugar. Clique numa linha para trocar o tipo ou remover. ' + ps.length + ' processo' + (ps.length === 1 ? '' : 's') + (ui.sel && ui.sel.g ? ' de ' + esc(ui.sel.e || ui.sel.g) : '') + '.</p>'
+      + '<div class="fx-wrap" id="fxWrap"><div class="fx-canvas" id="fxCanvas" style="width:' + W + 'px;height:' + H + 'px;transform:scale(' + u.z + ')">'
+      + '<svg class="fx-svg" width="' + W + '" height="' + H + '" aria-hidden="true"><defs>'
+      + ['bloq', 'dep'].map(function(k){ return '<marker id="fxm-' + k + '" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="' + TIPOS[k].c + '"/></marker>'; }).join('')
+      + '</defs>' + PROC_ST.map(function(s, i){ return '<text class="fx-colt" x="' + (40 + i * (CW + 56)) + '" y="30">' + esc(s.l) + '</text>'; }).join('')
+      + ls.map(function(l){ return linhaSvg(l, fxPos); }).join('') + '<path id="fxTemp" class="fx-temp" d=""/></svg>'
+      + ps.map(function(p){ return cartao(p, fxPos[p.id]); }).join('')
+      + (ps.length ? '' : '<div class="fx-vazio">Nenhum processo com esses filtros.</div>') + '</div></div>'
+      + '<div class="fx-leg">' + Object.keys(TIPOS).map(function(k){ return '<span class="' + k + '"><i></i><b>' + TIPOS[k].l + '</b> ' + TIPOS[k].d + '</span>'; }).join('') + '<span class="rel"><i></i><b>Relacionado</b> só referência</span></div>';
+  }
+  function redesenharLinhas(){ var svg = document.querySelector('#fxCanvas .fx-svg'); if(!svg) return; svg.querySelectorAll('.fx-l').forEach(function(g){ g.remove(); });
+    var tmp = svg.querySelector('#fxTemp'); ligacoes(fxPs).forEach(function(l){ tmp.insertAdjacentHTML('beforebegin', linhaSvg(l, fxPos)); }); }
+  function ligar(tipo, a, b){
+    var A = procById(a), B = procById(b); if(!A || !B || a === b) return;
+    desligar(a, b, true);
+    if(tipo === 'bloq'){ if(depAlcanca(a, b)){ toast('Isso criaria um ciclo de bloqueios'); return; } (B.deps = B.deps || []).push(a); logP(A, 'passou a bloquear ' + pcod(B)); logP(B, 'ficou bloqueado por ' + pcod(A)); }
+    else if(tipo === 'dep'){ (B.relac = B.relac || []).push({id:a, nome:'Dependência', dir:'depende'}); (A.relac = A.relac || []).push({id:b, nome:'Dependência', dir:'base'}); logP(B, 'passou a depender de ' + pcod(A)); logP(A, pcod(B) + ' passou a depender deste processo'); }
+    else { (A.relac = A.relac || []).push({id:b, nome:'Concomitância'}); (B.relac = B.relac || []).push({id:a, nome:'Concomitância'}); logP(A, 'ficou concomitante com ' + pcod(B)); logP(B, 'ficou concomitante com ' + pcod(A)); }
+    save(); toast(TIPOS[tipo].l + ': ' + pcod(A) + ' → ' + pcod(B));
+  }
+  function desligar(a, b, quieto){ var A = procById(a), B = procById(b); if(!A || !B) return;
+    var tira = function(P, Q){ P.deps = (P.deps || []).filter(function(d){ return d !== Q.id; }); P.relac = (P.relac || []).filter(function(r){ return !(r.id === Q.id && (r.nome === 'Dependência' || r.nome === 'Concomitância')); }); };
+    tira(A, B); tira(B, A); if(!quieto){ logP(A, 'removeu a ligação com ' + pcod(B)); save(); } }
+
+  var fxPop = null; function fecharFxPop(){ if(fxPop){ fxPop.remove(); fxPop = null; } }
+  function popLinha(ev, id){
+    fecharFxPop(); var pr = id.split('|'), t = pr[0], a = pr[1], b = pr[2];
+    fxPop = document.createElement('div'); fxPop.className = 'fx-pop'; fxPop.setAttribute('role', 'dialog'); fxPop.setAttribute('aria-label', 'Ligação');
+    fxPop.innerHTML = '<div class="fx-poph"><b>' + esc(pcod(procById(a))) + ' → ' + esc(pcod(procById(b))) + '</b><button class="x" data-fxpx aria-label="Fechar">✕</button></div>'
+      + (t === 'rel' ? '<p class="cg-sub" style="margin:4px 0 8px">Processo relacionado (só referência). Para mudar, use a aba Vínculos do processo.</p>' :
+        Object.keys(TIPOS).map(function(k){ return '<button class="fx-opt ' + k + ' ' + (k === t ? 'on' : '') + '" data-fxtipo="' + k + '|' + a + '|' + b + '"><i></i><span><b>' + TIPOS[k].l + '</b>' + TIPOS[k].d + '</span></button>'; }).join('')
+        + '<button class="fx-opt inv" data-fxinv="' + t + '|' + a + '|' + b + '"><span><b>Inverter direção</b>' + esc(pcod(procById(b))) + ' → ' + esc(pcod(procById(a))) + '</span></button>'
+        + '<button class="fx-opt del" data-fxdel="' + a + '|' + b + '"><span><b>Remover ligação</b></span></button>');
+    document.body.appendChild(fxPop); var w = fxPop.offsetWidth, h = fxPop.offsetHeight;
+    fxPop.style.left = Math.min(innerWidth - w - 8, Math.max(8, ev.clientX - w / 2)) + 'px'; fxPop.style.top = (ev.clientY + h + 16 > innerHeight ? Math.max(8, ev.clientY - h - 10) : ev.clientY + 10) + 'px';
+    var f = fxPop.querySelector('button.on') || fxPop.querySelector('button'); if(f) f.focus();
+  }
+
+  // arrastar cartões e criar ligações
+  var arr = null;
+  function ptCanvas(ev){ var c = document.getElementById('fxCanvas'), r = c.getBoundingClientRect(), z = fxUI().z; return {x:(ev.clientX - r.left) / z, y:(ev.clientY - r.top) / z}; }
+  document.addEventListener('pointerdown', function(ev){
+    var t = ev.target; if(!t.closest || !t.closest('#fxCanvas') || ev.button !== 0) return;
+    var card = t.closest('.fx-card'); if(!card) return; ev.preventDefault(); fecharFxPop();
+    var id = card.dataset.fxid, p0 = ptCanvas(ev);
+    arr = t.closest('[data-fxh]') ? {modo:'liga', id:id, x0:p0.x, y0:p0.y} : {modo:'move', id:id, card:card, dx:p0.x - fxPos[id].x, dy:p0.y - fxPos[id].y, sx:ev.clientX, sy:ev.clientY, mov:false};
+    try{ card.setPointerCapture(ev.pointerId); }catch(_){}
+    if(arr.modo === 'liga'){ document.getElementById('fxCanvas').classList.add('ligando'); card.classList.add('fx-src'); }
+  }, true);
+  document.addEventListener('pointermove', function(ev){ if(!arr) return; var q = ptCanvas(ev);
+    if(arr.modo === 'move'){ if(!arr.mov && Math.abs(ev.clientX - arr.sx) + Math.abs(ev.clientY - arr.sy) < 5) return; arr.mov = true; arr.card.classList.add('fx-mov');
+      var nx = Math.max(0, Math.round((q.x - arr.dx) / 8) * 8), ny = Math.max(40, Math.round((q.y - arr.dy) / 8) * 8); fxPos[arr.id] = {x:nx, y:ny}; arr.card.style.left = nx + 'px'; arr.card.style.top = ny + 'px'; redesenharLinhas(); }
+    else { var A = fxPos[arr.id], sx = A.x + (q.x >= A.x + CW / 2 ? CW : 0), sy = A.y + CH / 2; document.getElementById('fxTemp').setAttribute('d', 'M' + sx + ' ' + sy + ' L' + q.x + ' ' + q.y);
+      document.getElementById('fxTemp').setAttribute('class', 'fx-temp ' + fxUI().modo);
+      var el = document.elementFromPoint(ev.clientX, ev.clientY), alvo = el && el.closest && el.closest('.fx-card');
+      document.querySelectorAll('.fx-card.fx-alvo').forEach(function(x){ if(x !== alvo) x.classList.remove('fx-alvo'); }); if(alvo && alvo.dataset.fxid !== arr.id) alvo.classList.add('fx-alvo'); }
+  }, true);
+  document.addEventListener('pointerup', function(ev){ if(!arr) return; var a = arr; arr = null;
+    if(a.modo === 'move'){ a.card.classList.remove('fx-mov');
+      if(!a.mov){ ui.view = 'proc'; openDrawer('proc', a.id); return; }
+      var p = procById(a.id); if(p){ p.fx = {x:fxPos[a.id].x, y:fxPos[a.id].y}; save(); } return; }
+    var c = document.getElementById('fxCanvas'); if(c) c.classList.remove('ligando'); document.querySelectorAll('.fx-src,.fx-alvo').forEach(function(x){ x.classList.remove('fx-src', 'fx-alvo'); });
+    var tmp = document.getElementById('fxTemp'); if(tmp) tmp.setAttribute('d', '');
+    var el = document.elementFromPoint(ev.clientX, ev.clientY), alvo = el && el.closest && el.closest('.fx-card');
+    if(alvo && alvo.dataset.fxid !== a.id){ ligar(fxUI().modo, a.id, alvo.dataset.fxid); render(); }
+  }, true);
+  document.addEventListener('click', function(ev){
+    var t = ev.target; if(!t.closest) return; var el;
+    if(fxPop && t.closest('.fx-pop')){ ev.stopPropagation();
+      if(t.closest('[data-fxpx]')){ fecharFxPop(); return; }
+      if((el = t.closest('[data-fxtipo]'))){ var q = el.dataset.fxtipo.split('|'); fecharFxPop(); ligar(q[0], q[1], q[2]); render(); return; }
+      if((el = t.closest('[data-fxinv]'))){ var r = el.dataset.fxinv.split('|'); fecharFxPop(); ligar(r[0], r[2], r[1]); render(); return; }
+      if((el = t.closest('[data-fxdel]'))){ var d = el.dataset.fxdel.split('|'); fecharFxPop(); desligar(d[0], d[1]); render(); toast('Ligação removida'); return; }
+      return; }
+    if(fxPop && !t.closest('[data-fxedge]')) fecharFxPop();
+    if(ui.view !== 'proc' || !t.closest('#view')) return;
+    if((el = t.closest('[data-fxedge]'))){ ev.stopPropagation(); popLinha(ev, el.dataset.fxedge); return; }
+    if((el = t.closest('[data-fxmodo]'))){ ev.stopPropagation(); fxUI().modo = el.dataset.fxmodo; render(); return; }
+    if((el = t.closest('[data-fxz]'))){ ev.stopPropagation(); var u = fxUI(); u.z = Math.max(.5, Math.min(1.5, Math.round((u.z + (+el.dataset.fxz) * .1) * 10) / 10)); render(); return; }
+    if(t.closest('[data-fxorg]')){ ev.stopPropagation(); fxPs.forEach(function(p){ delete p.fx; }); save(); render(); toast('Cartões organizados por status'); return; }
+  }, true);
+  document.addEventListener('change', function(ev){ if(ev.target.matches && ev.target.matches('[data-fxrel]')){ fxUI().rel = ev.target.checked; render(); } }, true);
+  document.addEventListener('keydown', function(ev){
+    if(ev.key === 'Escape' && fxPop){ ev.stopPropagation(); fecharFxPop(); return; }
+    var t = ev.target; if(t.matches && t.matches('.fx-card') && (ev.key === 'Enter' || ev.key === ' ')){ ev.preventDefault(); openDrawer('proc', t.dataset.fxid); }
+  }, true);
+
+  /* ---------- liga tudo ao CRM ---------- */
+  render = (function(base){ return function(){
+    base.apply(this, arguments);
+    if(!DB.ready) return; migrar(); fecharFxPop();
+    if(ui.view !== 'proc') return;
+    var seg = document.querySelector('#view .pagehead .seg');
+    if(seg && !seg.querySelector('[data-mode="fluxo"]')) seg.insertAdjacentHTML('beforeend', '<button data-mode="fluxo" class="' + (ui.procMode === 'fluxo' ? 'on' : '') + '"><svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h7v6H3zm11 10h7v6h-7zM14 4h7v6h-7zM6.5 10v3.5c0 1.4 1.1 2.5 2.5 2.5h5v-2H9a.5.5 0 0 1-.5-.5V10z"/></svg> Fluxograma</button>');
+    if(ui.procMode === 'fluxo'){
+      var main = document.querySelector('#view .pmain'), board = main && main.querySelector('.pboard'); if(!board) return;
+      var dica = board.nextElementSibling; if(dica && dica.matches('p.hint')) dica.remove();
+      var al = main.querySelector('.alerts'); if(al) al.remove();
+      var w = document.createElement('div'); w.className = 'fx-host'; w.innerHTML = fluxoHtml(); board.replaceWith(w);
+    } else ajustaCartoes();
+  }; })(render);
   if(typeof DB !== 'undefined' && DB.ready) render();
 })();
 </script>
