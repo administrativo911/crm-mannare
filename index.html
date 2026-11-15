@@ -2945,6 +2945,48 @@ body.dwbusy,body.dwbusy *{user-select:none!important}
 .dwc-it b{font:600 13.5px var(--font-sans);color:var(--sx-text)}
 .dwc-it span{font:400 12px/1.4 var(--font-sans);color:var(--sx-text-3)}
 </style>
+<style id="mannare-espacos">
+.esp-pill{all:unset;box-sizing:border-box;display:inline-flex;align-items:center;gap:8px;height:30px;padding:0 12px;margin-right:10px;border-radius:999px!important;background:#fff;box-shadow:var(--sx-shadow-btn)!important;font:600 12.5px var(--font-sans);color:var(--sx-text);cursor:pointer;white-space:nowrap}
+.esp-pill i,.esp-menu i,.esp-it>i,.esp-dot,.esp-chips i{display:inline-block;width:10px;height:10px;border-radius:3px!important;flex:none}
+.esp-pill b{font-size:10px;color:var(--sx-text-3)}
+.esp-pill:hover{background:var(--sx-hover)}
+.esp-pill:focus-visible{outline:3px solid var(--mn-azul)!important;outline-offset:2px}
+.esp-pill.fixo{cursor:default}
+.esp-menu{position:fixed;z-index:160;min-width:260px;background:#fff;border-radius:16px!important;box-shadow:var(--sx-shadow-float),0 0 0 1px rgba(14,16,48,.06)!important;padding:6px;display:flex;flex-direction:column}
+.esp-menu button{all:unset;box-sizing:border-box;display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:10px!important;cursor:pointer}
+.esp-menu button span{display:flex;flex-direction:column}
+.esp-menu b{font:600 13.5px var(--font-sans);color:var(--sx-text)}
+.esp-menu em{font-style:normal;font:400 12px var(--font-sans);color:var(--sx-text-3)}
+.esp-menu button:hover,.esp-menu button:focus-visible{background:var(--sx-hover)}
+.esp-menu button.on{background:var(--mn-azul-soft)}
+.esp-menu hr{border:0;border-top:1px solid var(--sx-divider);margin:4px 0}
+.cg-dlg.esp-dlg{width:min(600px,100%)}
+.esp-aviso{background:var(--mn-amarelo-soft);color:var(--mn-amarelo-text);border-radius:12px!important;padding:10px 12px;font:500 13px/1.5 var(--font-sans)}
+.esp-aviso code{font-size:12px;background:rgba(255,255,255,.6);padding:1px 5px;border-radius:4px!important}
+.esp-list{display:flex;flex-direction:column;gap:6px}
+.esp-it{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:14px!important;background:var(--sx-sunken)}
+.esp-it>i{width:14px;height:14px;border-radius:4px!important}
+.esp-in{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.esp-in input{border:0!important;background:transparent!important;font:600 14px var(--font-sans)!important;color:var(--sx-text)!important;padding:2px 0!important;height:auto!important;box-shadow:none!important}
+.esp-in input:not([readonly]):focus{background:#fff!important;padding:2px 6px!important;border-radius:6px!important}
+.esp-in span{font:400 12px var(--font-sans);color:var(--sx-text-3)}
+.esp-acc{display:flex;flex-direction:column;gap:8px;background:var(--sx-sunken);border-radius:14px!important;padding:12px 14px;margin-top:12px}
+.esp-chips{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:6px}
+.esp-chips span{display:inline-flex;align-items:center;gap:6px;font:600 11.5px var(--font-sans);color:var(--sx-text-2);background:var(--sx-sunken);padding:4px 9px;border-radius:999px!important}
+/* pessoa de parceria: sem indicadores e integrações */
+.esp-externo .side [data-view="kpi"],.esp-externo .side [data-view="integ"]{display:none!important}
+.esp-pill[disabled]{opacity:1!important;color:var(--sx-text)!important}
+.ap-box{display:flex;flex-direction:column;gap:8px;background:#fff;border-radius:16px!important;box-shadow:0 0 0 1px var(--sx-divider)!important;padding:12px 14px;margin:0 0 14px}
+.ap-box.pend{box-shadow:0 0 0 1.5px var(--mn-amarelo)!important}.ap-box.ok{box-shadow:0 0 0 1.5px #ABEFC6!important}.ap-box.adj{box-shadow:0 0 0 1.5px #FECDCA!important}
+.ap-h{display:flex;align-items:center;gap:8px}.ap-h b{font:600 14px var(--font-sans);color:var(--sx-text);flex:1}
+.ap-bt{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.ap-bt select{height:34px;border-radius:999px!important;border:1px solid var(--sx-field)!important;padding:0 28px 0 12px!important;font:500 13px var(--font-sans)!important;background-color:#fff!important}
+.ap-obs{font:400 13px/1.45 var(--font-sans);color:var(--sx-text-2);font-style:italic}
+.ap-warn{font:600 12.5px var(--font-sans);color:var(--mn-amarelo-text);background:var(--mn-amarelo-soft);padding:6px 10px;border-radius:10px!important}
+.ap-chip{display:inline-block;font:700 10.5px/1 var(--font-sans);padding:4px 8px;border-radius:999px!important;vertical-align:1px;margin-left:4px}
+.ap-chip.pendente{background:var(--mn-amarelo-soft);color:var(--mn-amarelo-text)}.ap-chip.aprovada{background:#DDF7E8;color:#065F38}.ap-chip.ajustes{background:var(--sx-error-bg);color:var(--sx-error)}
+.esp-propf{margin-bottom:12px!important;max-width:320px}
+</style>
 </head>
 <body>
 <a class="skip" href="#view">Pular para o conteúdo</a>
@@ -10238,6 +10280,277 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
   render = (function(base){ return function(){ base.apply(this, arguments);
     if(ui.view !== 'dash' || !DB.ready) return; var b = document.querySelector('#view .pagehead [data-dashedit]:not(.primary)'); if(b && !b.dataset.cg){ b.dataset.cg = 1; b.title = 'Escolher, mover e redimensionar os cartões'; }
   }; })(render);
+})();
+</script>
+
+<script id="mannare-espacos">
+/* ==========================================================================
+   Espaços (como no ClickUp): Mannare + parcerias
+   - Cada processo/material/licença pertence a um espaço (campo "espaco")
+   - Cada pessoa acessa os espaços liberados em pm_equipe.espacos
+     ("mannare" = equipe interna, vê todos os espaços)
+   - O bloqueio de verdade é feito no Supabase (espacos-supabase.sql);
+     aqui o CRM marca cada documento com _espaco e organiza a tela
+   - Cadastros de clientes e serviços separados por espaço (config:clientes@<espaço>)
+   ========================================================================== */
+(function(){
+  if(typeof S === 'undefined' || typeof collect !== 'function') return;
+  var FILT = {processo:'procs', material:'mats', licenca:'lics', proposta:'propsDb', recebivel:'recs', pagamento:'pags'};
+  var M = null, ESP = {clis:{}, servs:{}}, ativo = 'todos', LS = 'mannare.espaco';
+  var CORES = ['#0000FF', '#00A9CC', '#C99500', '#12B76A', '#6666FF', '#D92D20', '#0B0B1A'];
+
+  /* ---------- quem sou eu / quais espaços ---------- */
+  function meuRow(){ return (S.equipe || []).find(function(r){ return String(r.email || '').toLowerCase() === me; }); }
+  var colunaExiste = function(){ return (S.equipe || []).some(function(r){ return Array.isArray(r.espacos); }); };
+  function espacosDoRow(r){ return r && Array.isArray(r.espacos) ? r.espacos : ['mannare']; }   // antes do SQL: todos internos
+  function meus(){ return espacosDoRow(meuRow()); }
+  function interno(){ return meus().indexOf('mannare') >= 0; }
+  function lista(){ var l = ((S.cfg && S.cfg.espacos) || []).slice(); if(!l.some(function(x){ return x.id === 'mannare'; })) l.unshift({id:'mannare', nome:'Mannare', cor:'#0000FF'}); return l; }
+  function acessiveis(){ var m = meus(); return interno() ? lista() : lista().filter(function(e){ return m.indexOf(e.id) >= 0; }); }
+  var espPorId = function(id){ return lista().find(function(e){ return e.id === id; }) || {id:id, nome:id, cor:'#9A9DB0'}; };
+  var cadAtivo = function(){ return ativo === 'todos' ? 'mannare' : ativo; };
+  var novoEsp = function(){ return ativo !== 'todos' ? ativo : interno() ? 'mannare' : (acessiveis()[0] || {}).id || 'mannare'; };
+  window.cgEspaco = {ativo:function(){ return ativo; }, interno:interno, lista:lista};
+
+  /* ---------- a que espaço pertence cada documento ---------- */
+  var procM = function(id){ return id && ((M && M.procs) || S.procs || []).find(function(p){ return p.id === id; }); };
+  var propM = function(id){ return id && ((M && M.propsDb) || S.propsDb || []).find(function(x){ return x.id === id; }); };
+  var matM = function(id){ return id && ((M && M.mats) || S.mats || []).find(function(m){ return m.id === id; }); };
+  function espDe(tipo, o){
+    if(tipo === 'processo' || tipo === 'proposta') return o.espaco || 'mannare';
+    if(tipo === 'material'){ var p = procM(o.procId); return p ? espDe('processo', p) : o.espaco || 'mannare'; }
+    if(tipo === 'licenca'){ var q = procM(o.procId); return q ? espDe('processo', q) : o.espaco || 'mannare'; }
+    if(tipo === 'membro') return 'comum';
+    if(tipo === 'recebivel' || tipo === 'pagamento'){ var pr = propM(o.propostaId); return pr ? espDe('proposta', pr) : o.espaco || 'mannare'; }
+    if(tipo === 'notificacao' || tipo === 'email'){ if(o._espaco) return o._espaco; var pp = procM(o.procId), mm = matM(o.matId);
+      return pp ? espDe('processo', pp) : mm ? espDe('material', mm) : novoEsp(); }
+    return o._espaco || novoEsp();
+  }
+
+  /* ---------- lista completa x lista do espaço ativo ---------- */
+  function init(){
+    M = {}; Object.keys(FILT).forEach(function(t){ M[FILT[t]] = S[FILT[t]] || []; });
+    ESP.clis.mannare = ESP.clis.mannare || S.clis || []; ESP.servs.mannare = ESP.servs.mannare || S.servs || [];
+    Object.keys(S.extra || {}).forEach(function(k){ var m = /^config:(clientes|servicos)@(.+)$/.exec(k); if(!m) return; var key = m[1] === 'clientes' ? 'clis' : 'servs';
+      if(!ESP[key][m[2]]) ESP[key][m[2]] = (S.extra[k] && S.extra[k].lista) || []; delete S.extra[k]; });
+    var salvo = ''; try{ salvo = localStorage.getItem(LS + '.' + me) || ''; }catch(_){}
+    var ok = acessiveis().map(function(e){ return e.id; });
+    ativo = interno() ? (salvo === 'todos' || ok.indexOf(salvo) >= 0 ? salvo : 'todos') : (ok.indexOf(salvo) >= 0 ? salvo : ok[0] || 'mannare');
+    aplicaVista(); trocaCad();
+  }
+  function sync(){ if(!M) return;
+    Object.keys(FILT).forEach(function(tipo){ var col = FILT[tipo], vis = S[col] || [];
+      if(ativo === 'todos'){ M[col] = vis; return; }
+      vis.forEach(function(o){ if(o.espaco) return; if(tipo === 'processo' || tipo === 'proposta') o.espaco = ativo; else if((tipo === 'recebivel' || tipo === 'pagamento') ? !propM(o.propostaId) : !procM(o.procId)) o.espaco = ativo; });
+      var resto = M[col].filter(function(o){ return vis.indexOf(o) < 0 && espDe(tipo, o) !== ativo; });
+      M[col] = resto.concat(vis); });
+  }
+  function aplicaVista(){ if(!M) return;
+    Object.keys(FILT).forEach(function(tipo){ var col = FILT[tipo]; S[col] = ativo === 'todos' ? M[col] : M[col].filter(function(o){ return espDe(tipo, o) === ativo; }); });
+    if(typeof rebuildProps === 'function') rebuildProps();
+  }
+  function guardaCad(){ var c = cadAtivo(); ESP.clis[c] = S.clis || []; ESP.servs[c] = S.servs || []; }
+  function trocaCad(){ var c = cadAtivo(); S.clis = ESP.clis[c] = ESP.clis[c] || []; S.servs = ESP.servs[c] = ESP.servs[c] || []; }
+  function aplicaUsuarios(){ if(typeof S.users === 'undefined' || ativo === 'todos') return;
+    var ids = (S.equipe || []).filter(function(r){ var e = espacosDoRow(r); return e.indexOf(ativo) >= 0 || (ativo === 'mannare' && e.indexOf('mannare') >= 0); }).map(function(r){ return String(r.email).toLowerCase(); });
+    USERS = S.users.filter(function(u){ return !u.inativo && ids.indexOf(u.id) >= 0; }); }
+
+  /* ---------- gravação: marca o espaço em cada documento ---------- */
+  collect = function(){
+    sync(); guardaCad();
+    var out = {};
+    Object.keys(TIPO_COL).forEach(function(tipo){ var col = TIPO_COL[tipo], arr = (M && M[col]) || S[col] || [];
+      arr.forEach(function(o){ o._espaco = espDe(tipo, o); out[tipo + ':' + o.id] = {tipo:tipo, dados:o}; }); });
+    out['config:geral'] = {tipo:'config', dados:S.cfg};
+    if(interno()){ out['config:servicos'] = {tipo:'config', dados:{lista:ESP.servs.mannare || []}}; out['config:clientes'] = {tipo:'config', dados:{lista:ESP.clis.mannare || []}}; out['config:assinaturas'] = {tipo:'config', dados:S.assin}; }
+    acessiveis().forEach(function(e){ if(e.id === 'mannare') return;
+      if(ESP.clis[e.id]) out['config:clientes@' + e.id] = {tipo:'config', dados:{lista:ESP.clis[e.id]}};
+      if(ESP.servs[e.id]) out['config:servicos@' + e.id] = {tipo:'config', dados:{lista:ESP.servs[e.id]}}; });
+    return out;
+  };
+  applyDoc = (function(base){ return function(k, tipo, dados){
+    var m = /^config:(clientes|servicos)@(.+)$/.exec(k);
+    if(m){ ESP[m[1] === 'clientes' ? 'clis' : 'servs'][m[2]] = (dados && dados.lista) || []; if(M && cadAtivo() === m[2]) trocaCad(); return; }
+    if(k === 'config:clientes' || k === 'config:servicos'){ var key = k === 'config:clientes' ? 'clis' : 'servs'; ESP[key].mannare = (dados && dados.lista) || [];
+      if(!M || cadAtivo() === 'mannare'){ if(key === 'clis') S.clis = ESP.clis.mannare; else S.servs = ESP.servs.mannare; } return; }
+    var col = FILT[tipo];
+    if(col && M){ var id = k.slice(tipo.length + 1); dados.id = id; var arr = M[col], i = arr.findIndex(function(o){ return o.id === id; }); if(i >= 0) arr[i] = dados; else arr.push(dados); aplicaVista(); return; }
+    return base.apply(this, arguments);
+  }; })(applyDoc);
+  if(typeof removeDoc === 'function') removeDoc = (function(base){ return function(k){ var tipo = k.split(':')[0], col = FILT[tipo];
+    if(col && M){ var id = k.slice(tipo.length + 1); M[col] = M[col].filter(function(o){ return o.id !== id; }); aplicaVista(); return; } return base.apply(this, arguments); }; })(removeDoc);
+
+  /* ---------- trocar de espaço ---------- */
+  function trocar(e){
+    if(e === ativo) return; sync(); guardaCad(); ativo = e; try{ localStorage.setItem(LS + '.' + me, e); }catch(_){}
+    aplicaVista(); trocaCad(); if(e === 'todos' && typeof setUsers === 'function') setUsers(S.users.filter(function(u){ return !u.inativo; }));
+    ui.sel = {g:'', e:''}; ui.mSel = {g:'', e:''}; if(ui.drawer) closeDrawer(); if(typeof closeTask === 'function') closeTask();
+    render(); toast(e === 'todos' ? 'Todos os espaços' : 'Espaço: ' + espPorId(e).nome);
+  }
+  var menu = null; function fecharMenu(){ if(menu){ menu.remove(); menu = null; } }
+  function pillHtml(){ var ac = acessiveis(), e = ativo === 'todos' ? {nome:'Todos os espaços', cor:'#0B0B1A'} : espPorId(ativo), varios = ac.length > 1 || interno();
+    return '<button class="esp-pill ' + (varios ? '' : 'fixo') + '" data-esppick ' + (varios ? 'aria-haspopup="menu"' : 'disabled') + ' title="Espaço"><i style="background:' + e.cor + '"></i><span>' + esc(e.nome) + '</span>' + (varios ? '<b aria-hidden="true">▾</b>' : '') + '</button>'; }
+  function abrirMenu(btn){ fecharMenu(); var ac = acessiveis();
+    menu = document.createElement('div'); menu.className = 'esp-menu'; menu.setAttribute('role', 'menu');
+    menu.innerHTML = (interno() ? '<button role="menuitemradio" aria-checked="' + (ativo === 'todos') + '" data-espir="todos" class="' + (ativo === 'todos' ? 'on' : '') + '"><i style="background:#0B0B1A"></i><span><b>Todos os espaços</b><em>Tudo o que a Mannare acompanha</em></span></button><hr>' : '')
+      + ac.map(function(e){ var n = M ? M.procs.filter(function(p){ return espDe('processo', p) === e.id && isOpen(p); }).length : 0;
+          return '<button role="menuitemradio" aria-checked="' + (ativo === e.id) + '" data-espir="' + e.id + '" class="' + (ativo === e.id ? 'on' : '') + '"><i style="background:' + e.cor + '"></i><span><b>' + esc(e.nome) + '</b><em>' + n + ' processo' + (n === 1 ? '' : 's') + ' em aberto</em></span></button>'; }).join('')
+      + (interno() && isSocio() ? '<hr><button data-espgerir><span><b>Gerenciar espaços e acessos</b></span></button>' : '');
+    document.body.appendChild(menu); var r = btn.getBoundingClientRect(); menu.style.left = Math.min(innerWidth - menu.offsetWidth - 8, r.left) + 'px'; menu.style.top = (r.bottom + 6) + 'px';
+    var f = menu.querySelector('.on') || menu.querySelector('button'); if(f) f.focus(); }
+
+  /* ---------- espaço do processo (só equipe interna) ---------- */
+  function moverProc(p, e){
+    var de = espDe('processo', p); if(de === e) return;
+    if(e !== 'mannare' && p.propId && !p.prop){ var pr = propById(p.propId); if(pr) p.prop = {id:p.propId, codigo:pr.codigo || '', cliente:pr.cliente || '', grupo:pr.grupo || '', emp:pr.emp || '', objeto:pr.objeto || '', tipo:pr.tipo || '', status:pr.status || 'aprovada', resp:pr.resp || '', modelo:pr.modelo || p.modelo || '', valor:0, itens:[]}; }
+    p.espaco = e; logP(p, 'passou do espaço ' + espPorId(de).nome + ' para ' + espPorId(e).nome);
+    aplicaVista(); save(); if(ui.drawer && !S.procs.some(function(x){ return x.id === p.id; })) closeDrawer(); render(); toast(pcod(p) + ' agora está em ' + espPorId(e).nome);
+  }
+
+  function moverProp(raw, e){
+    var de = espDe('proposta', raw); if(de === e) return; raw.espaco = e; propLog(raw, 'passou do espaço ' + espPorId(de).nome + ' para ' + espPorId(e).nome);
+    var ps = (M ? M.procs : S.procs).filter(function(p){ return p.propId === raw.id; });
+    ps.forEach(function(p){ if(espDe('processo', p) !== e){ p.espaco = e; logP(p, 'acompanhou a proposta para o espaço ' + espPorId(e).nome); } });
+    aplicaVista(); save(); if(ui.drawer && !S.propsDb.some(function(x){ return x.id === raw.id; })) closeDrawer(); render();
+    toast(raw.codigo + ' agora está em ' + espPorId(e).nome + (ps.length ? ' (com ' + ps.length + ' processo' + (ps.length > 1 ? 's' : '') + ')' : ''));
+  }
+
+  /* ---------- aprovação do parceiro (propostas e financeiro) ---------- */
+  function parceirosDe(esp){ return (S.equipe || []).filter(function(r){ var e = espacosDoRow(r); return e.indexOf(esp) >= 0 && e.indexOf('mannare') < 0; }).map(function(r){ return String(r.email).toLowerCase(); }); }
+  var souParceiro = function(esp){ return !interno() && meus().indexOf(esp) >= 0; };
+  function assinatura(k, o){ var s = k === 'prop' ? (typeof hashProp === 'function' ? hashProp(o) : J(o.doc || {})) : J([o.valorBruto, o.valor, o.vencimento, o.previsao, o.imposto, o.desembolso, o.descricao, o.status === 'cancelado']);
+    var h = 5381; for(var i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) | 0; return String(h); }
+  function rotuloItem(k, o){ return k === 'prop' ? 'a proposta ' + (o.codigo || '') : k === 'rec' ? 'o recebível ' + (o.codigo || o.cliente || '') + (o.parcela ? ' (parcela ' + o.parcela + '/' + o.deTotal + ')' : '') : 'o pagamento ' + (o.descricao || o.fornecedor || ''); }
+  function avisar(para, txt, k, o, esp){ if(!para || para === me) return;
+    S.notifs.unshift({id:uid(), para:para, txt:'<b>' + esc(first(me)) + '</b> ' + txt, procId:null, taskId:null, propId:k === 'prop' ? o.id : null, em:nowISO(), lida:false, _espaco:esp});
+    if(/@/.test(para)){ S.emails = S.emails || []; S.emails.push({id:uid(), status:'pendente', tipo:'aviso', cat:'propostas', para:para, cc:'', replyTo:me, por:me, em:nowISO(), _espaco:esp,
+      assunto:(first(me) + ' ' + limpaHtml(txt)).slice(0, 150), corpo:'Olá, ' + first(para) + '.\n\n' + (U[me] ? U[me].nome : me) + ' ' + limpaHtml(txt) + '.\n\nAbrir no CRM: ' + location.origin + location.pathname + '\n\n(Aviso automático do CRM Mannare.)'}); } }
+  function caixaAprov(k, o, esp){
+    var a = o.aprovParc, ps = parceirosDe(esp), alterado = a && a.st === 'aprovada' && a.sig !== assinatura(k, o), nomeEsp = espPorId(esp).nome;
+    var cab = '<div class="ap-h"><b>Aprovação do parceiro</b><span class="cg-sub">' + esc(nomeEsp) + '</span></div>';
+    if(!a || a.st === 'cancelada'){ if(souParceiro(esp)) return '<div class="ap-box">' + cab + '<div class="cg-sub">Ainda não pediram a sua aprovação. Você já pode aprovar se estiver de acordo.</div><div class="ap-bt"><button class="btn sm primary" data-apok="' + k + '">Aprovar</button></div></div>';
+      return '<div class="ap-box">' + cab + (ps.length ? '<div class="ap-bt"><select data-apquem aria-label="Quem aprova pelo parceiro">' + ps.map(function(id){ return '<option value="' + id + '">' + esc(U[id] ? U[id].nome : id) + '</option>'; }).join('') + '</select><button class="btn sm primary" data-appedir="' + k + '">Pedir aprovação do parceiro</button></div>'
+        : '<div class="cg-sub">Ninguém do parceiro tem acesso a este espaço ainda (Equipe › Espaços com acesso).</div>') + '</div>'; }
+    if(a.st === 'pendente'){ var euAprovo = me === a.aprovador || souParceiro(esp);
+      return '<div class="ap-box pend">' + cab + '<div><span class="kp-nv aten">aguardando ' + esc(first(a.aprovador)) + '</span> <span class="cg-sub">pedido por ' + esc(first(a.pedidoPor)) + ' em ' + fmtWhen(a.pedidoEm) + '</span></div>'
+        + (euAprovo ? '<input class="inp" data-apobs placeholder="O que precisa ajustar? (para pedir ajustes)"><div class="ap-bt"><button class="btn sm" data-apaj="' + k + '">Pedir ajustes</button><button class="btn sm primary" data-apok="' + k + '">Aprovar</button></div>'
+          : '<div class="ap-bt"><button class="btn sm ghost" data-apcancel="' + k + '">Cancelar pedido</button></div>') + '</div>'; }
+    if(a.st === 'aprovada') return '<div class="ap-box ok">' + cab + '<div><span class="kp-nv bom">✓ aprovado por ' + esc(first(a.por)) + '</span> <span class="cg-sub">' + fmtWhen(a.em) + '</span></div>'
+      + (alterado ? '<div class="ap-warn">Foi alterado depois da aprovação. Peça de novo.</div><div class="ap-bt"><button class="btn sm primary" data-appedir="' + k + '" data-apde="' + a.aprovador + '">Pedir nova aprovação</button></div>' : '') + '</div>';
+    return '<div class="ap-box adj">' + cab + '<div><span class="kp-nv ruim">' + esc(first(a.por)) + ' pediu ajustes</span> <span class="cg-sub">' + fmtWhen(a.em) + '</span></div>' + (a.obs ? '<div class="ap-obs">“' + esc(a.obs) + '”</div>' : '')
+      + (souParceiro(esp) ? '<div class="ap-bt"><button class="btn sm primary" data-apok="' + k + '">Aprovar assim mesmo</button></div>' : '<div class="ap-bt"><button class="btn sm primary" data-appedir="' + k + '" data-apde="' + a.aprovador + '">Pedir aprovação de novo</button></div>') + '</div>';
+  }
+  // qual item está aberto: proposta no painel lateral ou lançamento no modal do financeiro
+  function itemAberto(k){
+    if(k === 'prop'){ var raw = ui.drawer && ui.drawer.kind === 'prop' ? rawProp(ui.drawer.id) : null; return raw ? {o:raw, copia:null} : null; }
+    if(typeof finEdit === 'undefined' || !finEdit || finEdit.novo) return null; var col = finEdit.k === 'pag' ? 'pags' : 'recs', real = (M ? M[col] : S[col] || []).find(function(x){ return x.id === finEdit.o.id; });
+    return real ? {o:real, copia:finEdit.o} : null; }
+  function acaoAprov(k, tipo, el){
+    var it = itemAberto(k); if(!it) return; var o = it.o, kk = k === 'prop' ? 'prop' : (finEdit.k === 'pag' ? 'pag' : 'rec'), esp = espDe(kk === 'prop' ? 'proposta' : kk === 'pag' ? 'pagamento' : 'recebivel', o), a = o.aprovParc || {};
+    if(tipo === 'pedir'){ var sel = document.querySelector('[data-apquem]'), quem = (el && el.dataset.apde) || (sel ? sel.value : '') || parceirosDe(esp)[0]; if(!quem){ toast('Dê acesso a alguém do parceiro primeiro'); return; }
+      o.aprovParc = {st:'pendente', aprovador:quem, pedidoPor:me, pedidoEm:nowISO()}; avisar(quem, 'pediu a sua aprovação para ' + rotuloItem(kk, o), kk, o, esp); }
+    else if(tipo === 'ok'){ o.aprovParc = Object.assign({}, a, {st:'aprovada', por:me, em:nowISO(), sig:assinatura(kk, o), aprovador:a.aprovador || me}); avisar(a.pedidoPor, 'aprovou ' + rotuloItem(kk, o), kk, o, esp); }
+    else if(tipo === 'aj'){ var obs = ((document.querySelector('[data-apobs]') || {}).value || '').trim(); if(!obs){ toast('Escreva o que precisa ajustar'); var i = document.querySelector('[data-apobs]'); if(i) i.focus(); return; }
+      o.aprovParc = Object.assign({}, a, {st:'ajustes', por:me, em:nowISO(), obs:obs}); avisar(a.pedidoPor, 'pediu ajustes em ' + rotuloItem(kk, o) + ': ' + esc(obs), kk, o, esp); }
+    else if(tipo === 'cancel'){ o.aprovParc = Object.assign({}, a, {st:'cancelada', por:me, em:nowISO()}); }
+    if(it.copia) it.copia.aprovParc = o.aprovParc;
+    if(kk === 'prop') propLog(o, {pedir:'pediu a aprovação do parceiro', ok:'aprovou pelo parceiro', aj:'pediu ajustes pelo parceiro', cancel:'cancelou o pedido de aprovação do parceiro'}[tipo]);
+    else (o.log = o.log || []).unshift({em:nowISO(), por:me, txt:{pedir:'pediu a aprovação do parceiro', ok:'aprovou pelo parceiro', aj:'pediu ajustes pelo parceiro', cancel:'cancelou o pedido de aprovação do parceiro'}[tipo]});
+    save(); if(kk === 'prop'){ render(); } else { var box = document.querySelector('#layer .ap-box'); if(box) box.outerHTML = caixaAprov(kk, o, esp); render(); }
+    toast({pedir:'Pedido enviado ao parceiro (CRM e e-mail)', ok:'Aprovado', aj:'Ajustes pedidos', cancel:'Pedido cancelado'}[tipo]);
+  }
+  ['recModalHtml', 'pagModalHtml'].forEach(function(fn){ if(typeof window[fn] !== 'function' && typeof eval(fn) !== 'function') return;
+    var base = eval(fn), novo = function(){ base.apply(this, arguments); try{ var it = itemAberto('fin'); if(!it) return; var kk = finEdit.k === 'pag' ? 'pag' : 'rec', esp = espDe(kk === 'pag' ? 'pagamento' : 'recebivel', it.o); if(esp === 'mannare') return;
+      var body = document.querySelector('#layer .modal > div:nth-child(2)'); if(body) body.insertAdjacentHTML('afterbegin', caixaAprov(kk, it.o, esp)); }catch(_){} };
+    if(fn === 'recModalHtml') recModalHtml = novo; else pagModalHtml = novo; });
+
+  /* ---------- gerenciar espaços (sócios da Mannare) ---------- */
+  var ov = null; function fecharOv(){ if(ov){ ov.remove(); ov = null; } }
+  function membrosDoEsp(id){ return (S.equipe || []).filter(function(r){ return espacosDoRow(r).indexOf(id) >= 0; }); }
+  function gerir(){
+    fecharOv(); var l = lista();
+    ov = document.createElement('div'); ov.className = 'cg-ov';
+    ov.innerHTML = '<div class="cg-dlg esp-dlg" role="dialog" aria-modal="true" aria-label="Espaços" tabindex="-1"><div class="cg-dh"><div><div class="cg-eyebrow">Espaços e acessos</div><h2>Espaços do CRM</h2></div><button class="x" data-espx aria-label="Fechar">✕</button></div>'
+      + (colunaExiste() ? '' : '<div class="esp-aviso"><b>Falta ativar o bloqueio no Supabase.</b> Rode o arquivo <code>espacos-supabase.sql</code> (veja o LEIA-ME). Até lá, os espaços só organizam a tela e todo mundo continua vendo tudo.</div>')
+      + '<p class="cg-sub" style="margin:0">Quem tem acesso à <b>Mannare</b> vê todos os espaços. Pessoas de uma parceria só veem os processos, materiais, licenças e cadastros do espaço delas.</p>'
+      + '<div class="esp-list">' + l.map(function(e){ var ms = membrosDoEsp(e.id), n = M ? M.procs.filter(function(p){ return espDe('processo', p) === e.id; }).length : 0, fixo = e.id === 'mannare';
+          return '<div class="esp-it"><i style="background:' + e.cor + '"></i><div class="esp-in"><input data-espnome="' + e.id + '" value="' + esc(e.nome) + '" aria-label="Nome do espaço" ' + (fixo ? 'readonly' : '') + '><span>' + n + ' processo' + (n === 1 ? '' : 's') + ' | ' + ms.length + ' pessoa' + (ms.length === 1 ? '' : 's') + (ms.length ? ': ' + ms.slice(0, 4).map(function(r){ return esc(String(r.nome || r.email).split(' ')[0]); }).join(', ') + (ms.length > 4 ? '…' : '') : '') + '</span></div>'
+            + (fixo ? '<span class="cg-sub">interno</span>' : '<button class="btn sm ghost" data-espdel="' + e.id + '" ' + (n || ms.length ? 'disabled title="Tire os processos e as pessoas antes"' : '') + '>Excluir</button>') + '</div>'; }).join('') + '</div>'
+      + '<div class="kp-form"><input data-espnovo placeholder="Nome da parceria (ex.: ESCRITÓRIO SILVA & COSTA)" aria-label="Novo espaço"><button class="btn sm primary" data-espadd>+ Criar espaço</button></div>'
+      + '<p class="cg-sub" style="margin:0">Para dar acesso: Equipe › Editar cadastro da pessoa › <b>Espaços com acesso</b>. Para colocar um processo na parceria: abra o processo e troque o campo <b>Espaço</b>.</p>'
+      + '<div class="cg-df"><span class="spacer"></span><button class="btn primary" data-espx>Pronto</button></div></div>';
+    document.body.appendChild(ov); setTimeout(function(){ var f = ov && ov.querySelector('[data-espnovo]'); if(f) f.focus(); }, 30);
+  }
+  var slug = function(s){ return String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 30) || 'espaco'; };
+
+  /* ---------- acessos da pessoa (no cadastro do membro) ---------- */
+  if(typeof memberModal === 'function') memberModal = (function(base){ return function(id){ base.apply(this, arguments);
+    if(!isSocio() || !interno()) return; var r = id ? (S.equipe || []).find(function(x){ return String(x.email).toLowerCase() === id; }) : null, tem = r ? espacosDoRow(r) : ['mannare'];
+    var alvo = document.querySelector('#layer .fields'); if(!alvo) return;
+    alvo.insertAdjacentHTML('afterend', '<div class="esp-acc"><span class="cd-mt">Espaços com acesso</span><div class="cd-mlist">' + lista().map(function(e){ return '<label class="cd-mchk"><input type="checkbox" data-espacc value="' + e.id + '" ' + (tem.indexOf(e.id) >= 0 ? 'checked' : '') + '> <i class="esp-dot" style="background:' + e.cor + '"></i>' + esc(e.nome) + (e.id === 'mannare' ? ' <em class="cg-sub">(vê tudo)</em>' : '') + '</label>'; }).join('') + '</div>'
+      + '<span class="cg-sub">Pessoa de parceria: marque só o espaço da parceria.</span></div>'); }; })(memberModal);
+  function gravarAcesso(email, esps, tent){ tent = tent || 0; if(!email || typeof sb === 'undefined' || !sb) return;
+    sb.from('pm_equipe').update({espacos:esps}).eq('email', email).select().then(function(res){
+      if(res.error){ if(/espacos/.test(res.error.message || '')) toast('Rode o espacos-supabase.sql para salvar acessos'); else toast('Não salvei os acessos: ' + res.error.message); return; }
+      if(!res.data || !res.data.length){ if(tent < 6) setTimeout(function(){ gravarAcesso(email, esps, tent + 1); }, 800); return; }
+      var r = (S.equipe || []).find(function(x){ return String(x.email).toLowerCase() === email; }); if(r) r.espacos = esps; else (S.equipe = S.equipe || []).push({email:email, espacos:esps}); render(); }); }
+
+  /* ---------- liga ao CRM ---------- */
+  var BLOQ = ['kpi', 'integ'];
+  render = (function(base){ return function(){
+    if(DB.ready && !M) init();
+    if(DB.ready && M){ sync(); if(!interno() && BLOQ.indexOf(ui.view) >= 0) ui.view = 'dash'; aplicaUsuarios(); }
+    base.apply(this, arguments);
+    if(!DB.ready) return; fecharMenu();
+    document.documentElement.classList.toggle('esp-externo', !interno());
+    var cr = document.getElementById('crumbNow'), host = cr && cr.parentNode;
+    if(host){ var old = host.querySelector('.esp-pill'); if(old) old.remove(); host.insertAdjacentHTML('afterbegin', pillHtml()); }
+    if(host){ var raiz = host.querySelector('span:not(.esp-pill span)'); if(raiz && !raiz.closest('.esp-pill')) raiz.textContent = ativo === 'todos' || ativo === 'mannare' ? 'Mannare' : espPorId(ativo).nome; }
+    if(ui.view === 'prop') document.querySelectorAll('#view [data-prop]').forEach(function(r){ var raw = rawProp(r.dataset.prop); if(!raw || !raw.aprovParc || r.querySelector('.ap-chip')) return; var a = raw.aprovParc, st = a.st;
+      if(st === 'cancelada') return; var alvo = r.querySelector('td:first-child, .mt, b') || r; alvo.insertAdjacentHTML('beforeend', ' <span class="ap-chip ' + st + '">' + (st === 'pendente' ? 'parceiro: aguardando' : st === 'aprovada' ? '✓ parceiro' : 'parceiro: ajustes') + '</span>'); });
+    if(ui.view === 'cad' && !interno()){ var sm = document.querySelector('#view [data-cadsub="mod"]'); if(sm) sm.remove(); }
+    if(ui.view === 'team') document.querySelectorAll('#view .tcard').forEach(function(c){ var b = c.querySelector('[data-editmember]'); if(!b || c.querySelector('.esp-chips')) return;
+      var r = (S.equipe || []).find(function(x){ return String(x.email).toLowerCase() === b.dataset.editmember; }); if(!r) return;
+      c.querySelector('.chips') && c.querySelector('.chips').insertAdjacentHTML('afterend', '<div class="esp-chips">' + espacosDoRow(r).map(function(id){ var e = espPorId(id); return '<span><i style="background:' + e.cor + '"></i>' + esc(e.nome) + '</span>'; }).join('') + '</div>'); });
+    if(ui.view === 'team' && interno() && isSocio()){ var ph = document.querySelector('#view .pagehead'); if(ph && !ph.querySelector('[data-espgerir]')) ph.insertAdjacentHTML('beforeend', '<button class="btn" data-espgerir>Espaços e acessos</button>'); }
+  }; })(render);
+  renderDrawer = (function(base){ return function(){ sync(); base.apply(this, arguments);
+    if(M && ui.drawer && ui.drawer.kind === 'prop'){ var raw = rawProp(ui.drawer.id), b = document.querySelector('#drawer .dbody'); if(raw && b){ var esp = espDe('proposta', raw);
+      if(interno() && !b.querySelector('[data-espprop]')) b.insertAdjacentHTML('afterbegin', '<label class="f esp-propf">Espaço<select data-espprop>' + lista().map(function(x){ return '<option value="' + x.id + '" ' + (x.id === esp ? 'selected' : '') + '>' + esc(x.nome) + '</option>'; }).join('') + '</select></label>');
+      if(esp !== 'mannare' && !b.querySelector('.ap-box')){ var ref = b.querySelector('.esp-propf'); if(ref) ref.insertAdjacentHTML('afterend', caixaAprov('prop', raw, esp)); else b.insertAdjacentHTML('afterbegin', caixaAprov('prop', raw, esp)); } } }
+    if(!M || !interno() || !ui.drawer || ui.drawer.kind !== 'proc') return; var p = procById(ui.drawer.id); if(!p) return; var f = document.querySelector('#drawer .dbody > .fields'); if(!f || f.querySelector('[data-espproc]')) return;
+    var e = espDe('processo', p); f.insertAdjacentHTML('afterbegin', '<label class="f">Espaço<select data-espproc>' + lista().map(function(x){ return '<option value="' + x.id + '" ' + (x.id === e ? 'selected' : '') + '>' + esc(x.nome) + '</option>'; }).join('') + '</select></label>');
+  }; })(renderDrawer);
+
+  window.addEventListener('click', function(ev){
+    var t = ev.target; if(!t.closest) return; var el;
+    if(menu && t.closest('.esp-menu')){ ev.stopPropagation(); if((el = t.closest('[data-espir]'))){ var id = el.dataset.espir; fecharMenu(); trocar(id); return; } if(t.closest('[data-espgerir]')){ fecharMenu(); gerir(); return; } return; }
+    if(menu && !t.closest('[data-esppick]')) fecharMenu();
+    if((el = t.closest('[data-appedir],[data-apok],[data-apaj],[data-apcancel]'))){ ev.stopPropagation(); var k = el.dataset.appedir || el.dataset.apok || el.dataset.apaj || el.dataset.apcancel;
+      acaoAprov(k === 'prop' ? 'prop' : 'fin', el.dataset.appedir !== undefined ? 'pedir' : el.dataset.apok !== undefined ? 'ok' : el.dataset.apaj !== undefined ? 'aj' : 'cancel', el); return; }
+    if((el = t.closest('[data-esppick]'))){ ev.stopPropagation(); if(menu) fecharMenu(); else abrirMenu(el); return; }
+    if(t.closest('#view [data-espgerir]')){ ev.stopPropagation(); gerir(); return; }
+    if(ov && (t === ov || t.closest('.cg-ov') === ov)){ ev.stopPropagation();
+      if(t === ov || t.closest('[data-espx]')){ fecharOv(); return; }
+      if(t.closest('[data-espadd]')){ var inp = ov.querySelector('[data-espnovo]'), nome = String(inp.value || '').trim().toLocaleUpperCase('pt-BR'); if(!nome){ inp.focus(); return; }
+        var l = lista(), id = slug(nome); while(l.some(function(x){ return x.id === id; })) id += '-2';
+        S.cfg.espacos = l.concat([{id:id, nome:nome, cor:CORES[l.length % CORES.length]}]); ESP.clis[id] = ESP.clis[id] || []; ESP.servs[id] = ESP.servs[id] || []; save(); gerir(); toast('Espaço criado: ' + nome); return; }
+      if((el = t.closest('[data-espdel]'))){ var did = el.dataset.espdel; S.cfg.espacos = lista().filter(function(x){ return x.id !== did; }); save(); gerir(); render(); toast('Espaço excluído'); return; }
+      return; }
+    if(t.closest('#layer [data-savemember]') && isSocio() && interno()){ var cks = [].slice.call(document.querySelectorAll('#layer [data-espacc]')); if(!cks.length) return;
+      var esps = cks.filter(function(c){ return c.checked; }).map(function(c){ return c.value; }); if(!esps.length){ ev.stopPropagation(); toast('Marque pelo menos um espaço'); return; }
+      var sv = t.closest('[data-savemember]'), email = (sv.dataset.savemember || ((document.getElementById('mfEmail') || {}).value || '')).trim().toLowerCase();
+      setTimeout(function(){ gravarAcesso(email, esps); }, sv.dataset.savemember ? 0 : 700); }
+  }, true);
+  document.addEventListener('change', function(ev){ var t = ev.target; if(!t.matches) return;
+    if(t.matches('[data-espprop]') && ui.drawer){ ev.stopPropagation(); var rw = rawProp(ui.drawer.id); if(rw) moverProp(rw, t.value); return; }
+    if(t.matches('[data-espproc]') && ui.drawer){ ev.stopPropagation(); var p = procById(ui.drawer.id); if(p) moverProc(p, t.value); return; }
+    if(t.matches('[data-espnome]') && ov){ var l = lista(), e = l.find(function(x){ return x.id === t.dataset.espnome; }); if(e && e.id !== 'mannare'){ e.nome = t.value.trim().toLocaleUpperCase('pt-BR') || e.nome; S.cfg.espacos = l; save(); render(); } }
+  }, true);
+  document.addEventListener('keydown', function(ev){ if(ev.key === 'Escape'){ if(menu){ ev.stopPropagation(); fecharMenu(); } else if(ov){ ev.stopPropagation(); fecharOv(); } }
+    if(ev.key === 'Enter' && ev.target.matches && ev.target.matches('[data-espnovo]')){ ev.preventDefault(); var b = ov && ov.querySelector('[data-espadd]'); if(b) b.click(); } }, true);
+
+  if(typeof DB !== 'undefined' && DB.ready) render();
 })();
 </script>
 <script id="mannare-a11y">
