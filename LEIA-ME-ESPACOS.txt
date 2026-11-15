@@ -1,0 +1,92 @@
+CRM MANNARE | ESPAÇOS PARA PARCERIAS
+====================================
+
+Como funciona
+-------------
+- Cada processo pertence a um espaço: "Mannare" ou o espaço de uma parceria.
+  Materiais técnicos e licenças acompanham o espaço do processo a que estão ligados.
+- Quem tem acesso ao espaço Mannare (a equipe interna) vê todos os espaços.
+- A pessoa do escritório parceiro só recebe do banco os processos, materiais,
+  licenças, tarefas, propostas, financeiro e cadastros do espaço dela.
+  Ela não vê indicadores nem integrações.
+- Propostas e lançamentos do financeiro de um espaço de parceria têm o quadro
+  "Aprovação do parceiro": a Mannare pede, o parceiro aprova ou pede ajustes
+  (aviso no CRM e por e-mail). Se algo mudar depois, o CRM avisa para pedir de novo.
+  Recebíveis gerados de uma proposta acompanham o espaço dela.
+- Cada espaço tem seu próprio cadastro de clientes e de serviços.
+- Ficam compartilhados entre todos os espaços: nomes e fotos da equipe,
+  modelos de tarefas e configurações gerais do painel.
+
+
+ANTES DE RODAR (importante)
+---------------------------
+Se você já rodou a versão anterior do script, rode esta de novo (é seguro repetir).
+O script bloqueia o acesso sem login (chave "anon public"). Se o Apps Script
+dos e-mails e da ponte das propostas usar essa chave, ele vai parar de funcionar.
+
+1. Abra o Apps Script e procure a chave do Supabase (em geral em
+   Configurações do projeto > Propriedades do script, ou no topo do código).
+2. Se for a chave "anon public", troque pela chave "service_role":
+   Supabase > Project Settings > API > service_role (secret).
+   Essa chave nunca deve ir para o index.html nem para o GitHub: só para o Apps Script.
+3. Se já for a service_role, não precisa mudar nada.
+
+
+PASSO A PASSO
+-------------
+1. Supabase > SQL Editor > New query.
+2. Cole todo o conteúdo de espacos-supabase.sql e clique em Run.
+   Rode num horário em que ninguém esteja editando o CRM.
+   No final aparecem duas tabelas de conferência: documentos por espaço
+   e quem acessa o quê. Todos da equipe atual ficam com {mannare}.
+3. Publique o index.html novo no GitHub Pages (como sempre).
+4. No CRM: Equipe > "Espaços e acessos" > crie o espaço da parceria
+   (ex.: ESCRITÓRIO SILVA & COSTA).
+5. Equipe > Novo membro > coloque o e-mail Google da pessoa do escritório
+   parceiro e, em "Espaços com acesso", marque SÓ o espaço da parceria.
+   Para alguém da Mannare que trabalha na parceria, marque Mannare e a parceria
+   (assim ela aparece na equipe do espaço, na carga de trabalho e em Delegar).
+6. Para cada proposta ou processo feito em parceria: abra e troque o campo
+   "Espaço" para a parceria (a proposta leva junto os processos e os recebíveis dela). Processos criados com a parceria selecionada no
+   topo já nascem nela.
+7. Peça para a pessoa do escritório parceiro entrar com o Google. Ela verá só
+   o espaço dela.
+
+
+NO DIA A DIA
+------------
+- No topo, ao lado do caminho da página, fica o seletor de espaço:
+  "Todos os espaços", "Mannare" ou a parceria. O que você cria ou cadastra
+  vai para o espaço selecionado ("Todos" = Mannare).
+- Cadastros > Clientes mostra o cadastro do espaço selecionado.
+- Só sócios da Mannare podem criar espaços, incluir pessoas e mudar acessos
+  (isso também é garantido pelo banco).
+
+Observações
+-----------
+- Reuniões da Google Agenda trazidas pelo Apps Script continuam no espaço
+  Mannare: a pessoa do escritório parceiro não as vê no painel.
+- Se um processo da parceria veio de uma proposta da Mannare, ao mudar o
+  espaço o CRM guarda no processo só os dados básicos da proposta
+  (cliente, empreendimento, objeto), sem valores.
+
+
+TIMBRADO E APROVADORES POR ESPAÇO
+---------------------------------
+- Timbrado: Equipe > Espaços e acessos > botão "Timbrado" do espaço (ou, com o
+  espaço selecionado no topo, no menu do seletor > "Timbrado do espaço").
+  Envie o .docx do timbrado: o CRM tira o cabeçalho e o rodapé do Word e usa nas
+  propostas, relatórios de processo e relatórios de material daquele espaço.
+  Também dá para enviar só a imagem do cabeçalho ou do rodapé.
+  Botão "Usar o timbrado BMM · Vértis · Mannare da proposta WR": aplica de uma vez o
+  cabeçalho, o rodapé e o modelo visual "Faixa em gradiente" da proposta WR.
+  Na mesma tela: "Empresa do parceiro" (razão social e CNPJ que saem na assinatura de
+  quem é do parceiro) e "Quem assina e qualificação" (razão social, CNPJ, qualificação
+  e imagem da assinatura de cada pessoa daquele espaço).
+- Aprovadores: Equipe > Espaços e acessos > botão "Aprovadores" do espaço.
+  Marque quem aprova e a regra:
+    "Todos aprovam, menos quem elaborou" (ex.: Letícia elabora > Bruno e Rafael aprovam)
+    "Basta um deles, menos quem elaborou".
+  Todos recebem o pedido no CRM e por e-mail; a proposta só fica liberada para
+  envio quando a regra é cumprida. Sem aprovadores marcados, vale a aprovação
+  normal de uma pessoa.
