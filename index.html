@@ -2891,6 +2891,20 @@ body.arrastando .pcol{transition:background-color .15s}
 .cd-mmodo[hidden]{display:none}
 .cd-mchk{display:inline-flex!important;align-items:center;gap:8px;font:500 13.5px var(--font-sans);color:var(--sx-text);cursor:pointer;flex-direction:row!important}
 .cd-mchk input{width:18px;height:18px;accent-color:var(--mn-azul);margin:0}
+.mcard.pk .mt,.fx-nm{text-transform:uppercase}
+#avSrv,#mnTit{text-transform:uppercase}
+#avSrv::placeholder,#mnTit::placeholder{text-transform:none}
+.cd-mrows{display:flex;flex-direction:column;background:#fff;border-radius:12px!important;overflow:hidden}
+.cd-mrow{display:flex;align-items:center;gap:8px;padding:6px 10px;border-top:1px solid var(--sx-divider)}
+.cd-mrow:first-child{border-top:0}
+.cd-mrow .cd-mchk{flex:1}
+.cd-mnova{font:700 10.5px/1 var(--font-sans);background:var(--mn-azul-soft);color:var(--mn-azul);padding:4px 8px;border-radius:999px!important}
+.cd-madd{display:flex;gap:8px}
+.cd-madd .inp{flex:1}
+.cd-cremp{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:var(--mn-azul-soft);border-radius:14px!important;padding:10px 14px;margin:0 0 12px;font:500 13px var(--font-sans);color:var(--sx-text)}
+.cd-cremp span{flex:1;min-width:200px}
+.crumb{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.cd-crbtn{margin-left:auto}
 </style>
 </head>
 <body>
@@ -9637,12 +9651,12 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
   function lerMats(v){ var out = []; String(v || '').split(/[,;\/\n]+/).forEach(function(x){ var m = fmtMat(x); if(m && out.indexOf(m) < 0) out.push(m); }); return out; }
   var rotMat = function(m){ m = String(m || '').trim(); return !m ? '' : /^\d/.test(m) ? 'MT. ' + m : m; };
   function matDe(p){ var m = String(((p && p.imovel) || {}).matricula || '').trim(); return m && m.length <= 48 ? m : ''; }
-  function nomeProc(p){ var pr = propById(p.propId) || p.prop || {}, m = matDe(p); return (p.servico || pr.tipo || pcod(p)) + (m ? ' (' + rotMat(m) + ')' : ''); }
+  function nomeProc(p){ var pr = propById(p.propId) || p.prop || {}, m = matDe(p); return up((p.servico || pr.tipo || pcod(p)) + (m ? ' (' + rotMat(m) + ')' : '')); }
   window.nomeProc = nomeProc;
   // várias pessoas no mesmo campo: formata cada número separado por / , ;
   function fmtTels(v){ return String(v || '').split(/\s*[\/;,]\s*/).map(function(x){ return onlyDig(x).length >= 10 ? fmtTel(x) : x.trim(); }).filter(Boolean).join(' / '); }
 
-  var NOMES = '[data-cf="nome"],[data-cf="grupo"],[data-cf="contato"],[data-ce$="|nome"],[data-ce$="|razao"],#avCli,#avEmp,#mnCli,#mnImo';
+  var NOMES = '[data-cf="nome"],[data-cf="grupo"],[data-cf="contato"],[data-ce$="|nome"],[data-ce$="|razao"],#avCli,#avEmp,#mnCli,#mnImo,#avSrv,#mnTit';
   function aplicaCaixa(el, f){ var a = el.selectionStart, b = el.selectionEnd, v = f(el.value); if(v === el.value) return;
     var dAntes = el.value.slice(0, a).replace(/\D/g, '').length; el.value = v;
     if(f === up){ try{ el.setSelectionRange(a, b); }catch(_){} return; }
@@ -9724,7 +9738,7 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
     ct.hidden = cs.value !== '__outro' && cs.options.length > 2; et.hidden = es.value !== '__outro';
     var cli = cs.value === '__outro' || cs.options.length <= 2 && !cs.value ? up(ct.value).trim() : cs.value, emp = es.value === '__outro' ? up(et.value).trim() : es.value;
     var a = document.getElementById(CAMPOS[pref][0]), b = document.getElementById(CAMPOS[pref][1]); if(a) a.value = cli; if(b) b.value = emp;
-    if(sincroniza.empAnt !== pref + cli + '|' + emp){ sincroniza.empAnt = pref + cli + '|' + emp; desenhaMats(pref); }
+    if(sincroniza.empAnt !== pref + cli + '|' + emp){ sincroniza.empAnt = pref + cli + '|' + emp; matsExtra[pref] = []; desenhaMats(pref); }
   }
   function matsDoEmp(cli, emp){ var c = cliDoGrupo(cli), out = []; if(c){ var e = spesDe(c).concat(c.emps || []).find(function(x){ return normN(x.nome) === normN(emp); }); if(e && e.mats) out = out.concat(e.mats); }
     S.procs.forEach(function(p){ var pr = propById(p.propId) || p.prop || {}; if(normN(pr.emp) === normN(emp) && normN(grupoDe(pr)) === normN(cli)) lerMats(matDe(p)).forEach(function(m){ if(out.indexOf(m) < 0) out.push(m); }); });
@@ -9735,18 +9749,30 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
     if(pref === 'mn'){ var mi = document.getElementById('mnMat'); if(!mi) return; var dl = document.getElementById('dlMnMat'); if(!dl){ mi.insertAdjacentHTML('afterend', '<datalist id="dlMnMat"></datalist>'); dl = document.getElementById('dlMnMat'); mi.setAttribute('list', 'dlMnMat'); mi.placeholder = 'Escolha ou digite'; }
       dl.innerHTML = matsDoEmp(cli, emp).map(function(m){ return '<option value="' + esc(m) + '">'; }).join(''); return; }
     if(!host){ lbE.closest('label').insertAdjacentHTML('afterend', '<div class="f cd-mats" id="' + pref + 'MatsBox" style="grid-column:1/-1"></div>'); host = document.getElementById(pref + 'MatsBox'); }
-    var ms = emp ? matsDoEmp(cli, emp) : [], marc = [].slice.call(host.querySelectorAll('[data-cdmat]:checked')).map(function(x){ return x.value; }), extra = (host.querySelector('[data-cdmatx]') || {}).value || '';
-    host.innerHTML = '<span class="cd-mt">Matrículas do empreendimento</span>' + (ms.length ? '<div class="cd-mlist">' + ms.map(function(m){ return '<label class="cd-mchk"><input type="checkbox" data-cdmat value="' + esc(m) + '" ' + (marc.indexOf(m) >= 0 ? 'checked' : '') + '> ' + esc(rotMat(m)) + '</label>'; }).join('') + '</div>' : '<span class="cg-sub">' + (emp ? 'Nenhuma matrícula cadastrada para este empreendimento.' : 'Escolha o empreendimento.') + '</span>')
-      + '<input class="inp" data-cdmatx placeholder="Outra(s) matrícula(s), separadas por vírgula" value="' + esc(extra) + '" aria-label="Outras matrículas">'
-      + '<div class="cd-mmodo" hidden><label class="cd-mchk"><input type="radio" name="cdMatModo" value="cada" checked> Um processo para cada matrícula</label><label class="cd-mchk"><input type="radio" name="cdMatModo" value="junto"> Um processo só, com todas</label></div>';
+    var ms = emp ? matsDoEmp(cli, emp) : [], marc = [].slice.call(host.querySelectorAll('[data-cdmat]:checked')).map(function(x){ return x.value; }), ext = matsExtra[pref] = (matsExtra[pref] || []);
+    var todas = ms.concat(ext.filter(function(m){ return ms.indexOf(m) < 0; })), modo = (host.querySelector('[name="cdMatModo"]:checked') || {}).value || 'cada';
+    host.innerHTML = '<span class="cd-mt">Matrículas do empreendimento</span><div class="cd-mrows">'
+      + (todas.length ? todas.map(function(m){ var nova = ms.indexOf(m) < 0; return '<div class="cd-mrow"><label class="cd-mchk"><input type="checkbox" data-cdmat value="' + esc(m) + '" ' + (marc.indexOf(m) >= 0 || nova ? 'checked' : '') + '> ' + esc(rotMat(m)) + '</label>'
+          + (nova ? '<span class="cd-mnova">nova</span><button type="button" class="cg-mini" data-cdmatdel="' + esc(m) + '" aria-label="Tirar a matrícula ' + esc(m) + '" title="Tirar">✕</button>' : '') + '</div>'; }).join('')
+        : '<div class="cg-sub" style="padding:4px 2px">' + (emp ? 'Nenhuma matrícula cadastrada para este empreendimento.' : 'Escolha o empreendimento.') + '</div>') + '</div>'
+      + '<div class="cd-madd"><input class="inp" data-cdmatnova placeholder="+ Nova matrícula (Enter para adicionar)" inputmode="numeric" aria-label="Nova matrícula"><button type="button" class="btn sm" data-cdmatadd>Adicionar</button></div>'
+      + '<div class="cd-mmodo" hidden><label class="cd-mchk"><input type="radio" name="cdMatModo" value="cada" ' + (modo === 'cada' ? 'checked' : '') + '> Um processo para cada matrícula</label><label class="cd-mchk"><input type="radio" name="cdMatModo" value="junto" ' + (modo === 'junto' ? 'checked' : '') + '> Um processo só, com todas</label></div>';
     modoMats(pref);
   }
-  function matsEscolhidas(pref){ var host = document.getElementById(pref + 'MatsBox'); if(!host) return []; var out = [].slice.call(host.querySelectorAll('[data-cdmat]:checked')).map(function(x){ return x.value; });
-    lerMats((host.querySelector('[data-cdmatx]') || {}).value).forEach(function(m){ if(out.indexOf(m) < 0) out.push(m); }); return out; }
+  var matsExtra = {};
+  function addMatNova(pref){ var host = document.getElementById(pref + 'MatsBox'); if(!host) return; var inp = host.querySelector('[data-cdmatnova]'), ns = lerMats(inp.value); if(!ns.length){ inp.focus(); return; }
+    matsExtra[pref] = matsExtra[pref] || []; ns.forEach(function(m){ if(matsExtra[pref].indexOf(m) < 0) matsExtra[pref].push(m); });
+    var marcadas = [].slice.call(host.querySelectorAll('[data-cdmat]:checked')).map(function(x){ return x.value; }).concat(ns);
+    desenhaMats(pref); host.querySelectorAll('[data-cdmat]').forEach(function(x){ if(marcadas.indexOf(x.value) >= 0) x.checked = true; }); modoMats(pref);
+    var n2 = host.querySelector('[data-cdmatnova]'); if(n2) n2.focus(); }
+  function matsEscolhidas(pref){ var host = document.getElementById(pref + 'MatsBox'); if(!host) return []; return [].slice.call(host.querySelectorAll('[data-cdmat]:checked')).map(function(x){ return x.value; }); }
   function modoMats(pref){ var host = document.getElementById(pref + 'MatsBox'); if(!host) return; var n = matsEscolhidas(pref).length, md = host.querySelector('.cd-mmodo'); if(md) md.hidden = n < 2;
     var b = document.querySelector('#layer [data-avgo]'); if(b){ var cada = n > 1 && (host.querySelector('[name="cdMatModo"]:checked') || {}).value === 'cada'; b.textContent = cada ? 'Criar ' + n + ' processos' : 'Criar processo'; } }
   document.addEventListener('change', function(e){ var t = e.target; if(t.matches && (t.matches('[data-cdmat]') || t.matches('[name="cdMatModo"]'))) modoMats('av'); }, true);
-  document.addEventListener('input', function(e){ var t = e.target; if(t.matches && t.matches('[data-cdmatx]')) modoMats('av'); }, true);
+  document.addEventListener('keydown', function(e){ var t = e.target; if(t.matches && t.matches('[data-cdmatnova]') && e.key === 'Enter'){ e.preventDefault(); e.stopPropagation(); addMatNova(t.closest('.cd-mats').id.replace('MatsBox', '')); } }, true);
+  window.addEventListener('click', function(e){ var t = e.target; if(!t.closest) return; var el;
+    if(t.closest('[data-cdmatadd]')){ e.stopPropagation(); addMatNova(t.closest('.cd-mats').id.replace('MatsBox', '')); return; }
+    if((el = t.closest('[data-cdmatdel]'))){ e.stopPropagation(); var pref = el.closest('.cd-mats').id.replace('MatsBox', ''); matsExtra[pref] = (matsExtra[pref] || []).filter(function(m){ return m !== el.dataset.cdmatdel; }); desenhaMats(pref); return; } }, true);
   function trocaCliente(pref){
     var cs = document.getElementById(pref + 'CliSel'), es = document.getElementById(pref + 'EmpSel'), groups = pref === 'av' ? gruposProc() : gruposMat(), g = cs.value;
     var emps = groups[g] ? Object.keys(groups[g]).filter(function(e){ return e && e !== g; }).sort(function(a, b){ return a.localeCompare(b, 'pt'); }) : [];
@@ -9768,7 +9794,9 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
   document.addEventListener('input', function(e){ var t = e.target; if(t.matches && t.matches('[data-cdtxt]')){ aplicaCaixa(t, up); var s = t.closest('label').querySelector('select'); sincroniza((s.dataset.cdsel || s.dataset.cdsele)); } }, true);
 
   if(typeof avulsoModal === 'function') avulsoModal = (function(base){ return function(st0){ base.apply(this, arguments);
-    var sel = ui.view === 'proc' && ui.sel ? ui.sel : {}; sincroniza.empAnt = ''; instalaSeletor('av', sel);
+    var sel = ui.view === 'proc' && ui.sel ? ui.sel : {}; sincroniza.empAnt = ''; matsExtra = {}; instalaSeletor('av', sel);
+    var md = document.getElementById('avMod'); if(md && md.querySelector('option[value="sem"]')) md.value = 'sem';
+    var sv = document.getElementById('avSrv'); if(sv){ sv.placeholder = 'Ex.: RETIFICAÇÃO IMOBILIÁRIA'; sv.closest('label').firstChild.textContent = 'Nome do processo'; }
     if(fxNovo){ var st = document.getElementById('avSt'); if(st){ st.value = 'naoiniciado'; st.closest('label').hidden = true; } var hd = document.querySelector('#layer .mhead b'); if(hd) hd.textContent = 'Novo processo no fluxograma'; }
     var h = document.querySelector('#layer .mhead b'); if(h && sel.e) h.textContent = 'Novo processo | ' + sel.e; }; })(avulsoModal);
   if(typeof matNovoModal === 'function') matNovoModal = (function(base){ return function(){ base.apply(this, arguments); sincroniza.empAnt = ''; instalaSeletor('mn', ui.mSel || {}); }; })(matNovoModal);
@@ -9785,6 +9813,9 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
         if(p.prop && c){ var spe = spesDe(c).find(function(x){ return normN(x.nome) === normN(emp); }) || {};
           p.prop.cliente = c.nome; p.prop.cnpj = spe.cnpj || c.cnpj || ''; if(spe.razao) p.prop.razaoSpe = spe.razao; p.prop.contato = c.contato || ''; p.prop.email = c.email || ''; p.prop.telefone = c.telefone || ''; }
         var novos = [p];
+        if(mats.length && c){ var ce = (c.emps = c.emps || []).find(function(x){ return normN(x.nome) === normN(emp); }); if(!ce){ ce = {nome:up(emp), razao:'', cnpj:'', mats:[]}; c.emps.push(ce); }
+          ce.mats = ce.mats || []; mats.forEach(function(m){ if(ce.mats.indexOf(m) < 0) ce.mats.push(m); }); c.atualizadoEm = nowISO(); }
+        if(p.servico && p.servico !== up(p.servico)){ p.servico = up(p.servico); if(p.prop) p.prop.objeto = p.servico; }
         if(mats.length){ p.imovel = p.imovel || {}; p.imovel.matricula = cada ? mats[0] : mats.join(' / ');
           if(cada) mats.slice(1).forEach(function(m){ var q = mkProcess(Object.assign({}, p.prop, {id:'av-' + uid()}), p.modelo, p.resp, p.prazo, me);
             q.codigo = nextCode('PROC-', S.procs); q.status = p.status; q.servico = p.servico; q.orgao = p.orgao; if(q.prop) q.prop.objeto = p.prop.objeto; q.log[0].txt = p.log[0].txt + ' | matrícula ' + m; q.imovel = Object.assign({}, p.imovel, {matricula:m});
@@ -9800,6 +9831,37 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
       var mt = c.querySelector('.mt'), st = c.querySelector('.mtipo'); if(mt){ mt.textContent = nomeProc(p); mt.title = nomeProc(p); }
       if(st){ st.textContent = pcod(p) + (pr.emp ? ' | ' + pr.emp : ''); st.title = (pr.cliente || '') + (pr.emp ? ' | ' + pr.emp : ''); } });
   }
+
+  /* ---------- matrícula no processo aberto + cronograma do empreendimento ---------- */
+  var chaveEmp = function(p){ var pr = propById(p.propId) || p.prop || {}; return pr.emp ? normN(grupoDe(pr)) + '|' + normN(pr.emp) : ''; };
+  var procsDoEmp = function(k){ return k ? S.procs.filter(function(x){ return chaveEmp(x) === k; }) : []; };
+  if(typeof crComp === 'function') crComp = (function(base){ return function(p){ var r = base.apply(this, arguments); var k = p && p.tarefas ? chaveEmp(p) : '';
+    if(!k || !(ui.crEmpAll || {})[k]) return r; var ids = {}; r.forEach(function(x){ ids[x.id] = 1; });
+    var resto = procsDoEmp(k).filter(function(x){ return !ids[x.id]; }).sort(function(a, b){ var ka = (a.crono && a.crono.ini) || (a.datas && a.datas.iniPlan) || '9', kb = (b.crono && b.crono.ini) || (b.datas && b.datas.iniPlan) || '9'; return ka.localeCompare(kb) || pcod(a).localeCompare(pcod(b)); });
+    return r.concat(resto); }; })(crComp);
+  function abrirCronoEmp(p){ var k = chaveEmp(p); if(!k) return; ui.crEmpAll = ui.crEmpAll || {}; ui.crEmpAll[k] = true; ui.crModo = ui.crModo || {}; ui.crModo[p.id] = 'L';
+    ui.view = 'proc'; if(!ui.drawer || ui.drawer.id !== p.id) openDrawer('proc', p.id, 'crono'); else { ui.dtab = 'crono'; renderDrawer(); } if(typeof crAposRender === 'function') crAposRender(); }
+  renderDrawer = (function(base){ return function(){ base.apply(this, arguments);
+    if(!ui.drawer || ui.drawer.kind !== 'proc') return; var p = procById(ui.drawer.id); if(!p) return; var dr = document.getElementById('drawer'); if(!dr) return;
+    var f = dr.querySelector('.dbody > .fields'); if(f && !f.querySelector('[data-cdpmat]')){ var pr = propById(p.propId) || p.prop || {}, ops = pr.emp ? matsDoEmp(grupoDe(pr), pr.emp) : [];
+      f.insertAdjacentHTML('beforeend', '<label class="f">Matrícula(s) do processo<input data-cdpmat list="dlPMat" value="' + esc(matDe(p) || ((p.imovel || {}).matricula || '')) + '" placeholder="Ex.: 95.551" inputmode="numeric"><datalist id="dlPMat">' + ops.map(function(m){ return '<option value="' + esc(m) + '">'; }).join('') + '</datalist></label>'); }
+    var k = chaveEmp(p), n = procsDoEmp(k).length;
+    if(ui.dtab === 'crono' && n > 1 && !dr.querySelector('[data-cdcremp]')){ var on = !!(ui.crEmpAll || {})[k] && (ui.crModo || {})[p.id] === 'L', alvo = dr.querySelector('.dbody > .dsub');
+      if(alvo) alvo.insertAdjacentHTML('afterend', '<div class="cd-cremp"><span>' + (on ? 'Mostrando o cronograma de <b>todo o empreendimento</b> (' + n + ' processos).' : 'Este empreendimento tem ' + n + ' processos.') + '</span><button class="btn sm ' + (on ? '' : 'primary') + '" data-cdcremp="' + (on ? 'sair' : 'entrar') + '">' + (on ? 'Ver só este processo' : 'Cronograma do empreendimento todo') + '</button></div>'); }
+  }; })(renderDrawer);
+  document.addEventListener('change', function(e){ var t = e.target; if(!t.matches || !t.matches('[data-cdpmat]') || !ui.drawer) return; e.stopPropagation(); var p = procById(ui.drawer.id); if(!p) return;
+    var v = lerMats(t.value).join(' / '), ant = (p.imovel || {}).matricula || ''; if(v === ant) return; p.imovel = p.imovel || {}; p.imovel.matricula = v;
+    logP(p, v ? 'vinculou o processo à matrícula ' + v + (ant ? ' (antes: ' + ant + ')' : '') : 'tirou a matrícula do processo');
+    var pr = propById(p.propId) || p.prop || {}, c = cliDoGrupo(grupoDe(pr)); if(c && pr.emp && v){ var ce = (c.emps = c.emps || []).find(function(x){ return normN(x.nome) === normN(pr.emp); }); if(ce){ ce.mats = ce.mats || []; lerMats(v).forEach(function(m){ if(ce.mats.indexOf(m) < 0) ce.mats.push(m); }); } }
+    save(); render(); toast(v ? 'Matrícula: ' + v : 'Matrícula removida'); }, true);
+  window.addEventListener('click', function(e){ var t = e.target; if(!t.closest) return; var el;
+    if((el = t.closest('[data-cdcremp]'))){ e.stopPropagation(); var p = procById(ui.drawer.id); if(!p) return; if(el.dataset.cdcremp === 'entrar') abrirCronoEmp(p);
+      else { var k = chaveEmp(p); if(ui.crEmpAll) delete ui.crEmpAll[k]; if(ui.crModo) delete ui.crModo[p.id]; renderDrawer(); if(typeof crAposRender === 'function') crAposRender(); } return; }
+    if((el = t.closest('[data-cdcrsel]'))){ e.stopPropagation(); var ps = S.procs.filter(function(x){ var pr = propById(x.propId) || x.prop || {}; return normN(grupoDe(pr)) === normN(ui.sel.g) && normN(pr.emp) === normN(ui.sel.e); });
+      if(!ps.length){ toast('Nenhum processo neste empreendimento'); return; } abrirCronoEmp(ps[0]); return; }
+  }, true);
+  function botaoCronoEmp(){ if(ui.view !== 'proc' || !ui.sel || !ui.sel.e) return; var cr = document.querySelector('#view .pmain .crumb'); if(!cr || cr.querySelector('[data-cdcrsel]')) return;
+    cr.insertAdjacentHTML('beforeend', '<button class="btn sm cd-crbtn" data-cdcrsel>Cronograma do empreendimento</button>'); }
 
   /* ---------- pastas de cliente: excluir ou juntar ---------- */
   function grupoDe(pr){ return nomeOk(pr && (pr.grupo || pr.cliente)); }
@@ -10004,7 +10066,7 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
   /* ---------- liga tudo ao CRM ---------- */
   render = (function(base){ return function(){
     base.apply(this, arguments);
-    if(!DB.ready) return; migrar(); fecharFxPop(); botoesPasta();
+    if(!DB.ready) return; migrar(); fecharFxPop(); botoesPasta(); botaoCronoEmp();
     if(ui.view !== 'proc') return;
     var seg = document.querySelector('#view .pagehead .seg');
     if(seg && !seg.querySelector('[data-mode="fluxo"]')) seg.insertAdjacentHTML('beforeend', '<button data-mode="fluxo" class="' + (ui.procMode === 'fluxo' ? 'on' : '') + '"><svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h7v6H3zm11 10h7v6h-7zM14 4h7v6h-7zM6.5 10v3.5c0 1.4 1.1 2.5 2.5 2.5h5v-2H9a.5.5 0 0 1-.5-.5V10z"/></svg> Fluxograma</button>');
