@@ -90,3 +90,32 @@ TIMBRADO E APROVADORES POR ESPAÇO
   Todos recebem o pedido no CRM e por e-mail; a proposta só fica liberada para
   envio quando a regra é cumprida. Sem aprovadores marcados, vale a aprovação
   normal de uma pessoa.
+
+
+USUÁRIO MASTER
+--------------
+- Tipos de usuário: Master, Sócio(a) e Equipe.
+- Master faz tudo o que um sócio faz e, só ele, inclui e remove pessoas da equipe,
+  muda o tipo de usuário de alguém, os espaços com acesso, cria/exclui espaços e
+  define os aprovadores de cada espaço.
+- Um master pode tornar outra pessoa master: Equipe > Editar cadastro > "Tipo de usuário".
+  Sempre fica pelo menos um master.
+- Para ativar: rode master-supabase.sql no Supabase (depois do espacos-supabase.sql).
+  Ele já deixa leticia@mannare.com.br como master e trava no banco que só master
+  mexe na equipe. Enquanto não houver nenhum master, os sócios continuam podendo.
+
+
+REEMBOLSOS (NOTA DE DÉBITO)
+---------------------------
+- Menu > Reembolsos. Substitui o fluxo do Make (formulário > documento > e-mail > planilha).
+- "+ Nova nota de débito": cliente (do cadastro do espaço), CNPJ, empreendimento,
+  processo, e-mail do cliente, quem pagou, layout, vencimento e as despesas
+  (data, descrição, link do comprovante e valor). O número sai sozinho (2026/001...).
+- Layouts: "Só Mannare" ou "BMM · Vértis · Mannare" (já vem sugerido quando o espaço
+  selecionado tem esse timbrado).
+- "Dados da nota de débito": emitente, CNPJ, endereço, e-mail em cópia e dados de
+  pagamento (banco, agência, conta, PIX) de cada layout. Preencha antes de enviar.
+- "Enviar": vai pela ponte com a nota em PDF anexo e marca "ND enviada".
+  "Pago" registra o recebimento. "Exportar planilha (.csv)" faz o papel da planilha.
+- Cada nota também aparece em Financeiro > Contas a receber > Notas de débito,
+  e segue o espaço (o parceiro só vê as do espaço dele).

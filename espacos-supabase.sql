@@ -66,11 +66,16 @@ language sql stable security definer set search_path = public as $$
      and (e = 'comum' or 'mannare' = any(public.pm_meus_espacos()) or e = any(public.pm_meus_espacos()));
 $$;
 
+-- quem gerencia a equipe: master da Mannare (ou sócio, enquanto não houver master)
 create or replace function public.pm_socio_interno() returns boolean
 language sql stable security definer set search_path = public as $$
-  select exists (select 1 from public.pm_equipe
-                 where lower(email) = lower(coalesce(auth.jwt() ->> 'email', ''))
-                   and papel = 'socio' and 'mannare' = any(espacos));
+  select exists (
+    select 1 from public.pm_equipe e
+    where lower(e.email) = lower(coalesce(auth.jwt() ->> 'email', ''))
+      and 'mannare' = any(e.espacos)
+      and (e.papel = 'master'
+           or (e.papel = 'socio' and not exists (select 1 from public.pm_equipe m where m.papel = 'master')))
+  );
 $$;
 
 -- 3) RLS em pm_docs ----------------------------------------------------------
