@@ -2906,6 +2906,45 @@ body.arrastando .pcol{transition:background-color .15s}
 .crumb{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 .cd-crbtn{margin-left:auto}
 </style>
+<style id="mannare-dash">
+/* ======================= DASHBOARD PERSONALIZÁVEL ======================= */
+.dwedit2{display:flex;align-items:center;gap:14px;flex-wrap:wrap;background:#fff;border-radius:18px!important;box-shadow:var(--sx-shadow)!important;padding:12px 16px;margin:0 0 16px}
+.dwedit2>div{flex:1;min-width:240px;display:flex;flex-direction:column;gap:2px}
+.dwedit2 b{font:600 14px var(--font-sans);color:var(--sx-text)}
+.dwedit2 span{font:400 12.5px/1.45 var(--font-sans);color:var(--sx-text-3)}
+.dwedit2 .btn .n{background:var(--mn-amarelo);color:var(--mn-ink);border-radius:999px!important;padding:1px 7px;margin-left:4px;font-size:11px}
+.dgridl.edit .dw{outline:0!important;border-radius:var(--sx-r-card)!important;box-shadow:0 0 0 1.5px rgba(0,0,255,.18)!important;transition:box-shadow .15s}
+.dgridl.edit .dw:hover{box-shadow:0 0 0 2px var(--mn-azul),var(--sx-shadow-hover)!important}
+.dwt{position:absolute;left:8px;right:8px;top:8px;z-index:7;display:flex;align-items:center;gap:8px;height:38px;padding:0 6px 0 10px;border-radius:12px!important;
+  background:rgba(255,255,255,.94);backdrop-filter:blur(6px);box-shadow:0 2px 10px rgba(14,16,48,.10)!important;cursor:grab;touch-action:none;user-select:none;font:600 12.5px var(--font-sans);color:var(--sx-text);opacity:0;transform:translateY(-4px);transition:opacity .15s,transform .15s}
+.dgridl.edit .dw:hover .dwt,.dgridl.edit .dw:focus-within .dwt,.dw.dw-arr .dwt,.dw.dw-rs .dwt{opacity:1;transform:none}
+@media (hover:none){.dwt{opacity:1;transform:none}}
+.dwt:active{cursor:grabbing}
+.dwt b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.dwt-g{display:flex;color:var(--sx-text-3)}.dwt-g .ic{width:16px;height:16px}
+.dwt-sz{display:flex;gap:2px;background:var(--sx-sunken);border-radius:999px!important;padding:2px}
+.dwt-sz button{all:unset;cursor:pointer;min-width:26px;height:24px;padding:0 6px;box-sizing:border-box;text-align:center;border-radius:999px!important;font:600 12px/24px var(--font-sans);color:var(--sx-text-2)}
+.dwt-sz button:hover{background:#fff;color:var(--sx-text)}
+.dwt-sz button.on{background:var(--mn-ink);color:#fff}
+.dwt-sz button:focus-visible,.dwt-x:focus-visible{outline:3px solid var(--mn-azul)!important}
+.dwt-x{all:unset;cursor:pointer;width:28px;height:28px;border-radius:999px!important;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--sx-text-2)}
+.dwt-x:hover{background:var(--sx-error-bg);color:var(--sx-error-icon)}
+.dwr{position:absolute;right:6px;bottom:22px;width:18px;height:18px;z-index:7;cursor:nwse-resize;touch-action:none;border-radius:4px!important;opacity:0;transition:opacity .15s;
+  background:linear-gradient(135deg,transparent 45%,var(--mn-azul) 45%,var(--mn-azul) 55%,transparent 55%,transparent 70%,var(--mn-azul) 70%,var(--mn-azul) 80%,transparent 80%)}
+.dgridl.edit .dw:hover .dwr,.dw.dw-rs .dwr{opacity:1}
+.dw.dw-arr{pointer-events:none;box-shadow:0 30px 60px rgba(14,16,48,.28),0 0 0 2px var(--mn-azul)!important;transform:rotate(.6deg) scale(1.01);cursor:grabbing}
+.dw.dw-arr .dwin{overflow:hidden}
+.dw-ph{border-radius:var(--sx-r-card)!important;border:2px dashed rgba(0,0,255,.35)!important;background:rgba(0,0,255,.05);min-width:0;align-self:start;box-sizing:border-box}
+.dw.dw-sai{transition:opacity .15s,transform .15s;opacity:0;transform:scale(.96)}
+body.dwbusy,body.dwbusy *{user-select:none!important}
+.cg-dlg.dwc{width:min(620px,100%)}
+.dwc-list{display:flex;flex-direction:column;gap:6px;max-height:min(520px,60vh);overflow:auto;margin:0 -4px;padding:2px 4px}
+.dwc-it{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:14px!important;background:var(--sx-sunken)}
+.dwc-it.on{background:#fff;box-shadow:0 0 0 1px var(--sx-divider)!important}
+.dwc-it>div{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.dwc-it b{font:600 13.5px var(--font-sans);color:var(--sx-text)}
+.dwc-it span{font:400 12px/1.4 var(--font-sans);color:var(--sx-text-3)}
+</style>
 </head>
 <body>
 <a class="skip" href="#view">Pular para o conteúdo</a>
@@ -10078,6 +10117,127 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
     } else ajustaCartoes();
   }; })(render);
   if(typeof DB !== 'undefined' && DB.ready) render();
+})();
+</script>
+
+<script id="mannare-dash">
+/* ==========================================================================
+   Dashboard personalizável no estilo ClickUp
+   - Catálogo "Adicionar cartão": escolher o que entra e o que sai do painel
+   - Arrastar fluido: o cartão segue o mouse, um espaço reservado mostra onde ele vai cair
+     e os outros cartões deslizam (FLIP) — sem redesenhar o painel durante o arrasto
+   - Tamanhos rápidos (¼, ⅓, ½, ⅔, inteiro) e alça para ajustar largura/altura
+   ========================================================================== */
+(function(){
+  if(typeof dashGridHtml !== 'function') return;
+  var DESC = {kpi_proc:'Total de processos em andamento e novos nos últimos 30 dias.', kpi_prop:'Valor e quantidade de propostas em aberto.', kpi_lic:'Licenças cadastradas e quantas precisam renovar.',
+    kpi_ent:'Número de itens em aberto da equipe.', semana:'Suas tarefas: atrasadas, para hoje e próximos 7 dias.', timer:'Cronômetro da tarefa em andamento.', entregas:'Gráfico de entregas da equipe por semana ou mês.',
+    atividades:'Últimas movimentações nos processos.', reunioes:'Próximas reuniões da Google Agenda.', comatrib:'Comentários e aprovações esperando por você.', calendario:'Calendário do mês com prazos.',
+    licencas:'Licenças perto do vencimento.', equipe:'Disponibilidade e carga de cada pessoa.', orgao:'Processos parados há mais tempo no órgão.'};
+  var TAM = [[3, '¼'], [4, '⅓'], [6, '½'], [8, '⅔'], [12, 'Inteiro']];
+  var GRIP = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5h3v3H8zm5 0h3v3h-3zM8 10.5h3v3H8zm5 0h3v3h-3zM8 16h3v3H8zm5 0h3v3h-3z"/></svg>';
+  var nomeDe = function(id){ var w = DASH_W.find(function(x){ return x[0] === id; }); return w ? w[1] : id; };
+  var padraoDe = function(id){ var w = DASH_W.find(function(x){ return x[0] === id; }); return w ? w[2] : 4; };
+
+  dashGridHtml = function(H){
+    var L = dashLay(), ed = !!ui.dashEdit;
+    var cards = L.ordem.filter(function(id){ return L.oculto.indexOf(id) < 0 && (H[id] || ed); }).map(function(id){ var w = L.w[id] || padraoDe(id), h = L.h[id];
+      return '<div class="dw ' + (h ? 'fixo' : '') + '" data-dw="' + id + '" style="grid-column:span ' + w + ';' + (h ? '--dwh:' + h + 'px' : '') + '">'
+        + (ed ? '<div class="dwt" data-dwgrab="' + id + '"><span class="dwt-g" aria-hidden="true">' + GRIP + '</span><b>' + esc(nomeDe(id)) + '</b><span class="spacer"></span>'
+          + '<span class="dwt-sz" role="group" aria-label="Largura">' + TAM.map(function(t){ return '<button class="' + (t[0] === w ? 'on' : '') + '" data-dwsz="' + id + '|' + t[0] + '" title="Largura ' + t[1] + '">' + t[1] + '</button>'; }).join('') + '</span>'
+          + '<button class="dwt-x" data-dwhide="' + id + '" aria-label="Remover ' + esc(nomeDe(id)) + ' do painel" title="Remover do painel">✕</button></div>' : '')
+        + '<div class="dwin">' + (H[id] || '<div class="dcard"><div class="dempty">' + esc(nomeDe(id)) + ': nada para mostrar agora.</div></div>') + '</div>'
+        + (ed ? '<div class="dwr" data-dwrs="' + id + '" title="Arraste para mudar o tamanho | duplo clique: altura automática" aria-hidden="true"></div>' : '') + '</div>'; }).join('');
+    var ocultos = L.oculto.filter(function(id){ return DASH_W.some(function(x){ return x[0] === id; }); });
+    return (ed ? '<div class="dwedit2"><div><b>Personalizando o painel</b><span>Arraste pela barra do cartão para mudar de lugar. Use ¼ ⅓ ½ ⅔ para a largura ou a alça no canto. ✕ tira o cartão do painel.</span></div>'
+        + '<button class="btn primary" data-dwcat>+ Adicionar cartão' + (ocultos.length ? ' <span class="n">' + ocultos.length + '</span>' : '') + '</button></div>' : '')
+      + '<div class="dgridl ' + (ed ? 'edit' : '') + '">' + cards + '</div>';
+  };
+
+  /* ---------- catálogo de cartões ---------- */
+  var cat = null;
+  function fecharCat(){ if(cat){ cat.remove(); cat = null; } }
+  function desenharCat(){
+    var L = dashLay(), lista = DASH_W.map(function(w){ return {id:w[0], nome:w[1], on:L.oculto.indexOf(w[0]) < 0}; });
+    var html = '<div class="cg-dh"><div><div class="cg-eyebrow">Dashboard</div><h2>Cartões do painel</h2></div><button class="x" data-dwcatx aria-label="Fechar">✕</button></div>'
+      + '<p class="cg-sub" style="margin:-6px 0 0">Escolha o que aparece no seu painel. Cada pessoa tem o seu.</p><div class="dwc-list">'
+      + lista.map(function(c){ return '<div class="dwc-it ' + (c.on ? 'on' : '') + '"><div><b>' + esc(c.nome) + '</b><span>' + esc(DESC[c.id] || '') + '</span></div>'
+          + (c.on ? '<button class="btn sm" data-dwhide="' + c.id + '">Remover</button>' : '<button class="btn sm primary" data-dwshow="' + c.id + '">+ Adicionar</button>') + '</div>'; }).join('')
+      + '</div><div class="cg-df"><button class="btn" data-dwcatreset>Restaurar padrão</button><span class="spacer"></span><button class="btn primary" data-dwcatx>Pronto</button></div>';
+    if(cat) cat.firstChild.innerHTML = html;
+    else { cat = document.createElement('div'); cat.className = 'cg-ov'; cat.innerHTML = '<div class="cg-dlg dwc" role="dialog" aria-modal="true" aria-label="Cartões do painel" tabindex="-1">' + html + '</div>'; document.body.appendChild(cat); setTimeout(function(){ var b = cat && cat.querySelector('button'); if(b) b.focus(); }, 30); }
+  }
+  function mostrar(id){ var L = dashLay(); L.oculto = L.oculto.filter(function(x){ return x !== id; }); L.ordem = [id].concat(L.ordem.filter(function(x){ return x !== id; })); dashSalvar(L); render(); }
+  function ocultar(id){ var L = dashLay(); if(L.oculto.indexOf(id) < 0) L.oculto.push(id); dashSalvar(L);
+    var w = document.querySelector('.dgridl .dw[data-dw="' + id + '"]'); if(w && !cat){ w.classList.add('dw-sai'); setTimeout(function(){ render(); }, 160); } else render(); }
+
+  window.addEventListener('click', function(e){
+    var t = e.target; if(!t.closest) return; var el;
+    if(cat && (t === cat || t.closest('.cg-ov') === cat)){ e.stopPropagation();
+      if(t === cat || t.closest('[data-dwcatx]')){ fecharCat(); return; }
+      if((el = t.closest('[data-dwshow]'))){ mostrar(el.dataset.dwshow); desenharCat(); return; }
+      if((el = t.closest('[data-dwhide]'))){ ocultar(el.dataset.dwhide); desenharCat(); return; }
+      if(t.closest('[data-dwcatreset]')){ dashSalvar({ordem:[], w:{}, h:{}, oculto:[]}); render(); desenharCat(); toast('Painel no padrão'); return; }
+      return; }
+    if(ui.view !== 'dash' || !t.closest('#view')) return;
+    if(t.closest('[data-dwcat]')){ e.stopPropagation(); desenharCat(); return; }
+    if((el = t.closest('[data-dwsz]'))){ e.stopPropagation(); var q = el.dataset.dwsz.split('|'), L = dashLay(); L.w[q[0]] = +q[1]; dashSalvar(L);
+      var w = el.closest('.dw'); var antes = retangulos(); w.style.gridColumn = 'span ' + q[1]; w.querySelectorAll('[data-dwsz]').forEach(function(b){ b.classList.toggle('on', b === el); }); dashFit(); animar(antes); return; }
+    if((el = t.closest('.dgridl [data-dwhide]'))){ e.stopPropagation(); ocultar(el.dataset.dwhide); return; }
+  }, true);
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && cat){ e.stopPropagation(); fecharCat(); } }, true);
+  window.addEventListener('dblclick', function(e){ var el = e.target.closest && e.target.closest('[data-dwrs]'); if(!el) return; e.stopPropagation(); var L = dashLay(); delete L.h[el.dataset.dwrs]; dashSalvar(L); render(); }, true);
+
+  /* ---------- animação FLIP dos outros cartões ---------- */
+  function retangulos(){ var m = new Map(); document.querySelectorAll('.dgridl > .dw:not(.dw-arr)').forEach(function(x){ m.set(x, x.getBoundingClientRect()); }); return m; }
+  function animar(antes){
+    document.querySelectorAll('.dgridl > .dw:not(.dw-arr)').forEach(function(x){ var a = antes.get(x); if(!a) return; var b = x.getBoundingClientRect(), dx = a.left - b.left, dy = a.top - b.top;
+      if(!dx && !dy) return; x.style.transition = 'none'; x.style.transform = 'translate(' + dx + 'px,' + dy + 'px)';
+      requestAnimationFrame(function(){ x.style.transition = 'transform .22s cubic-bezier(.2,.8,.2,1)'; x.style.transform = ''; }); });
+  }
+
+  /* ---------- arrastar e redimensionar ---------- */
+  var op = null, raf = 0, ultimo = null;
+  function fitPh(){ if(!op || !op.ph) return; op.ph.style.gridColumn = op.w.style.gridColumn; op.ph.style.gridRowEnd = op.rowEnd; }
+  window.addEventListener('pointerdown', function(e){
+    if(!ui.dashEdit || ui.view !== 'dash' || e.button !== 0) return; var t = e.target; if(!t.closest) return;
+    var gb = t.closest('[data-dwgrab]'), rs = t.closest('[data-dwrs]'); if(!gb && !rs) return; if(t.closest('button')) return;
+    e.preventDefault(); e.stopPropagation();
+    var w = t.closest('.dw'), g = w.parentNode, r = w.getBoundingClientRect(); document.body.classList.add('dwbusy');
+    if(rs){ var gr = g.getBoundingClientRect(), gap = parseFloat(getComputedStyle(g).columnGap) || 16; op = {tipo:'rs', w:w, id:w.dataset.dw, x0:e.clientX, y0:e.clientY, r:r, colW:(gr.width - 11 * gap) / 12, gap:gap, L:dashLay()}; w.classList.add('dw-rs'); return; }
+    var ph = document.createElement('div'); ph.className = 'dw-ph'; ph.style.height = r.height + 'px';
+    op = {tipo:'mv', w:w, g:g, ph:ph, dx:e.clientX - r.left, dy:e.clientY - r.top, rowEnd:w.style.gridRowEnd || getComputedStyle(w).gridRowEnd};
+    fitPh(); g.insertBefore(ph, w);
+    w.classList.add('dw-arr'); Object.assign(w.style, {position:'fixed', left:r.left + 'px', top:r.top + 'px', width:r.width + 'px', height:r.height + 'px', zIndex:150});
+  }, true);
+  function passo(){ raf = 0; var ev = ultimo; if(!op || !ev) return;
+    if(op.tipo === 'rs'){ var cols = Math.max(2, Math.min(12, Math.round((op.r.width + ev.clientX - op.x0 + op.gap) / (op.colW + op.gap))));
+      if(op.cols !== cols){ var antes = retangulos(); op.cols = cols; op.w.style.gridColumn = 'span ' + cols; op.L.w[op.id] = cols; op.w.querySelectorAll('[data-dwsz]').forEach(function(b){ b.classList.toggle('on', +b.dataset.dwsz.split('|')[1] === cols); }); dashFit(); animar(antes); }
+      if(Math.abs(ev.clientY - op.y0) > 8 || op.L.h[op.id]){ var hh = Math.max(90, Math.round((op.r.height + ev.clientY - op.y0) / 10) * 10); if(op.hh !== hh){ op.hh = hh; op.L.h[op.id] = hh; op.w.classList.add('fixo'); op.w.style.setProperty('--dwh', hh + 'px'); dashFit(); } }
+      return; }
+    op.w.style.left = (ev.clientX - op.dx) + 'px'; op.w.style.top = (ev.clientY - op.dy) + 'px';
+    var zona = 70; if(ev.clientY < zona) window.scrollBy(0, -14); else if(ev.clientY > innerHeight - zona) window.scrollBy(0, 14);
+    var el = document.elementFromPoint(ev.clientX, ev.clientY), alvo = el && el.closest && el.closest('.dgridl > .dw, .dgridl > .dw-ph');
+    if(!alvo || alvo === op.ph || alvo.classList.contains('dw-arr')) return;
+    var rr = alvo.getBoundingClientRect(), depois = ev.clientX > rr.left + rr.width / 2 && ev.clientY > rr.top + Math.min(36, rr.height / 4) || ev.clientY > rr.bottom - Math.min(30, rr.height / 4);
+    var ref = depois ? alvo.nextSibling : alvo; while(ref && (ref === op.w || ref === op.ph)) ref = ref.nextSibling;
+    var prox = op.ph.nextSibling; while(prox && prox === op.w) prox = prox.nextSibling; if(prox === ref) return;
+    var antes2 = retangulos(); op.g.insertBefore(op.ph, ref); animar(antes2);
+  }
+  window.addEventListener('pointermove', function(e){ if(!op) return; e.preventDefault(); ultimo = e; if(!raf) raf = requestAnimationFrame(passo); }, true);
+  window.addEventListener('pointerup', function(){ if(!op) return; var o = op; op = null; ultimo = null; document.body.classList.remove('dwbusy');
+    if(o.tipo === 'rs'){ o.w.classList.remove('dw-rs'); dashSalvar(o.L); return; }
+    var alvo = o.ph.getBoundingClientRect();
+    o.w.style.transition = 'left .18s ease, top .18s ease, box-shadow .18s'; o.w.style.left = alvo.left + 'px'; o.w.style.top = alvo.top + 'px';
+    setTimeout(function(){ o.g.insertBefore(o.w, o.ph); o.ph.remove(); o.w.classList.remove('dw-arr'); ['position', 'left', 'top', 'width', 'height', 'zIndex', 'transition'].forEach(function(k){ o.w.style[k] = ''; });
+      var L = dashLay(), vis = [].slice.call(o.g.querySelectorAll(':scope > .dw')).map(function(x){ return x.dataset.dw; }); L.ordem = vis.concat(L.ordem.filter(function(x){ return vis.indexOf(x) < 0; })); dashSalvar(L); dashFit(); }, 190);
+  }, true);
+  window.addEventListener('pointercancel', function(){ if(op){ var o = op; op = null; document.body.classList.remove('dwbusy'); if(o.ph){ o.g.insertBefore(o.w, o.ph); o.ph.remove(); o.w.classList.remove('dw-arr'); ['position', 'left', 'top', 'width', 'height', 'zIndex', 'transition'].forEach(function(k){ o.w.style[k] = ''; }); } } }, true);
+
+  // botão do cabeçalho: "Personalizar" passa a mostrar também o catálogo
+  render = (function(base){ return function(){ base.apply(this, arguments);
+    if(ui.view !== 'dash' || !DB.ready) return; var b = document.querySelector('#view .pagehead [data-dashedit]:not(.primary)'); if(b && !b.dataset.cg){ b.dataset.cg = 1; b.title = 'Escolher, mover e redimensionar os cartões'; }
+  }; })(render);
 })();
 </script>
 <script id="mannare-a11y">
