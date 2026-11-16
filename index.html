@@ -3044,6 +3044,70 @@ body.dwbusy,body.dwbusy *{user-select:none!important}
 .pm-pushobs{margin:12px 0 0!important;font-weight:600;color:var(--ink,#0B0B1A)!important}
 @media (max-width:640px){.pm-pushkv{grid-template-columns:1fr}}
 
+/* Relatórios semanais */
+.rs-cfg{margin:0 0 16px;padding:18px 20px}
+.rs-cfg-g{display:grid;grid-template-columns:200px 270px 110px minmax(0,1fr);gap:14px 16px;align-items:start}
+.rs-txt{grid-column:1/-1}
+.rs-f{display:flex;flex-direction:column;gap:6px;font-size:12.5px;font-weight:600;color:var(--muted,#55577A);min-width:0}
+.rs-f input,.rs-f select,.rs-f textarea{font:500 14px var(--font,inherit);color:var(--ink,#0B0B1A);border:1px solid #C9CCDA;border-radius:12px;padding:9px 12px;background:#fff;min-height:40px;width:100%}
+.rs-f textarea{resize:vertical;min-height:100px;line-height:1.45}
+.rs-info{background:var(--sx-sunken,#F4F7FD);border-radius:14px;padding:10px 14px;font-size:13px;line-height:1.5;color:var(--ink,#0B0B1A);align-self:end}
+.rs-info small{color:var(--muted,#55577A)}
+.rs-list{padding:8px 0 6px;margin:0 0 16px}
+.rs-tools{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 18px 12px;border-bottom:1px solid rgba(11,11,26,.07)}
+.rs-all{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600}
+.rs-all input,.rs-ck input{width:18px;height:18px;accent-color:var(--azul,#0000FF)}
+.rs-q{border:1px solid #C9CCDA;border-radius:999px;padding:8px 14px;min-height:38px;width:220px;max-width:100%;font:inherit}
+.rs-row{display:grid;grid-template-columns:28px minmax(180px,1.1fr) minmax(220px,1.4fr) 92px 140px auto;gap:14px;align-items:center;padding:12px 18px;border-bottom:1px solid rgba(11,11,26,.06)}
+.rs-row:last-child{border-bottom:0}
+.rs-row.on{background:#F3F5FF}
+.rs-cli{display:flex;flex-direction:column;gap:2px;min-width:0}
+.rs-cli b{font-size:14px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rs-cli span{font-size:12px;color:var(--muted,#55577A)}
+.rs-cli em{font-style:normal;color:#B54708;font-weight:600}
+.rs-row .rs-f span{font-size:11px}
+.rs-row .rs-f input{min-height:36px;padding:7px 11px;font-size:13px}
+.rs-sw{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:600;cursor:pointer;position:relative}
+.rs-sw input{position:absolute;opacity:0;width:1px;height:1px}
+.rs-sw i{width:34px;height:20px;border-radius:999px;background:#D0D2DC;position:relative;transition:background .15s;flex:none}
+.rs-sw i::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.2);transition:transform .15s}
+.rs-sw input:checked+i{background:var(--azul,#0000FF)}
+.rs-sw input:checked+i::after{transform:translateX(14px)}
+.rs-sw input:focus-visible+i{outline:3px solid var(--azul,#0000FF);outline-offset:2px}
+.rs-ult{display:flex;flex-direction:column;font-size:12px;color:var(--muted,#55577A)}
+.rs-ult b.ok{color:#065F38;font-weight:600}
+.rs-acts{display:flex;gap:6px;justify-content:flex-end}
+.rs-vazio{padding:24px 18px;color:var(--muted,#55577A)}
+.rs-hist{padding:16px 18px}
+.rs-hist h3{margin:0 0 10px;font-size:15px}
+.rs-hist table{width:100%;border-collapse:collapse;font-size:13px}
+.rs-hist th{text-align:left;font-weight:600;color:var(--muted,#55577A);padding:6px 8px;border-bottom:1px solid rgba(11,11,26,.08)}
+.rs-hist td{padding:8px;border-bottom:1px solid rgba(11,11,26,.05)}
+.rs-ban{position:fixed;right:20px;bottom:20px;z-index:880;max-width:440px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding:16px 18px;border-radius:20px;background:#fff;box-shadow:0 24px 48px -12px rgba(14,16,48,.22)}
+.rs-ban>div:first-child{display:flex;flex-direction:column;gap:2px;flex:1 1 200px}
+.rs-ban span{font-size:13px;color:var(--muted,#55577A)}
+.rs-bt{display:flex;gap:6px}
+.rs-prog{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:1200;background:#0B0B1A;color:#fff;border-radius:999px;padding:10px 18px;font-size:13.5px;box-shadow:0 12px 30px rgba(0,0,0,.25)}
+.rs-dlg{width:min(1180px,100%)!important;max-height:calc(100vh - 32px)!important}
+.rs-dh{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.rs-dh h2{margin:2px 0 0;font-size:20px}
+.rs-k{font-size:11px;letter-spacing:.08em;color:var(--azul,#0000FF);font-weight:700}
+.rs-dg{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.rs-pv{background:#E9EEF8;border-radius:14px;padding:10px;overflow:hidden}
+.rs-pv iframe{display:block;width:100%;height:min(58vh,560px);border:0;background:#fff;border-radius:6px}
+.rs-aj summary{cursor:pointer;font-weight:600;font-size:14px;padding:4px 0}
+.rs-aj summary small{font-weight:400;color:var(--muted,#55577A)}
+.rs-aj table{width:100%;border-collapse:collapse;margin-top:8px;font-size:13px}
+.rs-aj th{text-align:left;font-weight:600;color:var(--muted,#55577A);padding:6px;border-bottom:1px solid rgba(11,11,26,.08)}
+.rs-aj td{padding:6px;border-bottom:1px solid rgba(11,11,26,.05);vertical-align:middle}
+.rs-aj input,.rs-aj select{width:100%;border:1px solid #C9CCDA;border-radius:10px;padding:7px 10px;font:inherit;min-height:36px;background:#fff}
+.rs-s{font-size:11.5px;color:var(--muted,#55577A)}
+.rs-df{display:flex;gap:8px;align-items:center}
+@media (max-width:1100px){.rs-row{grid-template-columns:28px minmax(0,1fr) auto;grid-template-areas:"ck cli acts" ". para para" ". sw ult"}.rs-row .rs-ck{grid-area:ck}.rs-row .rs-cli{grid-area:cli}.rs-row .rs-f{grid-area:para}.rs-row .rs-sw{grid-area:sw}.rs-row .rs-ult{grid-area:ult}.rs-row .rs-acts{grid-area:acts}.rs-cfg-g{grid-template-columns:1fr 1fr}.rs-dg{grid-template-columns:1fr 1fr}}
+@media (max-width:768px){.rs-cfg-g,.rs-dg{grid-template-columns:minmax(0,1fr)!important}.rs-row{grid-template-columns:24px minmax(0,1fr)!important;grid-template-areas:"ck cli" ". para" ". sw" ". ult" ". acts"!important;padding:12px!important}.rs-acts{justify-content:flex-start}.rs-tools{padding:10px 12px}.rs-q{width:100%}.rs-ban{left:12px;right:12px;max-width:none}.rs-pv iframe{height:46vh}}
+.rs-dlg>*{flex:none}
+.rs-pv iframe{min-height:420px}
+
 /* ==========================================================================
    MANNARE CRM · Camada mobile-first (até 768px)
    Celular: menu hambúrguer, 1 coluna, espaçamentos menores e
@@ -11317,6 +11381,292 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
   }, 600);
 
   window.cgPush = {estado:estado, ativar:ativar, desativar:desativar, testar:testar};
+})();
+</script>
+<script id="mannare-relsem">
+/* ==========================================================================
+   MANNARE CRM · Relatório Processual Semanal por cliente (pasta)
+   - Escolha os clientes, revise e envie (PDF em anexo, pela ponte de e-mails).
+   - Envio semanal: no dia escolhido o CRM lembra (ou envia sozinho).
+   ========================================================================== */
+(function(){
+  if(typeof S === 'undefined') return;
+  var DIAS = ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado'];
+  var TEXTO = 'Prezados,\n\nSegue em anexo o Relatório Processual Semanal com a atualização dos processos da {cliente} acompanhados pela Mannare.\n\nFicamos à disposição para qualquer esclarecimento.\n\nAtenciosamente,';
+  var ST_REL = {analise:['ANÁLISE', '#9B9BFF', '#0B0B1A'], notificado:['NOTIFICADO', '#FDCA40', '#0B0B1A'], notifdev:['NOTIF. DEVOLVIDA', '#3333FF', '#fff'], protocolo:['PROTOCOLADO', '#E4ECFA', '#0B0B1A'],
+    levdoc:['LEV. DOCUMENTAÇÃO', '#FFF1C2', '#0B0B1A'], naoiniciado:['NÃO INICIADO', '#F1F1F4', '#4B4E66'], externo:['ÓRGÃO EXTERNO', '#00CFFF', '#0B0B1A'], concluido:['CONCLUÍDO', '#12B76A', '#fff'], arquivado:['ARQUIVADO', '#D0D2DC', '#0B0B1A']};
+  var ATIVOS = {protocolo:1, analise:1, notifdev:1, notificado:1};
+  var x = function(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'}[c]; }); };
+  var nrm = function(s){ return String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/\s+/g, ' ').trim(); };
+  var pad = function(n){ return String(n).padStart(2, '0'); };
+  var br = function(iso){ if(!iso) return ''; var p = String(iso).slice(0, 10).split('-'); return p.length === 3 ? p[2] + '/' + p[1] + '/' + p[0] : ''; };
+  var hoje = function(){ var d = new Date(); return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); };
+  var semana = function(){ var d = new Date(); d.setHours(12); d.setDate(d.getDate() - ((d.getDay() + 6) % 7)); return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); };
+  var C = function(){ var c = (S.cfg.relSem = S.cfg.relSem || {}); c.dia = c.dia == null ? 1 : c.dia; c.modo = c.modo || 'revisar'; c.cli = c.cli || {}; c.env = c.env || {}; c.texto = c.texto || TEXTO; return c; };
+  var titulo = function(s){ var min = {de:1, da:1, do:1, das:1, dos:1, e:1}; return String(s || '').toLowerCase().split(' ').map(function(w, i){ if(/^(s\.?a\.?|ltda\.?|me|epp|spe|eireli)$/i.test(w) || (w.length <= 3 && !min[w] && !/[aeiouáéíóú]{2}/.test(w) && i === 0)) return w.toUpperCase(); return i && min[w] ? w : w.charAt(0).toUpperCase() + w.slice(1); }).join(' '); };
+  var tgl = function(){ return typeof toast === 'function' ? toast.apply(null, arguments) : console.log.apply(console, arguments); };
+
+  // ---------- dados ----------
+  function pasta(p){ var pr = p.prop || {}; return (typeof grupoDe === 'function' ? grupoDe(pr) : (pr.grupo || pr.cliente)) || pr.cliente || ''; }
+  function cadDe(nome){ var k = nrm(nome); return (S.clis || []).find(function(c){ return nrm(c.grupo || c.nome) === k; }) || (S.clis || []).find(function(c){ return nrm(c.nome) === k; }) || null; }
+  function entra(p){ if(p.status === 'concluido' || p.status === 'arquivado') return false; return !!(ATIVOS[p.status] || String(p.protocolo || '').trim()); }
+  function pastas(){
+    var m = {};
+    (S.procs || []).forEach(function(p){ var g = pasta(p); if(!g) return; var k = nrm(g); m[k] = m[k] || {k:k, nome:g, procs:[], todos:0}; m[k].todos++; if(entra(p)) m[k].procs.push(p); });
+    return Object.keys(m).map(function(k){ return m[k]; }).filter(function(g){ return g.procs.length; }).sort(function(a, b){ return a.nome.localeCompare(b.nome, 'pt-BR'); });
+  }
+  function cliCfg(g){ var c = C(), o = c.cli[g.k] = c.cli[g.k] || {}; var cad = cadDe(g.nome) || {};
+    return {semanal:!!o.semanal, para:o.para != null ? o.para : (cad.email || ''), cc:o.cc || '', curto:o.curto || titulo(g.nome), razao:o.razao || cad.nome || g.nome, cnpj:o.cnpj || cad.cnpj || '', raw:o}; }
+  function linha(p){
+    var a = typeof tramAtual === 'function' ? tramAtual(p) : null, k = p.kpi || {}, r = p.relCli || {};
+    var nts = (p.notas || []).filter(function(n){ return n.aberta !== false && !n.respEm; });
+    var nt = nts.sort(function(a, b){ return String(b.data || '').localeCompare(String(a.data || '')); })[0];
+    var tramIni = (p.tram || []).map(function(t){ return t.em; }).sort()[0];
+    var st = r.st || p.status, set = a && a.setor ? String(a.setor).split(' (')[0].split(' - ')[0].trim() : '';
+    var ult = (typeof tramSort === 'function' ? tramSort(p) : (p.tram || []))[0];
+    var mov = r.obs || (ult ? (ult.de || '') + (ult.acao === 'encaminhou' && ult.para ? ' encaminhou para ' + ult.para : ult.acao === 'recebeu' ? ' recebeu o processo' : '') + (ult.obs ? '. ' + ult.obs : '') : '');
+    return {p:p, orgao:String(p.orgao || '').trim().toUpperCase() || '—', proc:p.protocolo || p.codigo || '', prot:k.dataProt || p.dataProtocolo || (tramIni ? tramIni.slice(0, 10) : ''), tip:String(p.servico || '').toUpperCase(),
+      emp:String((p.prop || {}).emp || p.emp || '').toUpperCase(), doc:nt ? (nt.tipo === 'devolutiva' ? 'NOTA DEVOLUTIVA' : 'NOTIFICAÇÃO') : '', ult:a ? a.desde : '', dias:a ? a.dias : null,
+      prazo:nt ? nt.prazo || '' : '', st:st, esp:String(r.esp || '').toUpperCase(), setor:set.toUpperCase(), obs:r.obs || '', mov:mov};
+  }
+
+  // ---------- relatório (HTML) ----------
+  var LOGO_B = '';
+  function logoBranco(){
+    var l = document.querySelector('.side .logo');
+    if(!LOGO_B && l && l.complete && l.naturalWidth){
+      try{ var c = document.createElement('canvas'); c.width = l.naturalWidth; c.height = l.naturalHeight; var g = c.getContext('2d'); g.drawImage(l, 0, 0);
+        var d = g.getImageData(0, 0, c.width, c.height), a = d.data; for(var i = 0; i < a.length; i += 4){ a[i] = a[i + 1] = a[i + 2] = 255; } g.putImageData(d, 0, 0); LOGO_B = c.toDataURL('image/png'); }catch(_){}
+    }
+    return LOGO_B ? '<img src="' + LOGO_B + '" alt="Mannare" style="height:30px">' : '<b style="font:700 26px Kanit,Arial,sans-serif;color:#fff">mannare</b>';
+  }
+  function relHtml(g){
+    var cc = cliCfg(g), ls = g.procs.map(linha), dt = br(hoje());
+    var cont = function(f){ return ls.filter(f).length; };
+    var principal = (function(){ var n = {}; ls.forEach(function(l){ n[l.orgao] = (n[l.orgao] || 0) + 1; }); var s = ls.some(function(l){ return /SEUMA/.test(l.orgao); }) ? 'SEUMA' : Object.keys(n).sort(function(a, b){ return n[b] - n[a]; })[0]; return s; })();
+    var A = ls.filter(function(l){ return l.orgao === principal || (principal === 'SEUMA' && /SEUMA/.test(l.orgao)); }).sort(function(a, b){ return String(a.prot).localeCompare(String(b.prot)); });
+    var B = ls.filter(function(l){ return A.indexOf(l) < 0; }).sort(function(a, b){ return a.orgao.localeCompare(b.orgao) || String(a.prot).localeCompare(String(b.prot)); });
+    var stc = function(k){ var s = ST_REL[k] || [String((typeof PS !== 'undefined' && PS[k] ? PS[k].l : k) || '').toUpperCase(), '#E4ECFA', '#0B0B1A']; return '<td class="st" style="background:' + s[1] + ';color:' + s[2] + '">' + x(s[0]) + '</td>'; };
+    var dd = function(l){ return l.dias == null ? '<td></td>' : '<td class="' + (l.dias > 15 ? 'late' : '') + '">' + (l.dias === 0 ? 'HOJE' : 'HÁ ' + l.dias + ' DIA' + (l.dias > 1 ? 'S' : '')) + '</td>'; };
+    var rowspan = function(list, i, campo){ if(i && list[i - 1][campo] === list[i][campo]) return ''; var n = 1; while(list[i + n] && list[i + n][campo] === list[i][campo]) n++; return '<td class="org" rowspan="' + n + '">' + x(list[i][campo]) + '</td>'; };
+    var tA = A.length ? '<div class="sec">' + x(principal) + ' | ' + A.length + ' PROCESSO' + (A.length > 1 ? 'S' : '') + '</div><table class="t"><thead><tr><th style="width:62px">ÓRGÃO</th><th>PROCESSO</th><th>DATA<br>PROTOCOLO</th><th>TIPOLOGIA</th><th>EMPREENDIMENTO</th><th>DOCUMENTAÇÃO<br>PROCESSUAL</th><th>ÚLTIMA<br>MOVIMENTAÇÃO</th><th>DIAS SEM<br>MOVIMENTAÇÃO</th><th>PRAZO<br>NOTIFICAÇÃO</th><th>STATUS</th><th>ESPECIALISTA</th><th>SETOR</th><th style="width:170px">OBSERVAÇÃO</th></tr></thead><tbody>'
+      + A.map(function(l, i){ return '<tr>' + rowspan(A, i, 'orgao') + '<td><b>' + x(l.proc) + '</b></td><td>' + br(l.prot) + '</td><td class="l">' + x(l.tip) + '</td><td>' + x(l.emp) + '</td><td class="doc">' + x(l.doc) + '</td><td>' + br(l.ult) + '</td>' + dd(l) + '<td>' + br(l.prazo) + '</td>' + stc(l.st) + '<td>' + x(l.esp) + '</td><td>' + x(l.setor) + '</td><td class="l obs">' + x(l.obs) + '</td></tr>'; }).join('') + '</tbody></table>' : '';
+    var tB = B.length ? '<div class="sec">' + (A.length ? 'OUTROS ÓRGÃOS' : 'PROCESSOS') + ' | ' + B.length + ' PROCESSO' + (B.length > 1 ? 'S' : '') + '</div><table class="t"><thead><tr><th style="width:62px">ÓRGÃO</th><th>PROCESSO</th><th>DATA<br>PROTOCOLO</th><th>TIPOLOGIA</th><th>EMPREENDIMENTO</th><th>STATUS</th><th>ÚLTIMA<br>MOVIMENTAÇÃO</th><th>DIAS SEM<br>MOVIMENTAÇÃO</th><th style="width:330px">MOVIMENTAÇÃO</th></tr></thead><tbody>'
+      + B.map(function(l, i){ return '<tr>' + rowspan(B, i, 'orgao') + '<td><b>' + x(l.proc) + '</b></td><td>' + br(l.prot) + '</td><td class="l">' + x(l.tip) + '</td><td>' + x(l.emp) + '</td>' + stc(l.st) + '<td>' + br(l.ult) + '</td>' + dd(l) + '<td class="l obs">' + x(l.mov) + '</td></tr>'; }).join('') + '</tbody></table>' : '';
+    var kp = function(rot, n, cls){ return '<div class="kp ' + (cls || '') + '"><span>' + rot + '</span><b>' + pad(n) + '</b></div>'; };
+    return '<div class="rs-doc">'
+      + '<div class="hd">' + logoBranco() + '<div>RELATÓRIO PROCESSUAL SEMANAL<br>ATUALIZADO EM ' + dt + '</div></div>'
+      + '<div class="top"><div class="id"><h1>RELATÓRIO PROCESSUAL SEMANAL</h1><p>CLIENTE: ' + x(String(cc.razao).toUpperCase()) + '</p>' + (cc.cnpj ? '<p>CNPJ: ' + x(cc.cnpj) + '</p>' : '') + '<p>DATA DA ATUALIZAÇÃO: <em>' + dt + '</em></p></div>'
+      + kp('TOTAL DE<br>PROCESSOS', ls.length) + kp('EM ANÁLISE', cont(function(l){ return l.st === 'analise'; })) + kp('NOTIFICADOS', cont(function(l){ return l.st === 'notificado'; })) + kp('NOTIFICAÇÃO<br>DEVOLVIDA', cont(function(l){ return l.st === 'notifdev'; })) + kp('SEM MOVIMENTAÇÃO > 15 DIAS', cont(function(l){ return l.dias > 15; }), 'warn') + '</div>'
+      + tA + tB
+      + '<div class="leg"><span style="background:#FDCA40">NOTIFICADO</span><span style="background:#00CFFF">ÓRGÃO EXTERNO</span><span style="background:#9B9BFF">EM ANÁLISE</span><i>Fundo amarelo-claro nos dias: mais de 15 dias sem movimentação</i><em>MANNARE CONSULTORIA URBANÍSTICA · mannare.com.br</em></div>'
+      + '</div>';
+  }
+  var CSS_DOC = '.rs-doc{width:1123px;box-sizing:border-box;padding:28px 30px 24px;background:#fff;color:#0B0B1A;font:10px/1.3 Arial,Helvetica,sans-serif}'
+    + '.rs-doc *{box-sizing:border-box}.rs-doc .hd{display:flex;justify-content:space-between;align-items:center;background:#0000FF;color:#fff;padding:16px 18px;font-size:9.5px;text-align:right;line-height:1.35}'
+    + '.rs-doc .top{display:flex;align-items:stretch;border-bottom:1.5px solid #0B0B1A;margin:10px 0 12px}.rs-doc .id{flex:1;padding:6px 4px}.rs-doc h1{font:700 19px/1.2 Kanit,Arial,sans-serif;margin:0 0 6px;letter-spacing:.01em}.rs-doc .id p{margin:2px 0;font-weight:700;font-size:9px}.rs-doc .id em{font-style:normal;color:#0000FF;margin-left:50px}'
+    + '.rs-doc .kp{width:76px;border-left:1px solid #D0D2DC;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:7px 4px;text-align:center}.rs-doc .kp span{font-weight:700;font-size:8px;line-height:1.2}.rs-doc .kp b{font:700 21px Kanit,Arial,sans-serif;color:#0000FF}'
+    + '.rs-doc .kp.warn{width:220px;background:#FFF4D9}.rs-doc .kp.warn b{color:#0000FF}'
+    + '.rs-doc .sec{font-weight:700;font-size:9.5px;margin:12px 0 6px}'
+    + '.rs-doc table.t{width:100%;border-collapse:collapse;table-layout:auto}.rs-doc .t th{background:#0000FF;color:#fff;font-size:8.2px;font-weight:700;padding:9px 4px;text-align:center;line-height:1.2}'
+    + '.rs-doc .t td{padding:6px 4px;border-bottom:1px solid #E1E3EA;text-align:center;font-size:9px;vertical-align:middle}.rs-doc .t td.l{text-align:left}.rs-doc .t td.obs{font-size:8.5px}'
+    + '.rs-doc .t td.org{background:#CFCFFF;font-weight:700;border-bottom:1px solid #fff}.rs-doc .t td.doc{color:#0000FF;font-weight:700}.rs-doc .t td.late{background:#FFF4D9;font-weight:700}.rs-doc .t td.st{font-weight:400;border-bottom:1px solid #fff}'
+    + '.rs-doc .t tbody tr:last-child td{border-bottom:1.5px solid #0B0B1A}'
+    + '.rs-doc .leg{display:flex;align-items:center;gap:0;margin-top:22px;font-size:8.5px}.rs-doc .leg span{padding:5px 22px;font-weight:700;margin-right:0}.rs-doc .leg span:first-child{margin-left:60px}.rs-doc .leg i{font-style:normal;margin-left:8px;flex:1}.rs-doc .leg em{font-style:normal}';
+  function docCompleto(g){ return '<!DOCTYPE html><html><head><meta charset="utf-8"><style>@page{size:A4 landscape;margin:0}body{margin:0;background:#fff}' + CSS_DOC + '</style></head><body>' + relHtml(g) + '</body></html>'; }
+
+  // ---------- PDF (A4 deitado) ----------
+  var libs = null;
+  function carregaLibs(){
+    if(libs) return libs;
+    var js = function(src){ return new Promise(function(ok, no){ var s = document.createElement('script'); s.src = src; s.onload = ok; s.onerror = function(){ no(new Error('não carregou ' + src)); }; document.head.appendChild(s); }); };
+    libs = Promise.all([window.html2canvas ? 0 : js('https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js'), window.jspdf ? 0 : js('https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js')]).catch(function(e){ libs = null; throw e; });
+    return libs;
+  }
+  async function gerarPdf(g){
+    await carregaLibs(); if(document.fonts && document.fonts.ready) await document.fonts.ready;
+    var box = document.createElement('div'); box.style.cssText = 'position:fixed;left:-20000px;top:0;z-index:-1;background:#fff';
+    box.innerHTML = '<style>' + CSS_DOC + '</style>' + relHtml(g); document.body.appendChild(box);
+    try{
+      var doc = box.querySelector('.rs-doc'), W = 1123, H = Math.round(W * 210 / 297), top0 = doc.getBoundingClientRect().top;
+      // quebras de página entre linhas (nunca no meio de uma linha)
+      var cortes = [0], lim = H;
+      [].slice.call(doc.querySelectorAll('.hd,.top,.sec,thead,tr,.leg')).forEach(function(el){ var r = el.getBoundingClientRect(), a = r.top - top0, b = r.bottom - top0; if(b > lim - 26 && a > cortes[cortes.length - 1] + 40){ cortes.push(a - 8); lim = a - 8 + H; } });
+      var total = doc.scrollHeight, cv = await html2canvas(doc, {scale:2, backgroundColor:'#ffffff', useCORS:true, logging:false, windowWidth:W});
+      var k = cv.width / W, pdf = new window.jspdf.jsPDF({orientation:'landscape', unit:'mm', format:'a4', compress:true});
+      for(var i = 0; i < cortes.length; i++){
+        var y0 = cortes[i], y1 = Math.min(i + 1 < cortes.length ? cortes[i + 1] : total, y0 + H), h = y1 - y0; if(h < 10) continue;
+        var pg = document.createElement('canvas'); pg.width = cv.width; pg.height = Math.round(H * k); var cx = pg.getContext('2d'); cx.fillStyle = '#fff'; cx.fillRect(0, 0, pg.width, pg.height);
+        cx.drawImage(cv, 0, Math.round(y0 * k), cv.width, Math.round(h * k), 0, i ? Math.round(14 * k) : 0, cv.width, Math.round(h * k));
+        if(i) pdf.addPage(); pdf.addImage(pg.toDataURL('image/jpeg', .9), 'JPEG', 0, 0, 297, 210, undefined, 'FAST');
+      }
+      return pdf.output('datauristring').split(',')[1];
+    } finally { box.remove(); }
+  }
+
+  // ---------- envio ----------
+  function nomeArq(g){ var cc = cliCfg(g), d = br(hoje()).replace(/\//g, '.'); return ('Relatório Processual Semanal_' + cc.curto + '_' + d).replace(/[\\/:*?"<>|]+/g, '-') + '.pdf'; }
+  // função do Supabase (mesmo PDF do envio semanal automático)
+  async function servidor(corpo){
+    if(typeof sb === 'undefined' || !sb || typeof CFG === 'undefined' || !CFG.url) throw new Error('sem servidor');
+    if(typeof flush === 'function' && typeof DB !== 'undefined'){ clearTimeout(DB.timer); try{ await flush(); }catch(_){} }   // grava os ajustes antes
+    var ss = await sb.auth.getSession(), tok = ss && ss.data && ss.data.session && ss.data.session.access_token; if(!tok) throw new Error('sem login');
+    var r = await fetch(String(CFG.url).replace(/\/+$/, '') + '/functions/v1/pm-relatorio', {method:'POST', headers:{'Content-Type':'application/json', Authorization:'Bearer ' + tok, apikey:CFG.key || ''}, body:JSON.stringify(corpo)});
+    var j = {}; try{ j = await r.json(); }catch(_){}
+    if(r.status === 404 && !j.erro) throw new Error('sem servidor');
+    if(!r.ok) throw new Error(j.erro || ('erro ' + r.status));
+    return j;
+  }
+  function registra(g, auto){ var c = C(), cc = cliCfg(g);
+    c.env[g.k] = c.env[g.k] || {}; c.env[g.k].ultimo = new Date().toISOString(); c.env[g.k].semana = semana(); c.env[g.k].por = me; c.env[g.k].qtd = g.procs.length; c.env[g.k].auto = !!auto;
+    (c.hist = c.hist || []).unshift({em:new Date().toISOString(), cli:cc.curto, para:cc.para, procs:g.procs.length, por:me, auto:!!auto}); c.hist = c.hist.slice(0, 200); save(); }
+  async function enviar(g, auto){
+    var cc = cliCfg(g), para = cc.para.split(/[,;\s]+/).filter(Boolean);
+    if(!para.length || !para.every(function(e){ return /^\S+@\S+\.\S+$/.test(e); })) throw new Error('confira o e-mail de ' + cc.curto);
+    try{ var sv = await servidor({clientes:[g.k]}); if(sv.enviados){ registra(g, auto); return sv; } throw new Error(sv.motivo || 'não enviado'); }
+    catch(err){ if(err.message !== 'sem servidor') throw new Error(cc.curto + ': ' + err.message); }
+    var b64 = await gerarPdf(g);
+    if(b64.length > 10.5e6) throw new Error('o PDF de ' + cc.curto + ' ficou grande demais');
+    var c = C(), assunto = 'Relatório Processual Semanal | ' + cc.curto + ' | ' + br(hoje());
+    var em = {id:uid(), status:'pendente', tipo:'relatorio', cat:'relatorios', para:para.join(', '), cc:cc.cc, replyTo:me, por:me, em:new Date().toISOString(), assunto:assunto,
+      corpo:c.texto.replace(/\{cliente\}/g, cc.razao), anexoNome:nomeArq(g), anexoB64:b64};
+    try{ if(typeof assinEmail === 'function') em.assinatura = assinEmail(); }catch(_){}
+    em.relKey = g.k; em.semana = semana(); em.procs = g.procs.length;
+    S.emails.push(em); registra(g, auto); return em;
+  }
+  async function enviarVarios(lista, auto){
+    var ok = 0, erros = [];
+    for(var i = 0; i < lista.length; i++){ progresso('Gerando ' + (i + 1) + ' de ' + lista.length + ': ' + cliCfg(lista[i]).curto); try{ await enviar(lista[i], auto); ok++; }catch(e){ erros.push(e.message); } }
+    progresso('');
+    if(ok) tgl(ok + ' relatório' + (ok > 1 ? 's' : '') + ' na fila de envio. A ponte manda em alguns minutos.');
+    if(erros.length) setTimeout(function(){ tgl('Não enviado: ' + erros.join('; ')); }, ok ? 3200 : 0);
+    if(ui.view === 'relsem') render();
+    return ok;
+  }
+  function progresso(t){ var el = document.getElementById('rsProg'); if(!el){ if(!t) return; el = document.createElement('div'); el.id = 'rsProg'; el.className = 'rs-prog'; el.setAttribute('role', 'status'); document.body.appendChild(el); } if(!t){ el.remove(); return; } el.textContent = t; }
+
+  // ---------- semanal ----------
+  function envSemana(k){ var sem = semana(), c = C(); if(c.env[k] && c.env[k].semana === sem && c.env[k].ultimo) return {em:c.env[k].ultimo, auto:c.env[k].auto};
+    var e = (S.emails || []).filter(function(m){ return m.tipo === 'relatorio' && m.relKey === k && m.semana === sem; }).sort(function(a, b){ return String(b.em).localeCompare(String(a.em)); })[0]; return e ? {em:e.em, auto:e.auto} : null; }
+  function ultimoEnvio(k){ var c = C(), a = c.env[k] && c.env[k].ultimo ? {em:c.env[k].ultimo, auto:c.env[k].auto} : null;
+    (S.emails || []).forEach(function(m){ if(m.tipo === 'relatorio' && m.relKey === k && (!a || String(m.em) > String(a.em))) a = {em:m.em, auto:m.auto}; }); return a; }
+  function pendentesSemana(){ return pastas().filter(function(g){ var cc = cliCfg(g); return cc.semanal && cc.para && !envSemana(g.k); }); }
+  function diaChegou(){ var c = C(), n = new Date(), d = (n.getDay() + 6) % 7, a = (c.dia + 6) % 7; return d > a || (d === a && n.getHours() >= (c.hora == null ? 8 : +c.hora)); }
+  var rodou = false;
+  function verificaSemana(){
+    if(rodou || !DB.ready || !me || !isSocio()) return; rodou = true;
+    if(!diaChegou()) return; var pend = pendentesSemana(); if(!pend.length) return;
+    var c = C();
+    if(c.modo === 'auto') return;   // quem envia é o agendador do Supabase
+    setTimeout(function(){ banner(pend.length); }, 3500);
+  }
+  function banner(n){
+    if(document.getElementById('rsBan')) return;
+    var d = document.createElement('div'); d.id = 'rsBan'; d.className = 'rs-ban'; d.setAttribute('role', 'status');
+    d.innerHTML = '<div><b>Relatórios semanais</b><span>' + n + ' cliente' + (n > 1 ? 's' : '') + ' aguardando o envio desta semana.</span></div><div class="rs-bt"><button class="btn sm ghost" data-rsban="x">Depois</button><button class="btn sm primary" data-rsban="ir">Revisar e enviar</button></div>';
+    document.body.appendChild(d);
+  }
+
+  // ---------- tela ----------
+  var sel = {}, filtro = '';
+  function tela(){
+    var c = C(), gs = pastas(), sem = semana(), pend = pendentesSemana().length;
+    var vis = gs.filter(function(g){ return !filtro || nrm(g.nome).indexOf(nrm(filtro)) >= 0; });
+    var nSel = gs.filter(function(g){ return sel[g.k]; }).length;
+    var linhas = vis.map(function(g){ var cc = cliCfg(g), ue = ultimoEnvio(g.k) || {}, e = {ultimo:ue.em, auto:ue.auto}, enviado = !!envSemana(g.k);
+      var nNot = g.procs.filter(function(p){ return p.status === 'notificado'; }).length;
+      return '<div class="rs-row' + (sel[g.k] ? ' on' : '') + '">'
+        + '<label class="rs-ck"><input type="checkbox" data-rssel="' + x(g.k) + '" ' + (sel[g.k] ? 'checked' : '') + ' aria-label="Selecionar ' + x(g.nome) + '"></label>'
+        + '<div class="rs-cli"><b>' + x(g.nome) + '</b><span>' + g.procs.length + ' processo' + (g.procs.length > 1 ? 's' : '') + ' no relatório' + (nNot ? ' · <em>' + nNot + ' notificado' + (nNot > 1 ? 's' : '') + '</em>' : '') + (cc.cnpj ? ' · ' + x(cc.cnpj) : '') + '</span></div>'
+        + '<label class="rs-f"><span>Enviar para</span><input data-rsc="' + x(g.k) + '|para" value="' + x(cc.para) + '" placeholder="email@cliente.com.br, outro@cliente.com.br"></label>'
+        + '<label class="rs-sw" title="Entra no envio semanal"><input type="checkbox" data-rsc="' + x(g.k) + '|semanal" ' + (cc.semanal ? 'checked' : '') + '><i></i><span>Semanal</span></label>'
+        + '<div class="rs-ult">' + (e.ultimo ? (enviado ? '<b class="ok">Enviado esta semana</b>' : 'Último') + '<span>' + br(e.ultimo) + (e.auto ? ' · automático' : '') + '</span>' : '<span>Nunca enviado</span>') + '</div>'
+        + '<div class="rs-acts"><button class="btn sm" data-rsver="' + x(g.k) + '">Ver e ajustar</button><button class="btn sm primary" data-rsenv="' + x(g.k) + '">Enviar</button></div></div>'; }).join('');
+    return '<div class="pagehead"><div><h1>Relatórios semanais</h1><p>Relatório Processual Semanal por cliente (pasta), em PDF, enviado por e-mail pela ponte.</p></div><span class="spacer"></span></div>'
+      + '<section class="card rs-cfg"><div class="rs-cfg-g">'
+      + '<label class="rs-f"><span>Dia do envio semanal</span><select data-rsg="dia">' + DIAS.map(function(d, i){ return '<option value="' + i + '" ' + (+c.dia === i ? 'selected' : '') + '>' + d.charAt(0).toUpperCase() + d.slice(1) + '</option>'; }).join('') + '</select></label>'
+      + '<label class="rs-f"><span>Como enviar</span><select data-rsg="modo"><option value="revisar" ' + (c.modo === 'revisar' ? 'selected' : '') + '>Lembrar no dia e eu reviso antes</option><option value="auto" ' + (c.modo === 'auto' ? 'selected' : '') + '>Enviar sozinho no dia e horário</option></select></label>'
+      + '<label class="rs-f"><span>Horário</span><select data-rsg="hora">' + [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18].map(function(h){ return '<option value="' + h + '" ' + ((c.hora == null ? 8 : +c.hora) === h ? 'selected' : '') + '>' + pad(h) + 'h</option>'; }).join('') + '</select></label>'
+      + '<div class="rs-info">' + (pend ? '<b>' + pend + '</b> cliente' + (pend > 1 ? 's' : '') + ' do envio semanal ainda sem relatório nesta semana.' : 'Envio semanal desta semana em dia.') + '<br><small>' + (c.modo === 'auto' ? 'O Supabase envia sozinho ' + DIAS[+c.dia] + ' às ' + pad(c.hora == null ? 8 : +c.hora) + 'h (horário de Fortaleza), mesmo com o CRM fechado. Só entram os clientes com <b>Semanal</b> ligado.' : 'No dia e horário escolhidos, o CRM avisa quem é sócio(a) para revisar e enviar.') + '</small></div>'
+      + '<label class="rs-f rs-txt"><span>Texto do e-mail (onde estiver {cliente} entra a razão social)</span><textarea data-rsg="texto" rows="5">' + x(c.texto) + '</textarea></label></div></section>'
+      + '<section class="card rs-list"><div class="rs-tools"><label class="rs-all"><input type="checkbox" data-rsall ' + (nSel && nSel === gs.length ? 'checked' : '') + '> Todos</label><input class="rs-q" data-rsq placeholder="Buscar cliente" value="' + x(filtro) + '"><span class="spacer"></span>'
+      + '<button class="btn sm" data-rsmarcar>Marcar selecionados como semanais</button><button class="btn sm primary" data-rsenvsel ' + (nSel ? '' : 'disabled') + '>Enviar para selecionados' + (nSel ? ' (' + nSel + ')' : '') + '</button></div>'
+      + (linhas || '<p class="rs-vazio">Nenhum cliente com processo protocolado ou em andamento.</p>') + '</section>'
+      + (c.hist && c.hist.length ? '<section class="card rs-hist"><h3>Últimos envios</h3><div class="mx-scroll"><table><thead><tr><th>Quando</th><th>Cliente</th><th>Para</th><th>Processos</th><th>Por</th></tr></thead><tbody>' + c.hist.slice(0, 15).map(function(h){ return '<tr><td>' + br(h.em) + ' ' + String(h.em).slice(11, 16) + '</td><td>' + x(h.cli) + '</td><td>' + x(h.para) + '</td><td>' + h.procs + '</td><td>' + x(h.auto ? 'automático' : (typeof U !== 'undefined' && U[h.por] ? U[h.por].nome.split(' ')[0] : h.por)) + '</td></tr>'; }).join('') + '</tbody></table></div></section>' : '');
+  }
+
+  // prévia com ajustes por processo
+  var ov = null, atual = null;
+  function fecharOv(){ if(ov){ ov.remove(); ov = null; atual = null; } }
+  function previa(g){
+    fecharOv(); atual = g; var cc = cliCfg(g);
+    ov = document.createElement('div'); ov.className = 'cg-ov rs-ov';
+    var aj = g.procs.map(function(p){ var r = p.relCli || {}, l = linha(p);
+      return '<tr><td><b>' + x(l.proc || p.codigo) + '</b><div class="rs-s">' + x(l.tip) + ' · ' + x(l.emp) + '</div></td>'
+        + '<td><select data-rsp="' + p.id + '|st"><option value="">' + x((ST_REL[p.status] || [((typeof PS !== 'undefined' && PS[p.status]) || {}).l || p.status])[0]) + ' (do CRM)</option>' + Object.keys(ST_REL).map(function(k){ return '<option value="' + k + '" ' + (r.st === k ? 'selected' : '') + '>' + ST_REL[k][0] + '</option>'; }).join('') + '</select></td>'
+        + '<td><input data-rsp="' + p.id + '|esp" value="' + x(r.esp || '') + '" placeholder="Ex.: ANALISTA"></td>'
+        + '<td><input data-rsp="' + p.id + '|obs" value="' + x(r.obs || '') + '" placeholder="Observação para o cliente"></td></tr>'; }).join('');
+    ov.innerHTML = '<div class="cg-dlg rs-dlg" role="dialog" aria-modal="true" aria-label="Relatório de ' + x(g.nome) + '">'
+      + '<div class="rs-dh"><div><div class="rs-k">RELATÓRIO PROCESSUAL SEMANAL</div><h2>' + x(g.nome) + '</h2></div><button class="iconbtn" data-rsx aria-label="Fechar">✕</button></div>'
+      + '<div class="rs-dg"><label class="rs-f"><span>Nome no assunto e no arquivo</span><input data-rsc="' + x(g.k) + '|curto" value="' + x(cc.curto) + '"></label><label class="rs-f"><span>Razão social</span><input data-rsc="' + x(g.k) + '|razao" value="' + x(cc.razao) + '"></label><label class="rs-f"><span>CNPJ</span><input data-rsc="' + x(g.k) + '|cnpj" value="' + x(cc.cnpj) + '"></label>'
+      + '<label class="rs-f"><span>Enviar para</span><input data-rsc="' + x(g.k) + '|para" value="' + x(cc.para) + '"></label><label class="rs-f"><span>Cópia (CC)</span><input data-rsc="' + x(g.k) + '|cc" value="' + x(cc.cc) + '" placeholder="opcional"></label></div>'
+      + '<div class="rs-pv"><iframe title="Prévia do relatório" id="rsFrame"></iframe></div>'
+      + '<details class="rs-aj" open><summary>Ajustes por processo <small>(ficam guardados no processo para as próximas semanas)</small></summary><div class="mx-scroll"><table><thead><tr><th>Processo</th><th>Status no relatório</th><th>Especialista</th><th>Observação</th></tr></thead><tbody>' + aj + '</tbody></table></div></details>'
+      + '<div class="rs-df"><button class="btn" data-rspdf>Baixar PDF</button><span class="spacer"></span><button class="btn" data-rsx>Fechar</button><button class="btn primary" data-rsenv="' + x(g.k) + '">Enviar agora</button></div></div>';
+    document.body.appendChild(ov); atualizaPrevia();
+  }
+  function atualizaPrevia(){
+    var f = document.getElementById('rsFrame'); if(!f || !atual) return;
+    var g = pastas().find(function(y){ return y.k === atual.k; }) || atual; atual = g;
+    f.srcdoc = docCompleto(g).replace('<body>', '<body style="zoom:' + Math.min(1, (f.clientWidth || 900) / 1123).toFixed(3) + '">');
+  }
+
+  // ---------- integração com o CRM ----------
+  var side = document.getElementById('side'), ref = side && side.querySelector('.nav[data-view="carga"]');
+  if(side && !side.querySelector('[data-view="relsem"]')){
+    var b = document.createElement('button'); b.className = 'nav'; b.dataset.view = 'relsem';
+    b.innerHTML = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6zm8 1.5V8h4.5zM9 12h8v1.6H9zm0 3.5h8v1.6H9zm0 3.5h5v1.6H9z"/></svg><span class="tx">Relatórios semanais</span><span id="nRelSem"></span>';
+    if(ref) ref.insertAdjacentElement('afterend', b); else side.appendChild(b);
+  }
+  var _render = window.render;
+  window.render = render = function(){
+    var r = _render.apply(this, arguments);
+    try{
+      var nb = document.getElementById('nRelSem'); if(nb){ var n = isSocio() && diaChegou() && C().modo === 'revisar' ? pendentesSemana().length : 0; nb.innerHTML = n ? '<span class="n">' + n + '</span>' : ''; }
+      if(ui.view === 'relsem' && isSocio()){ var c0 = C(), as = ''; try{ as = typeof assinEmail === 'function' ? assinEmail() : ''; }catch(_){}
+        if(c0.assinatura !== as || !c0.replyTo){ c0.assinatura = as; c0.replyTo = c0.replyTo || me; save(); } }
+      if(ui.view === 'relsem'){ var v = document.getElementById('view'); var foco = document.activeElement && document.activeElement.matches && document.activeElement.matches('[data-rsq]');
+        v.innerHTML = tela(); var cr = document.getElementById('crumbNow'); if(cr) cr.textContent = 'Relatórios semanais';
+        document.querySelectorAll('#side [data-view]').forEach(function(x){ x.classList.toggle('on', x.dataset.view === 'relsem'); });
+        if(foco){ var q = v.querySelector('[data-rsq]'); q.focus(); q.setSelectionRange(q.value.length, q.value.length); } }
+      if(!rodou) verificaSemana();
+    }catch(err){ console.warn('relsem:', err); }
+    return r;
+  };
+
+  window.addEventListener('click', function(e){
+    var t = e.target; if(!t.closest) return; var h = function(s){ return t.closest(s); }, el;
+    if((el = h('[data-rsban]'))){ var bn = document.getElementById('rsBan'); if(bn) bn.remove(); if(el.dataset.rsban === 'ir'){ ui.view = 'relsem'; render(); } return; }
+    if(!h('#view') && !h('.rs-ov')) return;
+    if((el = h('[data-rsver]'))){ e.stopPropagation(); var g = pastas().find(function(y){ return y.k === el.dataset.rsver; }); if(g) previa(g); return; }
+    if((el = h('[data-rsenv]'))){ e.stopPropagation(); var g2 = pastas().find(function(y){ return y.k === el.dataset.rsenv; }); if(!g2) return; el.disabled = true; enviarVarios([g2], false).then(function(ok){ el.disabled = false; if(ok) fecharOv(); }); return; }
+    if(h('[data-rsenvsel]')){ e.stopPropagation(); var ls = pastas().filter(function(y){ return sel[y.k]; }); if(!ls.length) return; if(!confirm('Enviar o relatório para ' + ls.length + ' cliente' + (ls.length > 1 ? 's' : '') + '?')) return; enviarVarios(ls, false).then(function(){ sel = {}; render(); }); return; }
+    if(h('[data-rsmarcar]')){ e.stopPropagation(); var c = C(), n = 0; pastas().forEach(function(y){ if(sel[y.k]){ (c.cli[y.k] = c.cli[y.k] || {}).semanal = true; n++; } }); if(!n){ tgl('Selecione os clientes primeiro'); return; } save(); render(); tgl(n + ' cliente' + (n > 1 ? 's' : '') + ' no envio semanal'); return; }
+    if(h('[data-rspdf]')){ e.stopPropagation(); if(!atual) return; var gg = atual; progresso('Gerando PDF…'); servidor({clientes:[gg.k], soPdf:true}).then(function(j){ return j.pdf; }, function(err){ if(err.message !== 'sem servidor') throw err; return gerarPdf(gg); }).then(function(b64){ progresso(''); var a = document.createElement('a'); a.href = 'data:application/pdf;base64,' + b64; a.download = nomeArq(gg); document.body.appendChild(a); a.click(); a.remove(); }, function(err){ progresso(''); tgl('Não consegui gerar o PDF: ' + err.message); }); return; }
+    if(h('[data-rsx]') || (ov && t === ov)){ fecharOv(); return; }
+  }, true);
+  document.addEventListener('change', function(e){
+    var t = e.target; if(!t.dataset) return; var c = C();
+    if(t.dataset.rssel){ sel[t.dataset.rssel] = t.checked; render(); return; }
+    if(t.hasAttribute && t.hasAttribute('data-rsall')){ pastas().forEach(function(y){ sel[y.k] = t.checked; }); render(); return; }
+    if(t.dataset.rsg){ c[t.dataset.rsg] = (t.dataset.rsg === 'dia' || t.dataset.rsg === 'hora') ? +t.value : t.value; save(); if(t.dataset.rsg !== 'texto') render(); return; }
+    if(t.dataset.rsc){ var p = t.dataset.rsc.split('|'), o = c.cli[p[0]] = c.cli[p[0]] || {}; o[p[1]] = t.type === 'checkbox' ? t.checked : t.value.trim(); save(); if(ov) atualizaPrevia(); else render(); return; }
+    if(t.dataset.rsp){ var q = t.dataset.rsp.split('|'), pr = procById(q[0]); if(!pr) return; pr.relCli = pr.relCli || {}; pr.relCli[q[1]] = t.value.trim(); if(!pr.relCli[q[1]]) delete pr.relCli[q[1]]; save(); atualizaPrevia(); return; }
+  });
+  document.addEventListener('input', function(e){ var t = e.target; if(t.hasAttribute && t.hasAttribute('data-rsq')){ filtro = t.value; render(); } });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && ov){ e.stopPropagation(); fecharOv(); } }, true);
+
+  window.cgRelSem = {pastas:pastas, html:docCompleto, pdf:gerarPdf, enviar:enviar};
 })();
 </script>
 <script id="mannare-mobile">
