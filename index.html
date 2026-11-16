@@ -3289,6 +3289,35 @@ button.cu-row:hover{background:#F6F7F9!important;color:#1F2033!important}
 .cu-vlink{width:calc(100% - 0px);text-align:left;cursor:pointer}
 .cu-vlink:hover span{text-decoration:underline}
 
+/* Itens de fornecedor na proposta */
+.fn-row td{background:#F7F8FF}
+.fn-preco{display:flex;align-items:center;justify-content:flex-end;gap:6px;color:#3D3F5C;padding:8px 6px;min-height:38px}
+.fn-preco b{font-weight:700;color:#0B0B1A}
+.fn-box{display:grid;grid-template-columns:auto minmax(0,1.4fr) minmax(0,1fr) minmax(0,.9fr);gap:8px 10px;align-items:end;margin-top:8px;padding:10px 12px;background:#fff;border:1px dashed #B8BDF5;border-radius:12px!important}
+.fn-box label{display:flex;flex-direction:column;gap:4px;font-size:11.5px;font-weight:600;color:var(--muted,#55577A)}
+.fn-box .inp{min-height:34px}
+.fn-tag{align-self:center;font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:#3333FF;border-radius:999px!important;padding:3px 9px}
+.fn-calc{grid-column:1/-1;font-size:12.5px;color:#3D3F5C}
+.fn-off{grid-column:1/-1;justify-self:start;background:none;border:0;color:#55577A;font-size:12px;text-decoration:underline;cursor:pointer;padding:0}
+.fn-mini{width:22px;height:22px;border-radius:999px!important;border:1px solid #C9CCDA;background:#fff;color:#3333FF;font-size:11px;font-weight:700;cursor:pointer;margin-right:4px;vertical-align:middle}
+.fn-mini:hover{background:#EBEBFF}
+.fn-quadro{margin:12px 0 4px;padding:14px 16px;background:#F4F7FD;border-radius:14px!important;display:grid;grid-template-columns:minmax(0,1fr) 170px;gap:10px 16px;align-items:start}
+.fn-qh{grid-column:1/-1;display:flex;flex-direction:column;gap:2px}
+.fn-qh b{font-size:14px}
+.fn-qh span{font-size:12.5px;color:var(--muted,#55577A)}
+.fn-quadro table{width:100%;border-collapse:collapse;font-size:13.5px;grid-column:1;grid-row:2}
+.fn-quadro td{padding:5px 0;border-bottom:1px solid rgba(11,11,26,.06)}
+.fn-quadro td:last-child{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.fn-quadro tr.fn-tot td{font-weight:700;border-bottom:0;padding-top:8px}
+.fn-aliq{grid-column:2;grid-row:2;display:flex;flex-direction:column;gap:6px;font-size:12.5px;font-weight:600;color:var(--muted,#55577A)}
+.fn-nota{grid-column:1/-1;margin:0;font-size:12.5px;color:#3D3F5C}
+@media (max-width:760px){.fn-box{grid-template-columns:1fr}.fn-quadro{grid-template-columns:1fr}.fn-aliq,.fn-quadro table{grid-column:1;grid-row:auto}}
+.pc-box{grid-column:1/-1;display:grid;grid-template-columns:auto minmax(0,1.2fr) minmax(0,1fr) 110px minmax(0,1.2fr);gap:8px 10px;align-items:end;padding:10px 12px;background:#fff;border:1px dashed #F5C26B;border-radius:12px!important}
+.pc-box label{display:flex;flex-direction:column;gap:4px;font-size:11.5px;font-weight:600;color:var(--muted,#55577A)}
+.pc-box .inp{min-height:34px}
+.pc-tag{background:#C99500!important}
+@media (max-width:760px){.pc-box{grid-template-columns:1fr}}
+
 /* ==========================================================================
    MANNARE CRM · Camada mobile-first (até 768px)
    Celular: menu hambúrguer, 1 coluna, espaçamentos menores e
@@ -12412,6 +12441,156 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
   window.addEventListener('resize', function(){ if(pop) posicionar(); });
 
   window.cgCalPop = {criar:function(b){ ancora = null; criar(b); }, editar:function(e){ ancora = null; editar(e); }, ver:ver, fechar:fechar};
+})();
+</script>
+<script id="mannare-forn">
+/* ==========================================================================
+   MANNARE CRM · Itens de fornecedor nas propostas
+   Preço ao cliente = líquido do fornecedor + reserva para imprevisto (20%)
+   e imposto por dentro (alíquota da NF). O desconto nunca incide no fornecedor.
+   No PDF o item aparece como serviço da Mannare.
+   ========================================================================== */
+(function(){
+  if(typeof docSubtotal === 'undefined' || typeof numBR !== 'function') return;
+  var x = function(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'}[c]; }); };
+  var r2 = function(v){ return Math.round((Number(v) || 0) * 100) / 100; };
+  var real = function(v){ return typeof brl === 'function' ? brl(v) : 'R$ ' + (Number(v) || 0).toFixed(2).replace('.', ','); };
+  var pctIn = function(v){ return v === '' || v == null ? '' : String(v).replace('.', ','); };
+  var RESERVA_PADRAO = 20;
+  var aliqPadrao = function(){ try{ return typeof finCfg === 'function' ? numBR(finCfg().imposto) : 0; }catch(_){ return 0; } };
+  function aliqDe(d){ return d && d.aliqNF !== undefined && d.aliqNF !== '' ? numBR(d.aliqNF) : aliqPadrao(); }
+  function calc(r, d){
+    var f = r.forn || {}, liq = numBR(f.liquido), res = f.reserva === undefined || f.reserva === '' ? RESERVA_PADRAO : numBR(f.reserva), aliq = aliqDe(d), q = d && d.qtdMult ? qtdNum(r.qtd) : 1;
+    if(!liq || aliq >= 100) return {unit:0, liq:liq, res:res, aliq:aliq, q:q, reserva:0, imposto:0, total:0, custo:0};
+    var base = liq * (1 + res / 100), unit = r2(base / (1 - aliq / 100));
+    return {unit:unit, liq:liq, res:res, aliq:aliq, q:q, custo:r2(liq * q), reserva:r2(liq * res / 100 * q), imposto:r2(unit * q - base * q), total:r2(unit * q)};
+  }
+  function recalc(d){ (d.itens || []).forEach(function(r){ if(r.forn) setItemValor(d, r, String(calc(r, d).unit || '')); }); }
+  function subForn(d){ return ((d && d.itens) || []).reduce(function(a, r){ return a + (r.forn ? numBR(r.valor) : 0); }, 0); }
+  function comissao(d){ var pc = d && d.parceria; if(!pc || !numBR(pc.pct)) return 0; var base = pc.base === 'honorarios' ? Math.max(0, docTotal(d) - subForn(d)) : docTotal(d); return r2(base * numBR(pc.pct) / 100); }
+  var lastQ = '';
+  window.cgForn = {calc:calc, recalc:recalc, subForn:subForn, aliqDe:aliqDe, comissao:comissao};
+
+  // desconto só sobre os honorários (itens que não são de fornecedor)
+  if(typeof docDesconto === 'function'){
+    docDesconto = function(d){
+      var o = descObj(d); if(!o || !numBR(o.valor)) return 0;
+      var base = Math.max(0, docSubtotal(d) - subForn(d));
+      return round2(Math.min(o.tipo === 'valor' ? numBR(o.valor) : base * numBR(o.valor) / 100, base));
+    };
+  }
+
+  // contas a pagar do fornecedor quando os recebíveis da proposta são gerados (aceite)
+  if(typeof garantirRecebiveis === 'function'){
+    var _gar = garantirRecebiveis;
+    garantirRecebiveis = function(p){
+      var n = _gar.apply(this, arguments);
+      try{
+        if(p && p.doc && (p.doc.itens || []).some(function(r){ return r.forn; }) && !(S.pags || []).some(function(g){ return g.propostaId === p.id && g.origemForn; })){
+          S.pags = S.pags || [];
+          p.doc.itens.filter(function(r){ return r.forn && numBR(r.forn.liquido); }).forEach(function(r){
+            var c = calc(r, p.doc);
+            S.pags.push({id:uid(), tipo:'forn', descricao:String(r.descricao || 'Serviço de fornecedor').slice(0, 200), fornecedor:r.forn.nome || '', email:r.forn.email || '', whatsapp:'', categoria:'', valor:c.custo,
+              vencimento:'', dataPedido:TODAY, status:'a pagar', dataPagamento:'', empreendimento:p.emp || '', parcela:'', recorrente:false, reembolso:false, pagoPor:'', propostaId:p.id, recebivelId:'', descontar:true,
+              obs:'Gerado da proposta ' + (p.codigo || '') + '. Reserva para imprevisto (não pagar ao fornecedor): ' + real(c.reserva) + '.', origemForn:true, reservaForn:c.reserva,
+              log:[{em:nowISO(), por:me, txt:'gerado da proposta ' + (p.codigo || '') + ' (item de fornecedor)'}], criadoEm:nowISO()});
+          });
+          if(typeof propLog === 'function') propLog(p, 'gerou as contas a pagar dos fornecedores no Financeiro');
+        }
+        var pc = p && p.doc && p.doc.parceria, com = comissao(p && p.doc);
+        if(pc && com > 0 && !(S.pags || []).some(function(g){ return g.propostaId === p.id && g.origemParceria; })){
+          S.pags = S.pags || []; var recs = typeof recsDaProp === 'function' ? recsDaProp(p.id) : [], tot = docTotal(p.doc) || 1, pago = 0;
+          (recs.length ? recs : [{id:'', parcela:1, deTotal:1, valorBruto:tot}]).forEach(function(rc, i, arr){
+            var v = i === arr.length - 1 ? r2(com - pago) : r2(com * numBR(rc.valorBruto) / tot); pago = r2(pago + v);
+            S.pags.push({id:uid(), tipo:'forn', descricao:'Comissão de indicação | ' + (p.codigo || '') + (arr.length > 1 ? ' (parcela ' + rc.parcela + ' de ' + rc.deTotal + ')' : ''), fornecedor:pc.nome || 'Parceiro de indicação', email:pc.contato || '', whatsapp:'', categoria:'',
+              valor:v, vencimento:'', dataPedido:TODAY, status:'a pagar', dataPagamento:'', empreendimento:p.emp || '', parcela:arr.length > 1 ? rc.parcela + '/' + rc.deTotal : '', recorrente:false, reembolso:false, pagoPor:'', propostaId:p.id, recebivelId:rc.id || '', descontar:true,
+              obs:'Parceria de indicação: ' + pctIn(numBR(pc.pct)) + '% ' + (pc.base === 'honorarios' ? 'dos honorários' : 'do valor total') + '. Pagar quando o cliente pagar a parcela correspondente.', origemParceria:true,
+              log:[{em:nowISO(), por:me, txt:'gerado da proposta ' + (p.codigo || '') + ' (parceria de indicação)'}], criadoEm:nowISO()});
+          });
+          if(typeof propLog === 'function') propLog(p, 'gerou as contas a pagar da parceria de indicação');
+        }
+      }catch(err){ console.warn('forn:', err); }
+      return n;
+    };
+  }
+
+  /* ---------- editor da proposta ---------- */
+  function propAtual(){ return typeof ui !== 'undefined' && ui.drawer && ui.drawer.kind === 'prop' && typeof rawProp === 'function' ? rawProp(ui.drawer.id) : null; }
+  var LOCK = '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>';
+  function decorar(){
+    var p = propAtual(), tb = document.querySelector('#drawer .pitab'); if(!p || !tb || !p.doc) return;
+    var d = p.doc, temForn = (d.itens || []).some(function(r){ return r.forn; });
+    tb.querySelectorAll('tr[data-pit]').forEach(function(tr){
+      if(tr.dataset.fnOk === '1') return; tr.dataset.fnOk = '1';
+      var r = (d.itens || []).find(function(i){ return i.id === tr.dataset.pit; }); if(!r) return;
+      var tdX = tr.querySelector('td:last-child');
+      if(!r.forn){ if(tdX && !tdX.querySelector('[data-pfon]')) tdX.insertAdjacentHTML('afterbegin', '<button class="fn-mini" data-pfon="' + r.id + '" title="Transformar em item de fornecedor (preço calculado e sem desconto)">F</button>'); return; }
+      var c = calc(r, d); tr.classList.add('fn-row');
+      var tdV = tr.querySelector('[data-pi=valor]'); if(tdV){ var cell = tdV.closest('td'); cell.innerHTML = '<div class="fn-preco" title="Calculado: líquido do fornecedor + reserva + imposto da NF. Não recebe desconto.">' + LOCK + '<b>' + (c.unit ? real(c.unit) : '—') + '</b></div>' + (c.q !== 1 && c.unit ? '<div class="sub" style="text-align:right">total ' + real(c.total) + '</div>' : ''); }
+      var tdD = tr.querySelector('[data-pi=descricao]'); if(tdD){ tdD.closest('td').insertAdjacentHTML('beforeend',
+        '<div class="fn-box"><span class="fn-tag">Fornecedor</span>'
+        + '<label>Nome<input class="inp" data-pf="nome" value="' + x(r.forn.nome || '') + '" placeholder="Quem faz o serviço"></label>'
+        + '<label>Valor líquido (R$)<input class="inp num" data-pf="liquido" inputmode="decimal" value="' + x(typeof moneyIn === 'function' ? moneyIn(r.forn.liquido) : r.forn.liquido || '') + '" placeholder="0,00"></label>'
+        + '<label>Reserva p/ imprevisto (%)<input class="inp num" data-pf="reserva" inputmode="decimal" value="' + x(pctIn(r.forn.reserva === undefined ? RESERVA_PADRAO : r.forn.reserva)) + '"></label>'
+        + '<div class="fn-calc">' + (c.liq ? real(c.liq) + ' + reserva ' + real(c.liq * c.res / 100) + ' + imposto da NF (' + pctIn(c.aliq) + '%) = <b>' + real(c.unit) + '</b>' + (c.q !== 1 ? ' por unidade' : '') : 'Preencha o valor líquido do fornecedor.') + '</div>'
+        + '<button class="fn-off" data-pfoff="' + r.id + '">Deixar de ser item de fornecedor</button></div>'); }
+    });
+    // botão "+ Fornecedor"
+    var prow = document.querySelector('#drawer .prow'); if(prow && !prow.querySelector('[data-pfadd]')){ var bt = prow.querySelector('[data-piadd]'); if(bt) bt.insertAdjacentHTML('afterend', '<button class="btn sm" data-pfadd title="Serviço feito por fornecedor: preço calculado e sem desconto">+ Fornecedor</button>'); }
+    // botão "+ Parceria de indicação"
+    if(prow && !prow.querySelector('[data-ppcadd]') && !d.parceria){ var bf = prow.querySelector('[data-pfadd]'); if(bf) bf.insertAdjacentHTML('afterend', '<button class="btn sm" data-ppcadd title="Comissão para quem indicou o cliente (não aparece no PDF)">+ Parceria de indicação</button>'); }
+    // quadro interno (fornecedores e parceria)
+    var ptbl = tb.closest('.ptbl'), velho = document.getElementById('fnQuadro'), pc = d.parceria;
+    if(!temForn && !pc){ if(velho) velho.remove(); lastQ = ''; return; }
+    if(!ptbl) return;
+    var honor = r2(docSubtotal(d) - subForn(d)), dsc = docDesconto(d), tot = docTotal(d), its = d.itens.filter(function(r){ return r.forn; }).map(function(r){ return calc(r, d); });
+    var soma = function(k){ return r2(its.reduce(function(a, c){ return a + c[k]; }, 0)); };
+    var pctEq = docSubtotal(d) ? dsc / docSubtotal(d) * 100 : 0, aliq = aliqDe(d), com = comissao(d);
+    var resultado = r2(tot * (1 - aliq / 100) - soma('custo') - soma('reserva') - com);
+    var qh = '<div class="fn-quadro" id="fnQuadro"><div class="fn-qh"><b>Quadro interno da proposta</b><span>Não aparece no PDF: para o cliente, tudo sai como serviço da Mannare.</span></div>'
+      + '<label class="fn-aliq">Alíquota da NF (%)<input class="inp num" data-paliq inputmode="decimal" value="' + x(pctIn(aliq)) + '"></label>'
+      + '<table><tbody>'
+      + '<tr><td>Honorários Mannare</td><td>' + real(honor) + '</td></tr>'
+      + (dsc ? '<tr><td>Desconto (só sobre os honorários)</td><td>− ' + real(dsc) + '</td></tr>' : '')
+      + (temForn ? '<tr><td>Fornecedores: valor líquido a pagar</td><td>' + real(soma('custo')) + '</td></tr><tr><td>Fornecedores: reserva para imprevisto</td><td>' + real(soma('reserva')) + '</td></tr>' : '')
+      + '<tr class="fn-tot"><td>Total ao cliente</td><td>' + real(tot) + '</td></tr>'
+      + '<tr><td>Imposto da NF sobre o total (' + pctIn(aliq) + '%)</td><td>− ' + real(r2(tot * aliq / 100)) + '</td></tr>'
+      + (temForn ? '<tr><td>Fornecedores (líquido + reserva)</td><td>− ' + real(r2(soma('custo') + soma('reserva'))) + '</td></tr>' : '')
+      + (pc ? '<tr><td>Parceria de indicação (' + pctIn(numBR(pc.pct)) + '% ' + (pc.base === 'honorarios' ? 'dos honorários' : 'do total') + ')</td><td>− ' + real(com) + '</td></tr>' : '')
+      + '<tr class="fn-tot"><td>Resultado estimado da Mannare</td><td>' + real(resultado) + '</td></tr></tbody></table>'
+      + (pc ? '<div class="pc-box"><span class="fn-tag pc-tag">Parceria de indicação</span>'
+        + '<label>Parceiro<input class="inp" data-ppc="nome" value="' + x(pc.nome || '') + '" placeholder="Nome do corretor ou parceiro"></label>'
+        + '<label>E-mail ou contato<input class="inp" data-ppc="contato" value="' + x(pc.contato || '') + '" placeholder="Opcional"></label>'
+        + '<label>Percentual (%)<input class="inp num" data-ppc="pct" inputmode="decimal" value="' + x(pctIn(pc.pct)) + '"></label>'
+        + '<label>Sobre<select class="inp" data-ppc="base"><option value="total" ' + (pc.base !== 'honorarios' ? 'selected' : '') + '>Valor total do contrato</option><option value="honorarios" ' + (pc.base === 'honorarios' ? 'selected' : '') + '>Só os honorários (sem fornecedores)</option></select></label>'
+        + '<div class="fn-calc">Comissão: <b>' + real(com) + '</b>. Paga proporcionalmente a cada parcela que o cliente pagar (as contas a pagar são criadas no aceite).</div>'
+        + '<button class="fn-off" data-ppcoff>Tirar parceria</button></div>' : '')
+      + (dsc ? '<p class="fn-nota">O desconto informado vale só para os honorários. Sobre o total da proposta, equivale a ' + pctIn(r2(pctEq)) + '%.</p>' : (temForn ? '<p class="fn-nota">Desconto, quando houver, vale só para os honorários. Itens de fornecedor ficam travados.</p>' : ''))
+      + '</div>';
+    var alvo = document.querySelector('#drawer .prow') || ptbl;
+    if(velho && lastQ === qh && velho.previousElementSibling === alvo) return;
+    if(velho) velho.remove(); alvo.insertAdjacentHTML('afterend', qh); lastQ = qh;
+  }
+  var obs = new MutationObserver(function(){ clearTimeout(obs._t); obs._t = setTimeout(decorar, 40); });
+  var dr = document.getElementById('drawer'); if(dr) obs.observe(dr, {childList:true, subtree:true});
+
+  function mudou(p){ if(p.doc.aliqNF === undefined || p.doc.aliqNF === null) p.doc.aliqNF = aliqPadrao(); recalc(p.doc); if(typeof afterContentEdit === 'function') afterContentEdit(p); if(typeof rebuildProps === 'function') rebuildProps(); save(); if(typeof renderKeep === 'function') renderKeep(); else render(); }
+  window.addEventListener('change', function(ev){
+    var tg = ev.target; if(!tg.dataset || (!tg.dataset.pf && !tg.dataset.ppc && !tg.hasAttribute('data-paliq'))) return;
+    var p = propAtual(); if(!p) return; ev.stopPropagation();
+    if(tg.dataset.ppc){ var pc = p.doc.parceria = p.doc.parceria || {pct:20, base:'total'}, kk = tg.dataset.ppc; pc[kk] = kk === 'pct' ? numBR(tg.value) : tg.value.trim(); if(typeof afterContentEdit === 'function') afterContentEdit(p); save(); if(typeof renderKeep === 'function') renderKeep(); else render(); return; }
+    if(tg.hasAttribute('data-paliq')){ p.doc.aliqNF = tg.value.trim() === '' ? '' : numBR(tg.value); mudou(p); return; }
+    var r = (p.doc.itens || []).find(function(i){ return i.id === tg.closest('[data-pit]').dataset.pit; }); if(!r || !r.forn) return;
+    var k = tg.dataset.pf; r.forn[k] = k === 'nome' ? tg.value.trim() : (tg.value.trim() === '' ? '' : numBR(tg.value)); mudou(p);
+  }, true);
+  window.addEventListener('click', function(ev){
+    var tg = ev.target; if(!tg.closest) return; var el;
+    if(tg.closest('[data-pfadd]')){ ev.stopPropagation(); var p = propAtual(); if(!p) return; p.doc.itens.push({id:uid(), qtd:'01', descricao:'', valor:'', forn:{nome:'', liquido:'', reserva:RESERVA_PADRAO}}); mudou(p); return; }
+    if((el = tg.closest('[data-pfon]'))){ ev.stopPropagation(); var p2 = propAtual(); if(!p2) return; var r = p2.doc.itens.find(function(i){ return i.id === el.dataset.pfon; }); if(!r) return; r.forn = {nome:'', liquido:'', reserva:RESERVA_PADRAO}; mudou(p2); return; }
+    if(tg.closest('[data-ppcadd]')){ ev.stopPropagation(); var pp = propAtual(); if(!pp) return; pp.doc.parceria = {nome:'', contato:'', pct:20, base:'total'}; if(typeof afterContentEdit === 'function') afterContentEdit(pp); save(); if(typeof renderKeep === 'function') renderKeep(); else render(); return; }
+    if(tg.closest('[data-ppcoff]')){ ev.stopPropagation(); var pq = propAtual(); if(!pq) return; delete pq.doc.parceria; if(typeof afterContentEdit === 'function') afterContentEdit(pq); save(); if(typeof renderKeep === 'function') renderKeep(); else render(); return; }
+    if((el = tg.closest('[data-pfoff]'))){ ev.stopPropagation(); var p3 = propAtual(); if(!p3) return; var r3 = p3.doc.itens.find(function(i){ return i.id === el.dataset.pfoff; }); if(!r3) return; delete r3.forn; mudou(p3); return; }
+  }, true);
 })();
 </script>
 <script id="mannare-mobile">
