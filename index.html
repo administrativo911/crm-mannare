@@ -3108,6 +3108,56 @@ body.dwbusy,body.dwbusy *{user-select:none!important}
 .rs-dlg>*{flex:none}
 .rs-pv iframe{min-height:420px}
 
+/* Eventos e férias */
+.ev-dlg{width:min(620px,100%)!important}
+.ev-hd{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.ev-hd h2{margin:0;font-size:19px}
+.ev-sub{margin:-4px 0 0;color:var(--muted,#55577A);font-size:13px}
+.ev-tit{font:600 18px var(--font,inherit);border:0;border-bottom:1.5px solid #D0D2DC;border-radius:0;padding:8px 2px;width:100%;outline:0;background:transparent}
+.ev-tit:focus{border-bottom-color:var(--azul,#0000FF)}
+.ev-when{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.ev-when input[type=date],.ev-when input[type=time]{border:1px solid #C9CCDA;border-radius:10px;padding:7px 10px;font:inherit;min-height:38px;background:#fff}
+.ev-when input:disabled{opacity:.45}
+.ev-ck{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500;cursor:pointer}
+.ev-ck input,.ev-meet input{width:17px;height:17px;accent-color:var(--azul,#0000FF)}
+.ev-meet{display:flex;align-items:center;gap:10px;justify-content:center;background:var(--sx-sunken,#F4F7FD);border-radius:12px;padding:11px 14px;font-weight:600;font-size:14px;cursor:pointer}
+.ev-sec{display:flex;flex-direction:column;gap:6px}
+.ev-lb,.ev-f>span{font-size:12.5px;font-weight:600;color:var(--muted,#55577A)}
+.ev-team{display:flex;flex-wrap:wrap;gap:6px}
+.ev-p{display:inline-flex;align-items:center;gap:6px;border:1px solid #D0D2DC;border-radius:999px;padding:6px 12px;font-size:13px;cursor:pointer;background:#fff}
+.ev-p input{position:absolute;opacity:0;width:1px;height:1px}
+.ev-p.on{background:var(--azul,#0000FF);border-color:var(--azul,#0000FF);color:#fff}
+.ev-p:focus-within{outline:3px solid var(--azul,#0000FF);outline-offset:2px}
+.ev-f{display:flex;flex-direction:column;gap:6px;min-width:0}
+.ev-f input,.ev-f select,.ev-f textarea{border:1px solid #C9CCDA;border-radius:12px;padding:9px 12px;font:inherit;min-height:40px;background:#fff;width:100%}
+.ev-f textarea{resize:vertical}
+.ev-g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ev-ft{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.ev-av{margin:0;background:#FEF0C7;color:#93370D;border-radius:10px;padding:8px 12px;font-size:13px}
+.ev-err{margin:0;background:#FEE4E2;color:#A21C11;border-radius:10px;padding:8px 12px;font-size:13px}
+.ev-list{display:flex;flex-direction:column;gap:2px;max-height:56vh;overflow:auto}
+.ev-it{display:grid;grid-template-columns:52px minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 4px;border-bottom:1px solid rgba(11,11,26,.06)}
+.ev-dt{display:flex;flex-direction:column;align-items:center;background:var(--sx-sunken,#F4F7FD);border-radius:12px;padding:6px 0;font-size:11px;text-transform:uppercase;color:var(--muted,#55577A)}
+.ev-dt b{font-size:12px;color:var(--azul,#0000FF)}
+.ev-tx{display:flex;flex-direction:column;gap:2px;min-width:0;font-size:13px}
+.ev-tx>b{font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ev-tx span{color:var(--muted,#55577A)}
+.ev-tx a{font-size:12.5px;color:var(--azul,#0000FF);font-weight:600;margin-right:10px}
+.ev-st{font-size:11.5px!important;font-weight:600}
+.ev-st.vd{color:#065F38!important}.ev-st.am{color:#B54708!important}.ev-st.vm{color:#A21C11!important}.ev-st.cz{color:#55577A!important}
+.ev-ac{display:flex;gap:6px}
+.ev-vazio{color:var(--muted,#55577A);padding:16px 4px}
+.au-novo{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:var(--sx-sunken,#F4F7FD);border-radius:14px;padding:10px 12px}
+.au-novo select,.au-novo input[type=date]{border:1px solid #C9CCDA;border-radius:10px;padding:7px 10px;font:inherit;min-height:36px;background:#fff}
+.au-list{display:flex;flex-direction:column}
+.au-it{display:grid;grid-template-columns:70px 1fr auto auto;gap:10px;align-items:center;padding:10px 4px;border-bottom:1px solid rgba(11,11,26,.06);font-size:13.5px}
+.au-it.on{background:#FFF7E3;border-radius:10px}
+.au-tag{font-size:12px;color:var(--muted,#55577A)}
+.au-chip{margin:6px auto 0;display:inline-block;font-size:12px;font-weight:600;color:#93370D;background:#FEF0C7;border-radius:999px;padding:3px 10px}
+.au-chip.on{background:#0B0B1A;color:#FDCA40}
+.st-ferias{background:#FDCA40!important}
+@media (max-width:640px){.ev-g2{grid-template-columns:1fr}.ev-it{grid-template-columns:44px minmax(0,1fr)}.ev-ac{grid-column:2}.au-it{grid-template-columns:1fr auto}.au-it .au-tag{grid-column:1}}
+
 /* ==========================================================================
    MANNARE CRM · Camada mobile-first (até 768px)
    Celular: menu hambúrguer, 1 coluna, espaçamentos menores e
@@ -11667,6 +11717,195 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
   document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && ov){ e.stopPropagation(); fecharOv(); } }, true);
 
   window.cgRelSem = {pastas:pastas, html:docCompleto, pdf:gerarPdf, enviar:enviar};
+})();
+</script>
+<script id="mannare-eventos">
+/* ==========================================================================
+   MANNARE CRM · Eventos na Google Agenda + Férias e folgas
+   - Criar, editar e cancelar eventos no CRM; a ponte (Apps Script) cria/atualiza
+     /apaga na Google Agenda, convida os participantes e gera o link do Meet.
+   - Férias e folgas: quem gerencia a equipe marca o período; a pessoa fica sem
+     acesso ao CRM nesses dias (o bloqueio também vale no banco).
+   ========================================================================== */
+(function(){
+  if(typeof S === 'undefined' || typeof TIPO_COL === 'undefined') return;
+  TIPO_COL.evento = 'eventos'; S.eventos = S.eventos || [];
+  var x = function(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'}[c]; }); };
+  var pad = function(n){ return String(n).padStart(2, '0'); };
+  var hojeISO = function(){ var d = new Date(); return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); };
+  var br = function(iso){ if(!iso) return ''; var p = String(iso).slice(0, 10).split('-'); return p[2] + '/' + p[1] + '/' + p[0]; };
+  var DSEM = ['dom', 'seg', 'ter', 'qua', 'qui', 'sex', 'sáb'];
+  var dataLonga = function(iso){ var d = new Date(iso + 'T12:00'); return DSEM[d.getDay()] + ', ' + br(iso); };
+  var t = function(m){ return typeof toast === 'function' ? toast(m) : console.log(m); };
+  var nomeDe = function(e){ return (typeof U !== 'undefined' && U[e] && U[e].nome) || e; };
+  var euGestor = function(){ var r = (S.equipe || []).find(function(q){ return String(q.email).toLowerCase() === String(me).toLowerCase(); }); return (r && r.papel === 'master') || (typeof isSocio === 'function' && isSocio()); };
+  var souMaster = function(){ var r = (S.equipe || []).find(function(q){ return String(q.email).toLowerCase() === String(me).toLowerCase(); }); return !!(r && r.papel === 'master'); };
+
+  /* ===================== EVENTOS ===================== */
+  var ov = null, rasc = null;
+  function fechar(){ if(ov){ ov.remove(); ov = null; rasc = null; } }
+  function abrir(html, cls){ fechar(); ov = document.createElement('div'); ov.className = 'cg-ov ev-ov'; ov.innerHTML = '<div class="cg-dlg ' + (cls || '') + '" role="dialog" aria-modal="true">' + html + '</div>'; document.body.appendChild(ov); var f = ov.querySelector('input,button'); if(f) f.focus(); }
+  function hhmm(min){ return pad(Math.floor(min / 60) % 24) + ':' + pad(min % 60); }
+  function proxHora(){ var d = new Date(); return hhmm((d.getHours() + 1) * 60); }
+  function minDe(h){ var p = String(h || '0:0').split(':'); return (+p[0]) * 60 + (+p[1] || 0); }
+  function podeMexer(e){ return e.dono === me || euGestor(); }
+  function situacao(e){
+    if(e.status === 'cancelado') return e.sync === 'ok' ? ['Cancelado', 'cz'] : ['Cancelando na agenda…', 'am'];
+    if(e.sync === 'erro') return ['Erro na agenda', 'vm'];
+    if(e.sync === 'pendente') return ['Enviando para a agenda…', 'am'];
+    return ['Na Google Agenda', 'vd'];
+  }
+
+  function form(e){
+    rasc = JSON.parse(JSON.stringify(e));
+    var equipe = (typeof USERS !== 'undefined' ? USERS : []).filter(function(u){ return u.email || u.id; });
+    var procs = (S.procs || []).filter(function(p){ return p.status !== 'concluido' && p.status !== 'arquivado'; }).slice(0, 400);
+    var dono = e.dono || me;
+    abrir('<div class="ev-hd"><h2>' + (e.id ? 'Editar evento' : 'Novo evento') + '</h2><button class="iconbtn" data-evx aria-label="Fechar">✕</button></div>'
+      + '<input class="ev-tit" data-evf="titulo" value="' + x(e.titulo || '') + '" placeholder="Título do evento" aria-label="Título do evento">'
+      + '<div class="ev-when"><input type="date" data-evf="data" value="' + x(e.data) + '" aria-label="Data"><input type="time" data-evf="ini" value="' + x(e.ini) + '" aria-label="Início" ' + (e.diaTodo ? 'disabled' : '') + '><span aria-hidden="true">→</span><input type="time" data-evf="fim" value="' + x(e.fim) + '" aria-label="Fim" ' + (e.diaTodo ? 'disabled' : '') + '>'
+      + '<label class="ev-ck"><input type="checkbox" data-evf="diaTodo" ' + (e.diaTodo ? 'checked' : '') + '> O dia todo</label></div>'
+      + '<label class="ev-meet"><input type="checkbox" data-evf="meet" ' + (e.meet ? 'checked' : '') + '><span>Adicionar chamada de vídeo (Google Meet)</span></label>'
+      + '<div class="ev-sec"><div class="ev-lb">Participantes da equipe</div><div class="ev-team">' + equipe.map(function(u){ var em = String(u.email || u.id).toLowerCase(); return '<label class="ev-p ' + ((e.participantes || []).indexOf(em) >= 0 ? 'on' : '') + '"><input type="checkbox" data-evp="' + x(em) + '" ' + ((e.participantes || []).indexOf(em) >= 0 ? 'checked' : '') + '>' + x((u.nome || em).split(' ').slice(0, 2).join(' ')) + '</label>'; }).join('') + '</div></div>'
+      + '<label class="ev-f"><span>Convidados de fora (e-mails separados por vírgula)</span><input data-evf="externos" value="' + x((e.externos || []).join(', ')) + '" placeholder="cliente@empresa.com.br"></label>'
+      + '<div class="ev-g2"><label class="ev-f"><span>Local ou sala</span><input data-evf="local" value="' + x(e.local || '') + '" placeholder="Opcional"></label>'
+      + '<label class="ev-f"><span>Processo (opcional)</span><select data-evf="procId"><option value="">—</option>' + procs.map(function(p){ return '<option value="' + p.id + '" ' + (e.procId === p.id ? 'selected' : '') + '>' + x((p.protocolo || p.codigo || '') + ' · ' + ((p.prop || {}).emp || '')) + '</option>'; }).join('') + '</select></label></div>'
+      + '<label class="ev-f"><span>Descrição</span><textarea data-evf="desc" rows="3" placeholder="Pauta, links, observações">' + x(e.desc || '') + '</textarea></label>'
+      + '<label class="ev-f"><span>Em qual agenda</span><select data-evf="agenda"><option value="minha" ' + (e.agenda !== 'mannare' ? 'selected' : '') + '>Agenda de ' + x(nomeDe(dono).split(' ')[0]) + ' (' + x(dono) + ')</option><option value="mannare" ' + (e.agenda === 'mannare' ? 'selected' : '') + '>Agenda do administrativo (administrativo@mannare.com.br)</option></select></label>'
+      + (e.aviso ? '<p class="ev-av">' + x(e.aviso) + '</p>' : '') + (e.sync === 'erro' && e.erro ? '<p class="ev-err">Erro na agenda: ' + x(e.erro) + '</p>' : '')
+      + '<div class="ev-ft">' + (e.id && e.status !== 'cancelado' && podeMexer(e) ? '<button class="btn danger" data-evcancel="' + e.id + '">Cancelar evento</button>' : '') + '<span class="spacer"></span><button class="btn" data-evx>Fechar</button><button class="btn primary" data-evsave>' + (e.id ? 'Salvar e atualizar a agenda' : 'Criar na Google Agenda') + '</button></div>', 'ev-dlg');
+  }
+  function novo(base){ var h = proxHora(); form(Object.assign({titulo:'', data:hojeISO(), ini:h, fim:hhmm(minDe(h) + 60), diaTodo:false, meet:true, participantes:[], externos:[], local:'', desc:'', agenda:'minha', procId:''}, base || {})); }
+  function lerForm(){
+    var e = rasc; if(!e || !ov) return null;
+    ov.querySelectorAll('[data-evf]').forEach(function(i){ var k = i.dataset.evf; e[k] = i.type === 'checkbox' ? i.checked : i.value.trim(); });
+    e.participantes = [].map.call(ov.querySelectorAll('[data-evp]:checked'), function(i){ return i.dataset.evp; });
+    e.externos = String(e.externos || '').split(/[,;\s]+/).filter(Boolean);
+    return e;
+  }
+  function salvar(){
+    var e = lerForm(); if(!e) return;
+    if(!e.titulo){ t('Dê um título ao evento'); ov.querySelector('[data-evf=titulo]').focus(); return; }
+    if(!/^\d{4}-\d{2}-\d{2}$/.test(e.data)){ t('Confira a data'); return; }
+    if(!e.diaTodo && (!e.ini || !e.fim || minDe(e.fim) <= minDe(e.ini))){ t('O fim precisa ser depois do início'); return; }
+    var ruins = e.externos.filter(function(m){ return !/^\S+@\S+\.\S+$/.test(m); }); if(ruins.length){ t('Confira o e-mail: ' + ruins[0]); return; }
+    var agora = new Date().toISOString(), lista = S.eventos;
+    if(!e.id){ e.id = uid(); e.dono = me; e.por = me; e.criadoEm = agora; e.status = 'ativo'; lista.push(e); }
+    else { var i = lista.findIndex(function(o){ return o.id === e.id; }); if(i >= 0) lista[i] = e; else lista.push(e); }
+    e.sync = 'pendente'; e.erro = ''; e.atualizadoEm = agora; e.atualizadoPor = me;
+    if(typeof cgEspaco !== 'undefined' && cgEspaco.ativo) e._espaco = e._espaco || (cgEspaco.ativo() === 'todos' ? 'mannare' : cgEspaco.ativo());
+    save(); fechar(); t('Evento salvo. Ele aparece na Google Agenda em até 1 minuto.'); if(typeof render === 'function') render();
+  }
+  function cancelar(id){
+    var e = S.eventos.find(function(o){ return o.id === id; }); if(!e) return;
+    if(!confirm('Cancelar "' + e.titulo + '"? Os participantes recebem o aviso de cancelamento da Google Agenda.')) return;
+    e.status = 'cancelado'; e.sync = 'pendente'; e.canceladoEm = new Date().toISOString(); e.canceladoPor = me; save(); fechar(); t('Evento cancelado. A agenda é atualizada em até 1 minuto.'); if(typeof render === 'function') render();
+  }
+  function meusEventos(){
+    var em = String(me).toLowerCase(), h = hojeISO();
+    return S.eventos.filter(function(e){ return e.titulo && e.data >= h && (e.dono === me || (e.participantes || []).indexOf(em) >= 0 || euGestor()) && !(e.status === 'cancelado' && e.sync === 'ok'); })
+      .sort(function(a, b){ return (a.data + (a.diaTodo ? '00:00' : a.ini)).localeCompare(b.data + (b.diaTodo ? '00:00' : b.ini)); });
+  }
+  function lista(){
+    var ls = meusEventos();
+    abrir('<div class="ev-hd"><h2>Eventos</h2><button class="iconbtn" data-evx aria-label="Fechar">✕</button></div>'
+      + '<p class="ev-sub">Eventos criados pelo CRM. Criar, editar ou cancelar aqui atualiza a Google Agenda e avisa os participantes.</p>'
+      + '<div class="ev-list">' + (ls.map(function(e){ var s = situacao(e);
+        return '<div class="ev-it"><div class="ev-dt"><b>' + dataLonga(e.data).split(',')[0] + '</b><span>' + br(e.data).slice(0, 5) + '</span></div>'
+          + '<div class="ev-tx"><b>' + x(e.titulo) + '</b><span>' + (e.diaTodo ? 'O dia todo' : x(e.ini) + ' – ' + x(e.fim)) + ' · ' + x(nomeDe(e.dono).split(' ')[0]) + ((e.participantes || []).length + (e.externos || []).length ? ' · ' + ((e.participantes || []).length + (e.externos || []).length) + ' convidado(s)' : '') + '</span>'
+          + '<span class="ev-st ' + s[1] + '">' + s[0] + '</span>' + (e.meetLink ? ' <a href="' + x(e.meetLink) + '" target="_blank" rel="noopener">Entrar no Meet</a>' : '') + (e.htmlLink ? ' <a href="' + x(e.htmlLink) + '" target="_blank" rel="noopener">Abrir na agenda</a>' : '') + '</div>'
+          + '<div class="ev-ac">' + (podeMexer(e) && e.status !== 'cancelado' ? '<button class="btn sm" data-evedit="' + e.id + '">Editar</button><button class="btn sm ghost" data-evcancel="' + e.id + '">Cancelar</button>' : '') + '</div></div>'; }).join('') || '<p class="ev-vazio">Nenhum evento futuro criado pelo CRM.</p>') + '</div>'
+      + '<div class="ev-ft"><span class="spacer"></span><button class="btn primary" data-evnovo>+ Novo evento</button></div>', 'ev-dlg');
+  }
+
+  /* ===================== FÉRIAS E FOLGAS ===================== */
+  if(typeof STATUS_U !== 'undefined'){ STATUS_U.ferias = 'De férias'; }
+  function ausAtiva(u, dia){ dia = dia || hojeISO(); return ((u && u.ausencias) || []).find(function(a){ return a.de && a.ate && a.de <= dia && dia <= a.ate; }) || null; }
+  function ausProx(u){ var h = hojeISO(); return ((u && u.ausencias) || []).filter(function(a){ return a.ate >= h; }).sort(function(a, b){ return a.de.localeCompare(b.de); }); }
+  window.cgAusencia = {ativa:ausAtiva};
+  if(typeof stOf === 'function'){ var _stOf = stOf; stOf = function(u){ var a = ausAtiva(u); if(a) return a.tipo === 'ferias' ? 'ferias' : 'folga'; return _stOf.apply(this, arguments); }; }
+  function ausModal(sel){
+    var us = (typeof USERS !== 'undefined' ? USERS : []).slice().sort(function(a, b){ return String(a.nome).localeCompare(String(b.nome)); }); sel = sel || (us[0] && us[0].id) || '';
+    var u = U[sel] || {}, ls = ((u.ausencias) || []).slice().sort(function(a, b){ return b.de.localeCompare(a.de); }), h = hojeISO();
+    abrir('<div class="ev-hd"><h2>Férias e folgas</h2><button class="iconbtn" data-evx aria-label="Fechar">✕</button></div>'
+      + '<p class="ev-sub">Nos dias marcados com "bloquear acesso", a pessoa não consegue entrar no CRM nem receber dados do banco. Usuários master nunca são bloqueados.</p>'
+      + '<label class="ev-f"><span>Pessoa</span><select data-ausu>' + us.map(function(v){ return '<option value="' + x(v.id) + '" ' + (v.id === sel ? 'selected' : '') + '>' + x(v.nome || v.id) + '</option>'; }).join('') + '</select></label>'
+      + '<div class="au-novo"><select data-auf="tipo" aria-label="Tipo"><option value="ferias">Férias</option><option value="folga">Folga</option></select><input type="date" data-auf="de" value="' + h + '" aria-label="De"><span>até</span><input type="date" data-auf="ate" value="' + h + '" aria-label="Até">'
+      + '<label class="ev-ck"><input type="checkbox" data-auf="bloquear" checked> Bloquear acesso</label><button class="btn primary sm" data-auadd>Adicionar</button></div>'
+      + '<div class="au-list">' + (ls.map(function(a){ var at = a.de <= h && h <= a.ate, fut = a.de > h;
+        return '<div class="au-it ' + (at ? 'on' : '') + '"><b>' + (a.tipo === 'ferias' ? 'Férias' : 'Folga') + '</b><span>' + br(a.de) + (a.ate !== a.de ? ' a ' + br(a.ate) : '') + '</span><span class="au-tag">' + (at ? 'agora' : fut ? 'agendada' : 'passada') + (a.bloquear === false ? ' · sem bloqueio' : ' · acesso bloqueado') + '</span>'
+          + '<button class="btn sm ghost" data-audel="' + a.id + '">' + (at ? 'Encerrar hoje' : 'Remover') + '</button></div>'; }).join('') || '<p class="ev-vazio">Nenhuma férias ou folga marcada.</p>') + '</div>'
+      + '<div class="ev-ft"><span class="spacer"></span><button class="btn" data-evx>Fechar</button></div>', 'ev-dlg au-dlg');
+    ov.dataset.u = sel;
+  }
+  function ausAdd(){
+    var id = ov.dataset.u, u = S.users.find(function(v){ return v.id === id; }); if(!u) return;
+    var g = function(k){ var i = ov.querySelector('[data-auf=' + k + ']'); return i.type === 'checkbox' ? i.checked : i.value; };
+    var a = {id:uid(), tipo:g('tipo'), de:g('de'), ate:g('ate'), bloquear:g('bloquear'), por:me, em:new Date().toISOString()};
+    if(!a.de || !a.ate || a.ate < a.de){ t('Confira as datas'); return; }
+    if(id === me && a.bloquear && a.de <= hojeISO()){ t('Você não pode bloquear o seu próprio acesso a partir de hoje'); return; }
+    (u.ausencias = u.ausencias || []).push(a); if(U[id]) U[id].ausencias = u.ausencias; save(); t('Período salvo'); ausModal(id); if(typeof render === 'function') render();
+  }
+  function ausDel(aid){
+    var id = ov.dataset.u, u = S.users.find(function(v){ return v.id === id; }); if(!u) return; var h = hojeISO(), y = new Date(); y.setDate(y.getDate() - 1); var ontem = y.getFullYear() + '-' + pad(y.getMonth() + 1) + '-' + pad(y.getDate());
+    u.ausencias = (u.ausencias || []).map(function(a){ if(a.id !== aid) return a; if(a.de <= h && h <= a.ate){ return a.de === h ? null : Object.assign({}, a, {ate:ontem}); } return null; }).filter(Boolean);
+    if(U[id]) U[id].ausencias = u.ausencias; save(); ausModal(id); if(typeof render === 'function') render();
+  }
+  // tela de acesso pausado (vale mesmo quando o banco já bloqueou os dados)
+  var conferiu = false;
+  async function confereMeuAcesso(){
+    if(conferiu || !me) return; conferiu = true;
+    var a = null;
+    try{ var r = await sb.rpc('pm_minha_ausencia'); if(!r.error && r.data && (Array.isArray(r.data) ? r.data.length : r.data.de)) a = Array.isArray(r.data) ? r.data[0] : r.data; }catch(_){}
+    if(!a && typeof U !== 'undefined' && U[me] && !souMaster()){ var l = ausAtiva(U[me]); if(l && l.bloquear !== false) a = l; }
+    if(!a) return;
+    if(typeof gate === 'function') gate('<h2>Acesso pausado</h2><p>Você está de ' + (a.tipo === 'ferias' ? 'férias' : 'folga') + ' de <b>' + br(a.de) + '</b> a <b>' + br(a.ate) + '</b>. O CRM volta a abrir no dia seguinte.</p><p>Bom descanso!</p><button class="btn" onclick="sair()">Sair</button>');
+  }
+
+  /* ===================== integração ===================== */
+  var _render = window.render;
+  window.render = render = function(){
+    var r = _render.apply(this, arguments);
+    try{
+      if(!conferiu && typeof DB !== 'undefined' && DB.ready) confereMeuAcesso();
+      if(ui.view === 'plan'){ var ph = document.querySelector('#view .plhead'); if(ph && !ph.querySelector('[data-evlista]')) ph.insertAdjacentHTML('beforeend', '<button class="btn sm" data-evlista title="Eventos na Google Agenda">' + (typeof ic === 'function' ? ic('cal', 'sm') : '') + ' Eventos</button><button class="btn sm primary" data-evnovo title="Novo evento na Google Agenda">+ Evento</button>'); }
+      if(ui.view === 'team'){
+        var phd = document.querySelector('#view .pagehead'); if(phd && euGestor() && !phd.querySelector('[data-ausabrir]')){ var b = document.createElement('button'); b.className = 'btn'; b.dataset.ausabrir = ''; b.textContent = 'Férias e folgas'; var acts = phd.querySelector('.mx-acts') || phd; acts.appendChild(b); }
+        var cards = document.querySelectorAll('#view .tcard'); (typeof USERS !== 'undefined' ? USERS : []).forEach(function(u, i){ var c = cards[i]; if(!c || c.querySelector('.au-chip')) return; var p = ausProx(u)[0]; if(!p) return; var at = ausAtiva(u);
+          var el = document.createElement('div'); el.className = 'au-chip' + (at ? ' on' : ''); el.textContent = (p.tipo === 'ferias' ? 'Férias' : 'Folga') + ' ' + (at ? 'até ' + br(p.ate) : br(p.de) + (p.ate !== p.de ? ' a ' + br(p.ate) : '')); var ch = c.querySelector('.chips'); (ch || c).insertAdjacentElement('afterend', el); });
+      }
+    }catch(err){ console.warn('eventos:', err); }
+    return r;
+  };
+  // eventos que chegaram antes deste módulo carregar
+  var tm = setInterval(function(){
+    if(typeof DB === 'undefined' || !DB.ready || !me) return; clearInterval(tm);
+    if(!S.eventos.length && typeof sb !== 'undefined' && sb) sb.from('pm_docs').select('id,dados,versao').eq('tipo', 'evento').then(function(r){ if(r.error || !r.data) return; r.data.forEach(function(d){ if(!/^evento:/.test(d.id || '')) return; applyDoc(d.id, 'evento', d.dados); if(DB.base && !DB.base[d.id]) DB.base[d.id] = {json:JSON.stringify(d.dados), versao:d.versao}; }); });
+    confereMeuAcesso();
+  }, 500);
+
+  window.addEventListener('click', function(ev){
+    var tg = ev.target; if(!tg.closest) return; var h = function(s){ return tg.closest(s); }, el;
+    if(h('[data-evnovo]')){ ev.stopPropagation(); ev.preventDefault(); novo(); return; }
+    if(h('[data-evlista]')){ ev.stopPropagation(); ev.preventDefault(); lista(); return; }
+    if(h('[data-ausabrir]')){ ev.stopPropagation(); ausModal(); return; }
+    if(!ov || !ov.contains(tg)) return;
+    if(h('[data-evx]') || tg === ov){ fechar(); return; }
+    if(h('[data-evsave]')){ ev.stopPropagation(); salvar(); return; }
+    if((el = h('[data-evedit]'))){ ev.stopPropagation(); var e = S.eventos.find(function(o){ return o.id === el.dataset.evedit; }); if(e) form(e); return; }
+    if((el = h('[data-evcancel]'))){ ev.stopPropagation(); cancelar(el.dataset.evcancel); return; }
+    if(h('[data-auadd]')){ ev.stopPropagation(); ausAdd(); return; }
+    if((el = h('[data-audel]'))){ ev.stopPropagation(); ausDel(el.dataset.audel); return; }
+  }, true);
+  document.addEventListener('change', function(ev){
+    var tg = ev.target; if(!ov || !ov.contains(tg)) return;
+    if(tg.dataset.evf === 'diaTodo'){ ov.querySelectorAll('[data-evf=ini],[data-evf=fim]').forEach(function(i){ i.disabled = tg.checked; }); }
+    if(tg.dataset.evf === 'ini'){ var f = ov.querySelector('[data-evf=fim]'); if(f && minDe(f.value) <= minDe(tg.value)) f.value = hhmm(minDe(tg.value) + 60); }
+    if(tg.dataset.evp != null){ tg.closest('.ev-p').classList.toggle('on', tg.checked); }
+    if(tg.hasAttribute('data-ausu')){ ausModal(tg.value); }
+  });
+  document.addEventListener('keydown', function(ev){ if(ev.key === 'Escape' && ov){ ev.stopPropagation(); fechar(); } }, true);
+  window.cgEventos = {novo:novo, lista:lista};
 })();
 </script>
 <script id="mannare-mobile">
