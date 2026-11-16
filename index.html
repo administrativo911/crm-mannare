@@ -11730,6 +11730,8 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
 (function(){
   if(typeof S === 'undefined' || typeof TIPO_COL === 'undefined') return;
   TIPO_COL.evento = 'eventos'; S.eventos = S.eventos || [];
+  // eventos vão por último na gravação: se o banco recusar algum, o resto do CRM continua salvando
+  if(typeof collect === 'function'){ var _collect = collect; collect = function(){ var o = _collect.apply(this, arguments), ev = {}, out = {}; Object.keys(o).forEach(function(k){ (k.indexOf('evento:') === 0 ? ev : out)[k] = o[k]; }); Object.keys(ev).forEach(function(k){ out[k] = ev[k]; }); return out; }; }
   var x = function(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'}[c]; }); };
   var pad = function(n){ return String(n).padStart(2, '0'); };
   var hojeISO = function(){ var d = new Date(); return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); };
