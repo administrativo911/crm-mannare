@@ -4,7 +4,7 @@
    - Dados (Supabase, Google): nunca passam pelo cache.
    - Notificações: recebe o push do Supabase e abre o CRM no item certo.
    Ao publicar uma versão nova do CRM, aumente o número de VERSAO. */
-const VERSAO = 'mannare-v3';
+const VERSAO = 'mannare-v4';
 const ESSENCIAIS = ['./', './index.html', './manifest.webmanifest', './icons/icon-192.png', './icons/icon-512.png', './icons/apple-touch-icon.png'];
 
 self.addEventListener('install', e => {

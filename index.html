@@ -11157,7 +11157,34 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
     ls.set('pm-push-on', ''); toast('Notificações desligadas neste aparelho'); atualizarUI();
   }
   async function testar(){
-    try{ var reg = await swPronto(); reg.showNotification('CRM Mannare', {body:'Teste: assim chegam os avisos de tarefas, menções e aprovações.', icon:ICON, badge:BADGE, tag:'pm-teste', data:{url:location.href.split('#')[0]}}); }catch(_){ toast('Não consegui mostrar o teste'); }
+    var d = {perm:('Notification' in window) ? Notification.permission : 'sem', https:location.protocol === 'https:', sw:'não encontrado', swUrl:'', push:'nao', chave:!!cfgP().pub, via:'', erro:''};
+    var reg = null;
+    try{ reg = await Promise.race([navigator.serviceWorker.getRegistration(), new Promise(function(ok){ setTimeout(ok, 3000); })]); }catch(_){}
+    if(reg){ d.sw = reg.active ? 'ativo' : (reg.installing || reg.waiting) ? 'instalando' : 'registrado'; d.swUrl = (reg.active || reg.installing || reg.waiting || {}).scriptURL || ''; try{ var sub = await reg.pushManager.getSubscription(); d.push = sub ? 'sim' : 'nao'; }catch(_){ d.push = 'erro'; } }
+    var op = {body:'Teste: assim chegam os avisos de tarefas, menções e aprovações.', icon:ICON, badge:BADGE, tag:'pm-teste-' + Date.now(), requireInteraction:false, data:{url:location.href.split('#')[0]}};
+    if(d.perm === 'granted'){
+      try{ if(reg && reg.active){ await reg.showNotification('CRM Mannare', op); d.via = 'service worker'; } else throw new Error('sem service worker ativo'); }
+      catch(e1){ try{ var n = new Notification('CRM Mannare', op); n.onclick = function(){ window.focus(); n.close(); }; d.via = 'página'; }catch(e2){ d.erro = (e1.message || '') + ' / ' + (e2.message || ''); } }
+    }
+    diag(d);
+  }
+  function diag(d){
+    var ok = function(b){ return '<b style="color:' + (b ? '#065F38' : '#A21C11') + '">' + (b ? '✓' : '✕') + '</b> '; };
+    var mac = /Mac/.test(navigator.platform || navigator.userAgent), win = /Win/.test(navigator.platform || navigator.userAgent);
+    var nav = /Edg\//.test(navigator.userAgent) ? 'Microsoft Edge' : /Chrome\//.test(navigator.userAgent) ? 'Google Chrome' : /Firefox\//.test(navigator.userAgent) ? 'Firefox' : 'Safari';
+    var dica = mac ? '<li>Mac: menu Apple &gt; <b>Ajustes do Sistema &gt; Notificações &gt; ' + nav + '</b> &gt; ligue <b>Permitir notificações</b> e escolha o estilo <b>Alertas</b> ou <b>Faixas</b>.</li><li>Confira se o <b>Foco / Não perturbe</b> (lua na barra de cima) está desligado.</li>'
+      : win ? '<li>Windows: <b>Configurações &gt; Sistema &gt; Notificações</b> &gt; ligue as notificações e o <b>' + nav + '</b>.</li><li>Desligue o <b>Não incomodar</b> / <b>Assistente de foco</b>.</li>'
+      : '<li>Nas configurações do aparelho, permita notificações para o navegador ou para o app Mannare.</li>';
+    abrir('<h3 style="margin:0 0 6px">Teste de notificação</h3>'
+      + (d.via ? '<p style="margin:0 0 10px">O CRM mandou o aviso de teste agora (' + d.via + '). <b>Se ele não apareceu no canto da tela, quem está bloqueando é o sistema</b>, não o CRM:</p><ol style="margin:0 0 12px;padding-left:20px;line-height:1.6">' + dica + '<li>No ' + nav + ', abra <code>' + (nav === 'Microsoft Edge' ? 'edge' : 'chrome') + '://settings/content/notifications</code> e confira se o endereço do CRM está em <b>Permitidos</b>.</li></ol>'
+        : '<p style="margin:0 0 10px;color:#A21C11">Não consegui mostrar o aviso. ' + e(d.erro || '') + '</p>')
+      + '<div style="background:var(--sx-sunken,#F4F7FD);border-radius:12px;padding:10px 12px;font-size:13px;line-height:1.7">'
+      + ok(d.perm === 'granted') + 'Permissão do navegador: ' + ({granted:'permitida', denied:'bloqueada', 'default':'ainda não pedida', sem:'navegador sem suporte'}[d.perm] || d.perm) + '<br>'
+      + ok(d.https) + 'Endereço seguro (https)<br>'
+      + ok(d.sw === 'ativo') + 'Service worker (sw.js): ' + d.sw + (d.swUrl ? ' <span style="color:var(--muted)">' + e(d.swUrl.split('/').pop()) + '</span>' : ' (confira se o sw.js está no GitHub)') + '<br>'
+      + ok(d.chave) + 'Chaves geradas em Integrações<br>'
+      + ok(d.push === 'sim') + 'Aparelho inscrito para receber com o CRM fechado'
+      + '</div><div style="display:flex;justify-content:flex-end;gap:8px;margin-top:14px">' + (d.chave && d.push !== 'sim' && d.perm === 'granted' ? '<button class="btn" data-preinsc>Inscrever de novo</button>' : '') + '<button class="btn primary" data-pfechar>Fechar</button></div>');
   }
 
   function dicaIOS(){
@@ -11246,6 +11273,7 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
     if(h('[data-padiar]')){ ev.stopPropagation(); ls.set('pm-push-adiado', String(Date.now())); var b2 = document.getElementById('pmPushBanner'); if(b2) b2.remove(); return; }
     if(h('[data-pbloq]')){ ev.stopPropagation(); ev.preventDefault(); abrir('<h3 style="margin:0 0 8px">Liberar as notificações</h3><ol style="margin:0 0 14px;padding-left:20px;line-height:1.7"><li>Clique no <b>cadeado</b> (ou no ícone de ajustes) ao lado do endereço do CRM.</li><li>Em <b>Notificações</b>, escolha <b>Permitir</b>.</li><li>Recarregue a página e toque em <b>Ativar notificações</b>.</li></ol><p style="margin:0 0 12px;color:var(--muted)">No Windows e no Mac, confira também se o navegador pode mostrar notificações nas configurações do sistema.</p><div style="display:flex;justify-content:flex-end"><button class="btn" data-pfechar>Entendi</button></div>'); return; }
     if(h('[data-pfechar]') || (ov && t === ov)){ fechar(); return; }
+    if(h('[data-preinsc]')){ ev.stopPropagation(); fechar(); inscrever().then(function(ok){ toast(ok ? 'Aparelho inscrito' : 'Não consegui inscrever: confira o sw.js e as chaves'); }, function(err){ toast('Não consegui inscrever: ' + err.message); }); return; }
     if(h('[data-pgerar]')){ ev.stopPropagation(); gerarChaves().catch(function(err){ toast('Não consegui gerar as chaves: ' + err.message); }); return; }
     var cp = h('[data-pcopy]'); if(cp){ ev.stopPropagation(); navigator.clipboard.writeText(cp.dataset.pcopy).then(function(){ toast('Copiado'); }, function(){ toast('Selecione e copie manualmente'); }); return; }
   }, true);
