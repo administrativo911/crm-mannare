@@ -11203,7 +11203,7 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
     var r = _render.apply(this, arguments);
     try{
       if(ui.view === 'inbox'){ var ph = document.querySelector('#view .pagehead'); if(ph && !document.querySelector('#view .pm-pushbox')) ph.insertAdjacentHTML('afterend', blocoHtml().replace('pm-pushbox', 'pm-pushbox pm-inline')); }
-      if(ui.view === 'integ' && isSocio()){ var ph2 = document.querySelector('#view .pagehead'); if(ph2 && !document.getElementById('pmPushCfg')) ph2.insertAdjacentHTML('afterend', cfgCard()); }
+      if(ui.view === 'integ' && (isSocio() || MYROLE === 'master')){ var ph2 = document.querySelector('#view .pagehead'); if(ph2 && !document.getElementById('pmPushCfg')) ph2.insertAdjacentHTML('afterend', cfgCard()); }
     }catch(err){ console.warn(err); }
     return r;
   };
@@ -11277,6 +11277,8 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
   var tm = setInterval(function(){
     if(iniciado || typeof DB === 'undefined' || !DB.ready || !me) return;
     iniciado = true; clearInterval(tm);
+    // quem é "master" no banco tem as funções de sócio nesta versão do CRM
+    if(typeof MYROLE !== 'undefined' && MYROLE === 'master'){ MYROLE = 'socio'; try{ render(); }catch(_){} }
     sb.channel('pm-push-local').on('postgres_changes', {event:'INSERT', schema:'public', table:'pm_docs', filter:'tipo=eq.notificacao'}, function(p){
       var d = p.new && p.new.dados; if(!d || d.lida || String(d.para || '').toLowerCase() !== String(me).toLowerCase()) return; mostrarLocal(d);
     }).subscribe();
