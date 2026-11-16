@@ -2,8 +2,9 @@
    - Páginas (index.html): rede primeiro, cópia salva só como reserva sem internet.
    - Arquivos do app (ícones, manifest, biblioteca do Supabase, fontes): cache.
    - Dados (Supabase, Google): nunca passam pelo cache.
+   - Notificações: recebe o push do Supabase e abre o CRM no item certo.
    Ao publicar uma versão nova do CRM, aumente o número de VERSAO. */
-const VERSAO = 'mannare-v1';
+const VERSAO = 'mannare-v3';
 const ESSENCIAIS = ['./', './index.html', './manifest.webmanifest', './icons/icon-192.png', './icons/icon-512.png', './icons/apple-touch-icon.png'];
 
 self.addEventListener('install', e => {
@@ -36,4 +37,30 @@ self.addEventListener('fetch', e => {
       return hit || rede;
     }));
   }
+});
+
+/* ---------- Notificações (Web Push) ---------- */
+self.addEventListener('push', e => {
+  let d = {};
+  try { d = e.data ? e.data.json() : {}; } catch (_) { d = {body: e.data ? e.data.text() : ''}; }
+  const base = self.registration.scope;
+  // sempre mostra (o navegador exige um aviso visível para cada push)
+  e.waitUntil(Promise.resolve().then(() => {
+    return self.registration.showNotification(d.title || 'CRM Mannare', {
+      body: d.body || 'Você tem uma novidade no CRM.',
+      icon: 'icons/icon-192.png', badge: 'icons/badge-96.png',
+      tag: d.tag || undefined, renotify: false, timestamp: d.em ? Date.parse(d.em) : Date.now(),
+      data: {url: base + (d.id ? '?n=' + encodeURIComponent(d.id) : ''), procId: d.procId || '', taskId: d.taskId || ''}
+    });
+  }));
+});
+
+self.addEventListener('notificationclick', e => {
+  e.notification.close();
+  const o = e.notification.data || {}, url = o.url || self.registration.scope;
+  e.waitUntil(self.clients.matchAll({type: 'window', includeUncontrolled: true}).then(cs => {
+    const c = cs.find(x => x.url.startsWith(self.registration.scope));
+    if (c) { c.postMessage({tipo: 'pm-abrir', procId: o.procId, taskId: o.taskId}); return c.focus(); }
+    return self.clients.openWindow(url);
+  }));
 });

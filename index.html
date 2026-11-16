@@ -3012,39 +3012,157 @@ body.dwbusy,body.dwbusy *{user-select:none!important}
 .tb-qf{display:grid;grid-template-columns:2fr 1fr 1fr;gap:6px}
 .tb-qf input{height:34px!important;border-radius:10px!important;border:1px solid var(--sx-divider)!important;padding:0 10px!important;font:500 12.5px var(--font-sans)!important;background:#fff!important;min-width:0}
 @media (max-width:620px){.tb-qf{grid-template-columns:1fr}}
-.ms-chip{display:inline-block;font:700 10.5px/1 var(--font-sans);padding:4px 8px;border-radius:999px!important;vertical-align:2px;margin-left:4px}
-.ms-chip.master{background:var(--mn-ink);color:var(--mn-amarelo)}.ms-chip.socio{background:var(--mn-azul-soft);color:var(--mn-azul)}
-.ms-info{display:block;font-size:12.5px;color:var(--sx-text-3);margin-top:2px}
-.cg-nogestor #view [data-addmember],.cg-nogestor [data-espgerir]{display:none!important}
 </style>
-<style id="mannare-reembolsos">
-.rb-kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:0 0 16px}
-.rb-k{background:#fff;border-radius:var(--sx-r-card)!important;box-shadow:var(--sx-shadow)!important;padding:16px 20px;display:flex;flex-direction:column;gap:4px}
-.rb-k span{font:600 13px var(--font-sans);color:var(--sx-text-2)}.rb-k b{font:600 26px/1.15 var(--font-sans);color:var(--sx-text);font-variant-numeric:tabular-nums}.rb-k em{font-style:normal;font:400 12.5px var(--font-sans);color:var(--sx-text-3)}
-.rb-k:first-child{background:var(--sx-highlight)!important;box-shadow:var(--sx-shadow-hl)!important}.rb-k:first-child span,.rb-k:first-child b,.rb-k:first-child em{color:#fff}
-.rb-bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:0 0 12px}
-.rb-q{display:flex!important;align-items:center;gap:8px;height:38px;flex:1;min-width:220px;max-width:460px;border-radius:999px!important;background:#fff!important;padding:0 14px!important;box-shadow:var(--sx-shadow-btn)!important}
-.rb-q input{border:0!important;outline:0;background:transparent!important;flex:1;font:400 13.5px var(--font-sans)!important;height:auto!important;padding:0!important;box-shadow:none!important}
-.rb-card{background:#fff;border-radius:var(--sx-r-card)!important;box-shadow:var(--sx-shadow)!important;padding:8px 10px;overflow-x:auto}
-.rb-tb{width:100%;border-collapse:separate!important;border-spacing:0;font:400 13px/1.4 var(--font-sans);min-width:860px}
-.rb-tb th{text-align:left;font:600 12px var(--font-sans);color:var(--sx-text-2);background:var(--sx-sunken);padding:10px 12px}
-.rb-tb th:first-child{border-radius:12px 0 0 12px!important}.rb-tb th:last-child{border-radius:0 12px 12px 0!important}
-.rb-tb td{padding:10px 12px;border-bottom:1px solid var(--sx-divider);vertical-align:top}
-.rb-tb .v{text-align:right;white-space:nowrap}
-.rb-tb b{font-weight:600;color:var(--sx-text)}
-.rb-acts{white-space:nowrap;text-align:right}.rb-acts .btn{margin-left:4px}
-.rb-st{display:inline-flex;align-items:center;gap:6px;font:600 12px var(--font-sans);color:var(--c);background:color-mix(in srgb,var(--c) 10%,#fff);padding:4px 10px;border-radius:999px!important}
-.rb-st::before{content:"";width:7px;height:7px;border-radius:50%!important;background:var(--c)}
-.rb-lay{font:600 11.5px var(--font-sans);color:var(--sx-text-2);background:var(--sx-sunken);padding:4px 9px;border-radius:999px!important;white-space:nowrap}
-.rb-vazio{text-align:center;color:var(--sx-text-3);padding:28px!important}
-.cg-dlg.rb-dlg{width:min(780px,100%)}
-.rb-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 14px}.rb-grid .f{margin:0!important}
-.rb-its{display:flex;flex-direction:column;gap:6px;background:var(--sx-sunken);border-radius:14px!important;padding:12px}
-.rb-ih{display:flex;justify-content:space-between;align-items:center}.rb-ih b{font:600 14px var(--font-sans)}
-.rb-it{display:grid;grid-template-columns:140px minmax(0,2fr) minmax(0,1.4fr) 110px 30px;gap:6px;align-items:center}
-.rb-it input{height:36px!important;border-radius:10px!important;border:1px solid var(--sx-divider)!important;padding:0 10px!important;font:500 13px var(--font-sans)!important;background:#fff!important;min-width:0}
-.rb-its .btn{align-self:flex-start}
-@media (max-width:760px){.rb-kpis{grid-template-columns:1fr}.rb-grid{grid-template-columns:1fr}.rb-it{grid-template-columns:1fr 1fr}.rb-it input[data-rbi$="|descricao"],.rb-it input[data-rbi$="|comprovante"]{grid-column:1/-1}}
+<style id="mannare-push-css">
+/* Notificações push */
+.pm-pushbox{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:12px 0 4px;padding:12px 14px;border-radius:14px;background:var(--sx-sunken,#F4F7FD)}
+.pm-pushbox.pm-inline{margin:0 0 16px;background:#fff;box-shadow:0 8px 30px rgba(14,16,48,.04);border-radius:18px}
+.pm-pushtx{display:flex;flex-direction:column;gap:2px;min-width:0;flex:1 1 180px}
+.pm-pushtx b{font-weight:600;font-size:13.5px;color:var(--ink,#0B0B1A)}
+.pm-pushtx span{font-size:12.5px;color:var(--muted,#55577A)}
+.pm-pushbox[data-pst="on"] .pm-pushtx span{color:#065F38}
+.pm-pushbox[data-pst="on"] .pm-pushtx span::before{content:"\25cf  ";color:#12B76A}
+.pm-pushbox[data-pst="bloq"] .pm-pushtx span{color:#A21C11}
+.pm-pushbt{display:flex;gap:6px;flex-wrap:wrap}
+.pm-pushban{position:fixed;right:20px;bottom:20px;z-index:900;max-width:420px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding:16px 18px;border-radius:20px;background:#fff;box-shadow:0 24px 48px -12px rgba(14,16,48,.22),0 2px 6px rgba(14,16,48,.06);animation:pmPushIn .25s cubic-bezier(.2,0,0,1)}
+@keyframes pmPushIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.pm-pushban{animation:none}}
+@media (max-width:640px){.pm-pushban{left:12px;right:12px;bottom:calc(76px + env(safe-area-inset-bottom));max-width:none}}
+.pm-pushov{position:fixed;inset:0;z-index:1000;background:rgba(11,11,26,.32);display:flex;align-items:center;justify-content:center;padding:16px}
+.pm-pushdlg{background:#fff;border-radius:22px;padding:22px 24px;max-width:440px;width:100%;box-shadow:0 30px 60px -20px rgba(14,16,48,.35)}
+.pm-pushcfg{margin:0 0 16px;padding:18px 20px}
+.pm-pushcfg-hd{display:flex;gap:12px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap}
+.pm-pushcfg h3{margin:0 0 4px;font-size:16px}
+.pm-pushcfg p{margin:0;color:var(--muted,#55577A);font-size:13px;max-width:640px}
+.pm-pushkv{display:grid;grid-template-columns:150px minmax(0,1fr) auto;gap:10px;align-items:center;margin-top:10px}
+.pm-pushkv span{font-size:12px;font-weight:600;color:var(--muted,#55577A)}
+.pm-pushkv code{font:12px/1.45 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:var(--sx-sunken,#F4F7FD);border-radius:10px;padding:8px 10px;word-break:break-all;user-select:all}
+.pm-pushsql{grid-template-columns:minmax(0,1fr) auto}
+.pm-pushsql code{white-space:pre-wrap}
+.pm-pushnovo{margin-top:14px;padding-top:12px;border-top:1px solid rgba(11,11,26,.08)}
+.pm-pushnovo>p:first-child{color:#93370D;background:#FEF0C7;border-radius:10px;padding:8px 12px;max-width:none}
+.pm-pushobs{margin:12px 0 0!important;font-weight:600;color:var(--ink,#0B0B1A)!important}
+@media (max-width:640px){.pm-pushkv{grid-template-columns:1fr}}
+
+/* ==========================================================================
+   MANNARE CRM · Camada mobile-first (até 768px)
+   Celular: menu hambúrguer, 1 coluna, espaçamentos menores e
+   tabelas/elementos largos com rolagem interna (a página nunca rola de lado).
+   ========================================================================== */
+.mx-burger,.mx-scrim,.mx-sidehd,.mx-espslot{display:none}
+@media (max-width:768px){
+  html.mx,html.mx body{overflow-x:hidden!important;max-width:100%!important}
+  html.mx body{-webkit-text-size-adjust:100%}
+  html.mx img,html.mx video,html.mx canvas,html.mx iframe{max-width:100%}
+  html.mx .app{display:block!important;min-width:0!important;width:100%!important}
+  html.mx .main{min-width:0!important;width:100%!important;padding-bottom:calc(16px + env(safe-area-inset-bottom))!important}
+
+  /* ---------- barra superior ---------- */
+  html.mx header.top{position:sticky!important;top:0!important;z-index:60!important;display:flex!important;flex-wrap:nowrap!important;align-items:center!important;gap:6px!important;
+    padding:calc(8px + env(safe-area-inset-top)) 12px 8px!important;margin:0!important;background:rgba(238,244,255,.92)!important;-webkit-backdrop-filter:saturate(1.4) blur(10px);backdrop-filter:saturate(1.4) blur(10px);min-height:56px}
+  html.mx header.top>*{flex:none}
+  html.mx .mx-burger{display:inline-flex;flex-direction:column;justify-content:center;align-items:center;gap:4px;width:42px;height:42px;border:0;border-radius:999px;background:#fff;box-shadow:0 1px 2px rgba(14,16,48,.06);cursor:pointer;padding:0;margin:0 2px 0 0}
+  html.mx .mx-burger span{display:block;width:18px;height:2px;border-radius:2px;background:var(--ink,#0B0B1A);transition:transform .2s,opacity .2s}
+  html.mx.mx-open .mx-burger span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+  html.mx.mx-open .mx-burger span:nth-child(2){opacity:0}
+  html.mx.mx-open .mx-burger span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+  html.mx .mx-burger:focus-visible,html.mx .mx-close:focus-visible{outline:3px solid var(--azul,#0000FF);outline-offset:2px}
+  html.mx #btnBack,html.mx #btnFwd,html.mx #sync,html.mx #nextMeet,html.mx header.top .esp-pill,html.mx header.top .spacer{display:none!important}
+  html.mx header.top .crumbs{display:flex!important;flex:1 1 auto!important;min-width:0!important;margin:0!important;font-size:15px!important}
+  html.mx header.top .crumbs>span{display:none!important}
+  html.mx header.top .crumbs b{display:block;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600}
+  html.mx #topTimer:empty{display:none}
+  html.mx #topTimer .nm{display:none!important}
+  html.mx .chip-me{padding:3px!important;min-width:0!important;background:transparent!important;box-shadow:none!important}
+  html.mx .chip-me .tx{display:none!important}
+  html.mx #btnBell{width:40px!important;height:40px!important;min-width:40px!important}
+  html.mx #topNew{width:42px!important;height:42px!important;min-width:42px!important;padding:0!important;border-radius:999px!important;font-size:0!important;gap:0!important;justify-content:center!important}
+  html.mx #topNew svg,html.mx #topNew .ic{width:20px!important;height:20px!important;margin:0!important}
+
+  /* ---------- menu hambúrguer (gaveta lateral) ---------- */
+  html.mx .side{position:fixed!important;top:0!important;bottom:0!important;left:0!important;right:auto!important;z-index:200!important;
+    width:min(86vw,320px)!important;height:100%!important;max-height:none!important;display:flex!important;flex-direction:column!important;flex-wrap:nowrap!important;align-items:stretch!important;justify-content:flex-start!important;gap:2px!important;
+    padding:calc(14px + env(safe-area-inset-top)) 12px calc(16px + env(safe-area-inset-bottom))!important;border:0!important;border-radius:0 22px 22px 0!important;background:#fff!important;
+    box-shadow:0 30px 60px -20px rgba(14,16,48,.35)!important;overflow-x:hidden!important;overflow-y:auto!important;overscroll-behavior:contain;
+    -webkit-mask-image:none!important;mask-image:none!important;transform:translateX(-105%);visibility:hidden;transition:transform .26s cubic-bezier(.2,0,0,1),visibility 0s linear .26s}
+  html.mx.mx-open .side{transform:none;visibility:visible;transition:transform .26s cubic-bezier(.2,0,0,1)}
+  html.mx .mx-scrim{display:block;position:fixed;inset:0;z-index:190;background:rgba(11,11,26,.36);opacity:0;pointer-events:none;transition:opacity .2s}
+  html.mx.mx-open .mx-scrim{opacity:1;pointer-events:auto}
+  html.mx .mx-sidehd{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 0 8px}
+  html.mx .mx-sidehd .mx-logo{height:30px;width:auto;display:block}
+  html.mx .mx-close{width:40px;height:40px;border:0;border-radius:999px;background:var(--sx-sunken,#F4F7FD);font-size:16px;cursor:pointer;color:var(--ink,#0B0B1A)}
+  html.mx .side>.logo{display:none!important}
+  html.mx .side .sside{display:flex!important;width:100%!important;margin:0 0 8px!important}
+  html.mx .side .sside kbd{display:none}
+  html.mx .mx-espslot{display:block;margin:0 0 6px}
+  html.mx .mx-espslot:empty{display:none}
+  html.mx .mx-espslot .esp-pill{display:flex!important;width:100%;justify-content:flex-start;min-height:44px}
+  html.mx .side .leg{display:block!important;font-size:11px!important;height:auto!important;background:none!important;margin:12px 10px 4px!important;letter-spacing:.06em;text-transform:uppercase;color:var(--muted,#55577A)}
+  html.mx .side .nav{display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:flex-start!important;gap:12px!important;width:100%!important;height:auto!important;min-height:46px!important;min-width:0!important;
+    padding:10px 12px!important;border-radius:14px!important;font-size:15px!important;flex:none!important}
+  html.mx .side .nav .tx{display:block!important;font-size:15px!important;flex:1;text-align:left}
+  html.mx .side .nav .ic,html.mx .side .nav svg{width:20px!important;height:20px!important;flex:none}
+  html.mx .side .nav .n,html.mx .side .nav span[id^="n"]{position:static!important;margin-left:auto!important}
+  html.mx .side .nav.nav-more{display:none!important}
+  html.mx .side .nav.off{display:flex!important}
+  html.mx .side .sidebox{display:block!important;margin-top:auto!important;padding-top:12px!important}
+  html.mx .side .sidebox #btnSair{width:100%!important;height:44px!important;font-size:14px!important;border-radius:999px!important}
+  html.mx .esp-menu{z-index:260!important}
+  html.mx.mx-open body{overflow:hidden!important}
+
+  /* ---------- conteúdo: espaçamentos menores ---------- */
+  html.mx .content{padding:4px 12px 24px!important;min-width:0!important}
+  html.mx #view{min-width:0!important;max-width:100%!important}
+  html.mx .pagehead{flex-wrap:wrap!important;gap:10px!important;margin-bottom:12px!important}
+  html.mx .pagehead h1{font-size:24px!important;line-height:1.15!important}
+  html.mx .pagehead h1.big{font-size:26px!important}
+  html.mx .pagehead p{font-size:13.5px!important}
+  html.mx .pagehead>.spacer{display:none!important}
+  /* ações do topo da página: uma linha com rolagem interna */
+  html.mx .mx-acts{display:flex!important;flex-wrap:nowrap!important;gap:8px!important;width:100%;max-width:100%;overflow-x:auto;padding:2px 0 4px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  html.mx .mx-acts::-webkit-scrollbar{display:none}
+  html.mx .mx-acts>*{flex:none!important;width:auto!important;min-width:0!important;height:40px!important;min-height:40px!important;flex-direction:row!important;padding:0 14px!important;font-size:13.5px!important;white-space:nowrap!important;gap:6px!important;border-radius:999px!important}
+  html.mx .card,html.mx .blk,html.mx .sect,html.mx .acard,html.mx .tcard,html.mx .dcard{padding:14px!important;border-radius:18px!important}
+  html.mx .pm-pushbox.pm-inline{padding:12px!important}
+
+  /* ---------- grades: 1 coluna ---------- */
+  html.mx .dgridl,html.mx .dash,html.mx .kanban,html.mx .alerts,html.mx .fields,html.mx .grid2,html.mx .grid3,html.mx .g2,html.mx .g3,html.mx .cols2,html.mx .cols3,html.mx .rowc,html.mx .rowc.prop,html.mx .steps3,html.mx .rb-grid,html.mx .kpis,html.mx .kgrid,html.mx .mx-1col{grid-template-columns:minmax(0,1fr)!important}
+  html.mx .dgridl>*,html.mx .dash>*,html.mx .c3,html.mx .c4,html.mx .c5,html.mx .c6,html.mx .c7,html.mx .c8,html.mx .c9,html.mx .c12{grid-column:1/-1!important;min-width:0!important}
+  html.mx .mx-1col>*{grid-column:auto!important;min-width:0!important}
+  html.mx .fields>*,html.mx .mx-1col>*{max-width:100%}
+
+  /* quadros (kanban) e calendário: rolagem lateral só dentro do quadro */
+  html.mx .pboard,html.mx .mboard{overflow-x:auto!important;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;grid-auto-columns:minmax(82vw,1fr)!important;max-width:100%}
+  html.mx .pboard>*,html.mx .mboard>*{scroll-snap-align:start}
+
+  /* ---------- tabelas e elementos largos ---------- */
+  html.mx .mx-scroll{display:block;width:100%;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+  html.mx .mx-scroll>table{min-width:100%}
+  html.mx #view table,html.mx #drawer table,html.mx .modal table{font-size:13px}
+  html.mx #view pre,html.mx #view code{white-space:pre-wrap;word-break:break-word}
+  html.mx input,html.mx select,html.mx textarea{max-width:100%;font-size:16px!important}   /* 16px: o iPhone não dá zoom ao tocar */
+
+  /* ---------- painéis e janelas ---------- */
+  html.mx #drawer,html.mx aside.drawer{width:100vw!important;max-width:100vw!important;left:0!important;right:0!important;border-radius:0!important}
+  html.mx #drawer .dhead,html.mx #drawer header{padding-top:calc(12px + env(safe-area-inset-top))!important}
+  html.mx .mlayer{padding:0!important;align-items:flex-end!important}
+  html.mx .mlayer .modal{width:100%!important;max-width:100%!important;max-height:92vh!important;border-radius:22px 22px 0 0!important;padding:16px 14px calc(16px + env(safe-area-inset-bottom))!important;overflow-y:auto!important;overflow-x:hidden!important}
+  html.mx .cg-ov,html.mx .pm-pushov{padding:0!important;align-items:flex-end!important}
+  html.mx .cg-dlg,html.mx .pm-pushdlg{width:100%!important;max-width:100%!important;max-height:92vh!important;border-radius:22px 22px 0 0!important;padding:16px 14px calc(16px + env(safe-area-inset-bottom))!important}
+  html.mx .toast{left:12px!important;right:12px!important;bottom:calc(16px + env(safe-area-inset-bottom))!important;transform:none!important;max-width:none!important}
+  html.mx .pm-pushban{bottom:calc(12px + env(safe-area-inset-bottom))!important}
+  html.mx #pop{left:8px!important;right:8px!important;width:auto!important;max-width:none!important}
+  html.mx .npanel{left:8px!important;right:8px!important;width:auto!important;max-width:none!important}
+  html.mx .btip{max-width:calc(100vw - 24px)}
+  /* camadas acima da barra superior */
+  html.mx .overlay{z-index:240!important}
+  html.mx #drawer,html.mx aside.drawer{z-index:250!important}
+  html.mx .mlayer,html.mx .cg-ov,html.mx .pm-pushov,html.mx #layer>*{z-index:300!important}
+  html.mx #pop,html.mx .npanel,html.mx .esp-menu{z-index:320!important}
+  html.mx .toast{z-index:400!important}
+  html.mx .dgridl{padding-left:0!important;padding-right:0!important}
+}
+@media (max-width:768px) and (prefers-reduced-motion:reduce){html.mx .side,html.mx .mx-scrim,html.mx .mx-burger span{transition:none!important}}
 </style>
 </head>
 <body>
@@ -3060,7 +3178,6 @@ body.dwbusy,body.dwbusy *{user-select:none!important}
     <button class="nav" data-view="plan"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2h2v2h6V2h2v2h4v18H3V4h4zm-2 8v10h14V10zm2 2h4v4H7z"/></svg><span class="tx">Planejador</span></button>
     <button class="nav" data-view="prop"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 2h9l5 5v15H5zM14 2v5h5" /><path d="M8 11h8v2H8zM8 15h8v2H8z" fill="#fff"/></svg><span class="tx">Propostas</span></button>
     <button class="nav" data-view="fin"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h4v9H3zM10 3h4v18h-4zM17 8h4v13h-4z"/></svg><span class="tx">Financeiro</span><span id="nFin"></span></button>
-    <button class="nav" data-view="reemb"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M5 2h14v20l-2.3-1.5L14.3 22 12 20.5 9.7 22l-2.4-1.5L5 22zm3 5v2h8V7zm0 4v2h8v-2zm0 4v2h5v-2z"/></svg><span class="tx">Reembolsos</span></button>
     <button class="nav" data-view="proc"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 5h8l2 2h10v13H2z"/></svg><span class="tx">Processos</span><span id="nProc"></span></button>
     <button class="nav" data-view="mat"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3h16v12l-6 6H4zM14 15v6l6-6z"/></svg><span class="tx">Material técnico</span><span id="nMat"></span></button>
     <div class="leg">Acompanhamento</div>
@@ -10803,276 +10920,12 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
   document.addEventListener('keydown', function(ev){ if(ev.key === 'Escape' && ov){ ev.stopPropagation(); fechar(); } }, true);
 
   // entradas: menu do espaço e lista de espaços
-  // layout de documentos avulsos (ex.: nota de débito): 'mannare' ou 'parc' (BMM · Vértis · Mannare)
-  window.cgDocLayout = function(html, key, esp){ if(key !== 'parc' || typeof html !== 'string') return html;
-    var cand = [esp].concat(E.lista().map(function(x){ return x.id; })).filter(function(id){ var t = id && id !== 'mannare' && E.timb(id); return t && t.cab; })[0];
-    if(cand){ var t = E.timb(cand); if(t.estilo === 'faixa') return trocaTimb(html, cand); }
-    html = html.split(HEADER_IMG).join(WR_TIMB.cab).split(FOOTER_IMG).join(WR_TIMB.rod); var i = html.indexOf('</style>'); return i > 0 ? html.slice(0, i) + CSS_FAIXA + html.slice(i) : html; };
-  window.cgTemTimbParc = function(esp){ var t = esp && esp !== 'mannare' && E.timb(esp); return !!(t && t.cab); };
   var obs = new MutationObserver(function(){
     var m = document.querySelector('.esp-menu'); if(m && !m.querySelector('[data-tbopen]')){ var at = E.ativo(); if(at !== 'todos' && podeTimb(at)) m.insertAdjacentHTML('beforeend', '<hr><button data-tbopen="' + at + '"><span><b>Timbrado do espaço</b><em>Cabeçalho e rodapé dos documentos</em></span></button>'); }
     document.querySelectorAll('.esp-dlg .esp-it').forEach(function(it){ if(it.querySelector('.esp-acts')) return; var inp = it.querySelector('[data-espnome]'); if(!inp) return; var id = inp.dataset.espnome, e = E.espPorId(id), n = (e.aprovadores || []).length;
       it.insertAdjacentHTML('beforeend', '<div class="esp-acts"><button class="btn sm" data-apopen="' + id + '">Aprovadores' + (n ? ' (' + n + ')' : '') + '</button>' + (id !== 'mannare' ? '<button class="btn sm" data-tbopen="' + id + '">Timbrado' + (E.timb(id) && (E.timb(id).cab || E.timb(id).rod) ? ' ✓' : '') + '</button>' : '') + '</div>'); });
   });
   obs.observe(document.body, {childList:true, subtree:true});
-})();
-</script>
-
-<script id="mannare-master">
-/* ==========================================================================
-   Usuário master
-   - "master" (pm_equipe.papel = 'master') faz tudo o que um sócio faz e,
-     só ele, inclui e remove pessoas, muda tipos de usuário, acessos e espaços
-   - Um master pode tornar outras pessoas master
-   - Enquanto ninguém for master (antes do SQL), os sócios continuam com essas funções
-   ========================================================================== */
-(function(){
-  if(typeof S === 'undefined') return;
-  var TIPOS = [['master', 'Master'], ['socio', 'Sócio(a)'], ['equipe', 'Equipe']];
-  var rowDe = function(id){ return (S.equipe || []).find(function(r){ return String(r.email || '').toLowerCase() === id; }); };
-  var papelDe = function(id){ var r = rowDe(id); return r ? r.papel || 'equipe' : 'equipe'; };
-  var interno = function(id){ var r = rowDe(id); return !r || !Array.isArray(r.espacos) || r.espacos.indexOf('mannare') >= 0; };
-  var masters = function(){ return (S.equipe || []).filter(function(r){ return r.papel === 'master'; }); };
-  function souMaster(){ return papelDe(me) === 'master' && interno(me); }
-  function gestor(){ return souMaster() || (!masters().length && papelDe(me) === 'socio' && interno(me)); }   // quem gerencia a equipe
-  window.cgMaster = {master:souMaster, gestor:gestor, papel:papelDe};
-
-  // master faz tudo o que o sócio faz: o CRM verifica isSocio() em vários lugares
-  function ajustaPapel(){ if(papelDe(me) === 'master') MYROLE = 'socio'; document.documentElement.classList.toggle('cg-nogestor', !gestor()); }
-
-  /* ---------- telas ---------- */
-  function rotulo(p){ var t = TIPOS.find(function(x){ return x[0] === p; }); return t ? t[1] : 'Equipe'; }
-  if(typeof memberModal === 'function') memberModal = (function(base){ return function(id){ base.apply(this, arguments);
-    var pp = document.getElementById('mfPapel');
-    if(pp){ if(gestor()) pp.insertAdjacentHTML('afterbegin', '<option value="master">Master (gerencia a equipe)</option>'); pp.closest('label').firstChild.textContent = 'Tipo de usuário'; }
-    if(!id) return; var f = document.querySelector('#layer .fields'); if(!f || document.getElementById('mfTipo')) return; var atual = papelDe(id);
-    if(gestor()) f.insertAdjacentHTML('beforeend', '<label class="f">Tipo de usuário<select id="mfTipo" data-mstipo="' + id + '">' + TIPOS.map(function(t){ return '<option value="' + t[0] + '" ' + (t[0] === atual ? 'selected' : '') + '>' + t[1] + (t[0] === 'master' ? ' (gerencia a equipe)' : '') + '</option>'; }).join('') + '</select></label>');
-    else f.insertAdjacentHTML('beforeend', '<label class="f">Tipo de usuário<input id="mfTipo" value="' + esc(rotulo(atual)) + '" disabled></label>');
-    var del = document.querySelector('#layer [data-delmember]'); if(del && !gestor()) del.remove();
-  }; })(memberModal);
-
-  function trocarTipo(id, papel){
-    if(!gestor()){ toast('Só usuários master mudam o tipo de usuário'); return; }
-    var antes = papelDe(id); if(antes === papel) return;
-    if(antes === 'master' && papel !== 'master' && masters().length <= 1){ toast('Precisa ficar pelo menos um master'); var s = document.getElementById('mfTipo'); if(s) s.value = 'master'; return; }
-    sb.from('pm_equipe').update({papel:papel}).eq('email', id).select().then(function(res){
-      if(res.error){ toast('Não mudei o tipo: ' + res.error.message); return; }
-      if(!res.data || !res.data.length){ toast('O banco não deixou mudar (rode o master-supabase.sql)'); return; }
-      var r = rowDe(id); if(r) r.papel = papel; var u = U[id]; if(u && (papel === 'socio' || papel === 'master') && !u.cargo){ u.cargo = 'Sócio(a)'; save(); }
-      if(id === me){ MYROLE = papel === 'master' ? 'socio' : papel; } ajustaPapel(); render();
-      toast(first(id) + ' agora é ' + rotulo(papel)); });
-  }
-
-  /* ---------- travas: só quem gerencia inclui, remove e muda acessos ---------- */
-  window.addEventListener('click', function(e){
-    var t = e.target; if(!t.closest) return;
-    var bloq = t.closest('[data-addmember],[data-delmember],[data-espgerir],[data-espadd],[data-espdel],[data-apcfgok]') || (t.closest('#layer [data-savemember]') && !t.closest('[data-savemember]').dataset.savemember && document.getElementById('mfEmail'));
-    if(bloq && !gestor()){ e.stopPropagation(); e.preventDefault(); toast('Só usuários master incluem ou removem pessoas e mudam acessos'); return; }
-    var del = t.closest('[data-delmember]'); if(del && gestor()){ var id = del.dataset.delmember;
-      if(papelDe(id) === 'master' && masters().length <= 1){ e.stopPropagation(); toast('Não dá para remover o último master'); return; }
-      if(!confirm('Remover ' + (U[id] ? U[id].nome : id) + ' da equipe? A pessoa perde o acesso ao CRM.')){ e.stopPropagation(); return; } }
-  }, true);
-  document.addEventListener('change', function(e){ var t = e.target; if(t.matches && t.matches('[data-mstipo]')){ e.stopPropagation(); trocarTipo(t.dataset.mstipo, t.value); } }, true);
-  // só quem gerencia vê e muda os acessos por espaço no cadastro da pessoa
-  var obs = new MutationObserver(function(){ if(gestor()) return; document.querySelectorAll('#layer .esp-acc').forEach(function(x){ x.remove(); }); });
-  obs.observe(document.body, {childList:true, subtree:true});
-
-  render = (function(base){ return function(){
-    if(DB.ready) ajustaPapel();
-    base.apply(this, arguments);
-    if(!DB.ready || ui.view !== 'team') return;
-    document.querySelectorAll('#view .tcard').forEach(function(c){ var b = c.querySelector('[data-editmember]'); if(!b || c.querySelector('.ms-chip')) return; var p = papelDe(b.dataset.editmember);
-      var nm = c.querySelector('.nm'); if(nm && (p === 'master' || p === 'socio')) nm.insertAdjacentHTML('beforeend', ' <span class="ms-chip ' + p + '">' + rotulo(p) + '</span>'); });
-    var ph = document.querySelector('#view .pagehead p'); if(ph && !ph.querySelector('.ms-info')) ph.insertAdjacentHTML('beforeend', '<span class="ms-info"> ' + (gestor() ? (souMaster() ? 'Você é master: inclui, remove pessoas e define quem é master.' : 'Ainda não há master: os sócios gerenciam a equipe.') : 'Só usuários master incluem ou removem pessoas.') + '</span>');
-  }; })(render);
-  if(typeof DB !== 'undefined' && DB.ready) render();
-})();
-</script>
-
-<script id="mannare-reembolsos">
-/* ==========================================================================
-   Reembolsos (substitui o fluxo do Make: formulário → documento → e-mail → planilha)
-   - Cada reembolso é um recebível do tipo "reembolso" no Financeiro (segue o espaço)
-   - Gera a Nota de Débito em dois layouts: só Mannare ou BMM · Vértis · Mannare
-   - Envia por e-mail pela ponte (PDF anexo) e marca "ND enviada"; exporta CSV (a "planilha")
-   ========================================================================== */
-(function(){
-  if(typeof S === 'undefined') return;
-  var E = window.cgEspaco || {ativo:function(){ return 'todos'; }, espDe:function(){ return 'mannare'; }, espPorId:function(id){ return {nome:id}; }, interno:function(){ return true; }};
-  var I = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M5 2h14v20l-2.3-1.5L14.3 22 12 20.5 9.7 22l-2.4-1.5L5 22zm3 5v2h8V7zm0 4v2h8v-2zm0 4v2h5v-2z"/></svg>';
-  var LAY = {mannare:'Só Mannare', parc:'BMM · Vértis · Mannare'};
-  var ST = [['a faturar', 'A enviar', '#9A9DB0'], ['nd enviada', 'ND enviada', '#0000FF'], ['pago', 'Pago', '#12B76A'], ['cancelado', 'Cancelado', '#D92D20']];
-  var stDe = function(k){ return ST.find(function(s){ return s[0] === k; }) || [k, k || 'A enviar', '#9A9DB0']; };
-  var rUI = function(){ return ui.reemb = ui.reemb || {st:'abertos', q:''}; };
-  var lista = function(){ return (S.recs || []).filter(function(r){ return r.tipo === 'reembolso'; }); };
-  var totalDe = function(r){ return (r.itens || []).length ? r.itens.reduce(function(a, x){ return a + numBR(x.valor); }, 0) : numBR(r.valorBruto); };
-  function cfgLay(k){ var c = (S.cfg.reemb = S.cfg.reemb || {}), d = c[k] = c[k] || {};
-    if(k === 'mannare' && !d.razao){ d.razao = EMPRESA.razao; d.cnpj = EMPRESA.cnpj; d.endereco = d.endereco || ''; }
-    return d; }
-  function layPadrao(){ var a = E.ativo(); return a !== 'todos' && a !== 'mannare' && window.cgTemTimbParc && window.cgTemTimbParc(a) ? 'parc' : 'mannare'; }
-  function proximoNum(){ var y = TODAY.slice(0, 4), max = 0; lista().forEach(function(r){ var m = /^(\d{4})\/(\d+)$/.exec(String(r.numeroND || '')); if(m && m[1] === y) max = Math.max(max, +m[2]); }); return y + '/' + String(max + 1).padStart(3, '0'); }
-
-  /* ---------- valor por extenso ---------- */
-  var U1 = ['', 'um', 'dois', 'três', 'quatro', 'cinco', 'seis', 'sete', 'oito', 'nove', 'dez', 'onze', 'doze', 'treze', 'quatorze', 'quinze', 'dezesseis', 'dezessete', 'dezoito', 'dezenove'];
-  var D1 = ['', '', 'vinte', 'trinta', 'quarenta', 'cinquenta', 'sessenta', 'setenta', 'oitenta', 'noventa'];
-  var C1 = ['', 'cento', 'duzentos', 'trezentos', 'quatrocentos', 'quinhentos', 'seiscentos', 'setecentos', 'oitocentos', 'novecentos'];
-  function ate999(n){ if(n === 100) return 'cem'; var c = Math.floor(n / 100), r = n % 100, p = []; if(c) p.push(C1[c]); if(r){ if(r < 20) p.push(U1[r]); else p.push(D1[Math.floor(r / 10)] + (r % 10 ? ' e ' + U1[r % 10] : '')); } return p.join(' e '); }
-  function inteiro(n){ var g = [], mi = Math.floor(n / 1e6), mil = Math.floor((n % 1e6) / 1000), un = n % 1000;
-    if(mi) g.push(ate999(mi) + (mi === 1 ? ' milhão' : ' milhões')); if(mil) g.push(mil === 1 ? 'mil' : ate999(mil) + ' mil'); if(un) g.push(ate999(un));
-    if(g.length < 2) return g[0] || ''; var e = !un || un < 100 || un % 100 === 0; return g.slice(0, -1).join(', ') + (e ? ' e ' : ' ') + g[g.length - 1]; }
-  function porExtenso(v){ v = Math.round(v * 100); var re = Math.floor(v / 100), ce = v % 100, txt = '';
-    if(re) txt = inteiro(re) + (re % 1e6 === 0 ? ' de' : '') + (re === 1 ? ' real' : ' reais');
-    if(ce) txt += (re ? ' e ' : '') + ate999(ce) + (ce === 1 ? ' centavo' : ' centavos'); return txt || 'zero real'; }
-
-  /* ---------- documento: nota de débito ---------- */
-  function ndHtml(r, modo){
-    var lay = r.layout || 'mannare', c = cfgLay(lay), its = (r.itens || []).length ? r.itens : [{data:r.despesaPagaEm || '', descricao:r.servico || 'Reembolso de despesa', comprovante:r.linkNota || '', valor:r.valorBruto}], tot = totalDe(r);
-    var kv = function(l){ return '<table class="kv">' + l.filter(function(x){ return x[1]; }).map(function(x){ return '<tr><th>' + x[0] + '</th><td>' + x[1] + '</td></tr>'; }).join('') + '</table>'; };
-    var n = 0, bar = function(t){ return '<h2 class="bar"><span class="n">' + String(++n).padStart(2, '0') + '</span>' + esc(t) + '</h2>'; };
-    var comp = function(x){ return /^https?:/.test(x.comprovante || '') ? '<a href="' + esc(x.comprovante) + '">ver comprovante</a>' : esc(x.comprovante || '—'); };
-    var corpo = '<style>table.val td.v,table.val th.v{text-align:right;white-space:nowrap}table.val tr.tot td{background:#132054;color:#fff;font-weight:600}table.val tr.tot td.lb{text-align:right}.ext{margin:2mm 0 0}.ndn{font-weight:600}</style>'
-      + '<div class="title">NOTA DE DÉBITO Nº ' + esc(r.numeroND || '') + '</div>'
-      + '<div class="date">' + esc(c.cidade || 'Fortaleza/CE') + ', ' + dataExtenso(r.emissao || TODAY) + '.</div>'
-      + '<div class="to">À ' + esc(String(r.cliente || '').replace(/\.+$/, '')) + '.</div>'
-      + bar('EMITENTE') + kv([['Razão social', esc(c.razao || '')], ['CNPJ', esc(c.cnpj || '')], ['Endereço', esc(c.endereco || '')], ['E-mail', esc(c.email || '')]])
-      + bar('DEVEDOR') + kv([['Razão social', esc(r.cliente || '')], [onlyDig(r.cnpj).length === 11 ? 'CPF' : 'CNPJ', esc(r.cnpj || '')], ['Empreendimento', esc(r.empreendimento || '')], ['Processo', esc(r.processo || '')]])
-      + bar('DESPESAS REEMBOLSÁVEIS') + '<table class="val"><thead><tr><th style="width:26mm">DATA</th><th>DESCRIÇÃO DA DESPESA</th><th style="width:38mm">COMPROVANTE</th><th class="v" style="width:34mm">VALOR</th></tr></thead><tbody>'
-      + its.map(function(x){ return '<tr><td>' + esc(fmtDateBR(x.data) || '—') + '</td><td>' + esc(x.descricao || '') + '</td><td>' + comp(x) + '</td><td class="v">' + brl(numBR(x.valor)) + '</td></tr>'; }).join('')
-      + '<tr class="tot"><td colspan="3" class="lb">TOTAL</td><td class="v">' + brl(tot) + '</td></tr></tbody></table>'
-      + '<p class="ext">Valor total desta nota de débito: <b>' + brl(tot) + '</b> (' + porExtenso(tot) + ').</p>'
-      + bar('DADOS PARA PAGAMENTO') + kv([['Vencimento', esc(fmtDateBR(r.previsao) || 'à vista')], ['Favorecido', esc(c.favorecido || c.razao || '')], ['Banco', esc(c.banco || '')], ['Agência / conta', esc([c.agencia, c.conta].filter(Boolean).join(' / '))], ['PIX', esc(c.pix || '')]])
-      + bar('OBSERVAÇÕES') + '<ol class="al"><li>Reembolso de despesas pagas pela Emitente em nome e por conta do Devedor, referentes aos serviços contratados. Por se tratar de mero reembolso, não constitui receita nem há incidência de tributos.</li>'
-      + (r.obsND ? '<li>' + esc(r.obsND) + '</li>' : '') + '<li>Os comprovantes das despesas estão disponíveis ' + (its.some(function(x){ return /^https?:/.test(x.comprovante || ''); }) ? 'nos links indicados acima.' : 'mediante solicitação.') + '</li></ol>'
-      + '<div class="close"><div class="att">Atenciosamente,</div><div class="sg"><div class="sigbox"></div><div class="ln"></div><div class="rz">' + esc(c.razao || '') + '</div>' + (c.cnpj ? '<div>CNPJ nº ' + esc(c.cnpj) + '</div>' : '') + '</div></div>';
-    var html = timbradoDoc(corpo, false, modo === 'email' ? 'prev' : 'tela', 'Nota de Débito ' + (r.numeroND || '') + ' | ' + (r.cliente || ''));
-    if(modo !== 'email') html = html.replace(/<span>Versão validada\.[^<]*(<b>[^<]*<\/b>[^<]*)*<\/span>/, '<span>Nota de débito ' + esc(r.numeroND || '') + '. No destino, escolha <b>Salvar como PDF</b> e desmarque <b>Cabeçalhos e rodapés</b>.</span>');
-    return window.cgDocLayout ? window.cgDocLayout(html, lay, E.espDe('recebivel', r)) : html;
-  }
-  function abrirND(r){ var w = window.open('', '_blank'); if(!w){ toast('Permita pop-ups para abrir a nota de débito'); return; } w.document.open(); w.document.write(ndHtml(r, 'tela')); w.document.close(); }
-
-  /* ---------- tela ---------- */
-  function renderReemb(){
-    var u = rUI(), L = lista(), q = normN(u.q || ''), mes = TODAY.slice(0, 7);
-    var aberto = L.filter(function(r){ return r.status !== 'pago' && r.status !== 'cancelado'; }), enviados = aberto.filter(function(r){ return r.status === 'nd enviada'; }), aEnviar = aberto.filter(function(r){ return r.status !== 'nd enviada'; }), pagosMes = L.filter(function(r){ return r.status === 'pago' && String(r.dataPagamento || '').slice(0, 7) === mes; });
-    var soma = function(a){ return a.reduce(function(x, r){ return x + totalDe(r); }, 0); };
-    var vis = L.filter(function(r){ return (u.st === 'abertos' ? aberto.indexOf(r) >= 0 : u.st === 'todos' ? true : r.status === u.st) && (!q || normN([r.numeroND, r.cliente, r.empreendimento, r.processo, (r.itens || []).map(function(x){ return x.descricao; }).join(' ')].join(' ')).indexOf(q) >= 0); })
-      .sort(function(a, b){ return String(b.emissao || b.criadoEm || '').localeCompare(String(a.emissao || a.criadoEm || '')); });
-    var kpi = function(l, v, s){ return '<div class="rb-k"><span>' + l + '</span><b>' + v + '</b><em>' + s + '</em></div>'; };
-    $('#view').innerHTML = '<div class="pagehead"><div><h1>Reembolsos</h1><p>Despesas pagas em nome do cliente: gera a nota de débito, envia por e-mail e acompanha o pagamento.</p></div><span class="spacer"></span>'
-      + '<button class="btn" data-rbcfg>Dados da nota de débito</button><button class="btn" data-rbcsv>Exportar planilha (.csv)</button><button class="btn primary" data-rbnovo>+ Nova nota de débito</button></div>'
-      + '<div class="rb-kpis">' + kpi('A enviar', brl(soma(aEnviar)), aEnviar.length + ' nota(s)') + kpi('Enviadas, aguardando pagamento', brl(soma(enviados)), enviados.length + ' nota(s)') + kpi('Recebido no mês', brl(soma(pagosMes)), pagosMes.length + ' nota(s)') + '</div>'
-      + '<div class="rb-bar"><div class="seg sm">' + [['abertos', 'Em aberto'], ['a faturar', 'A enviar'], ['nd enviada', 'ND enviada'], ['pago', 'Pagas'], ['todos', 'Todas']].map(function(x){ return '<button data-rbst="' + x[0] + '" class="' + (u.st === x[0] ? 'on' : '') + '">' + x[1] + '</button>'; }).join('') + '</div>'
-      + '<label class="minis rb-q">' + ic('busca', 'sm') + '<input data-rbq placeholder="Buscar por número, cliente, empreendimento ou despesa" value="' + esc(u.q || '') + '" aria-label="Buscar reembolsos"></label></div>'
-      + '<div class="rb-card"><table class="rb-tb"><thead><tr><th>ND</th><th>Cliente / empreendimento</th><th>Despesas</th><th>Layout</th><th class="v">Valor</th><th>Status</th><th></th></tr></thead><tbody>'
-      + (vis.map(function(r){ var s = stDe(r.status), its = r.itens || [];
-          return '<tr><td><b>' + esc(r.numeroND || '—') + '</b><div class="sub">' + esc(fmtDateBR(r.emissao) || '') + '</div></td><td><b>' + esc(r.cliente || '—') + '</b><div class="sub">' + esc([r.empreendimento, r.processo].filter(Boolean).join(' | ')) + '</div></td>'
-            + '<td>' + (its.length ? esc(its[0].descricao || '') + (its.length > 1 ? ' <span class="sub">+' + (its.length - 1) + '</span>' : '') : esc(r.servico || '—')) + (r.pagoPor ? '<div class="sub">pago por ' + esc(U[r.pagoPor] ? U[r.pagoPor].nome : r.pagoPor) + '</div>' : '') + '</td>'
-            + '<td><span class="rb-lay">' + esc(LAY[r.layout] || LAY.mannare) + '</span></td><td class="v"><b>' + brl(totalDe(r)) + '</b>' + (r.previsao ? '<div class="sub">vence ' + fmtDateBR(r.previsao) + '</div>' : '') + '</td>'
-            + '<td><span class="rb-st" style="--c:' + s[2] + '">' + s[1] + '</span>' + (r.status === 'pago' && r.dataPagamento ? '<div class="sub">' + fmtDateBR(r.dataPagamento) + '</div>' : r.enviadoPara ? '<div class="sub">para ' + esc(r.enviadoPara) + '</div>' : '') + '</td>'
-            + '<td class="rb-acts"><button class="btn sm" data-rbver="' + r.id + '">Ver ND</button>' + (r.status !== 'pago' && r.status !== 'cancelado' ? '<button class="btn sm" data-rbmail="' + r.id + '">' + (r.status === 'nd enviada' ? 'Reenviar' : 'Enviar') + '</button><button class="btn sm" data-rbpago="' + r.id + '">Pago</button>' : '') + '<button class="cg-mini" data-rbedit="' + r.id + '" aria-label="Editar" title="Editar">✎</button></td></tr>'; }).join('')
-        || '<tr><td colspan="7" class="rb-vazio">Nenhum reembolso aqui. Use <b>+ Nova nota de débito</b>.</td></tr>') + '</tbody></table></div>'
-      + '<p class="hint">Cada nota de débito também aparece em Financeiro › Contas a receber › Notas de débito.</p>';
-    var cr = document.getElementById('crumbNow'); if(cr) cr.textContent = 'Reembolsos';
-  }
-
-  /* ---------- formulário ---------- */
-  var ov = null, ed = null;
-  function fechar(){ if(ov){ ov.remove(); ov = null; } ed = null; }
-  function abrir(html, cls){ if(ov) ov.remove(); ov = document.createElement('div'); ov.className = 'cg-ov'; ov.innerHTML = '<div class="cg-dlg ' + cls + '" role="dialog" aria-modal="true" tabindex="-1">' + html + '</div>'; document.body.appendChild(ov); }
-  function form(r){
-    ed = r ? JSON.parse(J(r)) : {id:uid(), tipo:'reembolso', propostaId:'', codigo:'', cliente:'', cnpj:'', emailCliente:'', servico:'Reembolso de despesas', empreendimento:'', processo:'', procId:'', parcela:1, deTotal:1, condicao:'', valorBruto:0, imposto:0, desembolso:0,
-      previsao:addDays(TODAY, 10), status:'a faturar', nf:'', numeroND:proximoNum(), emissao:TODAY, dataPagamento:'', obs:'', obsND:'', pagoPor:'', layout:layPadrao(), itens:[{data:TODAY, descricao:'', comprovante:'', valor:''}], criadoEm:nowISO(), log:[], _novo:true};
-    desenhar(); }
-  function desenhar(){
-    var r = ed, clis = (S.clis || []), cli = clis.find(function(c){ return normN(c.nome) === normN(r.cliente); }), emps = cli ? spesDe(cli).map(function(e){ return e.nome; }) : [];
-    var procs = (S.procs || []).filter(function(p){ var pr = propById(p.propId) || p.prop || {}; return !r.empreendimento || normN(pr.emp) === normN(r.empreendimento); });
-    var pessoas = USERS.map(function(u){ return '<option value="' + u.id + '" ' + (u.id === r.pagoPor ? 'selected' : '') + '>' + esc(u.nome) + '</option>'; }).join('');
-    var tot = r.itens.reduce(function(a, x){ return a + numBR(x.valor); }, 0);
-    abrir('<div class="cg-dh"><div><div class="cg-eyebrow">' + (r._novo ? 'Nova nota de débito' : 'Nota de débito') + '</div><h2>ND ' + esc(r.numeroND) + '</h2></div><button class="x" data-rbx aria-label="Fechar">✕</button></div>'
-      + '<div class="rb-grid"><label class="f">Cliente<input data-rbf="cliente" list="rbCli" value="' + esc(r.cliente) + '" placeholder="Escolha do cadastro ou digite"><datalist id="rbCli">' + clis.map(function(c){ return '<option value="' + esc(c.nome) + '">'; }).join('') + '</datalist></label>'
-      + '<label class="f">CNPJ / CPF<input data-rbf="cnpj" value="' + esc(r.cnpj || '') + '"></label>'
-      + '<label class="f">Empreendimento<input data-rbf="empreendimento" list="rbEmp" value="' + esc(r.empreendimento || '') + '"><datalist id="rbEmp">' + emps.map(function(e){ return '<option value="' + esc(e) + '">'; }).join('') + '</datalist></label>'
-      + '<label class="f">Processo (opcional)<select data-rbf="procId"><option value="">—</option>' + procs.map(function(p){ return '<option value="' + p.id + '" ' + (p.id === r.procId ? 'selected' : '') + '>' + esc(pcod(p) + ' | ' + (window.nomeProc ? nomeProc(p) : p.servico || '')) + '</option>'; }).join('') + '</select></label>'
-      + '<label class="f">E-mail do cliente<input data-rbf="emailCliente" type="email" value="' + esc(r.emailCliente || '') + '" placeholder="financeiro@cliente.com.br"></label>'
-      + '<label class="f">Pago por<select data-rbf="pagoPor"><option value="">— a empresa</option>' + pessoas + '</select></label>'
-      + '<label class="f">Layout da nota<select data-rbf="layout">' + Object.keys(LAY).map(function(k){ return '<option value="' + k + '" ' + (k === r.layout ? 'selected' : '') + '>' + LAY[k] + '</option>'; }).join('') + '</select></label>'
-      + '<label class="f">Vencimento<input type="date" data-rbf="previsao" value="' + esc(r.previsao || '') + '"></label></div>'
-      + '<div class="rb-its"><div class="rb-ih"><b>Despesas</b><span class="cg-sub">Total: <b>' + brl(tot) + '</b></span></div>'
-      + r.itens.map(function(x, i){ return '<div class="rb-it"><input type="date" data-rbi="' + i + '|data" value="' + esc(x.data || '') + '" aria-label="Data"><input data-rbi="' + i + '|descricao" value="' + esc(x.descricao || '') + '" placeholder="Ex.: Taxa de análise SEUMA" aria-label="Descrição"><input data-rbi="' + i + '|comprovante" value="' + esc(x.comprovante || '') + '" placeholder="Link do comprovante (Drive)" aria-label="Comprovante">'
-          + '<input data-rbi="' + i + '|valor" inputmode="decimal" value="' + esc(x.valor === '' ? '' : moneyIn(x.valor)) + '" placeholder="0,00" aria-label="Valor"><button class="cg-mini" data-rbidel="' + i + '" aria-label="Tirar despesa" title="Tirar">✕</button></div>'; }).join('')
-      + '<button class="btn sm" data-rbiadd>+ Despesa</button></div>'
-      + '<label class="f">Observação na nota (opcional)<input data-rbf="obsND" value="' + esc(r.obsND || '') + '" placeholder="Ex.: Referente ao protocolo nº 2026/123"></label>'
-      + '<div class="cg-df">' + (r._novo ? '' : '<button class="btn ghost" data-rbcancel>Cancelar nota</button>') + '<span class="spacer"></span><button class="btn" data-rbsalvar="ver">Salvar e ver ND</button><button class="btn primary" data-rbsalvar="mail">Salvar e enviar por e-mail</button></div>', 'rb-dlg');
-  }
-  function ler(){ if(!ov || !ed) return; ov.querySelectorAll('[data-rbf]').forEach(function(el){ ed[el.dataset.rbf] = el.value.trim(); });
-    ov.querySelectorAll('[data-rbi]').forEach(function(el){ var p = el.dataset.rbi.split('|'), it = ed.itens[+p[0]]; if(it) it[p[1]] = p[1] === 'valor' ? (el.value.trim() === '' ? '' : numBR(el.value)) : el.value.trim(); }); }
-  function gravar(){ ler(); var r = ed;
-    r.itens = r.itens.filter(function(x){ return x.descricao || numBR(x.valor); }); if(!r.cliente){ toast('Informe o cliente'); return null; } if(!r.itens.length){ toast('Inclua pelo menos uma despesa'); r.itens = [{data:TODAY, descricao:'', comprovante:'', valor:''}]; desenhar(); return null; }
-    r.cliente = r.cliente.toLocaleUpperCase('pt-BR'); if(r.cnpj && window.fmtDoc) r.cnpj = fmtDoc(r.cnpj);
-    var p = r.procId && procById(r.procId); r.processo = p ? pcod(p) + (window.nomeProc ? ' | ' + nomeProc(p) : '') : '';
-    r.valorBruto = totalDe(r); r.nf = r.numeroND; r.despesaPagaEm = r.itens[0].data || ''; r.linkNota = (r.itens.find(function(x){ return /^https?:/.test(x.comprovante || ''); }) || {}).comprovante || ''; r.codigo = 'ND ' + r.numeroND;
-    var novo = r._novo; delete r._novo; (r.log = r.log || []).unshift({em:nowISO(), por:me, txt:novo ? 'criou a nota de débito ' + r.numeroND : 'editou a nota de débito'});
-    var i = S.recs.findIndex(function(x){ return x.id === r.id; }); if(i >= 0) S.recs[i] = r; else S.recs.push(r);
-    var cli = (S.clis || []).find(function(c){ return normN(c.nome) === normN(r.cliente); }); if(cli && r.emailCliente && !cli.emailFinanceiro){ cli.emailFinanceiro = r.emailCliente; }
-    save(); return r; }
-  function mailND(r){ var c = cfgLay(r.layout || 'mannare');
-    abrir('<div class="cg-dh"><div><div class="cg-eyebrow">Enviar nota de débito</div><h2>ND ' + esc(r.numeroND) + ' | ' + esc(r.cliente) + '</h2></div><button class="x" data-rbx aria-label="Fechar">✕</button></div>'
-      + '<label class="f">Para<input id="rbPara" value="' + esc(r.emailCliente || '') + '" placeholder="email@cliente.com.br (separe vários por vírgula)"></label>'
-      + '<label class="f">Cópia<input id="rbCc" value="' + esc([me, c.email].filter(Boolean).join(', ')) + '"></label>'
-      + '<label class="f">Assunto<input id="rbAss" value="' + esc('Nota de débito nº ' + r.numeroND + ' | ' + (r.empreendimento || r.cliente)) + '"></label>'
-      + '<label class="f">Mensagem<textarea id="rbMsg" rows="7">' + esc('Prezados,\n\nSegue a nota de débito nº ' + r.numeroND + ', no valor de ' + brl(totalDe(r)) + ', referente ao reembolso de despesas pagas em nome de ' + r.cliente + (r.empreendimento ? ' (' + r.empreendimento + ')' : '') + '.\n\nVencimento: ' + (fmtDateBR(r.previsao) || 'à vista') + '.\n\nFicamos à disposição.') + '</textarea></label>'
-      + '<p class="cg-sub" style="margin:0">A nota vai em PDF anexo, no layout <b>' + esc(LAY[r.layout] || LAY.mannare) + '</b>. A ponte envia em até 1 minuto.</p>'
-      + '<div class="cg-df"><span class="spacer"></span><button class="btn" data-rbx>Cancelar</button><button class="btn primary" data-rbenviar="' + r.id + '">Enviar</button></div>', 'rb-dlg'); ed = null; }
-  function enviar(r){ var para = (document.getElementById('rbPara') || {}).value.trim();
-    if(!para || !para.split(',').every(function(x){ return /^\S+@\S+\.\S+$/.test(x.trim()); })){ toast('Confira o e-mail do cliente'); return; }
-    var em = {id:uid(), status:'pendente', tipo:'nd', para:para, cc:document.getElementById('rbCc').value.trim(), assunto:document.getElementById('rbAss').value.trim(), corpo:document.getElementById('rbMsg').value, replyTo:me, por:me, em:nowISO(),
-      anexoNome:('Nota de Débito ' + r.numeroND.replace('/', '-') + ' ' + r.cliente).replace(/[\\/:*?"<>|]+/g, '-') + '.pdf', html:ndHtml(r, 'email'), assinatura:typeof assinEmail === 'function' ? assinEmail() : '', recId:r.id, _espaco:E.espDe('recebivel', r)};
-    S.emails.push(em); r.status = 'nd enviada'; r.enviadoPara = para; r.enviadoEm = nowISO(); if(!r.emailCliente) r.emailCliente = para.split(',')[0].trim();
-    (r.log = r.log || []).unshift({em:nowISO(), por:me, txt:'enviou a nota de débito para ' + para}); save(); fechar(); render(); toast('Na fila de envio. A ponte envia em até 1 minuto.'); }
-  function cfgModal(){ var html = Object.keys(LAY).map(function(k){ var c = cfgLay(k), f = function(n, l, ph){ return '<label class="f">' + l + '<input data-rbc="' + k + '|' + n + '" value="' + esc(c[n] || '') + '" placeholder="' + esc(ph || '') + '"></label>'; };
-      return '<div class="tb-sec"><b>' + LAY[k] + '</b><div class="rb-grid">' + f('razao', 'Emitente (razão social)', k === 'parc' ? 'Quem emite a nota neste layout' : '') + f('cnpj', 'CNPJ') + f('endereco', 'Endereço', 'Rua Vicente Linhares, 500, 2º andar, Aldeota, Fortaleza/CE') + f('email', 'E-mail (vai em cópia)')
-        + f('favorecido', 'Favorecido') + f('banco', 'Banco') + f('agencia', 'Agência') + f('conta', 'Conta') + f('pix', 'Chave PIX') + f('cidade', 'Cidade da emissão', 'Fortaleza/CE') + '</div></div>'; }).join('');
-    abrir('<div class="cg-dh"><div><div class="cg-eyebrow">Reembolsos</div><h2>Dados da nota de débito</h2></div><button class="x" data-rbx aria-label="Fechar">✕</button></div><p class="cg-sub" style="margin:0">Quem emite e onde o cliente paga, em cada layout.</p>' + html
-      + '<div class="cg-df"><span class="spacer"></span><button class="btn primary" data-rbcfgok>Salvar</button></div>', 'rb-dlg'); }
-
-  /* ---------- eventos ---------- */
-  window.addEventListener('click', function(e){
-    var t = e.target; if(!t.closest) return; var el;
-    if(ov && (t === ov || t.closest('.cg-ov') === ov)){ e.stopPropagation();
-      if(t === ov || t.closest('[data-rbx]')){ fechar(); return; }
-      if(t.closest('[data-rbiadd]')){ ler(); ed.itens.push({data:TODAY, descricao:'', comprovante:'', valor:''}); desenhar(); var ins = ov.querySelectorAll('[data-rbi$="|descricao"]'); if(ins.length) ins[ins.length - 1].focus(); return; }
-      if((el = t.closest('[data-rbidel]'))){ ler(); ed.itens.splice(+el.dataset.rbidel, 1); if(!ed.itens.length) ed.itens.push({data:TODAY, descricao:'', comprovante:'', valor:''}); desenhar(); return; }
-      if((el = t.closest('[data-rbsalvar]'))){ var r = gravar(); if(!r) return; var acao = el.dataset.rbsalvar; fechar(); render(); if(acao === 'ver') abrirND(r); else mailND(r); toast('Nota de débito ' + r.numeroND + ' salva'); return; }
-      if(t.closest('[data-rbcancel]')){ ler(); ed.status = 'cancelado'; (ed.log = ed.log || []).unshift({em:nowISO(), por:me, txt:'cancelou a nota de débito'}); var i = S.recs.findIndex(function(x){ return x.id === ed.id; }); if(i >= 0) S.recs[i] = ed; save(); fechar(); render(); toast('Nota cancelada'); return; }
-      if((el = t.closest('[data-rbenviar]'))){ var rr = S.recs.find(function(x){ return x.id === el.dataset.rbenviar; }); if(rr) enviar(rr); return; }
-      if(t.closest('[data-rbcfgok]')){ ov.querySelectorAll('[data-rbc]').forEach(function(i){ var p = i.dataset.rbc.split('|'); cfgLay(p[0])[p[1]] = p[1] === 'cnpj' && window.fmtDoc && i.value.trim() ? fmtDoc(i.value) : i.value.trim(); }); save(); fechar(); toast('Dados da nota salvos'); return; }
-      return; }
-    if(ui.view !== 'reemb' || !t.closest('#view')) return;
-    if(t.closest('[data-rbnovo]')){ e.stopPropagation(); form(null); return; }
-    if(t.closest('[data-rbcfg]')){ e.stopPropagation(); cfgModal(); return; }
-    if((el = t.closest('[data-rbst]'))){ e.stopPropagation(); rUI().st = el.dataset.rbst; render(); return; }
-    var achar = function(id){ return S.recs.find(function(x){ return x.id === id; }); };
-    if((el = t.closest('[data-rbver]'))){ e.stopPropagation(); var a = achar(el.dataset.rbver); if(a) abrirND(a); return; }
-    if((el = t.closest('[data-rbmail]'))){ e.stopPropagation(); var b = achar(el.dataset.rbmail); if(b) mailND(b); return; }
-    if((el = t.closest('[data-rbedit]'))){ e.stopPropagation(); var c = achar(el.dataset.rbedit); if(c) form(c); return; }
-    if((el = t.closest('[data-rbpago]'))){ e.stopPropagation(); var d = achar(el.dataset.rbpago); if(d){ d.status = 'pago'; d.dataPagamento = TODAY; (d.log = d.log || []).unshift({em:nowISO(), por:me, txt:'registrou o pagamento da nota de débito'}); save(); render(); toast('Nota ' + d.numeroND + ' paga'); } return; }
-    if(t.closest('[data-rbcsv]')){ e.stopPropagation(); var rows = lista().map(function(r){ return [r.numeroND || '', fmtDateBR(r.emissao), r.cliente, r.cnpj || '', r.empreendimento || '', r.processo || '', (r.itens || []).map(function(x){ return x.descricao; }).join(' + ') || r.servico || '', LAY[r.layout] || LAY.mannare, String(totalDe(r).toFixed(2)).replace('.', ','), stDe(r.status)[1], fmtDateBR(r.previsao), fmtDateBR(r.dataPagamento), r.enviadoPara || '']; });
-      csvDown('reembolsos-' + TODAY + '.csv', ['Nº ND', 'Emissão', 'Cliente', 'CNPJ', 'Empreendimento', 'Processo', 'Despesas', 'Layout', 'Valor', 'Status', 'Vencimento', 'Pagamento', 'Enviada para'], rows); return; }
-  }, true);
-  document.addEventListener('change', function(e){ var t = e.target; if(!ov || !ed || !t.matches) return;
-    if(t.matches('[data-rbf="cliente"]')){ var c = (S.clis || []).find(function(x){ return normN(x.nome) === normN(t.value); }); if(!c) return;
-      var cn = ov.querySelector('[data-rbf="cnpj"]'), em = ov.querySelector('[data-rbf="emailCliente"]'), dl = ov.querySelector('#rbEmp');
-      if(cn && !cn.value) cn.value = c.cnpj || ''; if(em && !em.value) em.value = c.emailFinanceiro || c.email || ''; if(dl) dl.innerHTML = spesDe(c).map(function(e){ return '<option value="' + esc(e.nome) + '">'; }).join(''); return; }
-    if(t.matches('[data-rbf="empreendimento"]')){ var sel = ov.querySelector('[data-rbf="procId"]'); if(!sel) return; var v = sel.value, emp = normN(t.value);
-      var ps = (S.procs || []).filter(function(p){ var pr = propById(p.propId) || p.prop || {}; return !emp || normN(pr.emp) === emp; });
-      sel.innerHTML = '<option value="">—</option>' + ps.map(function(p){ return '<option value="' + p.id + '" ' + (p.id === v ? 'selected' : '') + '>' + esc(pcod(p) + ' | ' + (window.nomeProc ? nomeProc(p) : p.servico || '')) + '</option>'; }).join(''); return; }
-    if(t.matches('[data-rbi$="|valor"]')){ ler(); var b = ov.querySelector('.rb-ih .cg-sub b'); if(b) b.textContent = brl(ed.itens.reduce(function(a, x){ return a + numBR(x.valor); }, 0)); if(t.value.trim()) t.value = moneyIn(numBR(t.value)); return; } }, true);
-  document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && ov){ e.stopPropagation(); fechar(); } }, true);
-  document.addEventListener('input', function(e){ if(e.target.matches && e.target.matches('[data-rbq]')){ rUI().q = e.target.value; render(); var q = document.querySelector('[data-rbq]'); if(q){ q.focus(); q.setSelectionRange(q.value.length, q.value.length); } } }, true);
-
-  render = (function(base){ return function(){ base.apply(this, arguments); if(DB.ready && ui.view === 'reemb') renderReemb(); }; })(render);
-  window.cgND = {html:ndHtml, extenso:porExtenso};
-  if(typeof DB !== 'undefined' && DB.ready) render();
 })();
 </script>
 <script id="mannare-a11y">
@@ -11239,6 +11092,312 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
   }).observe(document.body, {childList:true, subtree:true, attributes:true, attributeFilter:['class']});
 
   enhance(document); syncDialogs();
+})();
+</script>
+<script id="mannare-push">
+/* ==========================================================================
+   MANNARE CRM · Notificações no computador e no celular (Web Push)
+   - Com o CRM aberto (mesmo em outra aba): o aviso sobe na hora.
+   - Com o CRM fechado: o Supabase manda o push (Edge Function pm-push).
+   ========================================================================== */
+(function(){
+  if(typeof sb === 'undefined' || !sb) return;
+  var SUP = 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window;
+  var IOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  var APP = matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+  var ICON = 'icons/icon-192.png', BADGE = 'icons/badge-96.png';
+  var ls = {get:function(k){ try{ return localStorage.getItem(k) || ''; }catch(e){ return ''; } }, set:function(k, v){ try{ v ? localStorage.setItem(k, v) : localStorage.removeItem(k); }catch(e){} }};
+  var cfgP = function(){ return (S.cfg.push = S.cfg.push || {}); };
+  var e = function(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'}[c]; }); };
+  var b64u = function(buf){ var s = '', b = new Uint8Array(buf); for(var i = 0; i < b.length; i++) s += String.fromCharCode(b[i]); return btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); };
+  var deB64u = function(s){ s = s.replace(/-/g, '+').replace(/_/g, '/'); while(s.length % 4) s += '='; var r = atob(s), o = new Uint8Array(r.length); for(var i = 0; i < r.length; i++) o[i] = r.charCodeAt(i); return o; };
+  var texto = function(h){ var d = document.createElement('div'); d.innerHTML = String(h || ''); return (d.textContent || '').replace(/\s+/g, ' ').trim(); };
+  var swPronto = function(){ return Promise.race([navigator.serviceWorker.ready, new Promise(function(_, no){ setTimeout(function(){ no(new Error('sw')); }, 8000); })]); };
+
+  function estado(){
+    if(IOS && !APP) return 'ios';
+    if(!SUP || location.protocol !== 'https:') return 'sem';
+    if(Notification.permission === 'denied') return 'bloq';
+    if(Notification.permission === 'granted' && ls.get('pm-push-on')) return 'on';
+    return 'off';
+  }
+
+  async function gravar(sub){
+    var j = sub.toJSON();
+    var r = await sb.from('pm_push').upsert({endpoint:j.endpoint, email:String(me).toLowerCase(), p256dh:j.keys.p256dh, auth:j.keys.auth, aparelho:nomeAparelho(), atualizado:new Date().toISOString()}, {onConflict:'endpoint'});
+    if(r.error) console.warn('pm_push:', r.error.message);
+    return !r.error;
+  }
+  function nomeAparelho(){ var u = navigator.userAgent; var so = /Android/.test(u) ? 'Android' : IOS ? 'iPhone/iPad' : /Windows/.test(u) ? 'Windows' : /Mac/.test(u) ? 'Mac' : 'Outro'; var nav = /Edg\//.test(u) ? 'Edge' : /Chrome\//.test(u) ? 'Chrome' : /Firefox\//.test(u) ? 'Firefox' : /Safari\//.test(u) ? 'Safari' : ''; return so + (nav ? ' · ' + nav : '') + (APP ? ' (app)' : ''); }
+
+  // inscreve este aparelho no push do servidor (quando as chaves já foram geradas)
+  async function inscrever(){
+    var pub = cfgP().pub; if(!pub || !SUP) return false;
+    var reg = await swPronto(), sub = await reg.pushManager.getSubscription();
+    if(sub && ls.get('pm-push-pub') !== pub){ try{ await sub.unsubscribe(); }catch(_){} sub = null; }
+    if(!sub) sub = await reg.pushManager.subscribe({userVisibleOnly:true, applicationServerKey:deB64u(pub)});
+    ls.set('pm-push-pub', pub);
+    return gravar(sub);
+  }
+
+  async function ativar(){
+    if(IOS && !APP){ dicaIOS(); return; }
+    if(!SUP){ toast('Este navegador não aceita notificações. Use Chrome, Edge ou Safari atualizado.'); return; }
+    if(location.protocol !== 'https:'){ toast('As notificações só funcionam no endereço publicado (https).'); return; }
+    var p = await Notification.requestPermission();
+    if(p !== 'granted'){ toast(p === 'denied' ? 'Notificações bloqueadas. Libere no cadeado ao lado do endereço.' : 'Notificações não ativadas.'); atualizarUI(); return; }
+    ls.set('pm-push-on', '1');
+    var ok = true; try{ ok = await inscrever(); }catch(err){ ok = false; console.warn('push:', err); }
+    try{ var reg = await swPronto(); reg.showNotification('CRM Mannare', {body:'Pronto! Os avisos do CRM vão aparecer neste aparelho.', icon:ICON, badge:BADGE, tag:'pm-teste'}); }catch(_){}
+    toast(cfgP().pub ? (ok ? 'Notificações ativadas neste aparelho' : 'Ativadas com o CRM aberto. Falta concluir a configuração no Supabase.') : 'Ativadas com o CRM aberto. Com ele fechado, falta a configuração (Integrações).');
+    atualizarUI();
+  }
+  async function desativar(){
+    try{ var reg = await swPronto(), sub = await reg.pushManager.getSubscription(); if(sub){ await sb.from('pm_push').delete().eq('endpoint', sub.endpoint); await sub.unsubscribe(); } }catch(_){}
+    ls.set('pm-push-on', ''); toast('Notificações desligadas neste aparelho'); atualizarUI();
+  }
+  async function testar(){
+    try{ var reg = await swPronto(); reg.showNotification('CRM Mannare', {body:'Teste: assim chegam os avisos de tarefas, menções e aprovações.', icon:ICON, badge:BADGE, tag:'pm-teste', data:{url:location.href.split('#')[0]}}); }catch(_){ toast('Não consegui mostrar o teste'); }
+  }
+
+  function dicaIOS(){
+    abrir('<h3 style="margin:0 0 8px">Notificações no iPhone</h3><p style="margin:0 0 10px;color:var(--muted)">No iPhone, o aviso só chega com o CRM instalado na tela de início (iOS 16.4 ou mais novo).</p>'
+      + '<ol style="margin:0 0 14px;padding-left:20px;line-height:1.7"><li>Abra o CRM no <b>Safari</b>.</li><li>Toque em <b>Compartilhar</b> (quadrado com seta) &gt; <b>Adicionar à Tela de Início</b>.</li><li>Abra o CRM pelo ícone novo e toque em <b>Ativar notificações</b> de novo.</li></ol>'
+      + '<div style="display:flex;justify-content:flex-end"><button class="btn" data-pfechar>Entendi</button></div>');
+  }
+
+  // --- interface --------------------------------------------------------
+  var ROT = {on:'Ativadas neste aparelho', off:'Desligadas neste aparelho', bloq:'Bloqueadas no navegador', ios:'Instale na tela de início', sem:'Este navegador não aceita'};
+  function blocoHtml(){
+    var st = estado();
+    var bt = st === 'on' ? '<button class="btn sm" data-ptest>Testar</button><button class="btn sm ghost" data-poff>Desligar</button>'
+      : st === 'bloq' ? '<button class="btn sm" data-pbloq>Como liberar</button>'
+      : st === 'sem' ? '' : '<button class="btn sm primary" data-pon>Ativar notificações</button>';
+    return '<div class="pm-pushbox" data-pst="' + st + '"><div class="pm-pushtx"><b>Notificações no computador e no celular</b><span>' + ROT[st] + '</span></div><div class="pm-pushbt">' + bt + '</div></div>';
+  }
+  function atualizarUI(){ document.querySelectorAll('.pm-pushbox').forEach(function(b){ b.outerHTML = blocoHtml(); }); var bn = document.getElementById('pmPushBanner'); if(bn && estado() === 'on') bn.remove(); }
+
+  var ov = null;
+  function abrir(html){ fechar(); ov = document.createElement('div'); ov.className = 'pm-pushov'; ov.innerHTML = '<div class="pm-pushdlg" role="dialog" aria-modal="true">' + html + '</div>'; document.body.appendChild(ov); var b = ov.querySelector('button'); if(b) b.focus(); }
+  function fechar(){ if(ov){ ov.remove(); ov = null; } }
+
+  function banner(){
+    if(document.getElementById('pmPushBanner') || ls.get('pm-push-adiado') > Date.now() - 7 * 864e5) return;
+    var st = estado(); if(st !== 'off' && st !== 'ios') return;
+    var d = document.createElement('div'); d.id = 'pmPushBanner'; d.className = 'pm-pushban'; d.setAttribute('role', 'status');
+    d.innerHTML = '<div class="pm-pushtx"><b>Receber os avisos do CRM?</b><span>Tarefas, menções e aprovações aparecem no computador e no celular, mesmo com o CRM fechado.</span></div><div class="pm-pushbt"><button class="btn sm ghost" data-padiar>Agora não</button><button class="btn sm primary" data-pon>Ativar</button></div>';
+    document.body.appendChild(d);
+  }
+
+  // perfil (meu nome lá em cima)
+  var _showPop = window.showPop;
+  if(typeof _showPop === 'function') window.showPop = showPop = function(uid, anchor){
+    var r = _showPop.apply(this, arguments);
+    if(uid === me){ var bd = document.querySelector('#pop .bd'); if(bd && !bd.querySelector('.pm-pushbox')){ var last = bd.lastElementChild; last.insertAdjacentHTML('beforebegin', blocoHtml()); } }
+    return r;
+  };
+
+  // caixa de entrada e integrações
+  var _render = window.render;
+  window.render = render = function(){
+    var r = _render.apply(this, arguments);
+    try{
+      if(ui.view === 'inbox'){ var ph = document.querySelector('#view .pagehead'); if(ph && !document.querySelector('#view .pm-pushbox')) ph.insertAdjacentHTML('afterend', blocoHtml().replace('pm-pushbox', 'pm-pushbox pm-inline')); }
+      if(ui.view === 'integ' && isSocio()){ var ph2 = document.querySelector('#view .pagehead'); if(ph2 && !document.getElementById('pmPushCfg')) ph2.insertAdjacentHTML('afterend', cfgCard()); }
+    }catch(err){ console.warn(err); }
+    return r;
+  };
+
+  // --- configuração (sócio): gera as chaves VAPID no próprio navegador ---
+  function cfgCard(){
+    var c = cfgP(), pronto = !!c.pub;
+    return '<section class="card pm-pushcfg" id="pmPushCfg"><div class="pm-pushcfg-hd"><div><h3>Notificações push (computador e celular)</h3><p>' + (pronto ? 'Chaves geradas em ' + e(String(c.geradoEm || '').slice(0, 10).split('-').reverse().join('/')) + ' por ' + e(c.geradoPor || '') + '. Cada pessoa ativa no próprio aparelho (perfil ou Caixa de entrada).' : 'Falta gerar as chaves. Faça uma vez só; depois siga o LEIA-ME-NOTIFICACOES.') + '</p></div>'
+      + '<button class="btn sm ' + (pronto ? 'ghost' : 'primary') + '" data-pgerar>' + (pronto ? 'Gerar chaves novas' : 'Gerar chaves') + '</button></div>'
+      + (pronto ? '<div class="pm-pushkv"><span>Chave pública (VAPID_PUBLIC)</span><code>' + e(c.pub) + '</code><button class="btn sm" data-pcopy="' + e(c.pub) + '">Copiar</button></div>' : '')
+      + '<div id="pmPushNovo"></div></section>';
+  }
+  async function gerarChaves(){
+    if(cfgP().pub && !confirm('Gerar chaves novas desliga as notificações de todos os aparelhos até cada pessoa ativar de novo. Continuar?')) return;
+    var k = await crypto.subtle.generateKey({name:'ECDSA', namedCurve:'P-256'}, true, ['sign']);
+    var pub = b64u(await crypto.subtle.exportKey('raw', k.publicKey)), priv = (await crypto.subtle.exportKey('jwk', k.privateKey)).d;
+    var seg = b64u(crypto.getRandomValues(new Uint8Array(24)));
+    var url = String(CFG.url || 'https://SEU-PROJETO.supabase.co').replace(/\/+$/, '');
+    var sql = "insert into public.pm_push_cfg (id, url, segredo) values (1, '" + url + "/functions/v1/pm-push', '" + seg + "')\n  on conflict (id) do update set url = excluded.url, segredo = excluded.segredo;";
+    var c = cfgP(); c.pub = pub; c.geradoEm = new Date().toISOString(); c.geradoPor = first(me); save();
+    ls.set('pm-push-pub', '');
+    var box = function(rot, val, obs){ return '<div class="pm-pushkv"><span>' + rot + '</span><code>' + e(val) + '</code><button class="btn sm" data-pcopy="' + e(val) + '">Copiar</button></div>' + (obs ? '<p class="pm-pushobs">' + obs + '</p>' : ''); };
+    var html = '<div class="pm-pushnovo"><p><b>Copie agora.</b> A chave privada e o segredo não ficam guardados no CRM: se fechar esta tela, gere de novo.</p>'
+      + '<p class="pm-pushobs">1) Supabase &gt; Edge Functions &gt; Secrets: crie os três abaixo.</p>'
+      + box('VAPID_PUBLIC', pub) + box('VAPID_PRIVATE', priv) + box('PUSH_SECRET', seg)
+      + '<p class="pm-pushobs">2) Supabase &gt; SQL Editor: rode esta linha (depois do push-supabase.sql).</p>'
+      + '<div class="pm-pushkv pm-pushsql"><code>' + e(sql) + '</code><button class="btn sm" data-pcopy="' + e(sql) + '">Copiar</button></div></div>';
+    render();
+    var alvo = document.getElementById('pmPushNovo'); if(alvo) alvo.innerHTML = html;
+    if(Notification.permission === 'granted' && ls.get('pm-push-on')) inscrever().catch(function(){});
+  }
+
+  // --- cliques ----------------------------------------------------------
+  window.addEventListener('click', function(ev){
+    var t = ev.target; if(!t.closest) return;
+    var h = function(sel){ return t.closest(sel); };
+    if(h('[data-pon]')){ ev.stopPropagation(); ev.preventDefault(); var bn = document.getElementById('pmPushBanner'); if(bn) bn.remove(); ativar(); return; }
+    if(h('[data-poff]')){ ev.stopPropagation(); ev.preventDefault(); desativar(); return; }
+    if(h('[data-ptest]')){ ev.stopPropagation(); ev.preventDefault(); testar(); return; }
+    if(h('[data-padiar]')){ ev.stopPropagation(); ls.set('pm-push-adiado', String(Date.now())); var b2 = document.getElementById('pmPushBanner'); if(b2) b2.remove(); return; }
+    if(h('[data-pbloq]')){ ev.stopPropagation(); ev.preventDefault(); abrir('<h3 style="margin:0 0 8px">Liberar as notificações</h3><ol style="margin:0 0 14px;padding-left:20px;line-height:1.7"><li>Clique no <b>cadeado</b> (ou no ícone de ajustes) ao lado do endereço do CRM.</li><li>Em <b>Notificações</b>, escolha <b>Permitir</b>.</li><li>Recarregue a página e toque em <b>Ativar notificações</b>.</li></ol><p style="margin:0 0 12px;color:var(--muted)">No Windows e no Mac, confira também se o navegador pode mostrar notificações nas configurações do sistema.</p><div style="display:flex;justify-content:flex-end"><button class="btn" data-pfechar>Entendi</button></div>'); return; }
+    if(h('[data-pfechar]') || (ov && t === ov)){ fechar(); return; }
+    if(h('[data-pgerar]')){ ev.stopPropagation(); gerarChaves().catch(function(err){ toast('Não consegui gerar as chaves: ' + err.message); }); return; }
+    var cp = h('[data-pcopy]'); if(cp){ ev.stopPropagation(); navigator.clipboard.writeText(cp.dataset.pcopy).then(function(){ toast('Copiado'); }, function(){ toast('Selecione e copie manualmente'); }); return; }
+  }, true);
+  document.addEventListener('keydown', function(ev){ if(ev.key === 'Escape' && ov) fechar(); });
+
+  // --- aviso imediato com o CRM aberto (outra aba ou minimizado) -----------
+  var vistos = {};
+  function mostrarLocal(d){
+    if(vistos[d.id]) return; vistos[d.id] = 1;
+    if(!('Notification' in window) || Notification.permission !== 'granted' || !ls.get('pm-push-on')) return;
+    if(!document.hidden && document.hasFocus()) return;           // olhando o CRM: a Caixa de entrada já mostra
+    var corpo = texto(d.txt);
+    swPronto().then(function(reg){ reg.showNotification('CRM Mannare', {body:corpo, icon:ICON, badge:BADGE, tag:'n-' + d.id, data:{url:location.href.split('#')[0].split('?')[0] + '?n=' + encodeURIComponent(d.id), procId:d.procId || '', taskId:d.taskId || ''}}); })
+      .catch(function(){ try{ new Notification('CRM Mannare', {body:corpo, icon:ICON, tag:'n-' + d.id}); }catch(_){} });
+  }
+
+  // abrir o que a notificação aponta
+  function abrirAlvo(o){
+    try{
+      if(o.procId && o.taskId && typeof openTask === 'function' && procById(o.procId)){ openTask(o.procId, o.taskId); return; }
+      if(o.procId && typeof openDrawer === 'function' && procById(o.procId)){ openDrawer('proc', o.procId); return; }
+      ui.view = 'inbox'; render();
+    }catch(_){}
+  }
+  if(SUP) navigator.serviceWorker.addEventListener('message', function(ev){ var m = ev.data || {}; if(m.tipo === 'pm-abrir') abrirAlvo(m); });
+
+  // --- início, depois do login -------------------------------------------
+  var iniciado = false;
+  var tm = setInterval(function(){
+    if(iniciado || typeof DB === 'undefined' || !DB.ready || !me) return;
+    iniciado = true; clearInterval(tm);
+    sb.channel('pm-push-local').on('postgres_changes', {event:'INSERT', schema:'public', table:'pm_docs', filter:'tipo=eq.notificacao'}, function(p){
+      var d = p.new && p.new.dados; if(!d || d.lida || String(d.para || '').toLowerCase() !== String(me).toLowerCase()) return; mostrarLocal(d);
+    }).subscribe();
+    var q = new URLSearchParams(location.search).get('n');
+    if(q){ var n = (S.notifs || []).find(function(x){ return x.id === q; }); abrirAlvo(n || {}); history.replaceState(null, '', location.pathname + location.hash); }
+    if(estado() === 'on') inscrever().catch(function(err){ console.warn('push:', err); });
+    setTimeout(banner, 2500);
+  }, 600);
+
+  window.cgPush = {estado:estado, ativar:ativar, desativar:desativar, testar:testar};
+})();
+</script>
+<script id="mannare-mobile">
+/* ==========================================================================
+   MANNARE CRM · Camada mobile-first: menu hambúrguer, tabelas com rolagem
+   interna e formulários em 1 coluna no celular (até 768px).
+   ========================================================================== */
+(function(){
+  var MQ = matchMedia('(max-width:768px)'), root = document.documentElement;
+  var top = document.querySelector('header.top'), side = document.getElementById('side');
+  if(!top || !side) return;
+
+  // botão hambúrguer, fundo escuro e cabeçalho da gaveta
+  var bt = document.createElement('button');
+  bt.type = 'button'; bt.id = 'mxBurger'; bt.className = 'mx-burger';
+  bt.setAttribute('aria-label', 'Abrir menu'); bt.setAttribute('aria-controls', 'side'); bt.setAttribute('aria-expanded', 'false');
+  bt.innerHTML = '<span></span><span></span><span></span>';
+  top.insertBefore(bt, top.firstChild);
+  var scrim = document.createElement('div'); scrim.className = 'mx-scrim'; scrim.setAttribute('aria-hidden', 'true'); document.body.appendChild(scrim);
+  var logo = side.querySelector('.logo');
+  var hd = document.createElement('div'); hd.className = 'mx-sidehd';
+  hd.innerHTML = (logo ? '<img class="mx-logo" alt="Mannare Consultoria Urbanística" src="' + logo.getAttribute('src') + '">' : '<span></span>') + '<button class="mx-close" type="button" aria-label="Fechar menu">✕</button>';
+  side.insertBefore(hd, side.firstChild);
+  var slot = document.createElement('div'); slot.className = 'mx-espslot';
+  var busca = side.querySelector('.sside'); (busca || hd).insertAdjacentElement('afterend', slot);
+
+  var ultimoFoco = null;
+  function aberto(){ return root.classList.contains('mx-open'); }
+  function abrir(){
+    if(!MQ.matches) return;
+    ultimoFoco = document.activeElement;
+    var pill = top.querySelector('.esp-pill'); slot.innerHTML = pill ? pill.outerHTML : '';
+    root.classList.add('mx-open'); bt.setAttribute('aria-expanded', 'true'); bt.setAttribute('aria-label', 'Fechar menu');
+    side.setAttribute('role', 'dialog'); side.setAttribute('aria-modal', 'true');
+    side.scrollTop = 0;
+    setTimeout(function(){ var a = side.querySelector('.nav.on, .nav.active, .nav[aria-current="page"]') || side.querySelector('.nav'); if(a) a.focus({preventScroll:true}); }, 60);
+  }
+  function fechar(devolveFoco){
+    if(!aberto()) return;
+    root.classList.remove('mx-open'); bt.setAttribute('aria-expanded', 'false'); bt.setAttribute('aria-label', 'Abrir menu');
+    side.removeAttribute('role'); side.removeAttribute('aria-modal');
+    if(devolveFoco && ultimoFoco && ultimoFoco.focus) ultimoFoco.focus({preventScroll:true});
+  }
+  window.cgMenu = {abrir:abrir, fechar:fechar};
+
+  function aplica(){ root.classList.toggle('mx', MQ.matches); if(!MQ.matches) fechar(); else ajusta(); }
+  (MQ.addEventListener ? MQ.addEventListener('change', aplica) : MQ.addListener(aplica)); aplica();
+
+  bt.addEventListener('click', function(e){ e.stopPropagation(); aberto() ? fechar(true) : abrir(); });
+  scrim.addEventListener('click', function(){ fechar(true); });
+  hd.querySelector('.mx-close').addEventListener('click', function(e){ e.stopPropagation(); fechar(true); });
+  // escolher um item do menu ou trocar de espaço fecha a gaveta (o clique segue para o CRM)
+  var SEL_FECHA = '.side .nav[data-view], #btnSair, [data-espir]';
+  window.addEventListener('pointerup', function(e){
+    if(aberto() && e.target.closest && e.target.closest(SEL_FECHA)) setTimeout(function(){ fechar(false); }, 120);
+  }, true);
+  window.addEventListener('keydown', function(e){
+    if(aberto() && (e.key === 'Enter' || e.key === ' ') && e.target.closest && e.target.closest(SEL_FECHA)) setTimeout(function(){ fechar(false); }, 120);
+  }, true);
+  document.addEventListener('keydown', function(e){
+    if(!aberto()) return;
+    if(e.key === 'Escape'){ e.stopPropagation(); fechar(true); return; }
+    if(e.key === 'Tab'){   // foco preso dentro do menu aberto
+      var f = [].slice.call(side.querySelectorAll('button:not([disabled]),input,a[href],[tabindex]:not([tabindex="-1"])')).filter(function(x){ return x.offsetParent !== null; });
+      if(!f.length) return; var i = f.indexOf(document.activeElement);
+      if(e.shiftKey && i <= 0){ e.preventDefault(); f[f.length - 1].focus(); } else if(!e.shiftKey && i === f.length - 1){ e.preventDefault(); f[0].focus(); }
+    }
+  }, true);
+  // arrastar para a esquerda fecha
+  var x0 = null;
+  side.addEventListener('touchstart', function(e){ x0 = e.touches[0].clientX; }, {passive:true});
+  side.addEventListener('touchend', function(e){ if(x0 !== null && e.changedTouches[0].clientX - x0 < -60) fechar(false); x0 = null; }, {passive:true});
+
+  // ---------- ajustes de conteúdo no celular ----------
+  function largo(el){ var cs = getComputedStyle(el); return /(auto|scroll)/.test(cs.overflowX); }
+  function ajusta(){
+    if(!MQ.matches) return;
+    var areas = document.querySelectorAll('#view, #drawer, #layer, .cg-ov, .npanel');
+    areas.forEach(function(a){
+      // 1) tabelas: sempre dentro de um contêiner com rolagem interna
+      a.querySelectorAll('table').forEach(function(t){
+        var p = t.parentElement; if(!p || p.classList.contains('mx-scroll')) return;
+        if(largo(p) && p.getBoundingClientRect().width <= innerWidth + 1) return;
+        var w = document.createElement('div'); w.className = 'mx-scroll'; p.insertBefore(w, t); w.appendChild(t);
+      });
+      // 2) grades de formulário: 1 coluna
+      a.querySelectorAll('div, form, section, fieldset').forEach(function(g){
+        if(g.classList.contains('mx-1col') || g.children.length < 2) return;
+        var cs = getComputedStyle(g); if(cs.display.indexOf('grid') < 0 || cs.gridTemplateColumns.split(' ').length < 2) return;
+        if(g.closest('.pboard, .mboard, .pgh, .pga, .pgb, .cal, .calgrid, .cg-row, .cg-hrow, .g')) return;
+        var k = 0; for(var i = 0; i < g.children.length; i++){ var c = g.children[i]; if(/^(INPUT|SELECT|TEXTAREA)$/.test(c.tagName) || c.querySelector('input:not([type=checkbox]):not([type=radio]), select, textarea')) k++; }
+        if(k / g.children.length >= .5) g.classList.add('mx-1col');
+      });
+      // 3) botões do topo da página: uma linha com rolagem interna
+      a.querySelectorAll('.pagehead').forEach(function(ph){
+        if(ph.querySelector(':scope > .mx-acts')) return;
+        var bs = [].filter.call(ph.children, function(c){ return c.matches('button, .btn, a.btn, .seg'); });
+        if(!bs.length) return; var w = document.createElement('div'); w.className = 'mx-acts'; ph.appendChild(w); bs.forEach(function(b){ w.appendChild(b); });
+      });
+    });
+    // 4) qualquer outro bloco mais largo que a tela ganha rolagem própria
+    var view = document.getElementById('view');
+    if(view) [].forEach.call(view.querySelectorAll(':scope > * > *, :scope > *'), function(el){
+      if(el.classList.contains('mx-scroll') || largo(el)) return;
+      if(el.scrollWidth > el.clientWidth + 4 && el.getBoundingClientRect().width >= innerWidth - 40 && getComputedStyle(el).display !== 'grid') el.classList.add('mx-scroll');
+    });
+  }
+  var tm = null, obs = new MutationObserver(function(){ if(!MQ.matches) return; clearTimeout(tm); tm = setTimeout(ajusta, 90); });
+  ['view', 'drawer', 'layer'].forEach(function(id){ var el = document.getElementById(id); if(el) obs.observe(el, {childList:true, subtree:true}); });
+  obs.observe(document.body, {childList:true});
+  window.addEventListener('orientationchange', function(){ setTimeout(ajusta, 200); });
 })();
 </script>
 </body>
