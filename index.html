@@ -3157,6 +3157,7 @@ body.dwbusy,body.dwbusy *{user-select:none!important}
 .au-chip.on{background:#0B0B1A;color:#FDCA40}
 .st-ferias{background:#FDCA40!important}
 @media (max-width:640px){.ev-g2{grid-template-columns:1fr}.ev-it{grid-template-columns:44px minmax(0,1fr)}.ev-ac{grid-column:2}.au-it{grid-template-columns:1fr auto}.au-it .au-tag{grid-column:1}}
+.plhead{flex-wrap:wrap;row-gap:8px}.plhead [data-evlista],.plhead [data-evnovo]{white-space:nowrap}
 
 /* ==========================================================================
    MANNARE CRM · Camada mobile-first (até 768px)
@@ -11865,8 +11866,27 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
   }
 
   /* ===================== integração ===================== */
+  // eventos do CRM aparecem no Planejador e em "Minhas reuniões" na hora (sem esperar a ponte trazer da agenda)
+  function injetar(){
+    if(!S.extra) return; var g = S.extra['config:gcal_eventos'] = S.extra['config:gcal_eventos'] || {};
+    var cancel = {}; S.eventos.forEach(function(e){ if(e.status === 'cancelado' && e.gid) cancel[e.gid] = 1; });
+    Object.keys(g).forEach(function(k){ if(Array.isArray(g[k])) g[k] = g[k].filter(function(v){ return !v._crm && !cancel[v.id]; }); });
+    S.eventos.forEach(function(e){
+      if(!e.titulo || e.status === 'cancelado' || e.diaTodo || !e.data || !e.ini || !e.fim) return;
+      var quem = {}; [e.dono].concat(e.participantes || []).forEach(function(m){ if(m) quem[String(m).toLowerCase()] = 1; });
+      var ini = new Date(e.data + 'T' + e.ini + ':00'), fim = new Date(e.data + 'T' + e.fim + ':00');
+      Object.keys(quem).forEach(function(u){
+        var l = g[u] = Array.isArray(g[u]) ? g[u] : [];
+        if(e.gid && l.some(function(v){ return v.id === e.gid; })) return;   // a agenda já trouxe
+        l.push({id:e.gid || ('crm-' + e.id), _crm:e.id, titulo:e.titulo, inicio:ini.toISOString(), fim:fim.toISOString(), data:e.data, hora:e.ini, horaFim:e.fim,
+          local:e.local || '', link:e.meetLink || '', convidados:(e.participantes || []).length + (e.externos || []).length, abrir:e.htmlLink || ''});
+      });
+    });
+    Object.keys(g).forEach(function(k){ if(Array.isArray(g[k])) g[k].sort(function(a, b){ return String(a.inicio).localeCompare(String(b.inicio)); }); });
+  }
   var _render = window.render;
   window.render = render = function(){
+    try{ injetar(); }catch(err){ console.warn('eventos/injetar:', err); }
     var r = _render.apply(this, arguments);
     try{
       if(!conferiu && typeof DB !== 'undefined' && DB.ready) confereMeuAcesso();
