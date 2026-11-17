@@ -3341,6 +3341,75 @@ button.cu-row:hover{background:#F6F7F9!important;color:#1F2033!important}
 .fc-dlg .f input,.fc-dlg .f select,.fc-dlg .f textarea{border:1px solid #C9CCDA;border-radius:12px!important;padding:9px 12px;font:inherit;font-weight:500;color:var(--ink,#0B0B1A);min-height:40px;background:#fff;width:100%}
 @media (max-width:640px){.fc-g{grid-template-columns:1fr}}
 
+/* Modelos de cronograma */
+.cm-dlg{width:min(640px,100%)!important}
+.cm-dlg.cm-ed{width:min(900px,100%)!important}
+.cm-hd{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.cm-hd h2{margin:0;font-size:19px}
+.cm-g{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 12px}
+.cm-dlg .f{display:flex;flex-direction:column;gap:6px;font-size:12.5px;font-weight:600;color:var(--muted,#55577A)}
+.cm-dlg .f input,.cm-dlg .f select{border:1px solid #C9CCDA;border-radius:12px!important;padding:9px 12px;font:inherit;font-weight:500;color:var(--ink,#0B0B1A);min-height:40px;background:#fff;width:100%}
+.cm-tbw{border:1px solid #E1E3EA;border-radius:12px!important;max-height:52vh;overflow:auto}
+.cm-tb{width:100%;border-collapse:collapse;font-size:13.5px;min-width:640px}
+.cm-tb th{position:sticky;top:0;background:#F4F7FD;text-align:left;font-size:11.5px;font-weight:700;color:#55577A;padding:8px 6px;z-index:1}
+.cm-tb td{padding:4px 6px;border-top:1px solid #EEF0F4;vertical-align:middle}
+.cm-tb td.cm-n{width:34px;color:#8C8FA3;text-align:center;font-variant-numeric:tabular-nums}
+.cm-tb input{width:100%;border:1px solid transparent;border-radius:8px!important;padding:6px 8px;font:inherit;background:transparent;min-height:32px}
+.cm-tb input:hover{border-color:#DCDDE3}
+.cm-tb input:focus{border-color:var(--azul,#0000FF);background:#fff;outline:0}
+.cm-tb input:disabled{color:#8C8FA3}
+.cm-tb td:nth-child(3){width:110px}.cm-tb td:nth-child(4){width:130px}
+.cm-nome{display:flex;align-items:center;gap:4px}
+.cm-diam{color:#0000FF;font-size:12px}
+.cm-tb tr.marco input[data-cmf=nome]{font-weight:600}
+.cm-ac{white-space:nowrap;width:1%}
+.cm-ac button{width:28px;height:28px;border:0;background:transparent;border-radius:8px!important;cursor:pointer;color:#55577A;font-size:13px}
+.cm-ac button:hover{background:#EEF0F6}
+.cm-ac button.on{color:#0000FF}
+.cm-ac .cm-del:hover{background:#FEE4E2;color:#B42318}
+.cm-add{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.cm-tot{font-size:13px;color:#55577A}
+.cm-dica{margin:0;font-size:12.5px;color:#55577A;background:#F4F7FD;border-radius:10px!important;padding:8px 12px}
+.cm-ft{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.cm-lst{display:flex;flex-direction:column;gap:6px;max-height:46vh;overflow:auto}
+.cm-op{display:flex;gap:10px;align-items:flex-start;border:1px solid #DCDDE3;border-radius:12px!important;padding:10px 12px;cursor:pointer}
+.cm-op.on{border-color:var(--azul,#0000FF);background:#F3F5FF}
+.cm-op input{margin-top:3px;accent-color:var(--azul,#0000FF)}
+.cm-op small{display:block;color:#55577A;font-size:12.5px;margin-top:2px}
+.cm-op em{font-style:normal;font-size:11px;font-weight:700;color:#065F38;background:#E3F8EC;border-radius:999px!important;padding:2px 7px;margin-left:4px}
+.cm-sug{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:10px 12px;background:#FFF9E8;border-bottom:1px solid #F1E3B5;font-size:13px;color:#5C4400}
+.cm-sug button{border:1px solid #E8D18A;background:#fff;border-radius:999px!important;padding:5px 12px;font:inherit;font-size:12.5px;cursor:pointer;color:#0B0B1A}
+.cm-sug button:hover{border-color:#C99500;background:#FFF3CC}
+@media (max-width:640px){.cm-g{grid-template-columns:1fr}}
+
+/* ===== iPad / tablet (769–1180px) ===== */
+@media (min-width:769px) and (max-width:1180px){
+  header.top{flex-wrap:nowrap!important;min-width:0!important;gap:8px!important}
+  header.top>*{flex:none;min-width:0}
+  header.top .crumbs{flex:1 1 auto!important;min-width:0!important;overflow:hidden;white-space:nowrap}
+  header.top .crumbs>span{display:none!important}
+  header.top .crumbs b{display:block;overflow:hidden;text-overflow:ellipsis}
+  header.top .spacer{display:none!important}
+  #btnBack,#btnFwd,#nextMeet{display:none!important}
+  header.top .esp-pill{margin-right:0!important;max-width:170px;overflow:hidden}
+  #sync{font-size:0!important;width:10px;height:10px;padding:0!important;border-radius:50%!important;overflow:hidden}
+  .chip-me .tx{display:none!important}
+  .chip-me{padding:0!important;gap:0!important}
+  #topNew{padding:0 12px!important;white-space:nowrap}
+  .overlay{z-index:190!important}
+  .drawer,#drawer{z-index:200!important;max-width:calc(100vw - 20px)!important}
+  .modal{max-width:calc(100vw - 32px)!important}
+  .plan{grid-template-columns:1fr!important;height:auto!important}
+  .plside{max-height:none!important}
+  .plcal{height:78vh!important;min-height:560px}
+  #view table{max-width:100%}
+}
+@media (min-width:769px) and (max-width:1100px){
+  #topNew{font-size:0!important;width:40px;height:40px;padding:0!important;justify-content:center}
+  #topNew svg{width:20px;height:20px;margin:0!important}
+  #topTimer{max-width:110px;overflow:hidden}
+}
+
 /* ==========================================================================
    MANNARE CRM · Camada mobile-first (até 768px)
    Celular: menu hambúrguer, 1 coluna, espaçamentos menores e
@@ -12770,6 +12839,195 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
     if(ov && ov.contains(tg) && tg.name === 'fctipo') mostraParc(); });
   document.addEventListener('input', function(ev){ var tg = ev.target; if(!ov || !ov.contains(tg) || !tg.dataset.fcmask) return; tg.value = tg.dataset.fcmask === 'doc' ? fmtDoc(tg.value) : fmtTel(tg.value); });
   document.addEventListener('keydown', function(ev){ if(ev.key === 'Escape' && ov){ ev.stopPropagation(); fechar(); } }, true);
+})();
+</script>
+<script id="mannare-cronomod">
+/* ==========================================================================
+   MANNARE CRM · Modelos de cronograma (cronogramas prontos)
+   - Cadastros › Modelos de cronograma: criar, editar, duplicar, excluir.
+   - No cronograma do processo/material: "Usar modelo" e "Salvar como modelo".
+   ========================================================================== */
+(function(){
+  if(typeof S === 'undefined' || typeof crDe !== 'function') return;
+  var x = function(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'}[c]; }); };
+  var nz = function(s){ return String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim(); };
+  var t = function(m){ return typeof toast === 'function' ? toast(m) : console.log(m); };
+  var lista = function(){ return (S.cfg.cronoModelos = S.cfg.cronoModelos || []); };
+  var TIPOS_OK = {TI:'TI', II:'II', TT:'TT', IT:'IT', FS:'TI', SS:'II', FF:'TT', SF:'IT'};
+
+  // predecessoras do modelo: por número da linha ("2", "2II", "3+2", "1TT-1")
+  function predTxt(ps){ return (ps || []).map(function(p){ return (p.i + 1) + (p.tipo && p.tipo !== 'TI' ? p.tipo : '') + (p.lag ? (p.lag > 0 ? '+' : '') + p.lag : ''); }).join(';'); }
+  function predParse(txt, idx){ var out = [], err = []; String(txt || '').split(/[;,\s]+/).filter(Boolean).forEach(function(s){ var m = s.toUpperCase().match(/^(\d+)(TI|II|TT|IT|FS|SS|FF|SF)?([+-]\d+)?(D|DU)?$/);
+      if(!m || +m[1] - 1 === idx || +m[1] < 1){ err.push(s); return; } out.push({i:+m[1] - 1, tipo:TIPOS_OK[m[2] || 'TI'], lag:m[3] ? +m[3] : 0}); }); return {out:out, err:err}; }
+  // duração total (dias úteis) usando o próprio motor do cronograma
+  function duracao(m){
+    if(!m.etapas || !m.etapas.length) return 0;
+    try{ var cr = paraCrono(m, (typeof TODAY !== 'undefined' ? TODAY : new Date().toISOString().slice(0, 10))), c = crCalc(cr), a = '', b = '';
+      cr.tarefas.forEach(function(tt){ var r = c.R[tt.id]; if(!a || r.ini < a) a = r.ini; if(!b || r.fim > b) b = r.fim; }); return typeof crConta === 'function' ? crConta(a, b) : 0; }catch(_){ return 0; }
+  }
+  function paraCrono(m, ini){
+    var ids = m.etapas.map(function(){ return uid(); });
+    return {ini:ini, tarefas:m.etapas.map(function(e, i){ return crNovaT({id:ids[i], nome:e.nome, dur:e.marco ? 0 : Math.max(1, +e.dur || 1), marco:!!e.marco, nivel:+e.nivel || 0,
+      preds:(e.preds || []).filter(function(p){ return ids[p.i]; }).map(function(p){ return {id:ids[p.i], tipo:p.tipo || 'TI', lag:+p.lag || 0}; })}); })};
+  }
+  function deCrono(cr){
+    var T = cr.tarefas || [], pos = {}; T.forEach(function(tt, i){ pos[tt.id] = i; });
+    return T.map(function(tt){ return {nome:tt.nome || '', dur:tt.marco ? 0 : Math.max(1, +tt.dur || 1), marco:!!tt.marco, nivel:+tt.nivel || 0,
+      preds:(tt.preds || []).filter(function(p){ return pos[p.id] !== undefined; }).map(function(p){ return {i:pos[p.id], tipo:p.tipo || 'TI', lag:+p.lag || 0}; })}; });
+  }
+  window.cgCronoMod = {lista:lista, duracao:duracao};
+
+  /* ---------- janela ---------- */
+  var ov = null, st = null;
+  function fechar(){ if(ov){ ov.remove(); ov = null; st = null; } }
+  function abrir(html, cls){ if(ov) ov.remove(); ov = document.createElement('div'); ov.className = 'cg-ov cm-ov'; ov.innerHTML = '<div class="cg-dlg cm-dlg ' + (cls || '') + '" role="dialog" aria-modal="true">' + html + '</div>'; document.body.appendChild(ov); }
+
+  /* ---------- editor de modelo ---------- */
+  function editor(m){
+    st = {modo:'edit', m:JSON.parse(JSON.stringify(m))}; if(!st.m.etapas.length) st.m.etapas.push({nome:'', dur:5, marco:false, nivel:0, preds:[]}); desenhaEditor(true);
+  }
+  function desenhaEditor(foco){
+    var m = st.m, nd = duracao(m);
+    var linhas = m.etapas.map(function(e, i){
+      return '<tr data-cmi="' + i + '" class="' + (e.marco ? 'marco' : '') + '"><td class="cm-n">' + (i + 1) + '</td>'
+        + '<td><div class="cm-nome" style="padding-left:' + (e.nivel * 18) + 'px">' + (e.marco ? '<span class="cm-diam">◆</span>' : '') + '<input data-cmf="nome" value="' + x(e.nome) + '" placeholder="' + (e.marco ? 'Nome do marco' : 'Nome da etapa') + '" aria-label="Etapa ' + (i + 1) + '"></div></td>'
+        + '<td><input data-cmf="dur" inputmode="numeric" value="' + (e.marco ? 0 : x(e.dur)) + '" ' + (e.marco ? 'disabled' : '') + ' aria-label="Duração em dias úteis"></td>'
+        + '<td><input data-cmf="preds" value="' + x(predTxt(e.preds)) + '" placeholder="ex.: ' + (i ? i : '—') + '" aria-label="Predecessoras"></td>'
+        + '<td class="cm-ac"><button data-cma="out" title="Recuar para a esquerda" aria-label="Recuar para a esquerda">⇤</button><button data-cma="in" title="Recuar (vira subetapa)" aria-label="Recuar">⇥</button><button data-cma="up" title="Subir" aria-label="Subir">↑</button><button data-cma="down" title="Descer" aria-label="Descer">↓</button><button data-cma="marco" title="Marco (duração 0)" aria-label="Alternar marco" class="' + (e.marco ? 'on' : '') + '">◆</button><button data-cma="del" title="Excluir" aria-label="Excluir etapa" class="cm-del">✕</button></td></tr>'; }).join('');
+    abrir('<div class="cm-hd"><h2>' + (st.m.id && lista().some(function(v){ return v.id === st.m.id; }) ? 'Editar modelo de cronograma' : 'Novo modelo de cronograma') + '</h2><button class="iconbtn" data-cmx aria-label="Fechar">✕</button></div>'
+      + '<div class="cm-g"><label class="f">Nome do modelo<input data-cmm="nome" value="' + x(m.nome || '') + '" placeholder="Ex.: Alvará de construção | SEUMA"></label>'
+      + '<label class="f">Serviços em que costuma ser usado<input data-cmm="servicos" value="' + x(m.servicos || '') + '" placeholder="Ex.: alvará, licença de construção (ajuda a sugerir o modelo)"></label></div>'
+      + '<div class="cm-tbw mx-scroll"><table class="cm-tb"><thead><tr><th>Nº</th><th>Etapa</th><th title="Dias úteis">Duração (dias úteis)</th><th title="Número da linha que precisa terminar antes. Ex.: 2 · 2II (começa junto) · 3+2 (2 dias depois)">Predecessoras</th><th></th></tr></thead><tbody>' + linhas + '</tbody></table></div>'
+      + '<div class="cm-add"><button class="btn sm" data-cmadd="etapa">+ Etapa</button><button class="btn sm" data-cmadd="marco">◆ Marco</button><span class="spacer"></span><span class="cm-tot">' + m.etapas.length + ' linha' + (m.etapas.length > 1 ? 's' : '') + (nd ? ' · duração estimada <b>' + nd + ' dias úteis</b>' : '') + '</span></div>'
+      + '<p class="cm-dica">Predecessoras: número da linha que precisa terminar antes (<b>2</b>). Use <b>2II</b> para começar junto, <b>3+2</b> para começar 2 dias úteis depois, <b>1;2</b> para depender de duas linhas. Linha com subetapas vira resumo e soma as datas delas.</p>'
+      + '<div class="cm-ft">' + (lista().some(function(v){ return v.id === st.m.id; }) ? '<button class="btn danger" data-cmdel>Excluir modelo</button><button class="btn" data-cmdup>Duplicar</button>' : '') + '<span class="spacer"></span><button class="btn" data-cmx>Cancelar</button><button class="btn primary" data-cmsave>Salvar modelo</button></div>', 'cm-ed');
+    if(foco){ var f = ov.querySelector('[data-cmm=nome]'); if(f && !f.value) f.focus(); }
+  }
+  function lerEditor(){
+    if(!ov || !st || st.modo !== 'edit') return [];
+    var m = st.m, erros = [];
+    ov.querySelectorAll('[data-cmm]').forEach(function(i){ m[i.dataset.cmm] = i.value.trim(); });
+    ov.querySelectorAll('tr[data-cmi]').forEach(function(tr){ var i = +tr.dataset.cmi, e = m.etapas[i]; if(!e) return;
+      e.nome = tr.querySelector('[data-cmf=nome]').value.trim(); if(!e.marco) e.dur = Math.max(1, parseInt(tr.querySelector('[data-cmf=dur]').value, 10) || 1);
+      var pr = predParse(tr.querySelector('[data-cmf=preds]').value, i); e.preds = pr.out; if(pr.err.length) erros.push('linha ' + (i + 1) + ': ' + pr.err.join(', ')); });
+    return erros;
+  }
+  function bloco(T, j){ var f = j; while(f + 1 < T.length && T[f + 1].nivel > T[j].nivel) f++; return f; }
+  function moverPreds(T, mapa){ T.forEach(function(e){ e.preds = (e.preds || []).map(function(p){ return mapa[p.i] === undefined ? null : Object.assign({}, p, {i:mapa[p.i]}); }).filter(Boolean); }); }
+  function acao(i, a){
+    var T = st.m.etapas, e = T[i]; if(!e) return; var antes = T.slice();
+    if(a === 'in'){ if(!i || T[i - 1].nivel < e.nivel) return t('Não dá para recuar mais'); var f = bloco(T, i); for(var j = i; j <= f; j++) T[j].nivel++; }
+    else if(a === 'out'){ if(!e.nivel) return; var f2 = bloco(T, i); for(var k = i; k <= f2; k++) T[k].nivel--; }
+    else if(a === 'marco'){ e.marco = !e.marco; e.dur = e.marco ? 0 : 1; }
+    else if(a === 'del'){ T.splice(i, 1); var mp = {}; antes.forEach(function(v, o){ var n2 = T.indexOf(v); if(n2 >= 0) mp[o] = n2; }); moverPreds(T, mp); }
+    else if(a === 'up' || a === 'down'){ var f3 = bloco(T, i), bl = T.slice(i, f3 + 1);
+      if(a === 'up'){ var p = i - 1; while(p >= 0 && T[p].nivel > e.nivel) p--; if(p < 0 || T[p].nivel < e.nivel) return; T.splice(i, bl.length); T.splice(p, 0, ...bl); }
+      else { var nx = f3 + 1; if(nx >= T.length || T[nx].nivel < e.nivel) return; var fn = bloco(T, nx); T.splice(i, bl.length); T.splice(i + (fn - nx + 1), 0, ...bl); }
+      var mp2 = {}; antes.forEach(function(v, o){ mp2[o] = T.indexOf(v); }); moverPreds(T, mp2); }
+    desenhaEditor();
+  }
+  function salvarModelo(){
+    var erros = lerEditor(), m = st.m;
+    if(!m.nome){ t('Dê um nome ao modelo'); ov.querySelector('[data-cmm=nome]').focus(); return; }
+    m.etapas = m.etapas.filter(function(e){ return e.nome; }); if(!m.etapas.length){ t('Adicione pelo menos uma etapa com nome'); desenhaEditor(); return; }
+    if(erros.length){ t('Predecessora não entendida (' + erros[0] + ')'); return; }
+    var ls = lista(), k = ls.findIndex(function(v){ return v.id === m.id; }), agora = new Date().toISOString();
+    if(!m.id){ m.id = uid(); m.criadoEm = agora; m.criadoPor = me; } m.atualizadoEm = agora;
+    if(k >= 0) ls[k] = m; else ls.push(m); save(); fechar(); t('Modelo salvo'); render();
+  }
+
+  /* ---------- aplicar no cronograma ---------- */
+  function servicoDe(o){ return [o.servico, o.tipo, o.titulo, (o.prop || {}).tipo].filter(Boolean).join(' '); }
+  function ordenados(o){ var sv = nz(servicoDe(o || {}));
+    return lista().slice().map(function(m){ var sc = 0; nz(m.servicos + ' ' + m.nome).split(/[,;|]+|\s+/).filter(function(w){ return w.length > 3; }).forEach(function(w){ if(sv.indexOf(w) >= 0) sc++; }); return {m:m, sc:sc}; })
+      .sort(function(a, b){ return b.sc - a.sc || String(a.m.nome).localeCompare(String(b.m.nome), 'pt'); }); }
+  function escolher(ref){
+    var o = ntOwner(ref); if(!o) return; var cr = crDe(o), os = ordenados(o);
+    if(!os.length){ abrir('<div class="cm-hd"><h2>Usar modelo de cronograma</h2><button class="iconbtn" data-cmx aria-label="Fechar">✕</button></div><p>Nenhum modelo cadastrado ainda. Monte um cronograma e use <b>Salvar como modelo</b>, ou cadastre em <b>Cadastros › Modelos de cronograma</b>.</p><div class="cm-ft"><span class="spacer"></span><button class="btn" data-cmx>Fechar</button><button class="btn primary" data-cmnovo>+ Novo modelo</button></div>'); return; }
+    st = {modo:'aplicar', ref:ref, sel:os[0].m.id};
+    abrir('<div class="cm-hd"><h2>Usar modelo de cronograma</h2><button class="iconbtn" data-cmx aria-label="Fechar">✕</button></div>'
+      + '<div class="cm-lst" role="radiogroup">' + os.map(function(v, i){ var m = v.m, d = duracao(m); return '<label class="cm-op ' + (i === 0 ? 'on' : '') + '"><input type="radio" name="cmsel" value="' + m.id + '" ' + (i === 0 ? 'checked' : '') + '><span><b>' + x(m.nome) + '</b>' + (v.sc ? ' <em>combina com o serviço</em>' : '') + '<small>' + m.etapas.length + ' linha' + (m.etapas.length > 1 ? 's' : '') + (d ? ' · ' + d + ' dias úteis' : '') + (m.servicos ? ' · ' + x(m.servicos) : '') + '</small></span></label>'; }).join('') + '</div>'
+      + '<div class="cm-g"><label class="f">Data de início<input type="date" data-cmini value="' + x(cr.ini || TODAY) + '"></label>'
+      + (cr.tarefas.length ? '<label class="f">As ' + cr.tarefas.length + ' tarefas que já existem<select data-cmmodo><option value="add">Manter e acrescentar o modelo no final</option><option value="sub">Substituir pelo modelo</option></select></label>' : '') + '</div>'
+      + '<div class="cm-ft"><span class="spacer"></span><button class="btn" data-cmx>Cancelar</button><button class="btn primary" data-cmaplicar>Aplicar modelo</button></div>');
+  }
+  function aplicar(){
+    var o = ntOwner(st.ref), m = lista().find(function(v){ return v.id === (ov.querySelector('[name=cmsel]:checked') || {}).value; }); if(!o || !m) return;
+    var cr = crDe(o), ini = (ov.querySelector('[data-cmini]') || {}).value || cr.ini, modo = (ov.querySelector('[data-cmmodo]') || {}).value || 'add';
+    if(modo === 'sub' && cr.tarefas.length && !confirm('Substituir as ' + cr.tarefas.length + ' tarefas do cronograma pelo modelo "' + m.nome + '"?')) return;
+    var novo = paraCrono(m, ini);
+    if(modo === 'sub') cr.tarefas = novo.tarefas; else cr.tarefas = cr.tarefas.concat(novo.tarefas);
+    cr.ini = ini; cr.modelo = {id:m.id, nome:m.nome, em:new Date().toISOString()};
+    if(typeof logP === 'function' && o.tarefas) logP(o, 'aplicou o modelo de cronograma “' + m.nome + '”');
+    var ref = st.ref; fechar(); if(typeof crSalvar === 'function') crSalvar(ref); else { save(); render(); } t('Modelo "' + m.nome + '" aplicado');
+  }
+  function salvarDe(ref){
+    var o = ntOwner(ref); if(!o) return; var cr = crDe(o); if(!cr.tarefas.length){ t('O cronograma está vazio'); return; }
+    editor({nome:'', servicos:servicoDe(o).slice(0, 80), etapas:deCrono(cr)});
+  }
+
+  /* ---------- botões no cronograma ---------- */
+  function decorar(){
+    document.querySelectorAll('.crwrap[data-cr]').forEach(function(w){
+      var ref = w.dataset.cr; if(ref.indexOf('L:') === 0) return; var tool = w.querySelector('.crtool'); if(!tool || tool.querySelector('[data-cmusar]')) return;
+      tool.insertAdjacentHTML('beforeend', '<span class="crsep"></span><button class="btn sm" data-cmusar="' + x(ref) + '" title="Aplicar um cronograma pronto">Usar modelo</button><button class="btn sm ghost" data-cmsalvar="' + x(ref) + '" title="Guardar este cronograma como modelo">Salvar como modelo</button>');
+      var o = ntOwner(ref); if(o && !crDe(o).tarefas.length && lista().length && !w.querySelector('.cm-sug')){
+        var os = ordenados(o).slice(0, 4); tool.insertAdjacentHTML('afterend', '<div class="cm-sug">Começar com um cronograma pronto: ' + os.map(function(v){ return '<button data-cmrapido="' + x(ref) + '|' + v.m.id + '">' + x(v.m.nome) + '</button>'; }).join('') + '</div>'); }
+    });
+  }
+  var mo = new MutationObserver(function(){ clearTimeout(mo._t); mo._t = setTimeout(decorar, 50); });
+  ['drawer', 'view', 'layer'].forEach(function(id){ var el = document.getElementById(id); if(el) mo.observe(el, {childList:true, subtree:true}); });
+
+  /* ---------- Cadastros › Modelos de cronograma ---------- */
+  function tela(){
+    var q = nz(ui.cadQ || ''), ls = lista().filter(function(m){ return !q || nz(m.nome + ' ' + m.servicos + ' ' + m.etapas.map(function(e){ return e.nome; }).join(' ')).indexOf(q) >= 0; }).sort(function(a, b){ return String(a.nome).localeCompare(String(b.nome), 'pt'); });
+    var cont = function(k){ return k === 'srv' ? (S.servs || []).length : k === 'cli' ? (S.clis || []).length : k === 'forn' ? (S.cfg.fornecedores || []).length : k === 'mod' ? (typeof modelosAtivos === 'function' ? modelosAtivos().length : 0) : lista().length; };
+    var usos = function(m){ return (S.procs || []).concat(S.mats || []).filter(function(o){ return o.crono && o.crono.modelo && o.crono.modelo.id === m.id; }).length; };
+    return '<div class="pagehead"><div><h1>Cadastros</h1><p>Serviços, clientes, fornecedores e parceiros, modelos de tarefas e de cronograma.</p></div><span class="spacer"></span><button class="btn primary" data-cmnovo>+ Novo modelo de cronograma</button></div>'
+      + '<div class="seg" style="margin-bottom:14px">' + [['srv', 'Serviços'], ['cli', 'Clientes'], ['forn', 'Fornecedores e parceiros'], ['mod', 'Modelos de tarefas'], ['crono', 'Modelos de cronograma']].map(function(s){ return '<button data-cadsub="' + s[0] + '" class="' + (s[0] === 'crono' ? 'on' : '') + '">' + s[1] + ' <span class="n">' + cont(s[0]) + '</span></button>'; }).join('') + '</div>'
+      + '<div class="filters"><input type="search" id="cadq" placeholder="Buscar modelo, serviço ou etapa" value="' + x(ui.cadQ || '') + '"></div>'
+      + '<div class="blk" style="padding:0;overflow:auto"><table class="atable"><thead><tr><th>Modelo</th><th>Serviços</th><th>Etapas</th><th style="text-align:right">Duração</th><th style="text-align:right">Em uso</th></tr></thead><tbody>'
+      + (ls.map(function(m){ var d = duracao(m), u = usos(m); return '<tr data-cmedit="' + m.id + '" style="cursor:pointer"><td><b>' + x(m.nome) + '</b></td><td>' + x(m.servicos || '—') + '</td><td>' + x(m.etapas.filter(function(e){ return !e.nivel; }).slice(0, 4).map(function(e){ return e.nome; }).join(' → ')) + (m.etapas.length > 4 ? ' <span class="sub">+' + (m.etapas.length - 4) + '</span>' : '') + '</td><td style="text-align:right">' + (d ? d + ' dias úteis' : '—') + '</td><td style="text-align:right">' + (u ? u + ' cronograma' + (u > 1 ? 's' : '') : '—') + '</td></tr>'; }).join('')
+        || '<tr><td colspan="5" class="empty">' + (lista().length ? 'Nada com essa busca.' : 'Nenhum modelo ainda. Use <b>Novo modelo de cronograma</b>, ou monte o cronograma de um processo e clique em <b>Salvar como modelo</b>.') + '</td></tr>') + '</tbody></table></div>'
+      + '<p class="hint">No cronograma de um processo ou material técnico, use <b>Usar modelo</b> para aplicar um destes com a data de início que você escolher. As datas são calculadas em dias úteis, com os feriados da Mannare.</p>';
+  }
+  if(typeof renderCad === 'function'){
+    var _rc = renderCad;
+    renderCad = function(){
+      if(ui.cadSub === 'crono'){ document.getElementById('view').innerHTML = tela(); return; }
+      var r = _rc.apply(this, arguments), seg = document.querySelector('#view .seg');
+      if(seg && !seg.querySelector('[data-cadsub=crono]')) seg.insertAdjacentHTML('beforeend', '<button data-cadsub="crono">Modelos de cronograma <span class="n">' + lista().length + '</span></button>');
+      return r;
+    };
+  }
+
+  /* ---------- cliques ---------- */
+  window.addEventListener('click', function(ev){
+    var tg = ev.target; if(!tg.closest) return; var el;
+    if((el = tg.closest('[data-cmusar]'))){ ev.stopPropagation(); escolher(el.dataset.cmusar); return; }
+    if((el = tg.closest('[data-cmsalvar]'))){ ev.stopPropagation(); salvarDe(el.dataset.cmsalvar); return; }
+    if((el = tg.closest('[data-cmrapido]'))){ ev.stopPropagation(); var pr = el.dataset.cmrapido.split('|'); escolher(pr[0]); if(ov){ var r = ov.querySelector('[name=cmsel][value="' + pr[1] + '"]'); if(r){ r.checked = true; ov.querySelectorAll('.cm-op').forEach(function(l){ l.classList.toggle('on', l.contains(r)); }); } } return; }
+    if(tg.closest('[data-cmnovo]')){ ev.stopPropagation(); editor({nome:'', servicos:'', etapas:[]}); return; }
+    if((el = tg.closest('[data-cmedit]'))){ ev.stopPropagation(); var m = lista().find(function(v){ return v.id === el.dataset.cmedit; }); if(m) editor(m); return; }
+    if(!ov || !ov.contains(tg)) return;
+    if(tg.closest('[data-cmx]') || tg === ov){ fechar(); return; }
+    ev.stopPropagation();
+    if(st && st.modo === 'edit'){
+      if((el = tg.closest('[data-cma]'))){ lerEditor(); acao(+el.closest('tr').dataset.cmi, el.dataset.cma); return; }
+      if((el = tg.closest('[data-cmadd]'))){ lerEditor(); var mc = el.dataset.cmadd === 'marco', ult = st.m.etapas[st.m.etapas.length - 1]; st.m.etapas.push({nome:'', dur:mc ? 0 : 5, marco:mc, nivel:ult ? ult.nivel : 0, preds:ult ? [{i:st.m.etapas.length - 1, tipo:'TI', lag:0}] : []}); desenhaEditor(); var ins = ov.querySelectorAll('[data-cmf=nome]'); ins[ins.length - 1].focus(); return; }
+      if(tg.closest('[data-cmsave]')){ salvarModelo(); return; }
+      if(tg.closest('[data-cmdup]')){ lerEditor(); var c = JSON.parse(JSON.stringify(st.m)); delete c.id; c.nome = c.nome + ' (cópia)'; editor(c); return; }
+      if(tg.closest('[data-cmdel]')){ if(!confirm('Excluir o modelo "' + st.m.nome + '"? Os cronogramas que já usaram o modelo continuam como estão.')) return; S.cfg.cronoModelos = lista().filter(function(v){ return v.id !== st.m.id; }); save(); fechar(); t('Modelo excluído'); render(); return; }
+    }
+    if(st && st.modo === 'aplicar'){
+      if(tg.closest('[data-cmaplicar]')){ aplicar(); return; }
+    }
+  }, true);
+  document.addEventListener('change', function(ev){ var tg = ev.target; if(!ov || !ov.contains(tg)) return; if(tg.name === 'cmsel') ov.querySelectorAll('.cm-op').forEach(function(l){ l.classList.toggle('on', l.contains(tg)); }); if(st && st.modo === 'edit' && (tg.dataset.cmf === 'dur' || tg.dataset.cmf === 'preds')){ lerEditor(); var tot = ov.querySelector('.cm-tot'); var nd = duracao(st.m); if(tot) tot.innerHTML = st.m.etapas.length + ' linhas' + (nd ? ' · duração estimada <b>' + nd + ' dias úteis</b>' : ''); } });
+  document.addEventListener('keydown', function(ev){
+    if(!ov) return; if(ev.key === 'Escape'){ ev.stopPropagation(); fechar(); return; }
+    var tg = ev.target; if(st && st.modo === 'edit' && ev.key === 'Enter' && tg.dataset && tg.dataset.cmf === 'nome'){ ev.preventDefault(); var b = ov.querySelector('[data-cmadd=etapa]'); if(b) b.click(); }
+  }, true);
 })();
 </script>
 <script id="mannare-mobile">
