@@ -3318,6 +3318,29 @@ button.cu-row:hover{background:#F6F7F9!important;color:#1F2033!important}
 .pc-tag{background:#C99500!important}
 @media (max-width:760px){.pc-box{grid-template-columns:1fr}}
 
+/* Cadastro de fornecedores e parceiros */
+.fc-tp{display:inline-block;font-size:11.5px;font-weight:600;border-radius:999px!important;padding:3px 9px;white-space:nowrap}
+.fc-fornecedor{background:#EBEBFF;color:#2323B8}
+.fc-parceiro{background:#FFF1C2;color:#8A5A00}
+.fc-ambos{background:#E3F8EC;color:#065F38}
+.fc-dlg{width:min(680px,100%)!important}
+.fc-hd{display:flex;align-items:center;justify-content:space-between}
+.fc-hd h2{margin:0;font-size:19px}
+.fc-tipos{display:flex;gap:6px;flex-wrap:wrap}
+.fc-ti{display:inline-flex;align-items:center;gap:6px;border:1px solid #D0D2DC;border-radius:999px!important;padding:7px 14px;font-size:13.5px;cursor:pointer;background:#fff}
+.fc-ti input{position:absolute;opacity:0;width:1px;height:1px}
+.fc-ti.on{background:#0B0B1A;border-color:#0B0B1A;color:#fff}
+.fc-ti:focus-within{outline:3px solid var(--azul,#0000FF);outline-offset:2px}
+.fc-g{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 12px}
+.fc-w2{grid-column:1/-1}
+.fc-sec{background:var(--sx-sunken,#F4F7FD);border-radius:14px!important;padding:12px 14px}
+.fc-sec h4{margin:0 0 8px;font-size:13.5px}
+.fc-ck{display:flex;align-items:center;gap:8px;font-size:13.5px}
+.fc-ft{display:flex;align-items:center;gap:8px}
+.fc-dlg .f{display:flex;flex-direction:column;gap:6px;font-size:12.5px;font-weight:600;color:var(--muted,#55577A)}
+.fc-dlg .f input,.fc-dlg .f select,.fc-dlg .f textarea{border:1px solid #C9CCDA;border-radius:12px!important;padding:9px 12px;font:inherit;font-weight:500;color:var(--ink,#0B0B1A);min-height:40px;background:#fff;width:100%}
+@media (max-width:640px){.fc-g{grid-template-columns:1fr}}
+
 /* ==========================================================================
    MANNARE CRM · Camada mobile-first (até 768px)
    Celular: menu hambúrguer, 1 coluna, espaçamentos menores e
@@ -12591,6 +12614,162 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
     if(tg.closest('[data-ppcoff]')){ ev.stopPropagation(); var pq = propAtual(); if(!pq) return; delete pq.doc.parceria; if(typeof afterContentEdit === 'function') afterContentEdit(pq); save(); if(typeof renderKeep === 'function') renderKeep(); else render(); return; }
     if((el = tg.closest('[data-pfoff]'))){ ev.stopPropagation(); var p3 = propAtual(); if(!p3) return; var r3 = p3.doc.itens.find(function(i){ return i.id === el.dataset.pfoff; }); if(!r3) return; delete r3.forn; mudou(p3); return; }
   }, true);
+})();
+</script>
+<script id="mannare-cadforn">
+/* ==========================================================================
+   MANNARE CRM · Cadastro de fornecedores e parceiros
+   Cadastros › Fornecedores e parceiros. Os dados são puxados nas propostas
+   (itens de fornecedor e parceria de indicação) e no Financeiro.
+   ========================================================================== */
+(function(){
+  if(typeof S === 'undefined') return;
+  var x = function(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'}[c]; }); };
+  var n = function(s){ return String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/\s+/g, ' ').trim(); };
+  var dig = function(s){ return String(s || '').replace(/\D/g, ''); };
+  var real = function(v){ return typeof brl === 'function' ? brl(v) : 'R$ ' + (Number(v) || 0).toFixed(2); };
+  var t = function(m){ return typeof toast === 'function' ? toast(m) : console.log(m); };
+  var TIPOS = {fornecedor:'Fornecedor', parceiro:'Parceiro de indicação', ambos:'Fornecedor e parceiro'};
+  var fmtDoc = function(v){ var d = dig(v).slice(0, 14); if(!d) return ''; if(d.length <= 11) return d.replace(/^(\d{3})(\d)/, '$1.$2').replace(/^(\d{3})\.(\d{3})(\d)/, '$1.$2.$3').replace(/\.(\d{3})(\d{1,2})$/, '.$1-$2'); return d.replace(/^(\d{2})(\d)/, '$1.$2').replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3').replace(/\.(\d{3})(\d)/, '.$1/$2').replace(/(\d{4})(\d{1,2})$/, '$1-$2'); };
+  var fmtTel = function(v){ var d = dig(v).slice(0, 11); if(d.length < 3) return d ? '(' + d : ''; var r = d.slice(2); return '(' + d.slice(0, 2) + ') ' + (d.length === 11 ? r[0] + '.' + r.slice(1, 5) + '-' + r.slice(5) : r.length > 4 ? r.slice(0, r.length - 4) + '-' + r.slice(-4) : r); };
+
+  var lista = function(){ return (S.cfg.fornecedores = S.cfg.fornecedores || []); };
+  function porNome(nome){ var k = n(nome); return k ? lista().find(function(f){ return n(f.nome) === k || (f.apelido && n(f.apelido) === k); }) || null : null; }
+  function deTipo(tp){ return lista().filter(function(f){ return f.ativo !== false && (f.tipo === tp || f.tipo === 'ambos'); }).sort(function(a, b){ return String(a.nome).localeCompare(String(b.nome), 'pt'); }); }
+  function movs(f){ var k = n(f.nome), ps = (S.pags || []).filter(function(p){ return n(p.fornecedor) === k; });
+    return {qtd:ps.length, aPagar:ps.filter(function(p){ return p.status !== 'pago' && p.status !== 'cancelado'; }).reduce(function(a, p){ return a + (Number(p.valor) || 0); }, 0), pago:ps.filter(function(p){ return p.status === 'pago'; }).reduce(function(a, p){ return a + (Number(p.valor) || 0); }, 0)}; }
+  window.cgFornCad = {lista:lista, porNome:porNome, deTipo:deTipo};
+
+  /* ---------- tela Cadastros › Fornecedores e parceiros ---------- */
+  function tela(){
+    var q = n(ui.cadQ || ''), ft = ui.fcTipo || '';
+    var ls = lista().filter(function(f){ return (!ft || f.tipo === ft || (f.tipo === 'ambos' && ft !== 'ambos')) && (!q || n([f.nome, f.apelido, f.doc, dig(f.doc), f.contato, f.email, f.telefone, f.servicos].join(' ')).indexOf(q) >= 0); })
+      .sort(function(a, b){ return String(a.nome).localeCompare(String(b.nome), 'pt'); });
+    var nSrv = (S.servs || []).length, nCli = (S.clis || []).length, nMod = typeof modelosAtivos === 'function' ? modelosAtivos().length : 0;
+    return '<div class="pagehead"><div><h1>Cadastros</h1><p>Serviços, clientes, fornecedores e parceiros, e modelos de tarefas.</p></div><span class="spacer"></span>'
+      + '<button class="btn" data-fcimp>Importar do Financeiro e das propostas</button><button class="btn primary" data-fcnovo>+ Novo fornecedor ou parceiro</button></div>'
+      + '<div class="seg" style="margin-bottom:14px"><button data-cadsub="srv">Serviços <span class="n">' + nSrv + '</span></button><button data-cadsub="cli">Clientes <span class="n">' + nCli + '</span></button><button data-cadsub="forn" class="on">Fornecedores e parceiros <span class="n">' + lista().length + '</span></button><button data-cadsub="mod">Modelos de tarefas <span class="n">' + nMod + '</span></button></div>'
+      + '<div class="filters"><input type="search" id="cadq" placeholder="Buscar por nome, CNPJ/CPF, contato ou serviço" value="' + x(ui.cadQ || '') + '"><select data-fctipo><option value="">Todos</option><option value="fornecedor" ' + (ft === 'fornecedor' ? 'selected' : '') + '>Fornecedores</option><option value="parceiro" ' + (ft === 'parceiro' ? 'selected' : '') + '>Parceiros de indicação</option></select></div>'
+      + '<div class="blk" style="padding:0;overflow:auto"><table class="atable"><thead><tr><th>Nome</th><th>Tipo</th><th>CNPJ / CPF</th><th>Contato</th><th>Serviços / comissão</th><th style="text-align:right">No Financeiro</th></tr></thead><tbody>'
+      + (ls.map(function(f){ var m = movs(f);
+          return '<tr data-fcedit="' + f.id + '" style="cursor:pointer' + (f.ativo === false ? ';opacity:.55' : '') + '"><td><b>' + x(f.nome) + '</b>' + (f.email ? '<div class="sub">' + x(f.email) + '</div>' : '') + '</td><td><span class="fc-tp fc-' + f.tipo + '">' + TIPOS[f.tipo] + '</span>' + (f.ativo === false ? ' <span class="sub">inativo</span>' : '') + '</td>'
+            + '<td>' + x(f.doc || '—') + '</td><td>' + x(f.contato || '—') + (f.telefone ? '<div class="sub">' + x(f.telefone) + '</div>' : '') + '</td>'
+            + '<td>' + x(f.servicos || '') + (f.tipo !== 'fornecedor' && f.pct ? '<div class="sub">comissão ' + String(f.pct).replace('.', ',') + '% ' + (f.base === 'honorarios' ? 'dos honorários' : 'do total') + '</div>' : (f.servicos ? '' : '—')) + '</td>'
+            + '<td style="text-align:right">' + (m.qtd ? m.qtd + ' lançamento' + (m.qtd > 1 ? 's' : '') + (m.aPagar ? '<div class="sub">a pagar ' + real(m.aPagar) + '</div>' : '') : '—') + '</td></tr>'; }).join('')
+        || '<tr><td colspan="6" class="empty">' + (lista().length ? 'Nada com esses filtros.' : 'Nenhum fornecedor ou parceiro cadastrado. Use <b>Novo fornecedor ou parceiro</b> ou <b>Importar do Financeiro e das propostas</b>.') + '</td></tr>') + '</tbody></table></div>'
+      + '<p class="hint">Nas propostas, ao digitar o nome do fornecedor (item de fornecedor) ou do parceiro (parceria de indicação), os dados vêm do cadastro. No Financeiro › Fornecedores, o e-mail e o WhatsApp também.</p>';
+  }
+
+  /* ---------- formulário ---------- */
+  var ov = null, ed = null;
+  function fechar(){ if(ov){ ov.remove(); ov = null; ed = null; } }
+  function form(f){
+    ed = JSON.parse(JSON.stringify(f)); fechar(); ed = JSON.parse(JSON.stringify(f));
+    var i = function(k, rot, extra, ph){ return '<label class="f">' + rot + '<input data-fcf="' + k + '" value="' + x(ed[k] == null ? '' : ed[k]) + '" ' + (extra || '') + (ph ? ' placeholder="' + x(ph) + '"' : '') + '></label>'; };
+    ov = document.createElement('div'); ov.className = 'cg-ov fc-ov';
+    ov.innerHTML = '<div class="cg-dlg fc-dlg" role="dialog" aria-modal="true" aria-label="Fornecedor ou parceiro">'
+      + '<div class="fc-hd"><h2>' + (f.id ? 'Editar cadastro' : 'Novo fornecedor ou parceiro') + '</h2><button class="iconbtn" data-fcx aria-label="Fechar">✕</button></div>'
+      + '<div class="fc-tipos">' + Object.keys(TIPOS).map(function(k){ return '<label class="fc-ti ' + (ed.tipo === k ? 'on' : '') + '"><input type="radio" name="fctipo" data-fcf="tipo" value="' + k + '" ' + (ed.tipo === k ? 'checked' : '') + '>' + TIPOS[k] + '</label>'; }).join('') + '</div>'
+      + '<div class="fc-g">' + i('nome', 'Nome ou razão social *', '', 'Como aparece nas propostas e no Financeiro') + i('doc', 'CNPJ / CPF', 'inputmode="numeric" data-fcmask="doc"') + i('contato', 'Pessoa de contato') + i('telefone', 'WhatsApp / telefone', 'inputmode="tel" data-fcmask="tel"') + i('email', 'E-mail', 'type="email"')
+      + '<label class="f fc-w2">Serviços que presta<input data-fcf="servicos" value="' + x(ed.servicos || '') + '" placeholder="Ex.: levantamento topográfico, georreferenciamento"></label></div>'
+      + '<div class="fc-sec fc-parc"><h4>Parceria de indicação</h4><div class="fc-g"><label class="f">Comissão padrão (%)<input data-fcf="pct" inputmode="decimal" value="' + x(ed.pct == null ? '' : String(ed.pct).replace('.', ',')) + '" placeholder="Ex.: 20"></label>'
+      + '<label class="f">Sobre<select data-fcf="base"><option value="total" ' + (ed.base !== 'honorarios' ? 'selected' : '') + '>Valor total do contrato</option><option value="honorarios" ' + (ed.base === 'honorarios' ? 'selected' : '') + '>Só os honorários</option></select></label></div></div>'
+      + '<div class="fc-sec"><h4>Dados para pagamento</h4><div class="fc-g">' + i('pix', 'Chave PIX') + i('banco', 'Banco') + i('agencia', 'Agência') + i('conta', 'Conta') + '</div></div>'
+      + '<label class="f">Observações<textarea data-fcf="obs" rows="2">' + x(ed.obs || '') + '</textarea></label>'
+      + (f.id ? '<label class="fc-ck"><input type="checkbox" data-fcf="inativo" ' + (ed.ativo === false ? 'checked' : '') + '> Inativo (não aparece nas sugestões)</label>' : '')
+      + '<div class="fc-ft">' + (f.id ? '<button class="btn danger" data-fcdel>Excluir</button>' : '') + '<span class="spacer"></span><button class="btn" data-fcx>Cancelar</button><button class="btn primary" data-fcsave>Salvar</button></div></div>';
+    document.body.appendChild(ov); mostraParc(); var p0 = ov.querySelector('[data-fcf=nome]'); if(p0) p0.focus();
+  }
+  function mostraParc(){ if(!ov) return; var tp = (ov.querySelector('[data-fcf=tipo]:checked') || {}).value || 'fornecedor'; ov.querySelector('.fc-parc').hidden = tp === 'fornecedor'; ov.querySelectorAll('.fc-ti').forEach(function(l){ l.classList.toggle('on', l.querySelector('input').checked); }); }
+  function salvar(){
+    ov.querySelectorAll('[data-fcf]').forEach(function(el){ var k = el.dataset.fcf; if(el.type === 'radio'){ if(el.checked) ed.tipo = el.value; return; } if(k === 'inativo'){ ed.ativo = !el.checked; return; } ed[k] = el.value.trim(); });
+    ed.nome = String(ed.nome || '').toLocaleUpperCase('pt-BR');
+    if(!ed.nome){ t('Informe o nome'); ov.querySelector('[data-fcf=nome]').focus(); return; }
+    var dup = lista().find(function(f){ return f.id !== ed.id && n(f.nome) === n(ed.nome); }); if(dup){ t('Já existe um cadastro com esse nome'); return; }
+    if(ed.email && !/^\S+@\S+\.\S+$/.test(ed.email)){ t('Confira o e-mail'); return; }
+    ed.doc = fmtDoc(ed.doc); ed.telefone = fmtTel(ed.telefone); ed.pct = ed.pct === '' ? '' : numBR(ed.pct);
+    var ls = lista(), agora = new Date().toISOString();
+    if(!ed.id){ ed.id = uid(); ed.criadoEm = agora; ed.criadoPor = me; ls.push(ed); } else { var k = ls.findIndex(function(f){ return f.id === ed.id; }); if(k >= 0) ls[k] = ed; else ls.push(ed); }
+    ed.atualizadoEm = agora; save(); fechar(); t('Cadastro salvo'); render();
+  }
+  function importar(){
+    var ls = lista(), novos = 0;
+    var add = function(nome, tipo, o){ nome = String(nome || '').trim(); if(!nome) return; var f = porNome(nome);
+      if(f){ if(f.tipo !== tipo && f.tipo !== 'ambos') f.tipo = 'ambos'; if(!f.email && o.email) f.email = o.email; if(!f.telefone && o.telefone) f.telefone = o.telefone; return; }
+      ls.push(Object.assign({id:uid(), nome:nome.toLocaleUpperCase('pt-BR'), tipo:tipo, doc:'', contato:'', telefone:'', email:'', servicos:'', pct:'', base:'total', pix:'', banco:'', agencia:'', conta:'', obs:'', criadoEm:new Date().toISOString(), criadoPor:me}, o)); novos++; };
+    (S.pags || []).filter(function(p){ return p.tipo === 'forn' && p.fornecedor; }).forEach(function(p){ add(p.fornecedor, p.origemParceria ? 'parceiro' : 'fornecedor', {email:/@/.test(p.email || '') ? p.email : '', telefone:p.whatsapp ? fmtTel(p.whatsapp) : ''}); });
+    (S.propsDb || []).forEach(function(pr){ var d = pr.doc || {}; (d.itens || []).forEach(function(r){ if(r.forn && r.forn.nome) add(r.forn.nome, 'fornecedor', {email:r.forn.email || ''}); });
+      if(d.parceria && d.parceria.nome) add(d.parceria.nome, 'parceiro', {email:/@/.test(d.parceria.contato || '') ? d.parceria.contato : '', pct:numBR(d.parceria.pct) || '', base:d.parceria.base || 'total'}); });
+    save(); t(novos ? novos + ' cadastro' + (novos > 1 ? 's' : '') + ' importado' + (novos > 1 ? 's' : '') : 'Nada novo para importar'); render();
+  }
+
+  /* ---------- integração com a tela de Cadastros ---------- */
+  if(typeof renderCad === 'function'){
+    var _rc = renderCad;
+    renderCad = function(){
+      if(ui.cadSub === 'forn'){ document.getElementById('view').innerHTML = tela(); return; }
+      var r = _rc.apply(this, arguments);
+      var seg = document.querySelector('#view .seg'), cli = seg && seg.querySelector('[data-cadsub=cli]');
+      if(cli && !seg.querySelector('[data-cadsub=forn]')) cli.insertAdjacentHTML('afterend', '<button data-cadsub="forn">Fornecedores e parceiros <span class="n">' + lista().length + '</span></button>');
+      return r;
+    };
+  }
+
+  /* ---------- puxar nas propostas e no Financeiro ---------- */
+  function datalists(){
+    var dl = document.getElementById('dlFornCad'); if(!dl){ dl = document.createElement('datalist'); dl.id = 'dlFornCad'; document.body.appendChild(dl); }
+    var dp = document.getElementById('dlParcCad'); if(!dp){ dp = document.createElement('datalist'); dp.id = 'dlParcCad'; document.body.appendChild(dp); }
+    var h1 = deTipo('fornecedor').map(function(f){ return '<option value="' + x(f.nome) + '" label="' + x(f.servicos || f.contato || '') + '">'; }).join(''), h2 = deTipo('parceiro').map(function(f){ return '<option value="' + x(f.nome) + '" label="' + x(f.pct ? f.pct + '% ' + (f.base === 'honorarios' ? 'dos honorários' : 'do total') : '') + '">'; }).join('');
+    if(dl.innerHTML !== h1) dl.innerHTML = h1; if(dp.innerHTML !== h2) dp.innerHTML = h2;
+    document.querySelectorAll('#drawer [data-pf=nome]:not([list])').forEach(function(i){ i.setAttribute('list', 'dlFornCad'); i.setAttribute('autocomplete', 'off'); });
+    document.querySelectorAll('#drawer [data-ppc=nome]:not([list])').forEach(function(i){ i.setAttribute('list', 'dlParcCad'); i.setAttribute('autocomplete', 'off'); });
+    var fe = document.querySelector('#layer [data-fe=fornecedor]'); if(fe && fe.getAttribute('list') !== 'dlFornTodos'){ var dt = document.getElementById('dlFornTodos'); if(!dt){ dt = document.createElement('datalist'); dt.id = 'dlFornTodos'; document.body.appendChild(dt); }
+      var nomes = {}; lista().filter(function(f){ return f.ativo !== false; }).forEach(function(f){ nomes[f.nome] = 1; }); (S.pags || []).forEach(function(p){ if(p.fornecedor) nomes[p.fornecedor] = 1; });
+      dt.innerHTML = Object.keys(nomes).sort().map(function(k){ return '<option value="' + x(k) + '">'; }).join(''); fe.setAttribute('list', 'dlFornTodos'); fe.setAttribute('autocomplete', 'off'); }
+  }
+  var mo = new MutationObserver(function(){ clearTimeout(mo._t); mo._t = setTimeout(datalists, 60); });
+  ['drawer', 'layer'].forEach(function(id){ var el = document.getElementById(id); if(el) mo.observe(el, {childList:true, subtree:true}); });
+
+  // ao escolher no cadastro: completa os dados
+  window.addEventListener('change', function(ev){
+    var tg = ev.target; if(!tg.dataset) return;
+    if(tg.dataset.pf === 'nome' || tg.dataset.ppc === 'nome'){
+      var f = porNome(tg.value); if(!f) return;
+      var p = typeof ui !== 'undefined' && ui.drawer && ui.drawer.kind === 'prop' && typeof rawProp === 'function' ? rawProp(ui.drawer.id) : null; if(!p || !p.doc) return;
+      if(tg.dataset.pf === 'nome'){ var r = (p.doc.itens || []).find(function(i){ return i.id === tg.closest('[data-pit]').dataset.pit; }); if(r && r.forn){ r.forn.nome = f.nome; r.forn.fornId = f.id; r.forn.email = f.email || r.forn.email || ''; r.forn.telefone = f.telefone || ''; } tg.value = f.nome; }
+      else { var pc = p.doc.parceria = p.doc.parceria || {}; pc.nome = f.nome; pc.parceiroId = f.id; pc.contato = f.email || f.telefone || pc.contato || ''; pc.telefone = f.telefone || ''; if(f.pct !== '' && f.pct != null) pc.pct = numBR(f.pct); if(f.base) pc.base = f.base; tg.value = f.nome; }
+      return;   // segue para o tratamento normal do campo (grava o nome e recalcula)
+    }
+    if(tg.dataset.fe === 'fornecedor' && typeof finEdit !== 'undefined' && finEdit && finEdit.o){
+      var g = porNome(tg.value); if(!g) return;
+      finEdit.o.fornecedor = g.nome; if(!finEdit.o.email) finEdit.o.email = g.email || ''; if(!finEdit.o.whatsapp) finEdit.o.whatsapp = g.telefone || '';
+      var fe = document.querySelector('#layer [data-fe=email]'); if(fe && !fe.value) fe.value = finEdit.o.email; var fw = document.querySelector('#layer [data-fe=whatsapp]'); if(fw && !fw.value) fw.value = finEdit.o.whatsapp; tg.value = g.nome;
+    }
+  }, true);
+  // contas a pagar criadas no aceite: completa e-mail e WhatsApp pelo cadastro
+  if(typeof garantirRecebiveis === 'function'){
+    var _g = garantirRecebiveis;
+    garantirRecebiveis = function(p){ var antes = (S.pags || []).length, r = _g.apply(this, arguments);
+      (S.pags || []).slice(antes).forEach(function(pg){ var f = porNome(pg.fornecedor); if(!f) return; if(!pg.email || !/@/.test(pg.email)) pg.email = f.email || pg.email || ''; if(!pg.whatsapp) pg.whatsapp = f.telefone || ''; if(f.pix && !/PIX/.test(pg.obs || '')) pg.obs = (pg.obs ? pg.obs + ' ' : '') + 'PIX: ' + f.pix + '.'; });
+      return r; };
+  }
+
+  /* ---------- cliques ---------- */
+  window.addEventListener('click', function(ev){
+    var tg = ev.target; if(!tg.closest) return; var el;
+    if(tg.closest('[data-fcnovo]')){ ev.stopPropagation(); form({tipo:(ui.fcTipo === 'parceiro' ? 'parceiro' : 'fornecedor'), base:'total', pct:'', ativo:true}); return; }
+    if(tg.closest('[data-fcimp]')){ ev.stopPropagation(); importar(); return; }
+    if((el = tg.closest('[data-fcedit]'))){ ev.stopPropagation(); var f = lista().find(function(v){ return v.id === el.dataset.fcedit; }); if(f) form(f); return; }
+    if(!ov || !ov.contains(tg)) return;
+    if(tg.closest('[data-fcx]') || tg === ov){ fechar(); return; }
+    if(tg.closest('[data-fcsave]')){ ev.stopPropagation(); salvar(); return; }
+    if(tg.closest('[data-fcdel]')){ ev.stopPropagation(); if(!confirm('Excluir o cadastro de ' + ed.nome + '? Os lançamentos do Financeiro continuam.')) return; S.cfg.fornecedores = lista().filter(function(v){ return v.id !== ed.id; }); save(); fechar(); t('Cadastro excluído'); render(); return; }
+  }, true);
+  document.addEventListener('change', function(ev){ var tg = ev.target;
+    if(tg.hasAttribute && tg.hasAttribute('data-fctipo')){ ui.fcTipo = tg.value; render(); return; }
+    if(ov && ov.contains(tg) && tg.name === 'fctipo') mostraParc(); });
+  document.addEventListener('input', function(ev){ var tg = ev.target; if(!ov || !ov.contains(tg) || !tg.dataset.fcmask) return; tg.value = tg.dataset.fcmask === 'doc' ? fmtDoc(tg.value) : fmtTel(tg.value); });
+  document.addEventListener('keydown', function(ev){ if(ev.key === 'Escape' && ov){ ev.stopPropagation(); fechar(); } }, true);
 })();
 </script>
 <script id="mannare-mobile">
