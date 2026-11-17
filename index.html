@@ -3410,6 +3410,37 @@ button.cu-row:hover{background:#F6F7F9!important;color:#1F2033!important}
   #topTimer{max-width:110px;overflow:hidden}
 }
 
+/* ===== Menu lateral em trilho compacto no iPad (tablet e qualquer tela de toque) ===== */
+@media (min-width:769px) and (max-width:1180px), (min-width:769px) and (hover:none) and (pointer:coarse){
+  html body .app,html body .app:has(.side:hover),html body .app:has(.side :focus-visible){grid-template-columns:80px minmax(0,1fr)!important}
+  html body nav#side{width:80px!important;padding:16px 0 16px!important;align-items:center!important;gap:4px!important;overflow-x:hidden!important;overflow-y:auto!important;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  html body nav#side::-webkit-scrollbar{display:none}
+  html body nav#side .logo{width:40px!important;max-width:40px!important;height:40px!important;aspect-ratio:auto!important;object-fit:cover!important;object-position:left center!important;margin:0 auto 12px!important;flex:none}
+  html body nav#side .leg{display:block!important;width:28px!important;height:1px!important;min-height:1px!important;padding:0!important;margin:8px auto!important;opacity:1!important;font-size:0!important;line-height:0!important;overflow:hidden!important;background:#E3E7F0!important;border:0!important;flex:none}
+  html body nav#side .nav{width:48px!important;height:48px!important;min-height:48px!important;padding:0!important;margin:0 auto!important;gap:0!important;justify-content:center!important;flex:none!important;overflow:visible!important}
+  html body nav#side .nav .tx{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip:rect(0 0 0 0)!important;white-space:nowrap!important}
+  html body nav#side .nav [id^="n"]:not(:empty),html body nav#side .nav .n{position:absolute!important;top:-3px!important;right:-5px!important;left:auto!important;margin:0!important;min-width:18px;padding:0 5px!important;line-height:16px!important;font-size:10.5px!important;border:2px solid #fff!important}
+  html body nav#side .nav:not(.on):hover{background:transparent!important}
+  html body nav#side .nav:not(.on):active{background:#E6EBF5!important}
+  html body nav#side .sside{width:48px!important;height:48px!important;padding:0 15px!important;margin:0 auto 6px!important;flex:none}
+  html body nav#side .sside input{width:0!important;opacity:0!important}
+  html body nav#side .sside:focus-within{position:fixed!important;left:92px!important;top:14px!important;width:min(360px,calc(100vw - 110px))!important;z-index:300!important;background:#fff!important;box-shadow:0 12px 32px rgba(14,16,48,.18)!important;outline:2px solid var(--mn-azul)!important;gap:10px}
+  html body nav#side .sside:focus-within input{width:100%!important;opacity:1!important}
+  html body nav#side .sidebox{margin:auto auto 0!important;padding-top:8px!important}
+  html body nav#side .sidebox #btnSair{width:48px!important;height:48px!important;padding:0!important;border-radius:999px!important;justify-content:center!important;font-size:11px!important}
+}
+
+/* ===== Toque no iPad: sem seleção acidental e alvos de 44px ===== */
+@media (hover:none) and (pointer:coarse) and (min-width:769px){
+  button,.btn,.nav,.chip,[role=tab],[role=button],label.chip-me,.esp-pill,.seg,.fchips,.dfilters,.ibx-tools,.ibx-empty,.empty,.leg,.pagehead p,.crumbs,.badge,.tabs,.ibx-tabs{-webkit-user-select:none!important;user-select:none!important;-webkit-touch-callout:none}
+  button,.btn,a,[role=tab]{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+  input,textarea,select,[contenteditable],[contenteditable] *{-webkit-user-select:text!important;user-select:text!important}
+  #view .btn,#view .seg button,#view .fchips button,#view .dfil,#view .dlink,#view .madd,#view [role=tab],header.top .iconbtn,header.top .navbtn,header.top .esp-pill,#topNew,.pm-pushbt button{min-height:44px!important}
+  header.top .iconbtn,header.top .navbtn{min-width:44px!important}
+  header.top .esp-pill{height:44px!important}
+  #view .btn.sm{padding-top:0!important;padding-bottom:0!important}
+}
+
 /* ==========================================================================
    MANNARE CRM · Camada mobile-first (até 768px)
    Celular: menu hambúrguer, 1 coluna, espaçamentos menores e
