@@ -3396,8 +3396,8 @@ button.cu-row:hover{background:#F6F7F9!important;color:#1F2033!important}
   .chip-me .tx{display:none!important}
   .chip-me{padding:0!important;gap:0!important}
   #topNew{padding:0 12px!important;white-space:nowrap}
-  .overlay{z-index:190!important}
-  .drawer,#drawer{z-index:200!important;max-width:calc(100vw - 20px)!important}
+  .drawer,#drawer{max-width:calc(100vw - 20px)!important}
+  html:not(.sb-over) body nav#side{z-index:19!important}
   .modal{max-width:calc(100vw - 32px)!important}
   .plan{grid-template-columns:1fr!important;height:auto!important}
   .plside{max-height:none!important}
@@ -3440,6 +3440,52 @@ button.cu-row:hover{background:#F6F7F9!important;color:#1F2033!important}
   header.top .esp-pill{height:44px!important}
   #view .btn.sm{padding-top:0!important;padding-bottom:0!important}
 }
+
+/* ===== Botão de abrir/recolher o menu (só no iPad) ===== */
+.sb-tog,.sb-scrim{display:none}
+@media (min-width:769px) and (max-width:1180px), (min-width:769px) and (hover:none) and (pointer:coarse){
+  html body nav#side .sb-tog{all:unset;box-sizing:border-box;display:flex;align-items:center;justify-content:center;gap:12px;width:48px;height:44px;margin:0 auto 8px;border-radius:14px!important;color:#55577A;cursor:pointer;flex:none;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none}
+  html body nav#side .sb-tog:active{background:#E6EBF5}
+  html body nav#side .sb-tog:focus-visible{outline:2px solid var(--mn-azul,#0000FF)!important}
+  html body nav#side .sb-tog-tx{display:none;font:600 13.5px var(--font-sans,inherit)}
+  html body .app{transition:grid-template-columns .26s cubic-bezier(.2,0,0,1)!important}
+
+  /* menu aberto: mesmo visual do computador */
+  html.sb-push body .app,html.sb-push body .app:has(.side:hover),html.sb-push body .app:has(.side :focus-visible){grid-template-columns:264px minmax(0,1fr)!important}
+  html.sb-over body nav#side{position:fixed!important;top:0!important;left:0!important;bottom:0!important;height:100vh!important;height:100dvh!important;z-index:215!important;box-shadow:0 20px 60px rgba(14,16,48,.25)!important}
+  html.sb-over .sb-scrim{display:block;position:fixed;inset:0;z-index:214;background:rgba(14,16,48,.28);backdrop-filter:blur(2px)}
+  html.sb-open body nav#side{width:264px!important;align-items:flex-start!important;padding:16px 20px!important}
+  html.sb-open body nav#side .logo{width:224px!important;max-width:224px!important;height:auto!important;aspect-ratio:390/51!important;object-fit:contain!important;object-position:left center!important;margin:6px 0 14px 2px!important}
+  html.sb-open body nav#side .sb-tog{width:224px;justify-content:flex-start;padding:0 15px;margin:0 0 8px}
+  html.sb-open body nav#side .sb-tog-tx{display:inline}
+  html.sb-open body nav#side .leg{width:auto!important;height:28px!important;min-height:28px!important;margin:0!important;padding:10px 0 0 4px!important;background:none!important;font-size:12px!important;line-height:1.2!important;font-weight:600!important;color:var(--sx-text-3,#8C8FA3)!important;white-space:nowrap}
+  html.sb-open body nav#side .nav{width:224px!important;justify-content:flex-start!important;padding:0 15px!important;gap:12px!important;margin:0!important}
+  html.sb-open body nav#side .nav .tx{display:inline!important;position:static!important;width:auto!important;height:auto!important;clip:auto!important;overflow:visible!important;font-size:14px;font-weight:600}
+  html.sb-open body nav#side .nav [id^="n"]:not(:empty),html.sb-open body nav#side .nav .n{position:static!important;margin-left:auto!important;border-width:0!important}
+  html.sb-open body nav#side .sside{width:224px!important;margin:0 0 6px!important;gap:10px}
+  html.sb-open body nav#side .sside input{width:100%!important;opacity:1!important}
+  html.sb-open body nav#side .sside:focus-within{position:relative!important;left:auto!important;top:auto!important;width:224px!important;box-shadow:none!important}
+  html.sb-open body nav#side .sidebox{margin:auto 0 0!important}
+  html.sb-open body nav#side .sidebox #btnSair{width:224px!important;border-radius:14px!important;justify-content:flex-start!important;padding:0 16px!important;font-size:13.5px!important}
+}
+
+/* ===== Editor de modelo = cronograma (Project) em tela cheia ===== */
+.cm-proj-ov{position:fixed;inset:0;z-index:125;background:var(--sx-canvas,#EEF4FF);display:flex;flex-direction:column;gap:10px;padding:16px 20px calc(16px + env(safe-area-inset-bottom));overflow:hidden}
+html.cm-aberto body{overflow:hidden}
+.cm-proj-hd{display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap;background:#fff;border-radius:18px!important;padding:12px 16px;box-shadow:0 1px 3px rgba(14,16,48,.08)!important}
+.cm-proj-t{display:flex;flex-direction:column;gap:2px;flex:1 1 320px;min-width:0}
+.cm-proj-t small{font-size:11.5px;font-weight:700;color:#55577A;text-transform:uppercase;letter-spacing:.04em}
+.cm-proj-t input{border:1px solid transparent;border-radius:10px!important;padding:6px 8px;margin-left:-8px;font:700 20px/1.2 var(--font-display,inherit);color:#0B0B1A;background:transparent;min-height:40px;width:100%}
+.cm-proj-t input:hover{border-color:#DCDDE3}.cm-proj-t input:focus{border-color:var(--mn-azul,#0000FF);outline:0;background:#fff}
+.cm-proj-sv{display:flex;flex-direction:column;gap:4px;font-size:12px;font-weight:600;color:#55577A;flex:1 1 260px;min-width:0}
+.cm-proj-sv input{border:1px solid #C9CCDA;border-radius:12px!important;padding:8px 12px;font:inherit;font-weight:500;color:#0B0B1A;min-height:40px;background:#fff;width:100%}
+.cm-proj-hd .btn{min-height:40px}
+.cm-proj-bd{flex:1;min-height:0;overflow:auto;-webkit-overflow-scrolling:touch}
+.cm-proj-bd .crwrap{height:100%;min-height:420px;display:flex;flex-direction:column}
+.cm-proj-bd .crwrap .crbody{flex:1;min-height:0}
+.cm-proj [data-cract$="|importar"],.cm-proj [data-crfull],.cm-proj [data-crlb]{display:none!important}
+.cm-proj-dica{margin:0;font-size:12.5px;color:#55577A;background:#fff;border-radius:12px!important;padding:8px 12px}
+@media (max-width:768px){.cm-proj-bd .crwrap{height:auto!important;min-height:0!important}.cm-proj-bd .crwrap .crbody{flex:none!important}.cm-proj-bd .crleg{display:none!important}.cm-proj-ov{padding:10px 10px calc(10px + env(safe-area-inset-bottom));z-index:290}.cm-proj-hd{padding:10px 12px}.cm-proj-hd .spacer{display:none}.cm-proj-dica{display:none}}
 
 /* ==========================================================================
    MANNARE CRM · Camada mobile-first (até 768px)
@@ -12890,82 +12936,86 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
   function predTxt(ps){ return (ps || []).map(function(p){ return (p.i + 1) + (p.tipo && p.tipo !== 'TI' ? p.tipo : '') + (p.lag ? (p.lag > 0 ? '+' : '') + p.lag : ''); }).join(';'); }
   function predParse(txt, idx){ var out = [], err = []; String(txt || '').split(/[;,\s]+/).filter(Boolean).forEach(function(s){ var m = s.toUpperCase().match(/^(\d+)(TI|II|TT|IT|FS|SS|FF|SF)?([+-]\d+)?(D|DU)?$/);
       if(!m || +m[1] - 1 === idx || +m[1] < 1){ err.push(s); return; } out.push({i:+m[1] - 1, tipo:TIPOS_OK[m[2] || 'TI'], lag:m[3] ? +m[3] : 0}); }); return {out:out, err:err}; }
-  // duração total (dias úteis) usando o próprio motor do cronograma
-  function duracao(m){
-    if(!m.etapas || !m.etapas.length) return 0;
-    try{ var cr = paraCrono(m, (typeof TODAY !== 'undefined' ? TODAY : new Date().toISOString().slice(0, 10))), c = crCalc(cr), a = '', b = '';
-      cr.tarefas.forEach(function(tt){ var r = c.R[tt.id]; if(!a || r.ini < a) a = r.ini; if(!b || r.fim > b) b = r.fim; }); return typeof crConta === 'function' ? crConta(a, b) : 0; }catch(_){ return 0; }
-  }
-  function paraCrono(m, ini){
-    var ids = m.etapas.map(function(){ return uid(); });
-    return {ini:ini, tarefas:m.etapas.map(function(e, i){ return crNovaT({id:ids[i], nome:e.nome, dur:e.marco ? 0 : Math.max(1, +e.dur || 1), marco:!!e.marco, nivel:+e.nivel || 0,
+  var HOJE = function(){ return typeof TODAY !== 'undefined' ? TODAY : new Date().toISOString().slice(0, 10); };
+  var CAMPOS = ['id', 'nome', 'modo', 'dur', 'marco', 'nivel', 'preds', 'restr', 'ini', 'fim', 'fechado'];
+  function limpaT(tt){ var o = {}; CAMPOS.forEach(function(k){ if(tt[k] !== undefined) o[k] = JSON.parse(JSON.stringify(tt[k])); }); o.iniReal = ''; o.fimReal = ''; return crNovaT(o); }
+  // modelo antigo (etapas por número de linha) -> cronograma de verdade (tarefas com id)
+  function legadoParaCrono(m, ini){
+    var E = m.etapas || [], ids = E.map(function(){ return uid(); });
+    return {ini:ini, tarefas:E.map(function(e, i){ return crNovaT({id:ids[i], nome:e.nome, dur:e.marco ? 0 : Math.max(1, +e.dur || 1), marco:!!e.marco, nivel:+e.nivel || 0,
       preds:(e.preds || []).filter(function(p){ return ids[p.i]; }).map(function(p){ return {id:ids[p.i], tipo:p.tipo || 'TI', lag:+p.lag || 0}; })}); })};
   }
-  function deCrono(cr){
+  function cronoDe(m){
+    if(!m.crono || !Array.isArray(m.crono.tarefas)) m.crono = legadoParaCrono(m, HOJE());
+    if(!m.crono.ini) m.crono.ini = HOJE(); return m.crono;
+  }
+  function etapasDe(cr){ // resumo legível (lista, busca) e compatibilidade com versões antigas
     var T = cr.tarefas || [], pos = {}; T.forEach(function(tt, i){ pos[tt.id] = i; });
     return T.map(function(tt){ return {nome:tt.nome || '', dur:tt.marco ? 0 : Math.max(1, +tt.dur || 1), marco:!!tt.marco, nivel:+tt.nivel || 0,
       preds:(tt.preds || []).filter(function(p){ return pos[p.id] !== undefined; }).map(function(p){ return {i:pos[p.id], tipo:p.tipo || 'TI', lag:+p.lag || 0}; })}; });
   }
-  window.cgCronoMod = {lista:lista, duracao:duracao};
+  function nTarefas(m){ return (cronoDe(m).tarefas || []).length; }
+  function duracao(m){
+    try{ var cr = cronoDe(m); if(!cr.tarefas.length) return 0; var c = crCalc({ini:cr.ini, tarefas:cr.tarefas.map(limpaT)}), a = '', b = '';
+      Object.keys(c.R).forEach(function(k){ var r = c.R[k]; if(!a || r.ini < a) a = r.ini; if(!b || r.fim > b) b = r.fim; }); return a ? crConta(a, b) : 0; }catch(_){ return 0; }
+  }
+  // cópia do modelo para um cronograma real, começando em "ini" (ids novos, mesmas ligações)
+  function paraCrono(m, ini){
+    var cr = cronoDe(m), mapa = {}; cr.tarefas.forEach(function(tt){ mapa[tt.id] = uid(); });
+    return {ini:ini, tarefas:cr.tarefas.map(function(tt){ var n = limpaT(tt); n.id = mapa[tt.id];
+      n.preds = (tt.preds || []).filter(function(p){ return mapa[p.id]; }).map(function(p){ return {id:mapa[p.id], tipo:p.tipo || 'TI', lag:+p.lag || 0}; });
+      if(n.modo === 'manual' && tt.ini){ var off = crConta(cr.ini, tt.ini) - 1; n.ini = off > 0 ? crSoma(ini, off) : ini; n.fim = ''; }
+      return n; })};
+  }
+  window.cgCronoMod = {lista:lista, duracao:duracao, paraCrono:paraCrono};
 
   /* ---------- janela ---------- */
   var ov = null, st = null;
-  function fechar(){ if(ov){ ov.remove(); ov = null; st = null; } }
+  function fechar(){ if(ov){ ov.remove(); ov = null; } if(st && st.tmp) tiraTmp(); st = null; document.documentElement.classList.remove('cm-aberto'); }
   function abrir(html, cls){ if(ov) ov.remove(); ov = document.createElement('div'); ov.className = 'cg-ov cm-ov'; ov.innerHTML = '<div class="cg-dlg cm-dlg ' + (cls || '') + '" role="dialog" aria-modal="true">' + html + '</div>'; document.body.appendChild(ov); }
 
-  /* ---------- editor de modelo ---------- */
+  /* ---------- editor de modelo = o mesmo cronograma (Project) das tarefas ---------- */
+  // O modelo é editado num "material" temporário (ref m:cmx_...), que nunca é gravado como material.
+  function poeTmp(){ if(st && st.tmp){ S.mats = S.mats || []; if(S.mats.indexOf(st.tmp) < 0) S.mats.push(st.tmp); } }
+  function tiraTmp(){ if(S.mats) S.mats = S.mats.filter(function(o){ return !o._cm; }); }
+  if(typeof collect === 'function'){ var _col = collect; collect = function(){ var keep = S.mats; if(keep && keep.some(function(o){ return o._cm; })) S.mats = keep.filter(function(o){ return !o._cm; }); try{ return _col.apply(this, arguments); } finally { S.mats = keep; } }; }
+  if(typeof crHtml === 'function'){ var _ch = crHtml; crHtml = function(o, ref){ var h = _ch.apply(this, arguments); if(o && o._cm){
+      h = h.replace('Início do material', 'Início de referência').replace(/<b>Trazer checklists<\/b>/, '<b>◆ Marco</b>').replace('crwrap ', 'crwrap cm-proj '); }
+    return h; }; }
   function editor(m){
-    st = {modo:'edit', m:JSON.parse(JSON.stringify(m))}; if(!st.m.etapas.length) st.m.etapas.push({nome:'', dur:5, marco:false, nivel:0, preds:[]}); desenhaEditor(true);
+    m = JSON.parse(JSON.stringify(m)); var cr = cronoDe(m), tid = 'cmx_' + (m.id || uid());
+    var tmp = {id:tid, _cm:true, titulo:m.nome || 'Novo modelo', codigo:'Modelo', crono:{ini:cr.ini, tarefas:cr.tarefas.map(function(tt){ return limpaT(tt); })}};
+    tiraTmp(); st = {modo:'edit', m:m, tmp:tmp, ref:'m:' + tid}; poeTmp();
+    if(typeof ui !== 'undefined'){ ui.crSel = null; ui.crSels = []; if(ui.crFull === st.ref) ui.crFull = null; }
+    st.sig = JSON.stringify(tmp.crono.tarefas) + '|' + (m.nome || '') + '|' + (m.servicos || '');
+    var existe = m.id && lista().some(function(v){ return v.id === m.id; });
+    if(ov) ov.remove(); ov = document.createElement('div'); ov.className = 'cm-proj-ov';
+    ov.innerHTML = '<div class="cm-proj-hd"><div class="cm-proj-t"><small>Modelo de cronograma</small><input data-cmm="nome" value="' + x(m.nome || '') + '" placeholder="Nome do modelo (ex.: Alvará de construção | SEUMA)" aria-label="Nome do modelo"></div>'
+      + '<label class="cm-proj-sv">Serviços em que costuma ser usado<input data-cmm="servicos" value="' + x(m.servicos || '') + '" placeholder="Ex.: alvará, licença (ajuda a sugerir o modelo)"></label>'
+      + '<span class="spacer"></span>' + (existe ? '<button class="btn ghost danger" data-cmdel>Excluir</button><button class="btn ghost" data-cmdup>Duplicar</button>' : '')
+      + '<button class="btn" data-cmx>Cancelar</button><button class="btn primary" data-cmsave>Salvar modelo</button></div>'
+      + '<div class="cm-proj-bd">' + crHtml(tmp, st.ref) + '</div>'
+      + '<p class="cm-proj-dica">Monte o modelo como um cronograma normal: tarefas, subtarefas (⇥), marcos, predecessoras (2, 3II, 4TT+2d), modo manual ou automático. A data de início aqui é só referência: ao usar o modelo num processo, você escolhe a data real e o CRM recalcula tudo em dias úteis.</p>';
+    document.body.appendChild(ov); document.documentElement.classList.add('cm-aberto');
+    setTimeout(function(){ if(typeof crAposRender === 'function') try{ crAposRender(); }catch(_){}
+      var f = ov && (ov.querySelector('[data-cmm=nome]').value ? ov.querySelector('[data-cradd]') : ov.querySelector('[data-cmm=nome]')); if(f) f.focus(); }, 30);
   }
-  function desenhaEditor(foco){
-    var m = st.m, nd = duracao(m);
-    var linhas = m.etapas.map(function(e, i){
-      return '<tr data-cmi="' + i + '" class="' + (e.marco ? 'marco' : '') + '"><td class="cm-n">' + (i + 1) + '</td>'
-        + '<td><div class="cm-nome" style="padding-left:' + (e.nivel * 18) + 'px">' + (e.marco ? '<span class="cm-diam">◆</span>' : '') + '<input data-cmf="nome" value="' + x(e.nome) + '" placeholder="' + (e.marco ? 'Nome do marco' : 'Nome da etapa') + '" aria-label="Etapa ' + (i + 1) + '"></div></td>'
-        + '<td><input data-cmf="dur" inputmode="numeric" value="' + (e.marco ? 0 : x(e.dur)) + '" ' + (e.marco ? 'disabled' : '') + ' aria-label="Duração em dias úteis"></td>'
-        + '<td><input data-cmf="preds" value="' + x(predTxt(e.preds)) + '" placeholder="ex.: ' + (i ? i : '—') + '" aria-label="Predecessoras"></td>'
-        + '<td class="cm-ac"><button data-cma="out" title="Recuar para a esquerda" aria-label="Recuar para a esquerda">⇤</button><button data-cma="in" title="Recuar (vira subetapa)" aria-label="Recuar">⇥</button><button data-cma="up" title="Subir" aria-label="Subir">↑</button><button data-cma="down" title="Descer" aria-label="Descer">↓</button><button data-cma="marco" title="Marco (duração 0)" aria-label="Alternar marco" class="' + (e.marco ? 'on' : '') + '">◆</button><button data-cma="del" title="Excluir" aria-label="Excluir etapa" class="cm-del">✕</button></td></tr>'; }).join('');
-    abrir('<div class="cm-hd"><h2>' + (st.m.id && lista().some(function(v){ return v.id === st.m.id; }) ? 'Editar modelo de cronograma' : 'Novo modelo de cronograma') + '</h2><button class="iconbtn" data-cmx aria-label="Fechar">✕</button></div>'
-      + '<div class="cm-g"><label class="f">Nome do modelo<input data-cmm="nome" value="' + x(m.nome || '') + '" placeholder="Ex.: Alvará de construção | SEUMA"></label>'
-      + '<label class="f">Serviços em que costuma ser usado<input data-cmm="servicos" value="' + x(m.servicos || '') + '" placeholder="Ex.: alvará, licença de construção (ajuda a sugerir o modelo)"></label></div>'
-      + '<div class="cm-tbw mx-scroll"><table class="cm-tb"><thead><tr><th>Nº</th><th>Etapa</th><th title="Dias úteis">Duração (dias úteis)</th><th title="Número da linha que precisa terminar antes. Ex.: 2 · 2II (começa junto) · 3+2 (2 dias depois)">Predecessoras</th><th></th></tr></thead><tbody>' + linhas + '</tbody></table></div>'
-      + '<div class="cm-add"><button class="btn sm" data-cmadd="etapa">+ Etapa</button><button class="btn sm" data-cmadd="marco">◆ Marco</button><span class="spacer"></span><span class="cm-tot">' + m.etapas.length + ' linha' + (m.etapas.length > 1 ? 's' : '') + (nd ? ' · duração estimada <b>' + nd + ' dias úteis</b>' : '') + '</span></div>'
-      + '<p class="cm-dica">Predecessoras: número da linha que precisa terminar antes (<b>2</b>). Use <b>2II</b> para começar junto, <b>3+2</b> para começar 2 dias úteis depois, <b>1;2</b> para depender de duas linhas. Linha com subetapas vira resumo e soma as datas delas.</p>'
-      + '<div class="cm-ft">' + (lista().some(function(v){ return v.id === st.m.id; }) ? '<button class="btn danger" data-cmdel>Excluir modelo</button><button class="btn" data-cmdup>Duplicar</button>' : '') + '<span class="spacer"></span><button class="btn" data-cmx>Cancelar</button><button class="btn primary" data-cmsave>Salvar modelo</button></div>', 'cm-ed');
-    if(foco){ var f = ov.querySelector('[data-cmm=nome]'); if(f && !f.value) f.focus(); }
-  }
-  function lerEditor(){
-    if(!ov || !st || st.modo !== 'edit') return [];
-    var m = st.m, erros = [];
-    ov.querySelectorAll('[data-cmm]').forEach(function(i){ m[i.dataset.cmm] = i.value.trim(); });
-    ov.querySelectorAll('tr[data-cmi]').forEach(function(tr){ var i = +tr.dataset.cmi, e = m.etapas[i]; if(!e) return;
-      e.nome = tr.querySelector('[data-cmf=nome]').value.trim(); if(!e.marco) e.dur = Math.max(1, parseInt(tr.querySelector('[data-cmf=dur]').value, 10) || 1);
-      var pr = predParse(tr.querySelector('[data-cmf=preds]').value, i); e.preds = pr.out; if(pr.err.length) erros.push('linha ' + (i + 1) + ': ' + pr.err.join(', ')); });
-    return erros;
-  }
-  function bloco(T, j){ var f = j; while(f + 1 < T.length && T[f + 1].nivel > T[j].nivel) f++; return f; }
-  function moverPreds(T, mapa){ T.forEach(function(e){ e.preds = (e.preds || []).map(function(p){ return mapa[p.i] === undefined ? null : Object.assign({}, p, {i:mapa[p.i]}); }).filter(Boolean); }); }
-  function acao(i, a){
-    var T = st.m.etapas, e = T[i]; if(!e) return; var antes = T.slice();
-    if(a === 'in'){ if(!i || T[i - 1].nivel < e.nivel) return t('Não dá para recuar mais'); var f = bloco(T, i); for(var j = i; j <= f; j++) T[j].nivel++; }
-    else if(a === 'out'){ if(!e.nivel) return; var f2 = bloco(T, i); for(var k = i; k <= f2; k++) T[k].nivel--; }
-    else if(a === 'marco'){ e.marco = !e.marco; e.dur = e.marco ? 0 : 1; }
-    else if(a === 'del'){ T.splice(i, 1); var mp = {}; antes.forEach(function(v, o){ var n2 = T.indexOf(v); if(n2 >= 0) mp[o] = n2; }); moverPreds(T, mp); }
-    else if(a === 'up' || a === 'down'){ var f3 = bloco(T, i), bl = T.slice(i, f3 + 1);
-      if(a === 'up'){ var p = i - 1; while(p >= 0 && T[p].nivel > e.nivel) p--; if(p < 0 || T[p].nivel < e.nivel) return; T.splice(i, bl.length); T.splice(p, 0, ...bl); }
-      else { var nx = f3 + 1; if(nx >= T.length || T[nx].nivel < e.nivel) return; var fn = bloco(T, nx); T.splice(i, bl.length); T.splice(i + (fn - nx + 1), 0, ...bl); }
-      var mp2 = {}; antes.forEach(function(v, o){ mp2[o] = T.indexOf(v); }); moverPreds(T, mp2); }
-    desenhaEditor();
-  }
+  function lerEditor(){ if(!ov || !st || st.modo !== 'edit') return; ov.querySelectorAll('[data-cmm]').forEach(function(i){ st.m[i.dataset.cmm] = i.value.trim(); }); if(st.tmp) st.tmp.titulo = st.m.nome || 'Novo modelo'; }
+  function mudou(){ lerEditor(); return st && st.tmp && (JSON.stringify(st.tmp.crono.tarefas) + '|' + (st.m.nome || '') + '|' + (st.m.servicos || '')) !== st.sig; }
+  function sair(){ if(st && st.modo === 'edit' && mudou() && !confirm('Sair sem salvar as alterações do modelo?')) return; fechar(); }
   function salvarModelo(){
-    var erros = lerEditor(), m = st.m;
+    lerEditor(); var m = st.m, T = st.tmp.crono.tarefas.filter(function(tt){ return String(tt.nome || '').trim(); });
     if(!m.nome){ t('Dê um nome ao modelo'); ov.querySelector('[data-cmm=nome]').focus(); return; }
-    m.etapas = m.etapas.filter(function(e){ return e.nome; }); if(!m.etapas.length){ t('Adicione pelo menos uma etapa com nome'); desenhaEditor(); return; }
-    if(erros.length){ t('Predecessora não entendida (' + erros[0] + ')'); return; }
+    if(!T.length){ t('Adicione pelo menos uma tarefa com nome'); var a = ov.querySelector('[data-cradd]'); if(a) a.focus(); return; }
+    var ok = {}; T.forEach(function(tt){ ok[tt.id] = 1; });
+    m.crono = {ini:st.tmp.crono.ini || HOJE(), tarefas:T.map(function(tt){ var n = limpaT(tt); n.preds = (n.preds || []).filter(function(p){ return ok[p.id]; }); return n; })};
+    m.etapas = etapasDe(m.crono);
     var ls = lista(), k = ls.findIndex(function(v){ return v.id === m.id; }), agora = new Date().toISOString();
-    if(!m.id){ m.id = uid(); m.criadoEm = agora; m.criadoPor = me; } m.atualizadoEm = agora;
-    if(k >= 0) ls[k] = m; else ls.push(m); save(); fechar(); t('Modelo salvo'); render();
+    if(!m.id){ m.id = uid(); m.criadoEm = agora; m.criadoPor = typeof me !== 'undefined' ? me : ''; } m.atualizadoEm = agora;
+    if(k >= 0) ls[k] = m; else ls.push(m); fechar(); save(); t('Modelo salvo'); render();
   }
+  // garante o material temporário antes de qualquer interação (uma sincronização pode ter recriado S.mats)
+  ['pointerdown', 'focusin', 'keydown', 'click', 'change', 'input'].forEach(function(evn){ document.addEventListener(evn, function(ev){ if(st && st.tmp && ov && ov.contains(ev.target)) poeTmp(); }, true); });
 
   /* ---------- aplicar no cronograma ---------- */
   function servicoDe(o){ return [o.servico, o.tipo, o.titulo, (o.prop || {}).tipo].filter(Boolean).join(' '); }
@@ -12977,7 +13027,7 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
     if(!os.length){ abrir('<div class="cm-hd"><h2>Usar modelo de cronograma</h2><button class="iconbtn" data-cmx aria-label="Fechar">✕</button></div><p>Nenhum modelo cadastrado ainda. Monte um cronograma e use <b>Salvar como modelo</b>, ou cadastre em <b>Cadastros › Modelos de cronograma</b>.</p><div class="cm-ft"><span class="spacer"></span><button class="btn" data-cmx>Fechar</button><button class="btn primary" data-cmnovo>+ Novo modelo</button></div>'); return; }
     st = {modo:'aplicar', ref:ref, sel:os[0].m.id};
     abrir('<div class="cm-hd"><h2>Usar modelo de cronograma</h2><button class="iconbtn" data-cmx aria-label="Fechar">✕</button></div>'
-      + '<div class="cm-lst" role="radiogroup">' + os.map(function(v, i){ var m = v.m, d = duracao(m); return '<label class="cm-op ' + (i === 0 ? 'on' : '') + '"><input type="radio" name="cmsel" value="' + m.id + '" ' + (i === 0 ? 'checked' : '') + '><span><b>' + x(m.nome) + '</b>' + (v.sc ? ' <em>combina com o serviço</em>' : '') + '<small>' + m.etapas.length + ' linha' + (m.etapas.length > 1 ? 's' : '') + (d ? ' · ' + d + ' dias úteis' : '') + (m.servicos ? ' · ' + x(m.servicos) : '') + '</small></span></label>'; }).join('') + '</div>'
+      + '<div class="cm-lst" role="radiogroup">' + os.map(function(v, i){ var m = v.m, d = duracao(m); return '<label class="cm-op ' + (i === 0 ? 'on' : '') + '"><input type="radio" name="cmsel" value="' + m.id + '" ' + (i === 0 ? 'checked' : '') + '><span><b>' + x(m.nome) + '</b>' + (v.sc ? ' <em>combina com o serviço</em>' : '') + '<small>' + nTarefas(m) + ' tarefa' + (nTarefas(m) > 1 ? 's' : '') + (d ? ' · ' + d + ' dias úteis' : '') + (m.servicos ? ' · ' + x(m.servicos) : '') + '</small></span></label>'; }).join('') + '</div>'
       + '<div class="cm-g"><label class="f">Data de início<input type="date" data-cmini value="' + x(cr.ini || TODAY) + '"></label>'
       + (cr.tarefas.length ? '<label class="f">As ' + cr.tarefas.length + ' tarefas que já existem<select data-cmmodo><option value="add">Manter e acrescentar o modelo no final</option><option value="sub">Substituir pelo modelo</option></select></label>' : '') + '</div>'
       + '<div class="cm-ft"><span class="spacer"></span><button class="btn" data-cmx>Cancelar</button><button class="btn primary" data-cmaplicar>Aplicar modelo</button></div>');
@@ -12994,31 +13044,31 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
   }
   function salvarDe(ref){
     var o = ntOwner(ref); if(!o) return; var cr = crDe(o); if(!cr.tarefas.length){ t('O cronograma está vazio'); return; }
-    editor({nome:'', servicos:servicoDe(o).slice(0, 80), etapas:deCrono(cr)});
+    editor({nome:'', servicos:servicoDe(o).slice(0, 80), crono:{ini:cr.ini, tarefas:cr.tarefas.filter(function(tt){ return !/^[SP]/.test(String(tt.id)) || !tt._proc; })}});
   }
 
   /* ---------- botões no cronograma ---------- */
   function decorar(){
     document.querySelectorAll('.crwrap[data-cr]').forEach(function(w){
-      var ref = w.dataset.cr; if(ref.indexOf('L:') === 0) return; var tool = w.querySelector('.crtool'); if(!tool || tool.querySelector('[data-cmusar]')) return;
+      var ref = w.dataset.cr; if(ref.indexOf('L:') === 0 || ref.indexOf('m:cmx_') === 0) return; var tool = w.querySelector('.crtool'); if(!tool || tool.querySelector('[data-cmusar]')) return;
       tool.insertAdjacentHTML('beforeend', '<span class="crsep"></span><button class="btn sm" data-cmusar="' + x(ref) + '" title="Aplicar um cronograma pronto">Usar modelo</button><button class="btn sm ghost" data-cmsalvar="' + x(ref) + '" title="Guardar este cronograma como modelo">Salvar como modelo</button>');
       var o = ntOwner(ref); if(o && !crDe(o).tarefas.length && lista().length && !w.querySelector('.cm-sug')){
         var os = ordenados(o).slice(0, 4); tool.insertAdjacentHTML('afterend', '<div class="cm-sug">Começar com um cronograma pronto: ' + os.map(function(v){ return '<button data-cmrapido="' + x(ref) + '|' + v.m.id + '">' + x(v.m.nome) + '</button>'; }).join('') + '</div>'); }
     });
   }
   var mo = new MutationObserver(function(){ clearTimeout(mo._t); mo._t = setTimeout(decorar, 50); });
-  ['drawer', 'view', 'layer'].forEach(function(id){ var el = document.getElementById(id); if(el) mo.observe(el, {childList:true, subtree:true}); });
+  ['drawer', 'view', 'layer', 'crFull'].forEach(function(id){ var el = document.getElementById(id); if(el) mo.observe(el, {childList:true, subtree:true}); });
 
   /* ---------- Cadastros › Modelos de cronograma ---------- */
   function tela(){
-    var q = nz(ui.cadQ || ''), ls = lista().filter(function(m){ return !q || nz(m.nome + ' ' + m.servicos + ' ' + m.etapas.map(function(e){ return e.nome; }).join(' ')).indexOf(q) >= 0; }).sort(function(a, b){ return String(a.nome).localeCompare(String(b.nome), 'pt'); });
+    var q = nz(ui.cadQ || ''), ls = lista().filter(function(m){ return !q || nz(m.nome + ' ' + m.servicos + ' ' + cronoDe(m).tarefas.map(function(e){ return e.nome; }).join(' ')).indexOf(q) >= 0; }).sort(function(a, b){ return String(a.nome).localeCompare(String(b.nome), 'pt'); });
     var cont = function(k){ return k === 'srv' ? (S.servs || []).length : k === 'cli' ? (S.clis || []).length : k === 'forn' ? (S.cfg.fornecedores || []).length : k === 'mod' ? (typeof modelosAtivos === 'function' ? modelosAtivos().length : 0) : lista().length; };
     var usos = function(m){ return (S.procs || []).concat(S.mats || []).filter(function(o){ return o.crono && o.crono.modelo && o.crono.modelo.id === m.id; }).length; };
     return '<div class="pagehead"><div><h1>Cadastros</h1><p>Serviços, clientes, fornecedores e parceiros, modelos de tarefas e de cronograma.</p></div><span class="spacer"></span><button class="btn primary" data-cmnovo>+ Novo modelo de cronograma</button></div>'
       + '<div class="seg" style="margin-bottom:14px">' + [['srv', 'Serviços'], ['cli', 'Clientes'], ['forn', 'Fornecedores e parceiros'], ['mod', 'Modelos de tarefas'], ['crono', 'Modelos de cronograma']].map(function(s){ return '<button data-cadsub="' + s[0] + '" class="' + (s[0] === 'crono' ? 'on' : '') + '">' + s[1] + ' <span class="n">' + cont(s[0]) + '</span></button>'; }).join('') + '</div>'
       + '<div class="filters"><input type="search" id="cadq" placeholder="Buscar modelo, serviço ou etapa" value="' + x(ui.cadQ || '') + '"></div>'
-      + '<div class="blk" style="padding:0;overflow:auto"><table class="atable"><thead><tr><th>Modelo</th><th>Serviços</th><th>Etapas</th><th style="text-align:right">Duração</th><th style="text-align:right">Em uso</th></tr></thead><tbody>'
-      + (ls.map(function(m){ var d = duracao(m), u = usos(m); return '<tr data-cmedit="' + m.id + '" style="cursor:pointer"><td><b>' + x(m.nome) + '</b></td><td>' + x(m.servicos || '—') + '</td><td>' + x(m.etapas.filter(function(e){ return !e.nivel; }).slice(0, 4).map(function(e){ return e.nome; }).join(' → ')) + (m.etapas.length > 4 ? ' <span class="sub">+' + (m.etapas.length - 4) + '</span>' : '') + '</td><td style="text-align:right">' + (d ? d + ' dias úteis' : '—') + '</td><td style="text-align:right">' + (u ? u + ' cronograma' + (u > 1 ? 's' : '') : '—') + '</td></tr>'; }).join('')
+      + '<div class="blk" style="padding:0;overflow:auto"><table class="atable"><thead><tr><th>Modelo</th><th>Serviços</th><th>Tarefas principais</th><th style="text-align:right">Duração</th><th style="text-align:right">Em uso</th></tr></thead><tbody>'
+      + (ls.map(function(m){ var d = duracao(m), u = usos(m); return '<tr data-cmedit="' + m.id + '" style="cursor:pointer"><td><b>' + x(m.nome) + '</b></td><td>' + x(m.servicos || '—') + '</td><td>' + (function(){ var T = cronoDe(m).tarefas, top = T.filter(function(e){ return !e.nivel; }); return x(top.slice(0, 4).map(function(e){ return e.nome; }).join(' → ')) + (top.length > 4 ? ' <span class="sub">+' + (top.length - 4) + '</span>' : '') + ' <span class="sub">(' + T.length + ' tarefa' + (T.length > 1 ? 's' : '') + ')</span>'; })() + '</td><td style="text-align:right">' + (d ? d + ' dias úteis' : '—') + '</td><td style="text-align:right">' + (u ? u + ' cronograma' + (u > 1 ? 's' : '') : '—') + '</td></tr>'; }).join('')
         || '<tr><td colspan="5" class="empty">' + (lista().length ? 'Nada com essa busca.' : 'Nenhum modelo ainda. Use <b>Novo modelo de cronograma</b>, ou monte o cronograma de um processo e clique em <b>Salvar como modelo</b>.') + '</td></tr>') + '</tbody></table></div>'
       + '<p class="hint">No cronograma de um processo ou material técnico, use <b>Usar modelo</b> para aplicar um destes com a data de início que você escolher. As datas são calculadas em dias úteis, com os feriados da Mannare.</p>';
   }
@@ -13038,27 +13088,58 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
     if((el = tg.closest('[data-cmusar]'))){ ev.stopPropagation(); escolher(el.dataset.cmusar); return; }
     if((el = tg.closest('[data-cmsalvar]'))){ ev.stopPropagation(); salvarDe(el.dataset.cmsalvar); return; }
     if((el = tg.closest('[data-cmrapido]'))){ ev.stopPropagation(); var pr = el.dataset.cmrapido.split('|'); escolher(pr[0]); if(ov){ var r = ov.querySelector('[name=cmsel][value="' + pr[1] + '"]'); if(r){ r.checked = true; ov.querySelectorAll('.cm-op').forEach(function(l){ l.classList.toggle('on', l.contains(r)); }); } } return; }
-    if(tg.closest('[data-cmnovo]')){ ev.stopPropagation(); editor({nome:'', servicos:'', etapas:[]}); return; }
+    if(tg.closest('[data-cmnovo]')){ ev.stopPropagation(); editor({nome:'', servicos:'', crono:{ini:HOJE(), tarefas:[]}}); return; }
     if((el = tg.closest('[data-cmedit]'))){ ev.stopPropagation(); var m = lista().find(function(v){ return v.id === el.dataset.cmedit; }); if(m) editor(m); return; }
     if(!ov || !ov.contains(tg)) return;
+    if(st && st.modo === 'edit'){
+      if(tg.closest('[data-cmx]')){ ev.stopPropagation(); sair(); return; }
+      if(tg.closest('[data-cmsave]')){ ev.stopPropagation(); salvarModelo(); return; }
+      if(tg.closest('[data-cmdup]')){ ev.stopPropagation(); lerEditor(); var c = JSON.parse(JSON.stringify(st.m)); c.crono = JSON.parse(JSON.stringify(st.tmp.crono)); delete c.id; c.nome = c.nome + ' (cópia)'; editor(c); return; }
+      if(tg.closest('[data-cmdel]')){ ev.stopPropagation(); if(!confirm('Excluir o modelo "' + st.m.nome + '"? Os cronogramas que já usaram o modelo continuam como estão.')) return; var id = st.m.id; fechar(); S.cfg.cronoModelos = lista().filter(function(v){ return v.id !== id; }); save(); t('Modelo excluído'); render(); return; }
+      return; // o resto (tarefas, marcos, recuos, ligações...) é tratado pelo próprio cronograma
+    }
     if(tg.closest('[data-cmx]') || tg === ov){ fechar(); return; }
     ev.stopPropagation();
-    if(st && st.modo === 'edit'){
-      if((el = tg.closest('[data-cma]'))){ lerEditor(); acao(+el.closest('tr').dataset.cmi, el.dataset.cma); return; }
-      if((el = tg.closest('[data-cmadd]'))){ lerEditor(); var mc = el.dataset.cmadd === 'marco', ult = st.m.etapas[st.m.etapas.length - 1]; st.m.etapas.push({nome:'', dur:mc ? 0 : 5, marco:mc, nivel:ult ? ult.nivel : 0, preds:ult ? [{i:st.m.etapas.length - 1, tipo:'TI', lag:0}] : []}); desenhaEditor(); var ins = ov.querySelectorAll('[data-cmf=nome]'); ins[ins.length - 1].focus(); return; }
-      if(tg.closest('[data-cmsave]')){ salvarModelo(); return; }
-      if(tg.closest('[data-cmdup]')){ lerEditor(); var c = JSON.parse(JSON.stringify(st.m)); delete c.id; c.nome = c.nome + ' (cópia)'; editor(c); return; }
-      if(tg.closest('[data-cmdel]')){ if(!confirm('Excluir o modelo "' + st.m.nome + '"? Os cronogramas que já usaram o modelo continuam como estão.')) return; S.cfg.cronoModelos = lista().filter(function(v){ return v.id !== st.m.id; }); save(); fechar(); t('Modelo excluído'); render(); return; }
-    }
     if(st && st.modo === 'aplicar'){
       if(tg.closest('[data-cmaplicar]')){ aplicar(); return; }
     }
   }, true);
-  document.addEventListener('change', function(ev){ var tg = ev.target; if(!ov || !ov.contains(tg)) return; if(tg.name === 'cmsel') ov.querySelectorAll('.cm-op').forEach(function(l){ l.classList.toggle('on', l.contains(tg)); }); if(st && st.modo === 'edit' && (tg.dataset.cmf === 'dur' || tg.dataset.cmf === 'preds')){ lerEditor(); var tot = ov.querySelector('.cm-tot'); var nd = duracao(st.m); if(tot) tot.innerHTML = st.m.etapas.length + ' linhas' + (nd ? ' · duração estimada <b>' + nd + ' dias úteis</b>' : ''); } });
+  document.addEventListener('change', function(ev){ var tg = ev.target; if(!ov || !ov.contains(tg)) return; if(tg.name === 'cmsel') ov.querySelectorAll('.cm-op').forEach(function(l){ l.classList.toggle('on', l.contains(tg)); }); if(tg.dataset && tg.dataset.cmm) lerEditor(); });
   document.addEventListener('keydown', function(ev){
-    if(!ov) return; if(ev.key === 'Escape'){ ev.stopPropagation(); fechar(); return; }
-    var tg = ev.target; if(st && st.modo === 'edit' && ev.key === 'Enter' && tg.dataset && tg.dataset.cmf === 'nome'){ ev.preventDefault(); var b = ov.querySelector('[data-cmadd=etapa]'); if(b) b.click(); }
+    if(!ov || ev.key !== 'Escape') return;
+    if(st && st.modo === 'edit'){ if(document.querySelector('.cg-ov:not(.cm-ov), #layer .modal, #layer .mlayer')) return; ev.stopPropagation(); sair(); return; }
+    ev.stopPropagation(); fechar();
   }, true);
+})();
+</script>
+<script id="mannare-tablet">
+/* MANNARE CRM · iPad/tablet: menu lateral que abre e fecha como no computador */
+(function(){
+  var Q = '(min-width:769px) and (max-width:1180px), (min-width:769px) and (hover:none) and (pointer:coarse)';
+  var mq = window.matchMedia ? window.matchMedia(Q) : null, side = document.getElementById('side'), root = document.documentElement;
+  if(!side || !mq) return;
+  var KEY = 'mannare.sbAberto';
+  var ler = function(){ try{ return localStorage.getItem(KEY) === '1'; }catch(_){ return false; } };
+  var gravar = function(v){ try{ localStorage.setItem(KEY, v ? '1' : '0'); }catch(_){} };
+  var empurra = function(){ return window.innerWidth >= 1024; }; // deitado: empurra o conteúdo, como no computador; em pé: abre por cima
+  var ICO = '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M3 5h18v2H3zm0 6h12v2H3zm0 6h18v2H3z" fill="currentColor"/></svg>';
+  var btn = document.createElement('button'); btn.type = 'button'; btn.className = 'sb-tog'; btn.innerHTML = ICO + '<span class="sb-tog-tx">Recolher menu</span>';
+  var logo = side.querySelector('.logo'); if(logo) logo.insertAdjacentElement('afterend', btn); else side.insertBefore(btn, side.firstChild);
+  var scrim = document.createElement('div'); scrim.className = 'sb-scrim'; document.body.appendChild(scrim);
+  function set(v, salvar){
+    var on = !!v && mq.matches; root.classList.toggle('sb-open', on); root.classList.toggle('sb-push', on && empurra()); root.classList.toggle('sb-over', on && !empurra());
+    btn.setAttribute('aria-expanded', on ? 'true' : 'false'); btn.setAttribute('aria-label', on ? 'Recolher menu' : 'Abrir menu'); btn.title = on ? 'Recolher menu' : 'Abrir menu';
+    if(salvar && empurra()) gravar(on);
+  }
+  btn.addEventListener('click', function(ev){ ev.preventDefault(); ev.stopPropagation(); set(!root.classList.contains('sb-open'), true); }, true);
+  scrim.addEventListener('click', function(){ set(false, false); });
+  // em pé, escolher um item fecha o menu; deitado, ele continua aberto (como no computador)
+  side.addEventListener('click', function(ev){ var n = ev.target.closest && ev.target.closest('.nav'); if(n && !n.classList.contains('nav-more') && root.classList.contains('sb-over')) setTimeout(function(){ set(false, false); }, 60); });
+  document.addEventListener('keydown', function(ev){ if(ev.key === 'Escape' && root.classList.contains('sb-over')) set(false, false); });
+  var ajusta = function(){ set(root.classList.contains('sb-open') ? (empurra() ? ler() || root.classList.contains('sb-push') : root.classList.contains('sb-over')) : (empurra() && ler()), false); };
+  if(mq.addEventListener) mq.addEventListener('change', ajusta); window.addEventListener('resize', function(){ clearTimeout(ajusta._t); ajusta._t = setTimeout(ajusta, 120); });
+  set(empurra() && ler(), false);
+  window.cgSide = {abrir:function(){ set(true, true); }, fechar:function(){ set(false, true); }};
 })();
 </script>
 <script id="mannare-mobile">
