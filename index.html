@@ -3288,6 +3288,14 @@ button.cu-row:hover{background:#F6F7F9!important;color:#1F2033!important}
 .cu-vsug button span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:13.5px}
 .cu-vlink{width:calc(100% - 0px);text-align:left;cursor:pointer}
 .cu-vlink:hover span{text-decoration:underline}
+/* blocos do Planejador (tempo de foco e tarefas com horário): o tema genérico ".blk" deixava o bloco branco e sem texto */
+.plan .pev.blk,.pev.blk{padding:3px 7px!important;background:color-mix(in srgb,var(--c) 12%,#fff)!important;box-shadow:none!important;border:1px solid color-mix(in srgb,var(--c) 25%,transparent)!important;border-left:3px solid var(--c)!important;border-radius:8px!important;margin:0!important;min-height:0!important;display:flex!important;flex-direction:column!important;gap:1px!important}
+.pev.blk.curto{flex-direction:row!important;align-items:center!important;gap:6px!important}
+.pev.blk b{font:600 12px/1.25 var(--font-sans,inherit)!important;color:var(--c)!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:none}
+.pev.blk span{font:500 11px/1.25 var(--font-sans,inherit)!important;color:#55577A!important;opacity:1!important;flex:none}
+.pev.blk:hover{box-shadow:0 1px 3px rgba(14,16,48,.12)!important}
+.cu-hora0{border:0;background:#F4F7FD;color:#0000FF;border-radius:999px!important;padding:3px 10px;font:600 12px var(--font-sans,inherit);cursor:pointer;margin-left:4px}
+.cu-hora0[data-cusemhora]{color:#55577A;padding:3px 8px}
 
 /* Itens de fornecedor na proposta */
 .fn-row td{background:#F7F8FF}
@@ -12159,7 +12167,7 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
   }
   function meusEventos(){
     var em = String(me).toLowerCase(), h = hojeISO();
-    return S.eventos.filter(function(e){ return e.titulo && e.data >= h && (e.dono === me || (e.participantes || []).indexOf(em) >= 0 || euGestor()) && !(e.status === 'cancelado' && e.sync === 'ok'); })
+    return S.eventos.filter(function(e){ return e.titulo && !e.origemBloco && e.data >= h && (e.dono === me || (e.participantes || []).indexOf(em) >= 0 || euGestor()) && !(e.status === 'cancelado' && e.sync === 'ok'); })
       .sort(function(a, b){ return (a.data + (a.diaTodo ? '00:00' : a.ini)).localeCompare(b.data + (b.diaTodo ? '00:00' : b.ini)); });
   }
   function lista(){
@@ -12225,7 +12233,7 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
     var cancel = {}; S.eventos.forEach(function(e){ if(e.status === 'cancelado' && e.gid) cancel[e.gid] = 1; });
     Object.keys(g).forEach(function(k){ if(Array.isArray(g[k])) g[k] = g[k].filter(function(v){ return !v._crm && !cancel[v.id]; }); });
     S.eventos.forEach(function(e){
-      if(!e.titulo || e.status === 'cancelado' || e.diaTodo || !e.data || !e.ini || !e.fim) return;
+      if(!e.titulo || e.origemBloco || e.status === 'cancelado' || e.diaTodo || !e.data || !e.ini || !e.fim) return;
       var quem = {}; [e.dono].concat(e.participantes || []).forEach(function(m){ if(m) quem[String(m).toLowerCase()] = 1; });
       var ini = new Date(e.data + 'T' + e.ini + ':00'), fim = new Date(e.data + 'T' + e.fim + ':00');
       Object.keys(quem).forEach(function(u){
@@ -12391,7 +12399,8 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
     var tit = '<input class="cu-tit" data-cuf="titulo" value="' + x(s.titulo) + '" placeholder="' + titPh + '" aria-label="Título">';
     var quando;
     if(ab === 'ferias' || ab === 'folga') quando = '<div class="cu-when"><label class="cu-dt">' + dLonga(s.data) + '<input type="date" data-cuf="data" value="' + s.data + '" aria-label="Início"></label><span class="cu-ar">→</span><label class="cu-dt">' + dLonga(s.ate) + '<input type="date" data-cuf="ate" value="' + s.ate + '" aria-label="Fim"></label></div>';
-    else if(ab === 'tarefa') quando = '<div class="cu-when"><span class="cu-lb2">Prazo</span><label class="cu-dt">' + dLonga(s.data) + '<input type="date" data-cuf="data" value="' + s.data + '" aria-label="Prazo"></label></div>';
+    else if(ab === 'tarefa') quando = '<div class="cu-when"><span class="cu-lb2">Prazo</span><label class="cu-dt">' + dLonga(s.data) + '<input type="date" data-cuf="data" value="' + s.data + '" aria-label="Prazo"></label>'
+      + (s.semHora ? '<button class="cu-hora0" data-cuhora title="Reservar um horário no calendário">+ horário</button>' : '<label class="cu-tm">' + s.ini + '<input type="time" step="900" data-cuf="ini" value="' + s.ini + '" aria-label="Início"></label><span class="cu-ar">→</span><label class="cu-tm">' + s.fim + '<input type="time" step="900" data-cuf="fim" value="' + s.fim + '" aria-label="Fim"></label><button class="cu-hora0" data-cusemhora title="Só o prazo, sem reservar horário" aria-label="Tirar horário">×</button>') + '</div>';
     else quando = '<div class="cu-when"><label class="cu-dt">' + dLonga(s.data) + '<input type="date" data-cuf="data" value="' + s.data + '" aria-label="Data"></label>'
       + (s.diaTodo ? '' : '<label class="cu-tm">' + s.ini + '<input type="time" step="900" data-cuf="ini" value="' + s.ini + '" aria-label="Início"></label><span class="cu-ar">→</span><label class="cu-tm">' + s.fim + '<input type="time" step="900" data-cuf="fim" value="' + s.fim + '" aria-label="Fim"></label><span class="cu-dur">' + durTxt(s.ini, s.fim) + '</span>') + '</div>';
     var corpo = '';
@@ -12481,9 +12490,11 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
       var v = s.vinculo || (s.procId ? vincDoProc(s.procId) : null);
       if(!v){ t('Vincule a tarefa a um processo, proposta ou material técnico'); var vq0 = pop.querySelector('[data-cuvq]'); if(vq0){ vq0.focus(); vsug(''); } return; }
       var resp = s.resp || eu(), outro = resp !== eu();
+      if(!s.semHora && s.ini && s.fim && mins(s.fim) <= mins(s.ini)){ t('O fim precisa ser depois do início'); return; }
+      var bloco = function(ref){ if(s.semHora || !s.ini || !s.fim) return; var uu = (typeof U !== 'undefined' && U[resp]) ? U[resp] : null; if(!uu) return; uu.plano = (uu.plano || []).concat([{id:uid(), ref:ref, titulo:s.titulo, ini:s.data + 'T' + s.ini, fim:s.data + 'T' + s.fim}]); };
       if(v.t === 'proc'){
         var p = (S.procs || []).find(function(q){ return q.id === v.id; }); if(!p){ t('Processo não encontrado'); return; }
-        var tk = mkTask(s.titulo, [], {resp:[resp], prazo:s.data, desc:s.desc || ''}); p.tarefas = p.tarefas || []; p.tarefas.push(tk);
+        var tk = mkTask(s.titulo, [], {resp:[resp], prazo:s.data, desc:s.desc || ''}); p.tarefas = p.tarefas || []; p.tarefas.push(tk); bloco('t|' + p.id + '|' + tk.id);
         if(typeof logP === 'function') logP(p, 'criou a tarefa “' + s.titulo + '” pelo calendário');
         if(outro && typeof notify === 'function') notify(resp, 'atribuiu a você a tarefa “' + s.titulo + '”', p.id, tk.id);
         save(); fechar(); t('Tarefa criada em ' + (p.protocolo || p.codigo || 'processo')); render(); return;
@@ -12491,7 +12502,7 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
       if(v.t === 'mat'){
         var m = (S.mats || []).find(function(q){ return q.id === v.id; }); if(!m){ t('Material não encontrado'); return; }
         m.checks = m.checks || []; var ck = m.checks.find(function(c){ return c.nome === 'Tarefas'; }); if(!ck){ ck = {id:uid(), nome:'Tarefas', itens:[]}; m.checks.push(ck); }
-        ck.itens.push({id:uid(), txt:s.titulo, feito:false, resp:resp, prazo:s.data, desc:s.desc || '', criadoEm:new Date().toISOString(), por:eu()});
+        var nid = uid(); ck.itens.push({id:nid, txt:s.titulo, feito:false, resp:resp, prazo:s.data, desc:s.desc || '', criadoEm:new Date().toISOString(), por:eu()}); bloco('mc|' + m.id + '|' + nid);
         if(typeof logT === 'function') logT(m, 'criou a tarefa “' + s.titulo + '” pelo calendário');
         if(outro && typeof notifyMat === 'function') notifyMat(resp, 'atribuiu a você a tarefa “' + s.titulo + '”', m);
         save(); fechar(); t('Tarefa criada em ' + (m.codigo || m.titulo || 'material técnico')); render(); return;
@@ -12499,9 +12510,9 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
       if(v.t === 'prop'){
         var raw = (S.propsDb || []).find(function(q){ return q.id === v.id; }), pv = (S.props || []).find(function(q){ return q.id === v.id; }) || {};
         if(!raw){ var pp = pv.procId && (S.procs || []).find(function(q){ return q.id === pv.procId; });
-          if(pp){ var tk2 = mkTask(s.titulo, [], {resp:[resp], prazo:s.data, desc:s.desc || ''}); pp.tarefas = pp.tarefas || []; pp.tarefas.push(tk2); if(typeof logP === 'function') logP(pp, 'criou a tarefa “' + s.titulo + '” pelo calendário'); save(); fechar(); t('Tarefa criada no processo da proposta'); render(); return; }
+          if(pp){ var tk2 = mkTask(s.titulo, [], {resp:[resp], prazo:s.data, desc:s.desc || ''}); pp.tarefas = pp.tarefas || []; pp.tarefas.push(tk2); bloco('t|' + pp.id + '|' + tk2.id); if(typeof logP === 'function') logP(pp, 'criou a tarefa “' + s.titulo + '” pelo calendário'); save(); fechar(); t('Tarefa criada no processo da proposta'); render(); return; }
           t('Proposta não encontrada'); return; }
-        var tk3 = mkTask(s.titulo, [], {resp:[resp], prazo:s.data, desc:s.desc || ''}); raw.tarefas = raw.tarefas || []; raw.tarefas.push(tk3);
+        var tk3 = mkTask(s.titulo, [], {resp:[resp], prazo:s.data, desc:s.desc || ''}); raw.tarefas = raw.tarefas || []; raw.tarefas.push(tk3); bloco('pt|' + raw.id + '|' + tk3.id);
         (raw.log = raw.log || []).push({em:new Date().toISOString(), por:eu(), txt:'criou a tarefa “' + s.titulo + '” pelo calendário'});
         if(outro && typeof notifyProp === 'function') notifyProp(resp, 'atribuiu a você a tarefa “' + s.titulo + '” na proposta ' + (raw.codigo || ''), raw);
         save(); fechar(); t('Tarefa criada na proposta ' + (raw.codigo || '')); render(); return;
@@ -12606,6 +12617,8 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
     ev.stopPropagation();
     if(h('[data-cux]')){ fechar(); return; }
     if(modo === 'criar'){
+      if(h('[data-cuhora]')){ lerCampos(); st.semHora = false; desenhaCriar(); return; }
+      if(h('[data-cusemhora]')){ lerCampos(); st.semHora = true; desenhaCriar(); return; }
       if((el = h('[data-cutab]'))){ lerCampos(); st.aba = el.dataset.cutab; if((st.aba === 'ferias' || st.aba === 'folga') && !st.titulo) st.titulo = ''; desenhaCriar(true); return; }
       if(h('[data-cudiatodo]')){ lerCampos(); st.diaTodo = !st.diaTodo; desenhaCriar(); return; }
       if(h('[data-cumeet]')){ lerCampos(); st.meet = !st.meet; if(!st.meet) st.meetLink = ''; desenhaCriar(); return; }
@@ -13156,6 +13169,100 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
     if(st && st.modo === 'edit'){ if(document.querySelector('.cg-ov:not(.cm-ov), #layer .modal, #layer .mlayer')) return; ev.stopPropagation(); sair(); return; }
     ev.stopPropagation(); fechar();
   }, true);
+})();
+</script>
+<script id="mannare-blocosgcal">
+/* MANNARE CRM · Tarefas e tempos de foco do Planejador ↔ Google Agenda (integração total)
+   - Cada bloco do Planejador (tempo de foco ou tarefa com horário) ganha um "espelho" (doc evento com origemBloco).
+     A ponte (Apps Script) cria/atualiza/apaga o compromisso na agenda do dono do bloco, como "Ocupado".
+   - Mudou no CRM (arrastou, mudou horário, renomeou, concluiu, apagou) → muda na Google Agenda.
+   - Mudou na Google Agenda (arrastou, mudou horário, renomeou, apagou) → a ponte avisa e o CRM ajusta o bloco.
+   - O espelho não aparece de novo no Planejador como reunião (sem duplicar). */
+(function(){
+  if(typeof S === 'undefined' || typeof collect !== 'function') return;
+  var PFX = 'blk_', COR = {foco:'3', tarefa:'9'};
+  var pad = function(n){ return String(n).padStart(2, '0'); };
+  var agoraISO = function(){ return new Date().toISOString(); };
+  var local = function(d){ return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()) + 'T' + pad(d.getHours()) + ':' + pad(d.getMinutes()); };
+  var carregado = false;
+  function pronto(){ return carregado && typeof DB !== 'undefined' && DB.ready && typeof U !== 'undefined' && U && Object.keys(U).length && Array.isArray(S.eventos); }
+  function espelhos(){ return (S.eventos || []).filter(function(e){ return e && e.origemBloco; }); }
+  function infoBloco(b){
+    var it = null; try{ it = b.ref && typeof itemDe === 'function' ? itemDe(b.ref) : null; }catch(_){}
+    var tit = String((it ? it.titulo : b.titulo) || (b.foco ? 'Tempo de foco' : 'Bloco')).trim();
+    var tipo = b.foco ? 'foco' : (it ? 'tarefa' : 'foco');
+    var VT = {proc:'Processo', prop:'Proposta', mat:'Material técnico'};
+    var desc = (tipo === 'foco' ? 'Tempo de foco' : 'Tarefa') + (it && it.onde ? ' | ' + it.onde : '') + (b.vinculo && b.vinculo.rot ? '\n' + (VT[b.vinculo.t] || 'Vínculo') + ': ' + b.vinculo.rot : '');
+    return {titulo:(it && it.feito ? '✓ ' : '') + tit, tipo:tipo, desc:desc, data:String(b.ini).slice(0, 10), ini:String(b.ini).slice(11, 16), fim:String(b.fim).slice(11, 16), dataFim:String(b.fim).slice(0, 10)};
+  }
+  function dentro(b){ if(!b || !b.id || !/^\d{4}-\d\d-\d\dT\d\d:\d\d/.test(String(b.ini)) || !/^\d{4}-\d\d-\d\dT\d\d:\d\d/.test(String(b.fim))) return false;
+    var lim0 = local(new Date(Date.now() - 864e5)), lim1 = local(new Date(Date.now() + 180 * 864e5)); return String(b.fim) >= lim0 && String(b.ini) <= lim1 && String(b.fim) > String(b.ini); }
+
+  // 1) o que mudou na Google Agenda volta para o bloco
+  function aplicarGoogle(){
+    var mudou = false;
+    espelhos().forEach(function(e){
+      var u = U[String(e.dono || '').toLowerCase()] || U[e.dono]; if(!u || !Array.isArray(u.plano)) return;
+      var i = u.plano.findIndex(function(b){ return b.id === e.origemBloco; });
+      if(e.googleApagou && !e.googleAplicado){ if(i >= 0){ u.plano.splice(i, 1); } e.googleAplicado = agoraISO(); mudou = true; return; }
+      var g = e.googleMudou; if(!g || !g.em || g.em === e.googleAplicadoEm) return;
+      if(i >= 0){ var b = u.plano[i]; if(g.data && g.ini && g.fim){ b.ini = g.data + 'T' + g.ini; b.fim = (g.dataFim || g.data) + 'T' + g.fim; }
+        if(g.titulo && !b.ref){ b.titulo = String(g.titulo).replace(/^✓\s*/, ''); } }
+      ['data', 'ini', 'fim', 'titulo'].forEach(function(k){ if(g[k]) e[k] = g[k]; }); e.googleAplicadoEm = g.em; mudou = true;
+    });
+    return mudou;
+  }
+  // 2) o que mudou no CRM vai para a Google Agenda
+  function reconciliar(){
+    if(!pronto()) return false;
+    var mudou = aplicarGoogle(), vistos = {}, porId = {};
+    espelhos().forEach(function(e){ porId[e.origemBloco] = e; });
+    Object.keys(U).forEach(function(k){ var u = U[k]; if(!u || !Array.isArray(u.plano)) return; var dono = String(u.id || u.email || k).toLowerCase();
+      u.plano.forEach(function(b){ if(!b || !b.id) return; vistos[b.id] = 1; if(!dentro(b)) return;
+        var inf = infoBloco(b), e = porId[b.id];
+        if(!e){ e = {id:PFX + b.id, origemBloco:b.id, tipoBloco:inf.tipo, dono:dono, por:typeof me !== 'undefined' ? me : '', criadoEm:agoraISO(), status:'ativo',
+            titulo:inf.titulo, data:inf.data, ini:inf.ini, fim:inf.fim, diaTodo:false, meet:false, participantes:[], externos:[], local:'', desc:inf.desc,
+            agenda:'minha', cor:COR[inf.tipo], visibilidade:'default', disponivel:false, lembrete:'', sync:'pendente', erro:''};
+          S.eventos.push(e); porId[b.id] = e; mudou = true; return; }
+        var dif = e.titulo !== inf.titulo || e.data !== inf.data || e.ini !== inf.ini || e.fim !== inf.fim || e.desc !== inf.desc || String(e.dono).toLowerCase() !== dono || e.status === 'cancelado';
+        if(dif){ e.titulo = inf.titulo; e.data = inf.data; e.ini = inf.ini; e.fim = inf.fim; e.desc = inf.desc; e.dono = dono; e.cor = COR[inf.tipo]; e.tipoBloco = inf.tipo;
+          if(e.status === 'cancelado'){ e.status = 'ativo'; e.gid = e.sync === 'ok' ? '' : e.gid; e.googleApagou = null; e.googleAplicado = null; }
+          e.sync = 'pendente'; e.erro = ''; e.atualizadoEm = agoraISO(); mudou = true; }
+      }); });
+    // blocos apagados no CRM → apaga na agenda (só se o dono do bloco estiver carregado)
+    espelhos().forEach(function(e){ if(vistos[e.origemBloco] || e.status === 'cancelado') return; var u = U[String(e.dono || '').toLowerCase()]; if(!u || !Array.isArray(u.plano)) return;
+      e.status = 'cancelado'; e.sync = 'pendente'; e.canceladoEm = agoraISO(); mudou = true; });
+    return mudou;
+  }
+  // só começa depois de ler do banco os espelhos que já existem (evita criar de novo e duplicar na agenda)
+  var tCar = setInterval(function(){
+    if(typeof DB === 'undefined' || !DB.ready || typeof me === 'undefined' || !me) return; clearInterval(tCar);
+    if(typeof sb === 'undefined' || !sb){ carregado = true; return; }
+    sb.from('pm_docs').select('id,dados,versao').eq('tipo', 'evento').then(function(r){
+      if(r && !r.error && r.data){ r.data.forEach(function(d){ if(!/^evento:blk_/.test(d.id || '')) return; var ja = (S.eventos || []).some(function(e){ return 'evento:' + e.id === d.id; });
+        if(!ja && typeof applyDoc === 'function'){ applyDoc(d.id, 'evento', d.dados); if(DB.base && !DB.base[d.id]) DB.base[d.id] = {json:JSON.stringify(d.dados), versao:d.versao}; } }); carregado = true; }
+      else setTimeout(function(){ carregado = true; }, 20000); // sem resposta: tenta de novo mais tarde, a ponte evita duplicar
+    }, function(){ setTimeout(function(){ carregado = true; }, 20000); });
+  }, 500);
+  window.cgBlocosGcal = {reconciliar:reconciliar, infoBloco:infoBloco};
+
+  // antes de cada gravação
+  var _col = collect;
+  collect = function(){ try{ reconciliar(); }catch(err){ console.warn('blocos/gcal:', err); } return _col.apply(this, arguments); };
+  // quando a ponte avisa uma mudança feita na Google Agenda (chega pelo tempo real) ou na primeira carga
+  var ultimo = '';
+  setInterval(function(){ if(!pronto()) return; try{ var sig = JSON.stringify(espelhos().map(function(e){ return [e.id, e.googleApagou && !e.googleAplicado, e.googleMudou && e.googleMudou.em !== e.googleAplicadoEm]; }).filter(function(v){ return v[1] || v[2]; }));
+      var precisa = sig !== '[]' && sig !== ultimo; ultimo = sig; if(precisa || !reconciliar._1){ reconciliar._1 = true; var antes = JSON.stringify(espelhos().map(function(e){ return [e.id, e.sync, e.titulo, e.data, e.ini, e.fim, e.status]; }));
+        reconciliar(); var depois = JSON.stringify(espelhos().map(function(e){ return [e.id, e.sync, e.titulo, e.data, e.ini, e.fim, e.status]; }));
+        if(antes !== depois || precisa){ save(); if(typeof render === 'function' && ui.view === 'plan') render(); } } }catch(err){ console.warn('blocos/gcal:', err); } }, 15000);
+
+  // não mostrar o espelho de novo como reunião, nem na lista de eventos
+  var _r = window.render;
+  window.render = render = function(){
+    try{ var g = S.extra && S.extra['config:gcal_eventos']; if(g){ var gids = {}, ids = {}; espelhos().forEach(function(e){ if(e.gid) gids[e.gid] = 1; ids[e.id] = 1; });
+      Object.keys(g).forEach(function(k){ if(Array.isArray(g[k])) g[k] = g[k].filter(function(v){ return !gids[v.id] && !ids[v._crm] && !v.blocoCrm; }); }); } }catch(_){}
+    return _r.apply(this, arguments);
+  };
 })();
 </script>
 <script id="mannare-tarefasvinc">
