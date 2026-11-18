@@ -3433,6 +3433,81 @@ button.cu-row:hover{background:#F6F7F9!important;color:#1F2033!important}
 .br-ico{display:inline-flex;color:var(--mn-azul,#0000FF);flex:none}
 .br-rtx{display:flex;flex-direction:column;flex:1;min-width:0}.br-rtx b{font-size:13.5px}.br-rtx span{font-size:12px;color:#55577A}
 
+/* ===== Canais (modelo ClickUp) ===== */
+.cn-wrap{display:grid;grid-template-columns:280px minmax(0,1fr);gap:16px;height:calc(100vh - 112px);height:calc(100dvh - 112px);min-height:520px}
+.cn-lst,.cn-pane{background:#fff;border-radius:20px!important;box-shadow:0 1px 3px rgba(14,16,48,.07)!important;min-height:0;display:flex;flex-direction:column;overflow:hidden}
+.cn-lh{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:16px 16px 10px}.cn-lh b{font:700 17px var(--font-display,inherit)}
+.cn-q{margin:0 12px 8px;border:1px solid #DCDDE3;border-radius:12px!important;padding:8px 12px;font:inherit;min-height:38px}
+.cn-scroll{flex:1;overflow:auto;padding:0 8px 12px}
+.cn-sec{font-size:11.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#8C8FA3;padding:12px 10px 4px}
+.cn-it{all:unset;box-sizing:border-box;display:flex;align-items:center;gap:8px;width:100%;padding:7px 10px;border-radius:10px!important;cursor:pointer;color:#33354D;font-size:14px;min-height:36px;-webkit-user-select:none;user-select:none}
+.cn-it:hover{background:#F4F7FD}.cn-it.on{background:#EEF0FF;color:#0000CC}.cn-it.un .cn-nm{font-weight:700;color:#0B0B1A}
+.cn-hash{display:inline-flex;color:#8C8FA3;flex:none}.cn-it.on .cn-hash{color:#0000FF}
+.cn-nm{flex:1;min-width:0;display:flex;flex-direction:column;overflow:hidden}.cn-nm,.cn-nm small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.cn-nm small{font-size:11.5px;color:#8C8FA3;font-weight:500}
+.cn-n{background:#E01E5A;color:#fff;border-radius:999px!important;font:700 11px var(--font-sans,inherit);padding:1px 7px;flex:none}
+.cn-vz,.cn-vz2{color:#8C8FA3;font-size:13.5px;padding:12px;text-align:center}
+.cn-ph{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid #EEF0F4}
+.cn-pt{min-width:0}.cn-pn{display:flex;align-items:center;gap:6px}.cn-pn h2{margin:0;font:700 18px var(--font-display,inherit);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.cn-pt small{color:#8C8FA3;font-size:12.5px}
+.cn-tipo{font-size:11px;font-weight:700;color:#55577A;background:#F1F2F7;border-radius:999px!important;padding:2px 8px;flex:none}
+.cn-avs{display:flex;align-items:center;cursor:pointer}.cn-avs>*{margin-left:-6px;box-shadow:0 0 0 2px #fff!important;border-radius:50%!important}.cn-mais{font-size:11px;font-weight:700;background:#EEF0F6;width:28px;height:28px;display:inline-grid;place-items:center}
+.cn-ph .btn{display:inline-flex;align-items:center;gap:6px}
+.cn-back{display:none;border:0;background:none;padding:4px;cursor:pointer;color:#33354D}
+.cn-tabs{display:flex;gap:4px;padding:6px 14px;border-bottom:1px solid #EEF0F4;overflow-x:auto}
+.cn-tabs button{all:unset;display:inline-flex;align-items:center;gap:6px;padding:7px 10px;border-radius:8px!important;font:600 13px var(--font-sans,inherit);color:#55577A;cursor:pointer;white-space:nowrap;position:relative;-webkit-user-select:none;user-select:none}
+.cn-tabs button:hover{background:#F4F7FD}.cn-tabs button.on{color:#0B0B1A}.cn-tabs button.on::after{content:"";position:absolute;left:8px;right:8px;bottom:-7px;height:2px;background:#0B0B1A}
+.cn-tabs .n{background:#EEF0F6;border-radius:999px!important;padding:0 6px;font-size:11px}
+.cn-feed{flex:1;overflow:auto;padding:12px 22px 16px;-webkit-overflow-scrolling:touch}
+.cn-m{position:relative;display:flex;gap:10px;padding:8px 10px;border-radius:12px!important;margin:0 -10px}
+.cn-m:hover{background:#F8F9FC}.cn-m.fix{background:#FFFBEB}.cn-flash{animation:cnfl 1.6s ease}@keyframes cnfl{0%,40%{background:#FFF3CC}100%{background:transparent}}
+.cn-mb{flex:1;min-width:0}.cn-mh{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}.cn-mh b{font-size:14px}.cn-mh span{font-size:12px;color:#8C8FA3}
+.cn-fx{font-style:normal;font-size:11px;font-weight:700;color:#8A6200;display:inline-flex;align-items:center;gap:3px}
+.cn-tx{font-size:14px;line-height:1.5;color:#1F2033;white-space:pre-wrap;word-wrap:break-word;margin-top:2px}.cn-tx a{color:#0000FF}
+.cn-post{border:1.5px solid #0000B3!important;background:transparent!important;border-radius:12px!important;padding:12px 14px;margin-top:6px}
+.cn-ptag{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:700;color:#0000B3;text-transform:uppercase;letter-spacing:.04em}
+.cn-post h4{margin:6px 0 4px;font:700 16px var(--font-display,inherit)}
+.cn-acts{position:absolute;top:-10px;right:10px;display:none;background:#fff;border:1px solid #E4E5EA;border-radius:10px!important;box-shadow:0 4px 12px rgba(14,16,48,.10)!important;padding:2px}
+.cn-m:hover .cn-acts,.cn-m:focus-within .cn-acts{display:flex}
+.cn-acts button{all:unset;width:30px;height:28px;display:inline-grid;place-items:center;border-radius:8px!important;color:#55577A;cursor:pointer}.cn-acts button:hover{background:#F4F7FD;color:#0000FF}.cn-acts button.on{color:#C99500}.cn-acts .cn-del:hover{color:#B42318;background:#FEE4E2}
+@media (hover:none){.cn-acts{display:flex;position:static;margin-left:auto;align-self:flex-start;border:0;box-shadow:none!important;background:transparent}}
+.cn-th{margin-top:6px}.cn-thl{all:unset;cursor:pointer;font-size:12.5px;font-weight:600;color:#0000FF;padding:2px 0}
+.cn-th .cn-r{display:flex;gap:8px;padding:6px 0 6px 10px;border-left:2px solid #E4E5EA;margin-left:4px}
+.cn-rbox{display:flex;gap:8px;align-items:flex-end;margin:6px 0 0 6px}.cn-rbox textarea{flex:1;border:1px solid #DCDDE3;border-radius:10px!important;padding:7px 10px;font:inherit;resize:vertical;min-height:36px}
+.cn-edbox{display:flex;flex-direction:column;gap:6px;margin-top:4px}.cn-edbox input,.cn-edbox textarea{border:1px solid #C9CCDA;border-radius:10px!important;padding:8px 10px;font:inherit}.cn-edbox div{display:flex;gap:6px;justify-content:flex-end}
+.cn-vazio{max-width:430px;margin:40px auto;display:flex;flex-direction:column;gap:10px}.cn-vazio h3{margin:0;font:700 17px var(--font-display,inherit)}.cn-vazio p{margin:0 0 6px;color:#55577A;font-size:14px;line-height:1.5}
+.cn-vb{all:unset;box-sizing:border-box;display:flex;align-items:center;justify-content:center;gap:8px;border:1px solid #DCDDE3;border-radius:10px!important;padding:9px;font:500 14px var(--font-sans,inherit);cursor:pointer}.cn-vb:hover{background:#F8F9FC}
+.cn-vl{height:1px;background:#E4E5EA;margin:4px 0}
+.cn-vc{all:unset;box-sizing:border-box;display:flex;align-items:center;gap:12px;border-radius:12px!important;padding:12px 14px;cursor:pointer}.cn-vc span{display:inline-grid;place-items:center;width:40px;height:40px;border-radius:10px!important;background:#fff;flex:none}
+.cn-vc b{display:block;font-size:14px}.cn-vc small{color:#55577A;font-size:12.5px}.cn-vc.rosa{background:#FDF2FA}.cn-vc.rosa span{color:#C11574}.cn-vc.azul{background:#EFF4FF}.cn-vc.azul span{color:#0000FF}.cn-vc:hover{filter:brightness(.98)}
+.cn-comp{padding:0 18px 16px}
+.cn-segbar{display:flex;align-items:center;gap:8px;background:#5B3FE4;color:#fff;border-radius:12px!important;padding:9px 12px;font-size:13px;margin-bottom:8px}.cn-segbar span{flex:1}.cn-segbar button{border:1px solid rgba(255,255,255,.6);background:transparent;color:#fff;border-radius:8px!important;padding:4px 12px;font:600 13px var(--font-sans,inherit);cursor:pointer}.cn-segbar button:hover{background:rgba(255,255,255,.15)}
+.cn-ctabs{display:flex;gap:4px;margin-bottom:6px}.cn-ctabs button{all:unset;display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:8px!important;font:500 13px var(--font-sans,inherit);color:#55577A;cursor:pointer;-webkit-user-select:none;user-select:none}.cn-ctabs button.on{background:#fff;color:#0B0B1A;box-shadow:0 0 0 1px #DCDDE3!important;font-weight:600}
+.cn-cbox{border:1px solid #DCDDE3;border-radius:14px!important;background:#fff;padding:10px 12px;display:flex;flex-direction:column;gap:8px}.cn-cbox:focus-within{border-color:#0000FF}
+.cn-cbox textarea{border:0;outline:0;resize:vertical;font:400 14px/1.5 var(--font-sans,inherit);min-height:44px;padding:2px}
+.cn-ptit{border:0;outline:0;font:700 16px var(--font-display,inherit);padding:2px;border-bottom:1px solid #EEF0F4!important}
+.cn-prow select{border:1px solid #DCDDE3;border-radius:10px!important;padding:6px 10px;font:inherit;font-size:13px;background:#F8F9FC}
+.cn-cft{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.cn-ck{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#33354D}.cn-dica{font-size:11.5px;color:#8C8FA3}
+.cn-nada{align-items:center;justify-content:center;text-align:center}.cn-nada>div{max-width:360px;display:flex;flex-direction:column;align-items:center;gap:8px}.cn-nada span{color:#0000FF;transform:scale(1.8);margin-bottom:10px}.cn-nada h3{margin:0}.cn-nada p{margin:0 0 6px;color:#55577A}
+.cn-dlg{width:min(560px,100%)!important;display:flex;flex-direction:column;gap:12px}.cn-dh{display:flex;align-items:center;justify-content:space-between}.cn-dh h2{margin:0;font-size:19px}
+.cn-dlg .f{display:flex;flex-direction:column;gap:6px;font-size:12.5px;font-weight:600;color:#55577A}.cn-dlg .f input,.cn-dlg .f select{border:1px solid #C9CCDA;border-radius:12px!important;padding:9px 12px;font:inherit;font-weight:500;color:#0B0B1A;min-height:40px;background:#fff}
+.cn-tsel{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.cn-tsel label{border:1px solid #DCDDE3;border-radius:12px!important;padding:10px;cursor:pointer;display:flex;flex-direction:column;gap:2px}.cn-tsel label.on{border-color:#0000FF;background:#F3F5FF}.cn-tsel input{display:none}.cn-tsel small{font-size:11.5px;color:#55577A;font-weight:500}
+.cn-memb{display:flex;flex-direction:column;gap:2px;max-height:260px;overflow:auto;border:1px solid #EEF0F4;border-radius:12px!important;padding:6px}
+.cn-todos{font-weight:700;color:#0B0B1A;padding:6px 8px;display:flex;gap:8px;align-items:center}.cn-pp{display:flex;align-items:center;gap:8px;padding:5px 8px;font-weight:500;color:#1F2033;border-radius:8px!important}.cn-pp:hover{background:#F8F9FC}.cn-pp em{margin-left:auto;font-style:normal;font-size:11px;color:#0000CC;font-weight:700}
+.cn-dft{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.cn-dica2{margin:0;font-size:13px;color:#55577A;line-height:1.5}
+.cn-mods{display:flex;flex-direction:column;gap:10px;max-height:52vh;overflow:auto}.cn-mod{display:flex;flex-direction:column;gap:6px;border:1px solid #EEF0F4;border-radius:12px!important;padding:10px}.cn-mod input,.cn-mod textarea{border:1px solid #DCDDE3;border-radius:10px!important;padding:7px 10px;font:inherit}.cn-mod input[data-cnmf=nome]{font-weight:700}.cn-mod .btn{align-self:flex-end}
+.cn-dbtn{display:inline-flex!important;align-items:center;gap:5px;max-width:240px;margin-right:8px}.cn-dbtn span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media (max-width:1180px){.cn-wrap{grid-template-columns:240px minmax(0,1fr)}}
+@media (max-width:900px){.cn-wrap{grid-template-columns:1fr;height:calc(100dvh - 130px)}.cn-wrap.tem .cn-lst{display:none}.cn-wrap:not(.tem) .cn-pane{display:none}.cn-back{display:inline-flex}.cn-feed{padding:10px 14px}.cn-comp{padding:0 10px 10px}.cn-tsel{grid-template-columns:1fr}.cn-ph{padding:10px 12px;flex-wrap:wrap}.cn-avs{display:none}}
+/* avatar das mensagens: círculo leve (padrão ClickUp) */
+.cn-av{display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;flex-shrink:0;border-radius:9999px!important;overflow:hidden;font-weight:600;line-height:1;letter-spacing:.01em;-webkit-user-select:none;user-select:none;box-shadow:none!important}
+.cn-av.s32{width:32px;height:32px;font-size:12px}
+.cn-av.s24{width:24px;height:24px;font-size:10px}
+.cn-av img{width:100%;height:100%;object-fit:cover;display:block;border-radius:9999px!important}
+.cn-m,.cn-th .cn-r{align-items:flex-start!important}
+.cn-m{gap:10px!important}.cn-th .cn-r{gap:8px!important}
+.cn-m>.cn-av{margin-top:1px}.cn-th .cn-r>.cn-av{margin-top:2px}
+.cn-mh{min-height:20px;line-height:20px}
+@media (max-width:768px){.cn-av.s32{width:28px;height:28px;font-size:11px}.cn-m{gap:10px!important}}
+
 /* ===== iPad / tablet (769–1180px) ===== */
 @media (min-width:769px) and (max-width:1180px){
   header.top{flex-wrap:nowrap!important;min-width:0!important;gap:8px!important}
@@ -13411,6 +13486,381 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
   document.addEventListener('change', function(ev){ if(menu && ev.target.hasAttribute && ev.target.hasAttribute('data-cmddata') && ev.target.value){ var w = menu._wrap, v = ev.target.value; fecharMenu(); pular(w, v, false); } }, true);
   document.addEventListener('keydown', function(ev){ if(menu && ev.key === 'Escape'){ ev.stopPropagation(); fecharMenu(); } }, true);
   window.addEventListener('scroll', function(ev){ if(menu && !menu.contains(ev.target) && Date.now() - (menu._em || 0) > 400) fecharMenu(); }, true);
+})();
+</script>
+<script id="mannare-canais">
+/* ==========================================================================
+   MANNARE CRM · Canais (modelo ClickUp)
+   - Um canal por cliente, por empreendimento ou geral.
+   - Mensagens rápidas e Publicações (título + texto), com modelos para informações recorrentes
+     ({data}, {semana}, {mes}, {cliente}, {empreendimento} são preenchidos sozinhos).
+   - Seguir o canal: recebe aviso de cada publicação e o canal aparece em "Seguindo".
+   - Respostas em conversa, fixar, editar, excluir, @menções, separação por dia e "Novo".
+   Dados: docs "canal:<id>" (o canal) e "canalmsg:<id>" (cada mensagem/publicação).
+   ========================================================================== */
+(function(){
+  if(typeof S === 'undefined' || typeof TIPO_COL === 'undefined') return;
+  TIPO_COL.canal = 'canais'; TIPO_COL.canalmsg = 'canalMsgs';
+  S.canais = S.canais || []; S.canalMsgs = S.canalMsgs || [];
+  var x = function(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'}[c]; }); };
+  var nz = function(s){ return String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/\s+/g, ' ').trim(); };
+  var t = function(m){ return typeof toast === 'function' ? toast(m) : console.log(m); };
+  var agora = function(){ return new Date().toISOString(); };
+  var pad = function(n){ return String(n).padStart(2, '0'); };
+  var eu = function(){ return String(me || '').toLowerCase(); };
+  var nomeDe = function(e){ return (typeof U !== 'undefined' && U[e] && U[e].nome) || String(e || '').split('@')[0]; };
+  var primeiro = function(e){ return typeof first === 'function' ? first(e) || nomeDe(e).split(' ')[0] : nomeDe(e).split(' ')[0]; };
+  var avatar = function(e){ try{ return typeof av === 'function' ? av(e, false, true) : ''; }catch(_){ return ''; } };
+  /* Avatar das mensagens (padrão ClickUp): círculo leve; foto quando houver, senão iniciais em tom pastel fixo por pessoa */
+  var PASTEL = [['#FEF0C7', '#93370D'], ['#D1FADF', '#05603A'], ['#EBE9FE', '#4A1FB8'], ['#E0EAFF', '#1E3A8A'], ['#FCE7F6', '#9E165F'], ['#CCFBEF', '#125D56'], ['#FFE4D5', '#9A3412'], ['#E4E7EC', '#344054']];
+  function cnAv(e, tam){
+    tam = tam || 32; e = String(e || '').toLowerCase(); var u = (typeof U !== 'undefined' && (U[e] || U[String(e)])) || null, nome = (u && u.nome) || e.split('@')[0];
+    var ini = nome.split(/\s+/).filter(Boolean), txt = ((ini[0] || '?')[0] + (ini.length > 1 ? ini[ini.length - 1][0] : '')).toUpperCase();
+    var h = 0; for(var i = 0; i < e.length; i++) h = (h * 31 + e.charCodeAt(i)) >>> 0; var c = PASTEL[h % PASTEL.length];
+    return '<span class="cn-av s' + tam + '" title="' + x(nome) + '" aria-hidden="true"' + (u && u.foto ? '' : ' style="background:' + c[0] + ';color:' + c[1] + '"') + '>' + (u && u.foto ? '<img src="' + x(u.foto) + '" alt="">' : x(txt)) + '</span>';
+  }
+  var equipe = function(){ return (typeof USERS !== 'undefined' ? USERS : []).map(function(u){ return String(u.email || u.id).toLowerCase(); }).filter(Boolean); };
+  var socio = function(){ return typeof isSocio === 'function' && isSocio(); };
+  var TIPOS = {cliente:'Cliente', emp:'Empreendimento', geral:'Geral'};
+  var I = {
+    hash:'<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M9 3 7.5 21M16.5 3 15 21M4 8.5h17M3 15.5h17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
+    sino:'<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M12 3a6 6 0 0 1 6 6v4l2 3H4l2-3V9a6 6 0 0 1 6-6zm-2.5 16h5a2.5 2.5 0 0 1-5 0z" fill="currentColor"/></svg>',
+    pino:'<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M14 3l7 7-3 1-4 4 1 5-2 1-4-5-5 5-1-1 5-5-5-4 1-2 5 1 4-4z" fill="currentColor"/></svg>',
+    resp:'<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M4 5h16v11H8l-4 4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>',
+    lapis:'<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M4 17v3h3L18 9l-3-3zM16 5l3 3 1.5-1.5-3-3z" fill="currentColor"/></svg>',
+    lixo:'<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M5 7h14l-1 14H6zM9 3h6l1 2h4v2H4V5h4z" fill="currentColor"/></svg>',
+    pub:'<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 4h16v16H4zM7 8h10M7 12h10M7 16h6" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>',
+    msg:'<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 5h16v11H8l-4 4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>',
+    pessoas:'<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M9 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zm7 0a3 3 0 1 0 0-6M2 20c0-3.5 3-6 7-6s7 2.5 7 6M17 14c3 .3 5 2.6 5 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
+    tarefas:'<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="4.5" cy="6" r="1.6" fill="currentColor"/><circle cx="4.5" cy="12" r="1.6" fill="currentColor"/><circle cx="4.5" cy="18" r="1.6" fill="currentColor"/></svg>',
+    modelo:'<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M6 3h9l4 4v14H6z" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M9 11h7M9 15h7M9 7h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
+    eng:'<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zm8.5 3.5-2-.6-.6-1.5 1-1.8-1.5-1.5-1.8 1-1.5-.6L13.5 3h-3l-.6 2-1.5.6-1.8-1-1.5 1.5 1 1.8-.6 1.5-2 .6v3l2 .6.6 1.5-1 1.8 1.5 1.5 1.8-1 1.5.6.6 2h3l.6-2 1.5-.6 1.8 1 1.5-1.5-1-1.8.6-1.5 2-.6z" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>',
+    volta:'<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+  };
+
+  /* ---------------- dados ---------------- */
+  function canalPorId(id){ return S.canais.find(function(c){ return c.id === id; }); }
+  function msgsDe(id){ return S.canalMsgs.filter(function(m){ return m.canal === id && !m.excluida; }).sort(function(a, b){ return String(a.em).localeCompare(String(b.em)); }); }
+  function podeVer(c){ return !c.arquivado && (!c.membros || !c.membros.length || c.membros.map(function(m){ return String(m).toLowerCase(); }).indexOf(eu()) >= 0 || socio() || c.criadoPor === me); }
+  function segue(c){ return (c.seguidores || []).map(function(m){ return String(m).toLowerCase(); }).indexOf(eu()) >= 0; }
+  function lidos(){ var u = U[me] || {}; return (u.canaisLidos = u.canaisLidos || {}); }
+  function naoLidas(c){ var l = lidos()[c.id] || ''; return S.canalMsgs.filter(function(m){ return m.canal === c.id && !m.excluida && m.em > l && String(m.autor).toLowerCase() !== eu(); }).length; }
+  function marcarLido(c){ var ms = msgsDe(c.id); var ult = ms.length ? ms[ms.length - 1].em : agora(); var l = lidos(); if((l[c.id] || '') < ult){ l[c.id] = ult; save(); } }
+  // clientes e empreendimentos conhecidos (Cadastros › Clientes + propostas/processos)
+  function alvos(){
+    var cli = {}, emp = {};
+    var addC = function(nome){ nome = String(nome || '').trim(); if(!nome) return; var k = nz(nome); if(!cli[k]) cli[k] = {k:'cli|' + k, nome:nome}; };
+    var addE = function(nomeE, nomeC){ nomeE = String(nomeE || '').trim(); if(!nomeE) return; var k = nz(nomeC) + '|' + nz(nomeE); if(!emp[k]) emp[k] = {k:'emp|' + k, nome:nomeE, cliente:String(nomeC || '').trim()}; };
+    (S.clis || []).forEach(function(c){ var g = c.grupo || c.nome; addC(g); (typeof spesDe === 'function' ? spesDe(c) : (c.emps || [])).forEach(function(e){ if(e.nome) addE(e.nome, g); }); });
+    (S.props || []).forEach(function(p){ var g = p.grupo || p.cliente; addC(g); if(p.emp) addE(p.emp, g); });
+    (S.procs || []).forEach(function(p){ var pr = (typeof propById === 'function' && propById(p.propId)) || p.prop || {}; var g = pr.grupo || pr.cliente; addC(g); if(pr.emp) addE(pr.emp, g); });
+    var ord = function(a, b){ return String(a.nome).localeCompare(String(b.nome), 'pt-BR'); };
+    return {cli:Object.keys(cli).map(function(k){ return cli[k]; }).sort(ord), emp:Object.keys(emp).map(function(k){ return emp[k]; }).sort(ord)};
+  }
+  function canalDaChave(k){ return S.canais.find(function(c){ return c.chave === k && !c.arquivado; }); }
+  function procsDoCanal(c){
+    if(!c.chave) return [];
+    var p = c.chave.split('|');
+    return (S.procs || []).filter(function(q){ var pr = (typeof propById === 'function' && propById(q.propId)) || q.prop || {}; var g = nz(pr.grupo || pr.cliente);
+      return p[0] === 'cli' ? g === p[1] : (g === p[1] && nz(pr.emp) === p[2]); });
+  }
+  function novoCanal(o){
+    var c = Object.assign({id:uid(), nome:'', tipo:'geral', chave:'', cliente:'', desc:'', membros:[], seguidores:[me], criadoPor:me, criadoEm:agora(), fixadas:[]}, o || {});
+    S.canais.push(c); save(); return c;
+  }
+  function canalDoProcesso(p){
+    var pr = (typeof propById === 'function' && propById(p.propId)) || p.prop || {}, g = pr.grupo || pr.cliente;
+    if(pr.emp){ var k = 'emp|' + nz(g) + '|' + nz(pr.emp); return canalDaChave(k) || {novo:true, tipo:'emp', chave:k, nome:pr.emp, cliente:g || ''}; }
+    if(g){ var k2 = 'cli|' + nz(g); return canalDaChave(k2) || {novo:true, tipo:'cliente', chave:k2, nome:g, cliente:g}; }
+    return null;
+  }
+  function preencher(s, c){
+    var d = new Date(), seg = new Date(d); seg.setDate(d.getDate() - ((d.getDay() + 6) % 7)); var sex = new Date(seg); sex.setDate(seg.getDate() + 4);
+    var MS = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
+    var br = function(z){ return pad(z.getDate()) + '/' + pad(z.getMonth() + 1); };
+    return String(s || '').replace(/\{data\}/gi, br(d) + '/' + d.getFullYear()).replace(/\{semana\}/gi, br(seg) + ' a ' + br(sex)).replace(/\{m[eê]s\}/gi, MS[d.getMonth()] + ' de ' + d.getFullYear())
+      .replace(/\{cliente\}/gi, (c && (c.cliente || c.nome)) || '').replace(/\{empreendimento\}/gi, (c && c.tipo === 'emp' ? c.nome : '') || '');
+  }
+  function modelos(){ var l = (S.cfg.canalModelos = S.cfg.canalModelos || []);
+    // publicação é para a equipe: tira a saudação ao cliente que vinha no modelo padrão antigo
+    l.forEach(function(md){ if(/^\s*Ol[áa][!,]?\s*(\{cliente\})?[!,]?\s*(Segue o andamento de \{cliente\}:)?/i.test(md.texto || '')){ var nv = String(md.texto).replace(/^\s*Ol[áa][!,]?\s*(\{cliente\}[!,]?)?\s*(Segue o andamento de \{cliente\}:)?\s*/i, 'Andamento de {cliente} | semana {semana}\n\n'); if(nv !== md.texto){ md.texto = nv; md._limpo = true; } } });
+    return l; }
+  function texto(s){
+    var h = typeof fmtText === 'function' ? fmtText(s) : x(s);
+    return h.replace(/(https?:\/\/[^\s<]+[^\s<.,;:!?)\]])/g, '<a href="$1" target="_blank" rel="noopener">$1</a>');
+  }
+  function mencionados(txt){ var n = nz(txt); return (typeof USERS !== 'undefined' ? USERS : []).filter(function(u){ return n.indexOf('@' + nz(primeiro(u.id))) >= 0; }).map(function(u){ return u.id; }); }
+  function avisar(c, m, quem, txtNotif){
+    quem.forEach(function(p){ if(!p || String(p).toLowerCase() === eu() || typeof notify !== 'function') return; var n0 = S.notifs.length; notify(p, txtNotif, null, null); if(S.notifs.length > n0 && S.notifs[0]){ S.notifs[0].canalId = c.id; S.notifs[0].canalMsg = m.id; } });
+  }
+
+  /* ---------------- tela ---------------- */
+  ui.canalTab = ui.canalTab || 'canal'; ui.canalComp = ui.canalComp || 'msg';
+  function lista(){
+    var q = nz(ui.canalQ || ''), vis = S.canais.filter(podeVer).filter(function(c){ return !q || nz(c.nome + ' ' + c.cliente).indexOf(q) >= 0; });
+    var ord = function(a, b){ return String(a.nome).localeCompare(String(b.nome), 'pt-BR'); };
+    var item = function(c){ var n = naoLidas(c); return '<button class="cn-it ' + (ui.canal === c.id ? 'on' : '') + (n ? ' un' : '') + '" data-cnopen="' + c.id + '"><span class="cn-hash">' + I.hash + '</span><span class="cn-nm">' + x(c.nome) + (c.tipo === 'emp' && c.cliente ? '<small>' + x(c.cliente) + '</small>' : '') + '</span>' + (n ? '<span class="cn-n">' + (n > 99 ? '99+' : n) + '</span>' : '') + '</button>'; };
+    var sec = function(tit, ls){ return ls.length ? '<div class="cn-sec">' + tit + '</div>' + ls.sort(ord).map(item).join('') : ''; };
+    var seg = vis.filter(segue);
+    return '<aside class="cn-lst"><div class="cn-lh"><b>Canais</b><button class="btn sm primary" data-cnnovo>+ Novo canal</button></div>'
+      + '<input class="cn-q" type="search" data-cnq placeholder="Buscar canal" value="' + x(ui.canalQ || '') + '" aria-label="Buscar canal">'
+      + '<div class="cn-scroll">' + sec('Seguindo', seg)
+      + sec('Clientes', vis.filter(function(c){ return c.tipo === 'cliente' && !segue(c); }))
+      + sec('Empreendimentos', vis.filter(function(c){ return c.tipo === 'emp' && !segue(c); }))
+      + sec('Gerais', vis.filter(function(c){ return c.tipo !== 'cliente' && c.tipo !== 'emp' && !segue(c); }))
+      + (vis.length ? '' : '<p class="cn-vz">' + (q ? 'Nenhum canal com essa busca.' : 'Nenhum canal ainda. Crie um para um cliente ou empreendimento.') + '</p>') + '</div></aside>';
+  }
+  function sepDia(iso){
+    var d = String(iso).slice(0, 10), DS = ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado'], MS = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
+    var hj = new Date(), ont = new Date(Date.now() - 864e5), f = function(z){ return z.getFullYear() + '-' + pad(z.getMonth() + 1) + '-' + pad(z.getDate()); };
+    var rot = d === f(hj) ? 'Hoje' : d === f(ont) ? 'Ontem' : (function(){ var z = new Date(d + 'T12:00'); return DS[z.getDay()] + ', ' + z.getDate() + ' de ' + MS[z.getMonth()] + (z.getFullYear() !== hj.getFullYear() ? ' de ' + z.getFullYear() : ''); })();
+    return '<div class="cmd-sep" data-cmday="' + d + '"><i></i><button type="button" class="cmd-pill" data-cmdpill="' + d + '" aria-haspopup="menu">' + rot + '<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M7 10l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><i></i></div>';
+  }
+  function diaLocal(iso){ var z = new Date(iso); return z.getFullYear() + '-' + pad(z.getMonth() + 1) + '-' + pad(z.getDate()); }
+  function hora(iso){ var z = new Date(iso); return pad(z.getHours()) + ':' + pad(z.getMinutes()); }
+  function msgHtml(m, c){
+    var meu = String(m.autor).toLowerCase() === eu(), fix = (c.fixadas || []).indexOf(m.id) >= 0, ed = ui.canalEdit === m.id, rs = m.respostas || [], aberto = ui.canalThread === m.id;
+    var acoes = '<div class="cn-acts">' + '<button data-cnresp="' + m.id + '" title="Responder">' + I.resp + '</button>' + '<button data-cnfix="' + m.id + '" title="' + (fix ? 'Desafixar' : 'Fixar no canal') + '" class="' + (fix ? 'on' : '') + '">' + I.pino + '</button>'
+      + (meu ? '<button data-cnedit="' + m.id + '" title="Editar">' + I.lapis + '</button>' : '') + (meu || socio() ? '<button data-cndel="' + m.id + '" title="Excluir" class="cn-del">' + I.lixo + '</button>' : '') + '</div>';
+    var corpo = ed
+      ? '<div class="cn-edbox">' + (m.tipo === 'post' ? '<input data-cneditt value="' + x(m.titulo || '') + '" placeholder="Título">' : '') + '<textarea data-cneditx rows="3">' + x(m.texto) + '</textarea><div><button class="btn sm" data-cneditno>Cancelar</button><button class="btn sm primary" data-cneditok="' + m.id + '">Salvar</button></div></div>'
+      : (m.tipo === 'post' ? '<div class="cn-post"><div class="cn-ptag">' + I.pub + ' Publicação' + (m.modelo ? ' · ' + x(m.modelo) : '') + '</div><h4>' + x(m.titulo || 'Publicação') + '</h4><div class="cn-tx">' + texto(m.texto) + '</div></div>' : '<div class="cn-tx">' + texto(m.texto) + '</div>');
+    var thread = rs.length || aberto ? '<div class="cn-th">' + (aberto ? rs.map(function(r){ return '<div class="cn-r">' + cnAv(r.autor, 24) + '<div class="cn-mb"><div class="cn-mh"><b>' + x(nomeDe(r.autor)) + '</b><span>' + hora(r.em) + (diaLocal(r.em) !== diaLocal(m.em) ? ' · ' + diaLocal(r.em).split('-').reverse().slice(0, 2).join('/') : '') + '</span></div><div class="cn-tx">' + texto(r.texto) + '</div></div></div>'; }).join('')
+        + '<div class="cn-rbox"><textarea data-cnrtx="' + m.id + '" rows="1" placeholder="Responder… (Enter envia)"></textarea><button class="btn sm primary" data-cnrok="' + m.id + '">Responder</button></div>'
+      : '<button class="cn-thl" data-cnresp="' + m.id + '">' + rs.length + ' resposta' + (rs.length > 1 ? 's' : '') + ' · última ' + hora(rs[rs.length - 1].em) + '</button>') + '</div>' : '';
+    return '<div class="cn-m ' + (m.tipo === 'post' ? 'is-post' : '') + (fix ? ' fix' : '') + '" id="cnm-' + m.id + '">' + cnAv(m.autor, 32) + '<div class="cn-mb"><div class="cn-mh"><b>' + x(nomeDe(m.autor)) + '</b><span>' + hora(m.em) + (m.editadaEm ? ' · editada' : '') + '</span>' + (fix ? '<em class="cn-fx">' + I.pino + ' fixada</em>' : '') + '</div>' + corpo + thread + '</div>' + (ed ? '' : acoes) + '</div>';
+  }
+  function feed(c){
+    var ms = msgsDe(c.id);
+    if(ui.canalTab === 'pub') ms = ms.filter(function(m){ return m.tipo === 'post'; });
+    if(ui.canalTab === 'fix') ms = ms.filter(function(m){ return (c.fixadas || []).indexOf(m.id) >= 0; });
+    var procs = procsDoCanal(c);
+    if(!ms.length && ui.canalTab === 'canal') return '<div class="cn-vazio"><h3>Chat em #' + x(c.nome) + '</h3><p>Colabore com a equipe em mensagens e publicações. Use as publicações para informações recorrentes, como o andamento semanal ou o resumo do mês.</p>'
+      + '<button class="cn-vb" data-cnmemb>' + I.pessoas + ' Adicionar pessoas</button><div class="cn-vl"></div>'
+      + (procs.length ? '<button class="cn-vc rosa" data-cnprocs><span>' + I.tarefas + '</span><div><b>Acompanhar processos</b><small>' + procs.length + ' processo' + (procs.length > 1 ? 's' : '') + ' deste ' + (c.tipo === 'emp' ? 'empreendimento' : 'cliente') + '</small></div></button>' : '')
+      + '<button class="cn-vc azul" data-cnpubnova><span>' + I.modelo + '</span><div><b>Fazer uma publicação</b><small>Comece de um modelo de informação recorrente</small></div></button></div>';
+    if(!ms.length) return '<p class="cn-vz2">' + (ui.canalTab === 'pub' ? 'Nenhuma publicação ainda.' : 'Nada fixado. Passe o mouse numa mensagem e clique no alfinete.') + '</p>';
+    var l = c._lidoAoAbrir || '', novoFeito = false, dia = '', h = '';
+    ms.forEach(function(m){ var d = diaLocal(m.em); if(d !== dia){ h += sepDia(m.em); dia = d; }
+      if(!novoFeito && l && m.em > l && String(m.autor).toLowerCase() !== eu()){ h += '<div class="cmd-sep cmd-novo-only"><span class="cmd-novo">Novo</span><i></i></div>'; novoFeito = true; }
+      h += msgHtml(m, c); });
+    return '<div class="cmd-wrap cn-feedin">' + h + '</div>';
+  }
+  function compositor(c){
+    var pub = ui.canalComp === 'pub', d = ui.canalRasc || {};
+    var mods = modelos();
+    return '<div class="cn-comp">' + (segue(c) ? '' : '<div class="cn-segbar">' + I.sino + '<span>Você não está seguindo este canal: não recebe aviso das publicações e ele não aparece em Seguindo.</span><button data-cnseg>Seguir</button></div>')
+      + '<div class="cn-ctabs"><button class="' + (pub ? '' : 'on') + '" data-cncomp="msg">' + I.msg + ' Mensagem</button><button class="' + (pub ? 'on' : '') + '" data-cncomp="pub">' + I.pub + ' Publicação</button></div>'
+      + '<div class="cn-cbox">' + (pub ? '<div class="cn-prow"><select data-cnmod aria-label="Modelo"><option value="">Modelo de publicação…</option>' + mods.map(function(md){ return '<option value="' + md.id + '">' + x(md.nome) + '</option>'; }).join('') + '<option value="__gerir">Gerenciar modelos…</option></select></div><input class="cn-ptit" data-cnptit placeholder="Título da publicação" value="' + x(d.titulo || '') + '">' : '')
+      + '<textarea data-cntx rows="' + (pub ? 4 : 2) + '" placeholder="' + (pub ? 'Escreva a publicação. Use @nome para mencionar.' : 'Escreva para ' + x(c.nome) + '. Enter envia, Shift+Enter quebra a linha. Use @nome para mencionar.') + '">' + x(d.texto || '') + '</textarea>'
+      + '<div class="cn-cft">' + (pub ? '<label class="cn-ck"><input type="checkbox" data-cnsalvamod> Salvar como modelo</label><span class="cn-dica">{data} {semana} {mes} {cliente} {empreendimento} são preenchidos sozinhos</span>' : '<span class="cn-dica">' + (segue(c) ? '' : '') + '</span>') + '<span class="spacer"></span><button class="btn sm primary" data-cnenv>' + (pub ? 'Publicar' : 'Enviar') + '</button></div></div></div>';
+  }
+  function painel(c){
+    var ms = S.canalMsgs.filter(function(m){ return m.canal === c.id && !m.excluida; }), np = ms.filter(function(m){ return m.tipo === 'post'; }).length, nf = (c.fixadas || []).filter(function(id){ return ms.some(function(m){ return m.id === id; }); }).length;
+    var membros = c.membros && c.membros.length ? c.membros : equipe();
+    return '<section class="cn-pane"><header class="cn-ph"><button class="cn-back" data-cnback aria-label="Voltar para a lista">' + I.volta + '</button><div class="cn-pt"><div class="cn-pn">' + I.hash + '<h2>' + x(c.nome) + '</h2><span class="cn-tipo">' + TIPOS[c.tipo || 'geral'] + '</span></div>' + (c.tipo === 'emp' && c.cliente ? '<small>' + x(c.cliente) + '</small>' : c.desc ? '<small>' + x(c.desc) + '</small>' : '') + '</div>'
+      + '<span class="spacer"></span><div class="cn-avs" data-cnmemb title="Membros">' + membros.slice(0, 4).map(avatar).join('') + (membros.length > 4 ? '<span class="cn-mais">+' + (membros.length - 4) + '</span>' : '') + '</div>'
+      + '<button class="btn sm ' + (segue(c) ? '' : 'primary') + '" data-cnseg>' + I.sino + (segue(c) ? ' Seguindo' : ' Seguir') + '</button><button class="iconbtn cn-eng" data-cncfg title="Configurar canal" aria-label="Configurar canal">' + I.eng + '</button></header>'
+      + '<nav class="cn-tabs"><button class="' + (ui.canalTab === 'canal' ? 'on' : '') + '" data-cntab="canal">' + I.hash + ' Canal</button><button class="' + (ui.canalTab === 'pub' ? 'on' : '') + '" data-cntab="pub">' + I.pub + ' Publicações' + (np ? ' <span class="n">' + np + '</span>' : '') + '</button><button class="' + (ui.canalTab === 'fix' ? 'on' : '') + '" data-cntab="fix">' + I.pino + ' Fixadas' + (nf ? ' <span class="n">' + nf + '</span>' : '') + '</button>'
+      + (procsDoCanal(c).length ? '<button data-cnprocs>Processos <span class="n">' + procsDoCanal(c).length + '</span></button>' : '') + '</nav>'
+      + '<div class="cn-feed" id="cnFeed">' + feed(c) + '</div>' + compositor(c) + '</section>';
+  }
+  function tela(){
+    var c = ui.canal && canalPorId(ui.canal); if(c && !podeVer(c)) c = null;
+    return '<div class="cn-wrap ' + (c ? 'tem' : '') + '">' + lista() + (c ? painel(c) : '<section class="cn-pane cn-nada"><div><span>' + I.hash + '</span><h3>Escolha um canal</h3><p>Ou crie um para um cliente ou empreendimento e faça publicações das informações recorrentes.</p><button class="btn primary" data-cnnovo>+ Novo canal</button></div></section>') + '</div>';
+  }
+  function desenhar(){
+    var v = document.getElementById('view'); if(!v) return;
+    var feedEl = document.getElementById('cnFeed'), noFim = !feedEl || feedEl.scrollHeight - feedEl.scrollTop - feedEl.clientHeight < 80, topo = feedEl ? feedEl.scrollTop : 0;
+    var ae = document.activeElement, campo = ae && v.contains(ae) && ae.matches && ae.matches('textarea,input') ? (ae.dataset.cntx !== undefined ? '[data-cntx]' : ae.dataset.cnptit !== undefined ? '[data-cnptit]' : ae.dataset.cnq !== undefined ? '[data-cnq]' : ae.dataset.cnrtx ? '[data-cnrtx="' + ae.dataset.cnrtx + '"]' : ae.hasAttribute('data-cneditx') ? '[data-cneditx]' : null) : null;
+    var val = campo ? ae.value : null, s0 = campo ? ae.selectionStart : 0, s1 = campo ? ae.selectionEnd : 0;
+    var rTx = {}; v.querySelectorAll('[data-cnrtx]').forEach(function(r){ if(r.value) rTx[r.dataset.cnrtx] = r.value; });
+    lerRascunho();
+    v.innerHTML = tela();
+    Object.keys(rTx).forEach(function(k){ var r = v.querySelector('[data-cnrtx="' + k + '"]'); if(r) r.value = rTx[k]; });
+    var c = ui.canal && canalPorId(ui.canal);
+    var f2 = document.getElementById('cnFeed'); if(f2){ if(c && c._rolarPara){ var alvo = document.getElementById('cnm-' + c._rolarPara); c._rolarPara = null; if(alvo){ alvo.scrollIntoView({block:'center'}); alvo.classList.add('cn-flash'); } else f2.scrollTop = f2.scrollHeight; } else f2.scrollTop = noFim ? f2.scrollHeight : topo; }
+    if(campo){ var n = v.querySelector(campo); if(n){ if(val !== null) n.value = val; n.focus(); try{ n.setSelectionRange(s0, s1); }catch(_){} } }
+    var cr = document.getElementById('crumbNow'); if(cr) cr.textContent = c ? '# ' + c.nome : 'Canais';
+    document.querySelectorAll('#side [data-view]').forEach(function(b){ b.classList.toggle('on', b.dataset.view === 'canais'); });
+    if(c && podeVer(c) && document.visibilityState !== 'hidden'){ var l = lidos()[c.id] || ''; var ms = msgsDe(c.id); if(ms.length && ms[ms.length - 1].em > l && ms.some(function(m){ return m.em > l && String(m.autor).toLowerCase() !== eu(); })) setTimeout(function(){ if(ui.view === 'canais' && ui.canal === c.id) marcarLido(c); }, 1500); }
+  }
+  function lerRascunho(){ var v = document.getElementById('view'); if(!v) return; var tx = v.querySelector('[data-cntx]'), ti = v.querySelector('[data-cnptit]'); if(tx || ti) ui.canalRasc = {texto:tx ? tx.value : (ui.canalRasc || {}).texto || '', titulo:ti ? ti.value : (ui.canalRasc || {}).titulo || ''}; }
+  function abrirCanal(id, msgId){ var c = canalPorId(id); if(!c) return; c._lidoAoAbrir = lidos()[c.id] || ''; c._rolarPara = msgId || null; ui.canal = id; ui.canalTab = 'canal'; ui.canalThread = null; ui.canalEdit = null; ui.canalRasc = {}; ui.view = 'canais'; render(); }
+
+  /* ---------------- ações ---------------- */
+  function enviar(){
+    var c = canalPorId(ui.canal); if(!c) return; var v = document.getElementById('view');
+    var tx = (v.querySelector('[data-cntx]') || {}).value || '', pub = ui.canalComp === 'pub', ti = pub ? ((v.querySelector('[data-cnptit]') || {}).value || '').trim() : '';
+    tx = tx.replace(/\s+$/, ''); if(!tx.trim() && !ti){ return; }
+    if(pub && !ti){ t('Dê um título à publicação'); v.querySelector('[data-cnptit]').focus(); return; }
+    var tiRaw = ti, txRaw = tx; ti = preencher(ti, c); tx = preencher(tx, c);
+    var m = {id:uid(), canal:c.id, tipo:pub ? 'post' : 'msg', titulo:ti, texto:tx, autor:me, em:agora(), respostas:[]};
+    if(pub && ui.canalModeloUsado) m.modelo = ui.canalModeloUsado;
+    S.canalMsgs.push(m);
+    if(pub && (v.querySelector('[data-cnsalvamod]') || {}).checked){ var nm = prompt('Nome do modelo (ex.: Andamento semanal):', ti); if(nm){ modelos().push({id:uid(), nome:nm.trim(), titulo:tiRaw, texto:txRaw, criadoPor:me, em:agora()}); } }
+    var men = mencionados(tx + ' ' + ti);
+    if(pub) avisar(c, m, (c.seguidores || []).filter(function(p){ return men.indexOf(p) < 0; }), 'publicou em #' + c.nome + ': “' + ti + '”');
+    avisar(c, m, men, 'mencionou você em #' + c.nome);
+    var l = lidos(); l[c.id] = m.em; c._lidoAoAbrir = m.em;
+    ui.canalRasc = {}; ui.canalModeloUsado = ''; v.querySelectorAll('[data-cntx],[data-cnptit]').forEach(function(i){ i.value = ''; }); if(pub) ui.canalComp = 'msg'; save(); desenhar(); var f = document.getElementById('cnFeed'); if(f) f.scrollTop = f.scrollHeight; var nt = document.querySelector('#view [data-cntx]'); if(nt) nt.focus();
+  }
+  function responder(id){
+    var c = canalPorId(ui.canal), m = S.canalMsgs.find(function(z){ return z.id === id; }); if(!c || !m) return;
+    var ta = document.querySelector('#view [data-cnrtx="' + id + '"]'), tx = ta ? ta.value.trim() : ''; if(!tx) return;
+    (m.respostas = m.respostas || []).push({id:uid(), autor:me, texto:tx, em:agora()}); ta.value = '';
+    var quem = [m.autor].concat((m.respostas || []).map(function(r){ return r.autor; })).filter(function(p, i, a){ return a.indexOf(p) === i; });
+    var men = mencionados(tx); avisar(c, m, quem.filter(function(p){ return men.indexOf(p) < 0; }), 'respondeu em #' + c.nome + ': “' + tx.slice(0, 60) + '”'); avisar(c, m, men, 'mencionou você em #' + c.nome);
+    save(); desenhar(); var n = document.querySelector('#view [data-cnrtx="' + id + '"]'); if(n) n.focus();
+  }
+  // janela simples
+  var ov = null;
+  function fecharOv(){ if(ov){ ov.remove(); ov = null; } }
+  function abrirOv(html, cls){ fecharOv(); ov = document.createElement('div'); ov.className = 'cg-ov cn-ov'; ov.innerHTML = '<div class="cg-dlg cn-dlg ' + (cls || '') + '" role="dialog" aria-modal="true">' + html + '</div>'; document.body.appendChild(ov); var f = ov.querySelector('input:not([type=checkbox]),select,textarea'); if(f) f.focus(); }
+  function dlgNovo(pre){
+    var a = alvos(), p = pre || {};
+    var opt = function(ls, tipo){ return ls.map(function(o){ var ja = canalDaChave(o.k); return '<option value="' + x(o.k) + '" data-nome="' + x(o.nome) + '" data-cli="' + x(o.cliente || o.nome) + '"' + (p.chave === o.k ? ' selected' : '') + (ja ? ' disabled' : '') + '>' + x(tipo === 'emp' ? o.nome + ' | ' + o.cliente : o.nome) + (ja ? ' (já tem canal)' : '') + '</option>'; }).join(''); };
+    var eq = equipe();
+    abrirOv('<div class="cn-dh"><h2>Novo canal</h2><button class="iconbtn" data-cnx aria-label="Fechar">✕</button></div>'
+      + '<div class="cn-tsel" role="radiogroup">' + ['cliente', 'emp', 'geral'].map(function(k){ return '<label class="' + ((p.tipo || 'cliente') === k ? 'on' : '') + '"><input type="radio" name="cntipo" value="' + k + '" ' + ((p.tipo || 'cliente') === k ? 'checked' : '') + '><b>' + TIPOS[k] + '</b><small>' + (k === 'cliente' ? 'Um canal para o cliente (grupo)' : k === 'emp' ? 'Um canal por empreendimento' : 'Assunto interno da equipe') + '</small></label>'; }).join('') + '</div>'
+      + '<label class="f cn-fcli" ' + ((p.tipo || 'cliente') === 'cliente' ? '' : 'hidden') + '>Cliente<select data-cnalvo="cliente"><option value="">Escolha o cliente…</option>' + opt(a.cli, 'cliente') + '</select></label>'
+      + '<label class="f cn-femp" ' + (p.tipo === 'emp' ? '' : 'hidden') + '>Empreendimento<select data-cnalvo="emp"><option value="">Escolha o empreendimento…</option>' + opt(a.emp, 'emp') + '</select></label>'
+      + '<label class="f">Nome do canal<input data-cnnome value="' + x(p.nome || '') + '" placeholder="Ex.: Mota Machado"></label>'
+      + '<label class="f">Descrição (opcional)<input data-cndesc value="" placeholder="Para que serve este canal"></label>'
+      + '<div class="f">Quem participa<div class="cn-memb"><label class="cn-todos"><input type="checkbox" data-cntodos checked> Toda a equipe</label>' + eq.map(function(e){ return '<label class="cn-pp"><input type="checkbox" data-cnpp value="' + x(e) + '" checked disabled>' + avatar(e) + '<span>' + x(nomeDe(e)) + '</span></label>'; }).join('') + '</div></div>'
+      + '<div class="cn-dft"><span class="spacer"></span><button class="btn" data-cnx>Cancelar</button><button class="btn primary" data-cncriar>Criar canal</button></div>', 'cn-dnovo');
+  }
+  function criarDoDlg(){
+    var tipo = (ov.querySelector('[name=cntipo]:checked') || {}).value || 'geral', sel = tipo === 'geral' ? null : ov.querySelector('[data-cnalvo="' + tipo + '"]');
+    var op = sel && sel.selectedOptions[0], nome = (ov.querySelector('[data-cnnome]').value || '').trim();
+    if(tipo !== 'geral' && (!op || !op.value)){ t('Escolha o ' + (tipo === 'emp' ? 'empreendimento' : 'cliente')); sel.focus(); return; }
+    if(!nome) nome = op ? op.dataset.nome : ''; if(!nome){ t('Dê um nome ao canal'); ov.querySelector('[data-cnnome]').focus(); return; }
+    var todos = ov.querySelector('[data-cntodos]').checked, membros = todos ? [] : [].slice.call(ov.querySelectorAll('[data-cnpp]:checked')).map(function(i){ return i.value; });
+    if(!todos && membros.map(function(m){ return m.toLowerCase(); }).indexOf(eu()) < 0) membros.push(me);
+    var c = novoCanal({nome:nome, tipo:tipo, chave:op ? op.value : '', cliente:op ? op.dataset.cli : '', desc:(ov.querySelector('[data-cndesc]').value || '').trim(), membros:membros});
+    fecharOv(); t('Canal #' + c.nome + ' criado'); abrirCanal(c.id);
+  }
+  function dlgMembros(c){
+    var eq = equipe(), todos = !c.membros || !c.membros.length;
+    abrirOv('<div class="cn-dh"><h2>Pessoas em #' + x(c.nome) + '</h2><button class="iconbtn" data-cnx aria-label="Fechar">✕</button></div>'
+      + '<div class="cn-memb"><label class="cn-todos"><input type="checkbox" data-cntodos ' + (todos ? 'checked' : '') + '> Toda a equipe</label>' + eq.map(function(e){ var on = todos || c.membros.map(function(m){ return String(m).toLowerCase(); }).indexOf(e) >= 0, sg = (c.seguidores || []).map(function(m){ return String(m).toLowerCase(); }).indexOf(e) >= 0;
+        return '<label class="cn-pp"><input type="checkbox" data-cnpp value="' + x(e) + '" ' + (on ? 'checked' : '') + (todos ? ' disabled' : '') + '>' + avatar(e) + '<span>' + x(nomeDe(e)) + '</span>' + (sg ? '<em>seguindo</em>' : '') + '</label>'; }).join('') + '</div>'
+      + '<label class="cn-ck"><input type="checkbox" data-cnsegtodos> Fazer todos os participantes seguirem o canal (recebem aviso das publicações)</label>'
+      + '<div class="cn-dft"><span class="spacer"></span><button class="btn" data-cnx>Cancelar</button><button class="btn primary" data-cnmembok>Salvar</button></div>');
+    ov._canal = c.id;
+  }
+  function dlgCfg(c){
+    abrirOv('<div class="cn-dh"><h2>Configurar #' + x(c.nome) + '</h2><button class="iconbtn" data-cnx aria-label="Fechar">✕</button></div>'
+      + '<label class="f">Nome do canal<input data-cnnome value="' + x(c.nome) + '"></label><label class="f">Descrição<input data-cndesc value="' + x(c.desc || '') + '"></label>'
+      + '<p class="cn-dica2">Tipo: <b>' + TIPOS[c.tipo || 'geral'] + '</b>' + (c.cliente ? ' · ' + x(c.cliente) : '') + '</p>'
+      + '<div class="cn-dft"><button class="btn ghost danger" data-cnarq>Arquivar canal</button><span class="spacer"></span><button class="btn" data-cnx>Cancelar</button><button class="btn primary" data-cncfgok>Salvar</button></div>');
+    ov._canal = c.id;
+  }
+  function dlgModelos(){
+    var ls = modelos();
+    abrirOv('<div class="cn-dh"><h2>Modelos de publicação</h2><button class="iconbtn" data-cnx aria-label="Fechar">✕</button></div>'
+      + '<p class="cn-dica2">Para informações recorrentes (andamento semanal, resumo do mês, pendências do cliente). No texto, <b>{data}</b>, <b>{semana}</b>, <b>{mes}</b>, <b>{cliente}</b> e <b>{empreendimento}</b> são preenchidos na hora de publicar.</p>'
+      + '<div class="cn-mods">' + (ls.length ? ls.map(function(md){ return '<div class="cn-mod" data-cnmodid="' + md.id + '"><input data-cnmf="nome" value="' + x(md.nome) + '" placeholder="Nome do modelo"><input data-cnmf="titulo" value="' + x(md.titulo) + '" placeholder="Título"><textarea data-cnmf="texto" rows="3" placeholder="Texto">' + x(md.texto) + '</textarea><button class="btn sm ghost danger" data-cnmoddel="' + md.id + '">Excluir</button></div>'; }).join('') : '<p class="cn-vz">Nenhum modelo ainda.</p>') + '</div>'
+      + '<div class="cn-dft"><button class="btn" data-cnmodnovo>+ Novo modelo</button><span class="spacer"></span><button class="btn" data-cnx>Cancelar</button><button class="btn primary" data-cnmodok>Salvar</button></div>', 'cn-dmods');
+  }
+  function lerModelos(){ if(!ov) return; ov.querySelectorAll('[data-cnmodid]').forEach(function(el){ var md = modelos().find(function(z){ return z.id === el.dataset.cnmodid; }); if(!md) return; el.querySelectorAll('[data-cnmf]').forEach(function(i){ md[i.dataset.cnmf] = i.value; }); }); }
+
+  /* ---------------- integração com o CRM ---------------- */
+  var side = document.getElementById('side'), ref = side && side.querySelector('.nav[data-view="inbox"]');
+  if(side && !side.querySelector('[data-view="canais"]')){
+    var b = document.createElement('button'); b.className = 'nav'; b.dataset.view = 'canais';
+    b.innerHTML = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 3 8 21h2l1.5-18zM16 3l-1.5 18h2L18 3zM4 8v2h17V8zm-1 6v2h17v-2z"/></svg><span class="tx">Canais</span><span id="nCanais"></span>';
+    if(ref) ref.insertAdjacentElement('afterend', b); else side.appendChild(b);
+  }
+  var _render = window.render;
+  window.render = render = function(){
+    if(ui.view === 'canais') lerRascunho();
+    var r = _render.apply(this, arguments);
+    try{
+      var nb = document.getElementById('nCanais'); if(nb){ var n = S.canais.filter(function(c){ return podeVer(c) && segue(c); }).reduce(function(a, c){ return a + naoLidas(c); }, 0); nb.innerHTML = n ? '<span class="n">' + (n > 99 ? '99+' : n) + '</span>' : ''; }
+      if(ui.view === 'canais') desenhar();
+      decorarDrawer();
+    }catch(err){ console.warn('canais:', err); }
+    return r;
+  };
+  // carga inicial dos canais (se chegarem depois do módulo)
+  var tm = setInterval(function(){
+    if(typeof DB === 'undefined' || !DB.ready || !me) return; clearInterval(tm);
+    if(typeof sb === 'undefined' || !sb) return;
+    ['canal', 'canalmsg'].forEach(function(tp){ var col = TIPO_COL[tp]; if((S[col] || []).length) return;
+      sb.from('pm_docs').select('id,dados,versao').eq('tipo', tp).then(function(r){ if(r.error || !r.data || !r.data.length) return; r.data.forEach(function(d){ if((d.id || '').indexOf(tp + ':') !== 0) return; applyDoc(d.id, tp, d.dados); if(DB.base && !DB.base[d.id]) DB.base[d.id] = {json:JSON.stringify(d.dados), versao:d.versao}; }); render(); }); });
+  }, 500);
+  function decorarDrawer(){
+    var dh = document.querySelector('#drawer .dhead'); if(!dh || !ui.drawer || ui.drawer.kind !== 'proc' || dh.querySelector('[data-cnproc]')) return;
+    var p = typeof procById === 'function' ? procById(ui.drawer.id) : null; if(!p) return; var cc = canalDoProcesso(p); if(!cc) return;
+    var bt = document.createElement('button'); bt.className = 'btn sm cn-dbtn'; bt.dataset.cnproc = p.id; bt.title = cc.novo ? 'Criar o canal deste ' + (cc.tipo === 'emp' ? 'empreendimento' : 'cliente') : 'Abrir o canal';
+    var n = cc.novo ? 0 : naoLidas(cc); bt.innerHTML = I.hash + '<span>' + (cc.novo ? 'Criar canal' : x(cc.nome)) + '</span>' + (n ? '<b class="cn-n">' + n + '</b>' : '');
+    var fecha = dh.querySelector('[data-close]'); if(fecha && fecha.parentElement === dh) dh.insertBefore(bt, fecha); else dh.appendChild(bt);
+  }
+  if(typeof renderDrawer === 'function'){ var _rd = renderDrawer; renderDrawer = function(){ var r = _rd.apply(this, arguments); try{ decorarDrawer(); }catch(_){} return r; }; }
+  window.cgCanais = {abrir:abrirCanal, novo:novoCanal, canalDoProcesso:canalDoProcesso};
+
+  /* ---------------- eventos ---------------- */
+  window.addEventListener('click', function(ev){
+    var tg = ev.target; if(!tg.closest) return; var h = function(s){ return tg.closest(s); }, el;
+    // aviso de canal no sino
+    if((el = h('[data-notif]'))){ var nn = (S.notifs || []).find(function(z){ return z.id === el.dataset.notif; }); if(nn && nn.canalId){ ev.stopPropagation(); ev.preventDefault(); nn.lida = true; var np = document.getElementById('npanel'); if(np) np.hidden = true; save(); abrirCanal(nn.canalId, nn.canalMsg); return; } }
+    if((el = h('[data-cnproc]'))){ ev.stopPropagation(); ev.preventDefault(); var p = procById(el.dataset.cnproc), cc = p && canalDoProcesso(p); if(!cc) return;
+      if(cc.novo){ if(typeof closeDrawer === 'function') try{ closeDrawer(); }catch(_){} ui.view = 'canais'; render(); dlgNovo(cc); return; }
+      if(typeof closeDrawer === 'function') try{ closeDrawer(); }catch(_){} abrirCanal(cc.id); return; }
+    if(h('[data-cnnovo]')){ ev.stopPropagation(); dlgNovo(); return; }
+    if(ov && ov.contains(tg)){
+      if(h('[data-cnx]') || tg === ov){ ev.stopPropagation(); fecharOv(); return; }
+      if((el = h('.cn-tsel label'))){ var rd = el.querySelector('input'); rd.checked = true; ov.querySelectorAll('.cn-tsel label').forEach(function(l){ l.classList.toggle('on', l === el); }); ov.querySelector('.cn-fcli').hidden = rd.value !== 'cliente'; ov.querySelector('.cn-femp').hidden = rd.value !== 'emp'; return; }
+      if(h('[data-cncriar]')){ ev.stopPropagation(); criarDoDlg(); return; }
+      if(h('[data-cnmembok]')){ ev.stopPropagation(); var c1 = canalPorId(ov._canal); if(!c1) return; var todos = ov.querySelector('[data-cntodos]').checked; c1.membros = todos ? [] : [].slice.call(ov.querySelectorAll('[data-cnpp]:checked')).map(function(i){ return i.value; });
+        if(ov.querySelector('[data-cnsegtodos]').checked){ var alvo = todos ? equipe() : c1.membros; c1.seguidores = alvo.slice(); if(alvo.map(function(m){ return String(m).toLowerCase(); }).indexOf(eu()) < 0 && segue(c1)) c1.seguidores.push(me); }
+        save(); fecharOv(); render(); t('Pessoas atualizadas'); return; }
+      if(h('[data-cncfgok]')){ ev.stopPropagation(); var c2 = canalPorId(ov._canal); if(!c2) return; var nm = ov.querySelector('[data-cnnome]').value.trim(); if(nm) c2.nome = nm; c2.desc = ov.querySelector('[data-cndesc]').value.trim(); save(); fecharOv(); render(); return; }
+      if(h('[data-cnarq]')){ ev.stopPropagation(); var c3 = canalPorId(ov._canal); if(!c3 || !confirm('Arquivar #' + c3.nome + '? Ele some da lista (as mensagens ficam guardadas).')) return; c3.arquivado = true; c3.arquivadoEm = agora(); c3.arquivadoPor = me; save(); fecharOv(); ui.canal = null; render(); t('Canal arquivado'); return; }
+      if(h('[data-cnmodnovo]')){ ev.stopPropagation(); lerModelos(); modelos().push({id:uid(), nome:'Novo modelo', titulo:'Andamento da semana {semana}', texto:'Andamento de {cliente} | semana {semana}\n\nFeito:\n• \n\nEm andamento:\n• \n\nPróximos passos (responsável e prazo):\n• ', criadoPor:me, em:agora()}); dlgModelos(); return; }
+      if((el = h('[data-cnmoddel]'))){ ev.stopPropagation(); lerModelos(); S.cfg.canalModelos = modelos().filter(function(z){ return z.id !== el.dataset.cnmoddel; }); dlgModelos(); return; }
+      if(h('[data-cnmodok]')){ ev.stopPropagation(); lerModelos(); save(); fecharOv(); render(); t('Modelos salvos'); return; }
+      return;
+    }
+    if(ui.view !== 'canais' || !h('#view')) return;
+    var c = ui.canal && canalPorId(ui.canal);
+    if((el = h('[data-cnopen]'))){ ev.stopPropagation(); abrirCanal(el.dataset.cnopen); return; }
+    if(h('[data-cnback]')){ ev.stopPropagation(); ui.canal = null; render(); return; }
+    if(!c) return;
+    if(h('[data-cnseg]')){ ev.stopPropagation(); var sg = (c.seguidores || []).filter(function(m){ return String(m).toLowerCase() !== eu(); }); if(!segue(c)) sg.push(me); c.seguidores = sg; save(); t(segue(c) ? 'Seguindo #' + c.nome : 'Você deixou de seguir #' + c.nome); render(); return; }
+    if(h('[data-cnmemb]')){ ev.stopPropagation(); dlgMembros(c); return; }
+    if(h('[data-cncfg]')){ ev.stopPropagation(); dlgCfg(c); return; }
+    if((el = h('[data-cntab]'))){ ev.stopPropagation(); ui.canalTab = el.dataset.cntab; desenhar(); return; }
+    if(h('[data-cnprocs]')){ ev.stopPropagation(); var ps = procsDoCanal(c); if(ps.length === 1 && typeof openDrawer === 'function'){ ui.view = 'proc'; render(); openDrawer('proc', ps[0].id); return; } ui.view = 'proc'; if(ps[0]){ var pr = (typeof propById === 'function' && propById(ps[0].propId)) || ps[0].prop || {}; ui.procQ = c.tipo === 'emp' ? (pr.emp || '') : (pr.grupo || pr.cliente || ''); } render(); var q = document.querySelector('#view input[type=search], #view .filters input'); if(q && ui.procQ){ q.value = ui.procQ; q.dispatchEvent(new Event('input', {bubbles:true})); } return; }
+    if(h('[data-cnpubnova]')){ ev.stopPropagation(); ui.canalComp = 'pub'; desenhar(); var mm = document.querySelector('#view [data-cnmod]'); if(mm) mm.focus(); return; }
+    if((el = h('[data-cncomp]'))){ ev.stopPropagation(); lerRascunho(); ui.canalComp = el.dataset.cncomp; desenhar(); var tt = document.querySelector('#view ' + (ui.canalComp === 'pub' ? '[data-cnptit]' : '[data-cntx]')); if(tt) tt.focus(); return; }
+    if(h('[data-cnenv]')){ ev.stopPropagation(); enviar(); return; }
+    if((el = h('[data-cnresp]'))){ ev.stopPropagation(); ui.canalThread = ui.canalThread === el.dataset.cnresp ? null : el.dataset.cnresp; desenhar(); var rr = document.querySelector('#view [data-cnrtx="' + ui.canalThread + '"]'); if(rr) rr.focus(); return; }
+    if((el = h('[data-cnrok]'))){ ev.stopPropagation(); responder(el.dataset.cnrok); return; }
+    if((el = h('[data-cnfix]'))){ ev.stopPropagation(); var fx = c.fixadas = c.fixadas || [], i = fx.indexOf(el.dataset.cnfix); if(i >= 0) fx.splice(i, 1); else fx.push(el.dataset.cnfix); save(); desenhar(); t(i >= 0 ? 'Desafixada' : 'Fixada no canal'); return; }
+    if((el = h('[data-cnedit]'))){ ev.stopPropagation(); ui.canalEdit = el.dataset.cnedit; desenhar(); var et = document.querySelector('#view [data-cneditx]'); if(et){ et.focus(); et.setSelectionRange(et.value.length, et.value.length); } return; }
+    if(h('[data-cneditno]')){ ev.stopPropagation(); ui.canalEdit = null; desenhar(); return; }
+    if((el = h('[data-cneditok]'))){ ev.stopPropagation(); var m = S.canalMsgs.find(function(z){ return z.id === el.dataset.cneditok; }); if(m){ var nt = document.querySelector('#view [data-cneditx]').value.trim(), ntt = document.querySelector('#view [data-cneditt]'); if(nt || (ntt && ntt.value.trim())){ m.texto = nt; if(ntt) m.titulo = ntt.value.trim(); m.editadaEm = agora(); } } ui.canalEdit = null; save(); desenhar(); return; }
+    if((el = h('[data-cndel]'))){ ev.stopPropagation(); var md = S.canalMsgs.find(function(z){ return z.id === el.dataset.cndel; }); if(!md || !confirm('Excluir esta ' + (md.tipo === 'post' ? 'publicação' : 'mensagem') + '?')) return; md.excluida = true; md.excluidaEm = agora(); md.excluidaPor = me; save(); desenhar(); return; }
+  }, true);
+  document.addEventListener('keydown', function(ev){
+    var tg = ev.target;
+    if(ov && ev.key === 'Escape'){ ev.stopPropagation(); fecharOv(); return; }
+    if(!tg.dataset || ui.view !== 'canais') return;
+    if(tg.dataset.cntx !== undefined && ev.key === 'Enter' && !ev.shiftKey && !ev.isComposing && ui.canalComp !== 'pub'){ ev.preventDefault(); enviar(); return; }
+    if(tg.dataset.cntx !== undefined && ev.key === 'Enter' && (ev.metaKey || ev.ctrlKey)){ ev.preventDefault(); enviar(); return; }
+    if(tg.dataset.cnrtx && ev.key === 'Enter' && !ev.shiftKey && !ev.isComposing){ ev.preventDefault(); responder(tg.dataset.cnrtx); return; }
+  }, true);
+  document.addEventListener('input', function(ev){ var tg = ev.target; if(ui.view === 'canais' && tg.dataset && tg.dataset.cnq !== undefined){ ui.canalQ = tg.value; var l = document.querySelector('#view .cn-lst'); if(l){ var tmp = document.createElement('div'); tmp.innerHTML = lista(); l.querySelector('.cn-scroll').innerHTML = tmp.querySelector('.cn-scroll').innerHTML; } } });
+  document.addEventListener('change', function(ev){ var tg = ev.target; if(!tg.dataset) return;
+    if(tg.hasAttribute('data-cntodos') && ov){ ov.querySelectorAll('[data-cnpp]').forEach(function(i){ i.disabled = tg.checked; if(tg.checked) i.checked = true; }); return; }
+    if(tg.hasAttribute('data-cnalvo') && ov){ var op = tg.selectedOptions[0], nm = ov.querySelector('[data-cnnome]'); if(op && op.value && nm && !nm.dataset.mexeu) nm.value = op.dataset.nome; return; }
+    if(tg.hasAttribute('data-cnmod') && ui.view === 'canais'){ var v = tg.value; tg.value = ''; if(!v) return; if(v === '__gerir'){ dlgModelos(); return; }
+      var md = modelos().find(function(z){ return z.id === v; }), c = canalPorId(ui.canal); if(!md) return;
+      var tt = document.querySelector('#view [data-cnptit]'), tx = document.querySelector('#view [data-cntx]'); if(tt) tt.value = preencher(md.titulo, c); if(tx){ tx.value = preencher(md.texto, c); tx.focus(); } ui.canalModeloUsado = md.nome; return; }
+  });
+  document.addEventListener('input', function(ev){ if(ov && ev.target.hasAttribute && ev.target.hasAttribute('data-cnnome')) ev.target.dataset.mexeu = '1'; });
 })();
 </script>
 <script id="mannare-barra">
