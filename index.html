@@ -3410,6 +3410,29 @@ button.cu-row:hover{background:#F6F7F9!important;color:#1F2033!important}
 .cmd-data input{border:1px solid #C9CCDA;border-radius:10px!important;padding:6px 10px;font:inherit;min-height:36px}
 @media (hover:none) and (pointer:coarse){.cmd-menu button{min-height:44px}}
 
+/* Agenda na barra do Mac */
+.br-dlg{width:min(600px,100%)!important;display:flex;flex-direction:column;gap:12px}
+.br-hd{display:flex;align-items:center;justify-content:space-between;gap:10px}.br-hd h2{margin:0;font-size:19px}
+.br-sub,.br-nota,.br-av{margin:0;font-size:13.5px;color:#55577A;line-height:1.5}
+.br-av{background:#FFF9E8;color:#5C4400;border-radius:10px!important;padding:8px 12px}
+.br-nota{font-size:12.5px}
+.br-demo{display:flex;align-items:center;gap:8px;align-self:flex-start;background:#1F1F1F;color:#fff;border-radius:8px!important;padding:6px 14px;font:500 13px -apple-system,BlinkMacSystemFont,"SF Pro Text",var(--font-sans,sans-serif)}
+.br-demo b{font-weight:500}.br-demo span{opacity:.85}.br-dico{display:inline-flex;opacity:.95}
+.br-passos{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:10px;font-size:14px;line-height:1.5}
+.br-passos a{color:var(--mn-azul,#0000FF);font-weight:600}
+.br-acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.br-acts .btn{text-decoration:none}
+.br-ok{margin-top:6px;color:#065F38;font-size:13.5px}
+.br-det{margin-top:8px;font-size:13px;color:#33354D}.br-det summary{cursor:pointer;color:var(--mn-azul,#0000FF);font-weight:600}
+.br-det ol{margin:8px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:6px}
+.br-det code{background:#F4F7FD;border-radius:6px!important;padding:1px 6px;font-size:12px}
+.br-cmd{display:block;margin-top:4px;padding:8px 10px!important;user-select:all;-webkit-user-select:all;word-break:break-all}
+.br-ft{display:flex;align-items:center;gap:8px;border-top:1px solid #EEF0F4;padding-top:12px}
+.br-row{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px!important;background:#F4F7FD;margin:8px 0}
+.br-row.br-inline{background:#fff;margin:0 0 16px;box-shadow:0 1px 2px rgba(14,16,48,.06)!important;padding:14px 18px;border-radius:18px!important}
+.br-ico{display:inline-flex;color:var(--mn-azul,#0000FF);flex:none}
+.br-rtx{display:flex;flex-direction:column;flex:1;min-width:0}.br-rtx b{font-size:13.5px}.br-rtx span{font-size:12px;color:#55577A}
+
 /* ===== iPad / tablet (769–1180px) ===== */
 @media (min-width:769px) and (max-width:1180px){
   header.top{flex-wrap:nowrap!important;min-width:0!important;gap:8px!important}
@@ -13388,6 +13411,99 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
   document.addEventListener('change', function(ev){ if(menu && ev.target.hasAttribute && ev.target.hasAttribute('data-cmddata') && ev.target.value){ var w = menu._wrap, v = ev.target.value; fecharMenu(); pular(w, v, false); } }, true);
   document.addEventListener('keydown', function(ev){ if(menu && ev.key === 'Escape'){ ev.stopPropagation(); fecharMenu(); } }, true);
   window.addEventListener('scroll', function(ev){ if(menu && !menu.contains(ev.target) && Date.now() - (menu._em || 0) > 400) fecharMenu(); }, true);
+})();
+</script>
+<script id="mannare-barra">
+/* MANNARE CRM · Agenda na barra do Mac (como a do ClickUp)
+   Meu perfil › "Agenda na barra do Mac": gera um link pessoal e instala o plugin no app gratuito SwiftBar.
+   A barra mostra "Próximo compromisso • em 48min" e, ao clicar, a agenda de hoje e amanhã, com botão para entrar no Meet. */
+(function(){
+  if(typeof S === 'undefined') return;
+  var x = function(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'}[c]; }); };
+  var t = function(m){ return typeof toast === 'function' ? toast(m) : console.log(m); };
+  var CRM = 'https://crm.mannare.com.br/';
+  var base = function(){ var c = window.PM_CONFIG || {}; return String(c.url || '').replace(/\/+$/, ''); };
+  var ICO = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M3 4h18v3H3zM3 9h18v11H3z" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M7 13h5v3H7z" fill="currentColor"/></svg>';
+  var ehMac = /Mac/i.test(navigator.platform || navigator.userAgent) && !/iPhone|iPad/i.test(navigator.userAgent) && !(navigator.maxTouchPoints > 1);
+
+  function plugin(tok){
+    var u = base() + '/functions/v1/pm-barra/crm-mannare.1m.sh?t=' + tok;
+    return '#!/bin/bash\n# <xbar.title>CRM Mannare | próximo compromisso</xbar.title>\n# <xbar.version>1.0</xbar.version>\n# <xbar.author>Mannare</xbar.author>\n'
+      + '# <xbar.desc>Mostra na barra do Mac o próximo compromisso do CRM Mannare (reuniões, tarefas e tempo de foco).</xbar.desc>\n'
+      + '# <swiftbar.hideAbout>true</swiftbar.hideAbout>\n# <swiftbar.hideRunInTerminal>true</swiftbar.hideRunInTerminal>\n# <swiftbar.hideDisablePlugin>true</swiftbar.hideDisablePlugin>\n'
+      + '# Link pessoal: se gerar um novo no CRM, este para de funcionar.\n'
+      + 'R=$(curl -s --max-time 12 "' + u + '")\n'
+      + 'if [ -z "$R" ]; then echo "CRM | sfimage=calendar.badge.exclamationmark"; echo "---"; echo "Sem conexão com o CRM agora"; echo "Abrir o CRM | href=' + CRM + '"; else echo "$R"; fi\n';
+  }
+
+  var ov = null, tok = '';
+  function fechar(){ if(ov){ ov.remove(); ov = null; } }
+  function abrir(){
+    fechar(); ov = document.createElement('div'); ov.className = 'cg-ov br-ov';
+    ov.innerHTML = '<div class="cg-dlg br-dlg" role="dialog" aria-modal="true" aria-labelledby="brTit">' + corpo() + '</div>';
+    document.body.appendChild(ov); var b = ov.querySelector('.btn.primary,button'); if(b) b.focus();
+  }
+  function redesenha(){ if(ov) ov.querySelector('.br-dlg').innerHTML = corpo(); }
+  function corpo(){
+    var demo = '<div class="br-demo" aria-hidden="true"><span class="br-dico">' + ICO + '</span><b>Apresentação de c…</b><span>• em 48min</span></div>';
+    var passo2 = tok
+      ? '<div class="br-ok"><b>Seu link está pronto.</b> Clique para instalar:</div>'
+        + '<div class="br-acts"><a class="btn primary" href="swiftbar://addplugin?src=' + encodeURIComponent(base() + '/functions/v1/pm-barra/crm-mannare.1m.sh?t=' + tok + '&plugin=1') + '" data-brinst>Adicionar à barra do Mac</a>'
+        + '<button class="btn" data-brbaixar>Baixar o arquivo</button></div>'
+        + '<details class="br-det"><summary>Não funcionou? Instalar pelo arquivo</summary><ol>'
+        + '<li>Clique em <b>Baixar o arquivo</b> (vem como <code>crm-mannare.1m.sh</code>).</li>'
+        + '<li>No Finder, mova o arquivo para a pasta de plugins que você escolheu no SwiftBar.</li>'
+        + '<li>Abra o <b>Terminal</b> (⌘ + espaço, digite Terminal) e cole, trocando o caminho se a pasta for outra:<code class="br-cmd">chmod +x ~/Documents/SwiftBar/crm-mannare.1m.sh</code></li>'
+        + '<li>No ícone do SwiftBar na barra, clique em <b>Refresh All</b>.</li></ol></details>'
+      : '<div class="br-acts"><button class="btn primary" data-brgerar>Gerar meu link</button></div>';
+    return '<div class="br-hd"><h2 id="brTit">Agenda na barra do Mac</h2><button class="iconbtn" data-brx aria-label="Fechar">✕</button></div>'
+      + '<p class="br-sub">Mostra o próximo compromisso na barra superior do Mac, como no ClickUp: reuniões da Google Agenda, eventos do CRM, tarefas e tempos de foco. Clicando, aparece a agenda de hoje e de amanhã, com botão para entrar no Meet. Atualiza a cada minuto.</p>'
+      + demo + (ehMac ? '' : '<p class="br-av">Isto funciona só no Mac. Abra o CRM no seu Mac para instalar.</p>')
+      + '<ol class="br-passos">'
+      + '<li><b>Instale o SwiftBar</b> (gratuito): baixe em <a href="https://swiftbar.app" target="_blank" rel="noopener">swiftbar.app</a>, arraste para Aplicativos e abra. Na primeira vez ele pede uma pasta para os plugins: crie uma chamada <b>SwiftBar</b> dentro de Documentos e escolha.</li>'
+      + '<li><b>Conecte ao CRM</b>:' + passo2 + '</li></ol>'
+      + '<p class="br-nota">O link é só seu (como uma senha): não compartilhe. Se gerar outro, o anterior para de funcionar.' + (tok ? '' : ' Já instalou antes? Gerar de novo troca o link; aí instale outra vez.') + '</p>'
+      + '<div class="br-ft"><button class="btn ghost danger" data-brdesl>Desligar meu link</button><span class="spacer"></span><button class="btn" data-brx>Fechar</button></div>';
+  }
+  async function gerar(){
+    if(typeof sb === 'undefined' || !sb){ t('Sem conexão com o banco'); return; }
+    var r = await sb.rpc('pm_barra_gerar');
+    if(r.error){ t(/function|does not exist|schema cache/i.test(r.error.message) ? 'Falta rodar o barra-supabase.sql no Supabase' : 'Não deu: ' + r.error.message); return; }
+    tok = String(r.data || ''); redesenha();
+  }
+  function baixar(){
+    if(!tok) return; var a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([plugin(tok)], {type:'text/x-shellscript'})); a.download = 'crm-mannare.1m.sh'; document.body.appendChild(a); a.click(); setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+  }
+  async function desligar(){
+    if(!confirm('Desligar o seu link? A agenda some da barra do Mac até você gerar outro.')) return;
+    if(typeof sb !== 'undefined' && sb){ var r = await sb.rpc('pm_barra_desligar'); if(r.error){ t('Não deu: ' + r.error.message); return; } }
+    tok = ''; redesenha(); t('Link desligado');
+  }
+  window.cgBarra = {abrir:abrir, plugin:plugin};
+
+  // atalho no Meu perfil e na Caixa de entrada (abaixo das notificações)
+  function linhaHtml(){ return '<div class="br-row"><span class="br-ico">' + ICO + '</span><div class="br-rtx"><b>Agenda na barra do Mac</b><span>Próximo compromisso sempre à vista, como no ClickUp</span></div><button class="btn sm" data-brabrir>Configurar</button></div>'; }
+  var _sp = window.showPop;
+  if(typeof _sp === 'function') window.showPop = showPop = function(uid){ var r = _sp.apply(this, arguments);
+    try{ if(uid === me){ var bd = document.querySelector('#pop .bd'); if(bd && !bd.querySelector('.br-row')){ var pb = bd.querySelector('.pm-pushbox'); if(pb) pb.insertAdjacentHTML('afterend', linhaHtml()); else if(bd.lastElementChild) bd.lastElementChild.insertAdjacentHTML('beforebegin', linhaHtml()); } } }catch(_){}
+    return r; };
+  var _r = window.render;
+  window.render = render = function(){ var r = _r.apply(this, arguments);
+    try{ if(ui.view === 'inbox' && ehMac){ var pb = document.querySelector('#view .pm-pushbox'); if(pb && !document.querySelector('#view .br-row')) pb.insertAdjacentHTML('afterend', linhaHtml().replace('br-row', 'br-row br-inline')); } }catch(_){}
+    return r; };
+  // links da barra: crm.mannare.com.br/#plan abre o Planejador
+  var tH = setInterval(function(){ if(typeof DB === 'undefined' || !DB.ready) return; clearInterval(tH); if(location.hash === '#plan' && typeof ui !== 'undefined'){ ui.view = 'plan'; history.replaceState(null, '', location.pathname); render(); } }, 400);
+
+  window.addEventListener('click', function(ev){ var tg = ev.target; if(!tg.closest) return;
+    if(tg.closest('[data-brabrir]')){ ev.stopPropagation(); ev.preventDefault(); abrir(); return; }
+    if(!ov || !ov.contains(tg)) return;
+    if(tg.closest('[data-brx]') || tg === ov){ ev.stopPropagation(); fechar(); return; }
+    if(tg.closest('[data-brgerar]')){ ev.stopPropagation(); gerar(); return; }
+    if(tg.closest('[data-brbaixar]')){ ev.stopPropagation(); baixar(); return; }
+    if(tg.closest('[data-brdesl]')){ ev.stopPropagation(); desligar(); return; }
+    if(tg.closest('[data-brinst]')){ setTimeout(function(){ t('Se o SwiftBar perguntar, clique em Instalar. Não abriu? Use "Baixar o arquivo".'); }, 400); }
+  }, true);
+  document.addEventListener('keydown', function(ev){ if(ov && ev.key === 'Escape'){ ev.stopPropagation(); fechar(); } }, true);
 })();
 </script>
 <script id="mannare-tablet">
