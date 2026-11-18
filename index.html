@@ -3382,6 +3382,26 @@ button.cu-row:hover{background:#F6F7F9!important;color:#1F2033!important}
 .cm-sug button:hover{border-color:#C99500;background:#FFF3CC}
 @media (max-width:640px){.cm-g{grid-template-columns:1fr}}
 
+/* comentários separados por dia (estilo Slack) */
+.cmd-wrap{display:flex;flex-direction:column}
+.cmd-sep{position:sticky;top:0;z-index:3;display:flex;align-items:center;gap:8px;margin:6px 0 12px;padding:4px 0;pointer-events:none}
+.cmd-sep i{flex:1;height:1px;background:#E1E3EA!important;display:block;font-style:normal}
+.cmd-sep .cmd-pill{pointer-events:auto;display:inline-flex;align-items:center;gap:4px;border:1px solid #E1E3EA;background:#fff;color:#0B0B1A;border-radius:999px!important;padding:4px 10px 4px 14px;font:600 12.5px var(--font-sans,inherit);cursor:pointer;white-space:nowrap;box-shadow:0 1px 2px rgba(14,16,48,.06)!important;-webkit-user-select:none;user-select:none;min-height:30px}
+.cmd-sep .cmd-pill:hover{background:#F4F7FD}
+.cmd-sep .cmd-pill:focus-visible{outline:2px solid var(--mn-azul,#0000FF)!important;outline-offset:2px}
+.cmd-novo{pointer-events:auto;display:inline-flex;align-items:center;background:#E01E5A;color:#fff;font:700 11px var(--font-sans,inherit);border-radius:999px!important;padding:2px 9px;letter-spacing:.02em;flex:none}
+.cmd-wrap .cmd-sep.tem-novo i:first-of-type,.cmd-wrap .cmd-novo-only i{background:#E01E5A!important}
+.cmd-novo-only{position:static}
+.cmd-flash .cmd-pill{background:#FFF3CC;border-color:#E8D18A}
+.cmd-menu{position:fixed;z-index:1400;min-width:240px;background:#fff;border:1px solid #E4E5EA;border-radius:14px!important;box-shadow:0 12px 32px rgba(14,16,48,.18)!important;padding:8px 0;font:500 14px var(--font-sans,inherit);color:#0B0B1A}
+.cmd-mt{font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#8C8FA3;padding:4px 16px 6px}
+.cmd-menu button{all:unset;box-sizing:border-box;display:block;width:100%;padding:8px 16px;cursor:pointer;min-height:36px}
+.cmd-menu button:hover,.cmd-menu button:focus-visible{background:#F4F7FD}
+.cmd-menu hr{border:0;border-top:1px solid #EEF0F4;margin:6px 0}
+.cmd-data{display:flex;flex-direction:column;gap:6px;padding:6px 16px 8px;font-size:13.5px}
+.cmd-data input{border:1px solid #C9CCDA;border-radius:10px!important;padding:6px 10px;font:inherit;min-height:36px}
+@media (hover:none) and (pointer:coarse){.cmd-menu button{min-height:44px}}
+
 /* ===== iPad / tablet (769–1180px) ===== */
 @media (min-width:769px) and (max-width:1180px){
   header.top{flex-wrap:nowrap!important;min-width:0!important;gap:8px!important}
@@ -12384,10 +12404,10 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
         + (s.abre.local ? '<div class="cu-row cu-open">' + I.pin + '<input data-cuf="local" value="' + x(s.local) + '" placeholder="Localização ou sala"></div>' : '<button class="cu-row" data-cuabre="local">' + I.pin + '<span>Adicionar localização ou sala</span></button>')
         + (s.abre.desc ? '<div class="cu-row cu-open cu-top">' + I.txt + '<textarea data-cuf="desc" rows="3" placeholder="Descrição">' + x(s.desc) + '</textarea></div>' : '<button class="cu-row" data-cuabre="desc">' + I.txt + '<span>Adicionar descrição</span></button>');
     } else if(ab === 'tarefa'){
-      corpo += linhaProc(true) + '<div class="cu-row cu-open">' + I.users + '<select data-cuf="resp" aria-label="Responsável">' + (typeof USERS !== 'undefined' ? USERS : []).map(function(u){ var em = String(u.email || u.id).toLowerCase(); return '<option value="' + x(em) + '" ' + (em === s.resp ? 'selected' : '') + '>' + x(u.nome || em) + '</option>'; }).join('') + '</select></div>'
+      corpo += linhaProc(true, 'tarefa') + '<div class="cu-row cu-open">' + I.users + '<select data-cuf="resp" aria-label="Responsável">' + (typeof USERS !== 'undefined' ? USERS : []).map(function(u){ var em = String(u.email || u.id).toLowerCase(); return '<option value="' + x(em) + '" ' + (em === s.resp ? 'selected' : '') + '>' + x(u.nome || em) + '</option>'; }).join('') + '</select></div>'
         + (s.abre.desc ? '<div class="cu-row cu-open cu-top">' + I.txt + '<textarea data-cuf="desc" rows="3" placeholder="Descrição">' + x(s.desc) + '</textarea></div>' : '<button class="cu-row" data-cuabre="desc">' + I.txt + '<span>Adicionar descrição</span></button>');
     } else if(ab === 'foco'){
-      corpo += '<p class="cu-note">Reserva este horário no seu Planejador para focar. Fica só no CRM.</p>' + linhaTarefaFoco();
+      corpo += '<p class="cu-note">Reserva este horário no seu Planejador para focar. Fica só no CRM.</p>' + linhaProc(true, 'foco') + linhaTarefaFoco();
     } else {
       corpo += '<p class="cu-note">' + (ab === 'ferias' ? 'Marca suas férias na equipe' : 'Marca sua folga na equipe') + ' (aparece "De ' + (ab === 'ferias' ? 'férias' : 'folga') + '" para todos). O bloqueio de acesso só quem gerencia a equipe liga, em Equipe › Férias e folgas.</p>'
         + '<label class="cu-ck"><input type="checkbox" data-cuf="criarAgenda" ' + (s.criarAgenda ? 'checked' : '') + '> Criar evento de dia inteiro na minha Google Agenda</label>';
@@ -12417,10 +12437,11 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
     return out.filter(function(v){ return v.rot; });
   }
   function vincDoProc(id){ var p = (S.procs || []).find(function(q){ return q.id === id; }); return p ? {t:'proc', id:p.id, rot:rotProc(p)} : null; }
-  function linhaProc(obrig){
-    if(obrig){
-      var procs = (S.procs || []).filter(function(p){ return p.status !== 'concluido' && p.status !== 'arquivado'; }).sort(function(a, b){ return rotProc(a).localeCompare(rotProc(b), 'pt-BR'); });
-      return '<div class="cu-row cu-open">' + I.link + '<select data-cuf="procId" aria-label="Processo"><option value="">Escolha o processo da tarefa</option>' + procs.map(function(p){ return '<option value="' + p.id + '" ' + (st.procId === p.id ? 'selected' : '') + '>' + x(rotProc(p)) + '</option>'; }).join('') + '</select></div>';
+  function linhaProc(obrig, onde){
+    if(obrig){ st.abre.proc = 1;
+      if(!st.vinculo && st.procId) st.vinculo = vincDoProc(st.procId);
+      if(st.vinculo) return '<div class="cu-row cu-open">' + I.link + '<span class="cu-vchip"><em>' + TIPOV[st.vinculo.t] + '</em>' + x(st.vinculo.rot) + '<button data-cuvdel aria-label="Tirar vínculo">×</button></span></div>';
+      return '<div class="cu-row cu-open">' + I.link + '<div class="cu-pbox"><input data-cuvq placeholder="' + (onde === 'tarefa' ? 'Vincular a processo, proposta ou material técnico' : 'Vincular a processo, proposta ou material técnico (opcional)') + '" autocomplete="off" aria-label="Vincular"><div class="cu-sug cu-vsug" hidden></div></div></div>';
     }
     if(!st.vinculo && st.procId) st.vinculo = vincDoProc(st.procId);
     if(!st.abre.proc && !st.vinculo) return '<button class="cu-row" data-cuabre="proc">' + I.link + '<span>Vincular a <u>processo</u>, <u>proposta</u> ou <u>material técnico</u></span></button>';
@@ -12457,17 +12478,41 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
     }
     if(ab === 'tarefa'){
       if(!s.titulo){ t('Dê um nome à tarefa'); return; }
-      var p = (S.procs || []).find(function(q){ return q.id === s.procId; }); if(!p){ t('Escolha o processo da tarefa'); return; }
-      var tk = mkTask(s.titulo, [], {resp:[s.resp || eu()], prazo:s.data, desc:s.desc || ''}); p.tarefas = p.tarefas || []; p.tarefas.push(tk);
-      if(typeof logP === 'function') logP(p, 'criou a tarefa “' + s.titulo + '” pelo calendário');
-      if(s.resp && s.resp !== eu() && typeof notify === 'function') notify(s.resp, 'atribuiu a você a tarefa “' + s.titulo + '”', p.id, tk.id);
-      save(); fechar(); t('Tarefa criada em ' + (p.protocolo || p.codigo || 'processo')); render(); return;
+      var v = s.vinculo || (s.procId ? vincDoProc(s.procId) : null);
+      if(!v){ t('Vincule a tarefa a um processo, proposta ou material técnico'); var vq0 = pop.querySelector('[data-cuvq]'); if(vq0){ vq0.focus(); vsug(''); } return; }
+      var resp = s.resp || eu(), outro = resp !== eu();
+      if(v.t === 'proc'){
+        var p = (S.procs || []).find(function(q){ return q.id === v.id; }); if(!p){ t('Processo não encontrado'); return; }
+        var tk = mkTask(s.titulo, [], {resp:[resp], prazo:s.data, desc:s.desc || ''}); p.tarefas = p.tarefas || []; p.tarefas.push(tk);
+        if(typeof logP === 'function') logP(p, 'criou a tarefa “' + s.titulo + '” pelo calendário');
+        if(outro && typeof notify === 'function') notify(resp, 'atribuiu a você a tarefa “' + s.titulo + '”', p.id, tk.id);
+        save(); fechar(); t('Tarefa criada em ' + (p.protocolo || p.codigo || 'processo')); render(); return;
+      }
+      if(v.t === 'mat'){
+        var m = (S.mats || []).find(function(q){ return q.id === v.id; }); if(!m){ t('Material não encontrado'); return; }
+        m.checks = m.checks || []; var ck = m.checks.find(function(c){ return c.nome === 'Tarefas'; }); if(!ck){ ck = {id:uid(), nome:'Tarefas', itens:[]}; m.checks.push(ck); }
+        ck.itens.push({id:uid(), txt:s.titulo, feito:false, resp:resp, prazo:s.data, desc:s.desc || '', criadoEm:new Date().toISOString(), por:eu()});
+        if(typeof logT === 'function') logT(m, 'criou a tarefa “' + s.titulo + '” pelo calendário');
+        if(outro && typeof notifyMat === 'function') notifyMat(resp, 'atribuiu a você a tarefa “' + s.titulo + '”', m);
+        save(); fechar(); t('Tarefa criada em ' + (m.codigo || m.titulo || 'material técnico')); render(); return;
+      }
+      if(v.t === 'prop'){
+        var raw = (S.propsDb || []).find(function(q){ return q.id === v.id; }), pv = (S.props || []).find(function(q){ return q.id === v.id; }) || {};
+        if(!raw){ var pp = pv.procId && (S.procs || []).find(function(q){ return q.id === pv.procId; });
+          if(pp){ var tk2 = mkTask(s.titulo, [], {resp:[resp], prazo:s.data, desc:s.desc || ''}); pp.tarefas = pp.tarefas || []; pp.tarefas.push(tk2); if(typeof logP === 'function') logP(pp, 'criou a tarefa “' + s.titulo + '” pelo calendário'); save(); fechar(); t('Tarefa criada no processo da proposta'); render(); return; }
+          t('Proposta não encontrada'); return; }
+        var tk3 = mkTask(s.titulo, [], {resp:[resp], prazo:s.data, desc:s.desc || ''}); raw.tarefas = raw.tarefas || []; raw.tarefas.push(tk3);
+        (raw.log = raw.log || []).push({em:new Date().toISOString(), por:eu(), txt:'criou a tarefa “' + s.titulo + '” pelo calendário'});
+        if(outro && typeof notifyProp === 'function') notifyProp(resp, 'atribuiu a você a tarefa “' + s.titulo + '” na proposta ' + (raw.codigo || ''), raw);
+        save(); fechar(); t('Tarefa criada na proposta ' + (raw.codigo || '')); render(); return;
+      }
     }
     if(ab === 'foco'){
       if(mins(s.fim) <= mins(s.ini)){ t('Confira o horário'); return; }
       var it = s.taskRef && typeof itemDe === 'function' ? itemDe(s.taskRef) : null;
-      if(!s.titulo && !it){ t('Escreva no que vai focar ou escolha uma tarefa'); return; }
+      if(!s.titulo && !it && !s.vinculo){ t('Escreva no que vai focar, escolha uma tarefa ou um vínculo'); return; }
       var b = {id:uid(), ref:s.taskRef || '', titulo:it ? it.titulo : s.titulo, ini:s.data + 'T' + s.ini, fim:s.data + 'T' + s.fim, foco:true};
+      if(s.vinculo){ b.vinculo = {t:s.vinculo.t, id:s.vinculo.id, rot:s.vinculo.rot}; if(!b.titulo) b.titulo = s.vinculo.rot; }
       if(typeof setPlano === 'function') setPlano(function(l){ l.push(b); return l; }); fechar(); t('Tempo de foco reservado'); render(); return;
     }
     // férias / folga (próprias, sem bloqueio)
@@ -12590,6 +12635,7 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
       if((el = h('[data-cursvp]'))){ var gid = el.dataset.cursvp; abrirMenu(el, [['accepted', 'Sim', RSVP.accepted[1]], ['declined', 'Não', RSVP.declined[1]], ['tentative', 'Talvez', RSVP.tentative[1]]], respMinha(gid), function(v){ responder(gid, v); }); return; }
     }
   }, true);
+  document.addEventListener('focusin', function(ev){ var tg = ev.target; if(pop && tg.hasAttribute && tg.hasAttribute('data-cuvq')) vsug(tg.value); });
   document.addEventListener('input', function(ev){ var tg = ev.target; if(pop && tg.hasAttribute && tg.hasAttribute('data-cupq')) sugestoes(tg.value); if(pop && tg.hasAttribute && tg.hasAttribute('data-cuvq')) vsug(tg.value); });
   document.addEventListener('change', function(ev){ var tg = ev.target; if(!pop || !pop.contains(tg) || modo !== 'criar') return; var k = tg.dataset.cuf;
     if(k === 'data' || k === 'ate' || k === 'ini' || k === 'fim'){ lerCampos(); if(k === 'ini' && mins(st.fim) <= mins(st.ini)) st.fim = hm(mins(st.ini) + 60); if(k === 'data' && st.ate < st.data) st.ate = st.data; desenhaCriar(); } });
@@ -13110,6 +13156,131 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
     if(st && st.modo === 'edit'){ if(document.querySelector('.cg-ov:not(.cm-ov), #layer .modal, #layer .mlayer')) return; ev.stopPropagation(); sair(); return; }
     ev.stopPropagation(); fechar();
   }, true);
+})();
+</script>
+<script id="mannare-tarefasvinc">
+/* MANNARE CRM · tarefas criadas pelo calendário em propostas e material técnico
+   - Proposta: fica em proposta.tarefas (não entra no hash de aprovação).
+   - Material técnico: vira item do checklist "Tarefas".
+   Aparecem no Planejador e em Minhas tarefas. */
+(function(){
+  if(typeof S === 'undefined' || typeof planItens !== 'function') return;
+  var x = function(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'}[c]; }); };
+  var tem = function(r, u){ return typeof respTem === 'function' ? respTem(r, u) : (r || []).indexOf(u) >= 0; };
+  function propRaw(id){ return (S.propsDb || []).find(function(r){ return r.id === id; }); }
+  function achar(ref){ var p = String(ref || '').split('|');
+    if(p[0] === 'pt'){ var r = propRaw(p[1]), t = r && (r.tarefas || []).find(function(z){ return z.id === p[2]; }); return t ? {k:'pt', r:r, t:t} : null; }
+    if(p[0] === 'mc'){ var m = (S.mats || []).find(function(z){ return z.id === p[1]; }), it = null; if(m) (m.checks || []).forEach(function(c){ (c.itens || []).forEach(function(i){ if(i.id === p[2]) it = i; }); }); return it ? {k:'mc', m:m, i:it} : null; }
+    return null; }
+  var _pi = planItens;
+  planItens = function(u){ var out = _pi.apply(this, arguments);
+    (S.propsDb || []).forEach(function(r){ (r.tarefas || []).forEach(function(t){ if(tem(t.resp, u)) out.push({ref:'pt|' + r.id + '|' + t.id, k:'tarefa', titulo:t.titulo, onde:'Proposta ' + (r.codigo || ''), prazo:t.prazo, feito:t.status === 'concluida', aberto:true}); }); });
+    (S.mats || []).forEach(function(m){ (m.checks || []).forEach(function(c){ (c.itens || []).forEach(function(i){ if(i.resp === u && (i.prazo || c.nome === 'Tarefas')) out.push({ref:'mc|' + m.id + '|' + i.id, k:'tarefa', titulo:i.txt, onde:m.codigo || m.titulo || 'Material técnico', prazo:i.prazo || '', feito:!!i.feito, aberto:m.status !== 'entregue'}); }); }); });
+    return out; };
+  var _id = itemDe;
+  itemDe = function(ref){ var a = achar(ref);
+    if(a && a.k === 'pt') return {ref:ref, k:'tarefa', titulo:a.t.titulo, onde:'Proposta ' + (a.r.codigo || ''), prazo:a.t.prazo, feito:a.t.status === 'concluida'};
+    if(a && a.k === 'mc') return {ref:ref, k:'tarefa', titulo:a.i.txt, onde:a.m.codigo || a.m.titulo, prazo:a.i.prazo || '', feito:!!a.i.feito};
+    if(/^(pt|mc)\|/.test(String(ref || ''))) return null;
+    return _id.apply(this, arguments); };
+  function abrir(ref){ var p = ref.split('|');
+    if(p[0] === 'pt'){ if(typeof closeTask === 'function') try{ closeTask(); }catch(_){} ui.view = 'prop'; render(); openDrawer('prop', p[1], 'dados'); return true; }
+    if(p[0] === 'mc'){ if(typeof openMat === 'function') openMat(p[1]); return true; } return false; }
+  function concluir(ref){ var a = achar(ref); if(!a) return false;
+    if(a.k === 'pt'){ a.t.status = a.t.status === 'concluida' ? 'afazer' : 'concluida'; (a.r.log = a.r.log || []).push({em:new Date().toISOString(), por:me, txt:(a.t.status === 'concluida' ? 'concluiu' : 'reabriu') + ' a tarefa “' + a.t.titulo + '”'}); }
+    else { a.i.feito = !a.i.feito; if(typeof logT === 'function') logT(a.m, (a.i.feito ? 'concluiu' : 'reabriu') + ' “' + a.i.txt + '”'); }
+    save(); render(); return true; }
+  if(typeof abrirItem === 'function'){ var _ab = abrirItem; abrirItem = function(ref){ if(abrir(String(ref || ''))) return; return _ab.apply(this, arguments); }; }
+  if(typeof concluirItem === 'function'){ var _cc = concluirItem; concluirItem = function(ref){ if(/^(pt|mc)\|/.test(String(ref || '')) && concluir(ref)) return; return _cc.apply(this, arguments); }; }
+  // Minhas tarefas: bloco das propostas
+  if(typeof matsMine === 'function'){ var _mm = matsMine;
+    matsMine = function(){ var h = _mm.apply(this, arguments), feito = ui.mineFilter !== 'aberto', its = [];
+      (S.propsDb || []).forEach(function(r){ (r.tarefas || []).forEach(function(t){ if(tem(t.resp, me) && (t.status === 'concluida') === feito) its.push({r:r, t:t}); }); });
+      if(!its.length) return h;
+      its.sort(function(a, b){ return String(a.t.prazo || '9').localeCompare(String(b.t.prazo || '9')); });
+      return h + '<div class="tlist"><div class="tgh" style="color:#0000CC">Propostas <span class="sub">' + its.length + '</span></div>' + its.map(function(o){ var ref = 'pt|' + o.r.id + '|' + o.t.id, ok = o.t.status === 'concluida';
+        return '<div class="mine-row" data-ptopen="' + x(ref) + '"><span class="sq ' + (ok ? 'done' : '') + '" style="border-color:#0000CC" data-ptchk="' + x(ref) + '" title="Marcar como feito"></span>'
+          + '<div><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">' + (typeof tag === 'function' ? tag('tarefa', '#0000CC') : '') + '<b>' + x(o.t.titulo) + '</b></div><div class="sub" style="margin-top:3px">Proposta ' + x(o.r.codigo || '') + (o.r.cliente ? ' | ' + x(o.r.cliente) : '') + '</div></div>'
+          + '<span></span><span style="min-width:70px;text-align:right">' + (typeof dueHtml === 'function' ? dueHtml(o.t.prazo, ok) : x(o.t.prazo || '')) + '</span></div>'; }).join('') + '</div>'; }; }
+  window.addEventListener('click', function(ev){ var tg = ev.target; if(!tg.closest) return; var el;
+    if((el = tg.closest('[data-ptchk]'))){ ev.stopPropagation(); ev.preventDefault(); concluir(el.dataset.ptchk); return; }
+    if((el = tg.closest('[data-ptopen]'))){ ev.stopPropagation(); abrir(el.dataset.ptopen); return; }
+  }, true);
+  window.cgTarefasVinc = {achar:achar};
+})();
+</script>
+<script id="mannare-comdias">
+/* MANNARE CRM · comentários separados por dia (estilo Slack)
+   - Divisória com o dia ("Hoje", "Ontem", "segunda-feira, 16 de novembro") que fica presa no topo ao rolar.
+   - Clicar no dia: Pular para Hoje | Ontem | Última semana | Mês passado | Primeira mensagem | data específica.
+   - Marca "Novo" nos comentários de outras pessoas que chegaram desde a última vez que você abriu a conversa. */
+(function(){
+  if(typeof feedHtml !== 'function') return;
+  var x = function(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'}[c]; }); };
+  var pad = function(n){ return String(n).padStart(2, '0'); };
+  var diaDe = function(ts){ var d = new Date(ts); return isNaN(d) ? '' : d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); };
+  var hoje = function(){ return diaDe(Date.now()); };
+  var somaDias = function(iso, n){ var d = new Date(iso + 'T12:00'); d.setDate(d.getDate() + n); return diaDe(d); };
+  var DS = ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado'], MS = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
+  function rotulo(iso){ var h = hoje(); if(iso === h) return 'Hoje'; if(iso === somaDias(h, -1)) return 'Ontem';
+    var d = new Date(iso + 'T12:00'); return DS[d.getDay()] + ', ' + d.getDate() + ' de ' + MS[d.getMonth()] + (d.getFullYear() !== new Date().getFullYear() ? ' de ' + d.getFullYear() : ''); }
+  var ICO = '<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M7 10l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  // "visto" por conversa: o que valia quando você abriu nesta sessão (a marca Novo não some a cada atualização da tela)
+  var sessao = {}, KEY = 'mannare.comVisto';
+  function lerVistos(){ try{ return JSON.parse(localStorage.getItem(KEY) || '{}'); }catch(_){ return {}; } }
+  function gravarVisto(k, em){ try{ var v = lerVistos(); v[k] = em; var ks = Object.keys(v); if(ks.length > 400) ks.slice(0, ks.length - 400).forEach(function(z){ delete v[z]; }); localStorage.setItem(KEY, JSON.stringify(v)); }catch(_){} }
+  var eu = function(){ return typeof me !== 'undefined' ? String(me).toLowerCase() : ''; };
+
+  var _fh = feedHtml;
+  feedHtml = function(coms, t){
+    if(!coms || !coms.length || coms.length < 2 && !coms.some(function(c){ return c.em; })) return _fh.apply(this, arguments);
+    var k = 'c:' + (coms[0].id || coms[0].em), ult = coms.reduce(function(a, c){ return c.em > a ? c.em : a; }, '');
+    if(sessao[k] === undefined){ var v = lerVistos(); sessao[k] = v[k] || ''; }
+    if(ult) gravarVisto(k, ult);
+    var visto = sessao[k], novoIdx = -1;
+    if(visto) for(var i = 0; i < coms.length; i++){ var c = coms[i]; if(c.em > visto && String(c.autor || '').toLowerCase() !== eu()){ novoIdx = i; break; } }
+    var grupos = [], atual = null;
+    coms.forEach(function(c, i){ var d = diaDe(c.em) || 'sem'; if(!atual || atual.d !== d || i === novoIdx){ atual = {d:d, cs:[], novo:i === novoIdx, cont:atual && atual.d === d}; grupos.push(atual); } atual.cs.push(c); });
+    var self = this;
+    return '<div class="cmd-wrap">' + grupos.map(function(g){
+      var sep = g.cont ? '<div class="cmd-sep cmd-novo-only"><span class="cmd-novo">Novo</span><i></i></div>'
+        : '<div class="cmd-sep ' + (g.novo ? 'tem-novo' : '') + '" data-cmday="' + g.d + '">' + (g.novo ? '<span class="cmd-novo">Novo</span>' : '') + '<i></i><button type="button" class="cmd-pill" data-cmdpill="' + g.d + '" aria-haspopup="menu">' + x(g.d === 'sem' ? 'Sem data' : rotulo(g.d)) + ICO + '</button><i></i></div>';
+      return sep + _fh.call(self, g.cs, t);
+    }).join('') + '</div>';
+  };
+
+  /* menu "Pular para" */
+  var menu = null;
+  function fecharMenu(){ if(menu){ menu.remove(); menu = null; } }
+  function pular(wrap, alvo, primeira){
+    var seps = [].slice.call(wrap.querySelectorAll('.cmd-sep[data-cmday]')); if(!seps.length) return;
+    var el = primeira ? seps[0] : seps.find(function(s){ return s.dataset.cmday >= alvo; }) || seps[seps.length - 1];
+    if(!primeira && el.dataset.cmday > alvo && alvo !== hoje()){ /* sem comentários nesse dia: vai para o próximo dia com comentários */ }
+    el.scrollIntoView({block:'start', behavior:'smooth'});
+    el.classList.add('cmd-flash'); setTimeout(function(){ el.classList.remove('cmd-flash'); }, 1200);
+  }
+  function abrirMenu(btn){
+    fecharMenu(); var wrap = btn.closest('.cmd-wrap'); if(!wrap) return;
+    menu = document.createElement('div'); menu.className = 'cmd-menu'; menu.setAttribute('role', 'menu');
+    menu.innerHTML = '<div class="cmd-mt">Pular para</div>'
+      + [['hoje', 'Hoje'], ['ontem', 'Ontem'], ['semana', 'Última semana'], ['mes', 'Mês passado'], ['primeira', 'Primeira mensagem']].map(function(o){ return '<button type="button" role="menuitem" data-cmdgo="' + o[0] + '">' + o[1] + '</button>'; }).join('')
+      + '<hr><label class="cmd-data">Escolher uma data específica<input type="date" data-cmddata max="' + hoje() + '"></label>';
+    document.body.appendChild(menu);
+    var r = btn.getBoundingClientRect(), w = menu.offsetWidth, h = menu.offsetHeight;
+    var left = Math.max(8, Math.min(window.innerWidth - w - 8, r.left + r.width / 2 - w / 2)), top = r.bottom + 6; if(top + h > window.innerHeight - 8) top = Math.max(8, r.top - h - 6);
+    menu.style.left = left + 'px'; menu.style.top = top + 'px'; menu._wrap = wrap; menu._em = Date.now();
+    var b0 = menu.querySelector('button'); if(b0) try{ b0.focus({preventScroll:true}); }catch(_){}
+  }
+  window.addEventListener('click', function(ev){ var tg = ev.target; if(!tg.closest) return; var el;
+    if((el = tg.closest('[data-cmdpill]'))){ ev.stopPropagation(); ev.preventDefault(); if(menu && menu._btn === el){ fecharMenu(); return; } abrirMenu(el); if(menu) menu._btn = el; return; }
+    if(menu && menu.contains(tg)){ ev.stopPropagation(); if((el = tg.closest('[data-cmdgo]'))){ var h = hoje(), g = el.dataset.cmdgo, w = menu._wrap;
+        var alvo = g === 'hoje' ? h : g === 'ontem' ? somaDias(h, -1) : g === 'semana' ? somaDias(h, -7) : g === 'mes' ? (function(){ var d = new Date(); d.setDate(1); d.setMonth(d.getMonth() - 1); return diaDe(d); })() : '';
+        fecharMenu(); pular(w, alvo, g === 'primeira'); } return; }
+    if(menu) fecharMenu();
+  }, true);
+  document.addEventListener('change', function(ev){ if(menu && ev.target.hasAttribute && ev.target.hasAttribute('data-cmddata') && ev.target.value){ var w = menu._wrap, v = ev.target.value; fecharMenu(); pular(w, v, false); } }, true);
+  document.addEventListener('keydown', function(ev){ if(menu && ev.key === 'Escape'){ ev.stopPropagation(); fecharMenu(); } }, true);
+  window.addEventListener('scroll', function(ev){ if(menu && !menu.contains(ev.target) && Date.now() - (menu._em || 0) > 400) fecharMenu(); }, true);
 })();
 </script>
 <script id="mannare-tablet">
