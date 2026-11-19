@@ -3814,6 +3814,210 @@ html.cm-aberto body{overflow:hidden}
   html.mx .plcal h2,html.mx .plcal .plt,html.mx .pltop b{white-space:nowrap}
 }
 </style>
+<style id="mannare-refino">
+/* ==========================================================================
+   MANNARE CRM · Refino de layout (auditoria UI/UX — nov/2026)
+   Camada final e única fonte de verdade para escala de espaço, alturas de
+   controle, tipografia de cartões e grades. Só CSS: nenhum ID, classe usada
+   por script ou lógica foi alterado. Para desfazer, basta remover este bloco.
+   ========================================================================== */
+:root{
+  /* escala de espaço (base 4) */
+  --rf-1:4px; --rf-2:8px; --rf-3:12px; --rf-4:16px; --rf-5:20px; --rf-6:24px; --rf-8:32px;
+  /* alturas de controle: 3 tamanhos, nada fora disso */
+  --rf-ctl:40px; --rf-ctl-sm:32px; --rf-ctl-xs:28px;
+  /* forma */
+  --rf-r-card:20px; --rf-r-inner:14px; --rf-r-field:12px;
+  /* tipografia */
+  --rf-t-title:15px;   /* título de cartão */
+  --rf-t-body:14px;
+  --rf-t-meta:12.5px;  /* informação secundária */
+  --rf-t-label:12px;   /* cabeçalho de tabela, rótulo de campo */
+  --rf-kpi:34px;
+}
+
+/* ---------- 1. Rail: logo visível no modo recolhido ---------- */
+/* O logo herdava height:auto e virava uma faixa de 44×6px. No rail recolhido
+   mostra só o símbolo (recorte à esquerda); ao expandir volta ao logotipo. */
+@media (min-width:769px){
+  .side .logo{height:44px!important;aspect-ratio:auto!important;object-fit:cover!important;object-position:left center!important;flex:none}
+  .side:hover .logo,.side:has(:focus-visible) .logo{height:auto!important;aspect-ratio:390/51!important;object-fit:contain!important}
+  /* contadores do rail: mesma pílula, presos ao canto do ícone */
+  .side .nav{position:relative}
+  .side .nav>[id^="n"]:not(:empty){min-width:18px;height:18px;padding:0 5px;box-sizing:border-box;border-radius:999px!important;font:700 10.5px/18px var(--font-sans)!important;text-align:center;
+    top:2px!important;right:2px!important;left:auto!important;box-shadow:0 0 0 2px #fff}
+  .side:hover .nav>[id^="n"]:not(:empty),.side:has(:focus-visible) .nav>[id^="n"]:not(:empty){box-shadow:none}
+  /* rail rola por dentro em telas baixas, sem barra visível */
+  .side{scrollbar-width:none}
+  .side::-webkit-scrollbar{display:none}
+}
+
+/* ---------- 2. Cabeçalho da página ---------- */
+.pagehead{align-items:flex-end!important;gap:var(--rf-3) var(--rf-2)!important;margin-bottom:var(--rf-6)!important;flex-wrap:wrap}
+.pagehead>div:first-child{min-width:min(100%,280px)}
+.pagehead h1{letter-spacing:-.01em;line-height:1.1!important;margin:0 0 var(--rf-1)!important}
+.pagehead p{margin:0!important;max-width:72ch}
+/* saudação: nome na mesma cor do título (o destaque de uma só palavra competia com os dados) */
+.pagehead h1.welcome span{color:inherit!important}
+.pagehead>.btn,.pagehead>.seg{flex:none}
+
+/* ---------- 3. Controles: alturas únicas ---------- */
+.btn{min-height:var(--rf-ctl)!important;height:var(--rf-ctl);box-sizing:border-box;white-space:nowrap}
+.btn.sm{min-height:var(--rf-ctl-sm)!important;height:var(--rf-ctl-sm)!important;padding-top:0!important;padding-bottom:0!important;font-size:12.5px!important}
+.top .btn,.top .iconbtn,.top .navbtn,.top .sync{flex:none}
+#view .filters input:not([type=checkbox]):not([type=radio]),#view .filters select,
+#view .pagehead select,#view .kfil select,#view select.inp,#view input.inp{height:var(--rf-ctl)!important;min-height:var(--rf-ctl)!important;box-sizing:border-box}
+/* filtros: busca cresce, selects com largura estável, quebram linha sem cortar */
+.filters{display:flex!important;flex-wrap:wrap!important;align-items:center!important;gap:var(--rf-2)!important}
+.filters>input[type=search],.filters>input[type=text],.filters>input:not([type]){flex:1 1 260px;min-width:200px}
+.filters>select{flex:0 1 auto;min-width:160px;max-width:260px}
+.filters>label{flex:none;white-space:nowrap;display:inline-flex;align-items:center;gap:var(--rf-2)}
+/* chips de filtro: uma linha com rolagem, nunca um chip órfão na linha de baixo */
+.fchips{flex-wrap:nowrap!important;overflow-x:auto;scrollbar-width:none;padding-bottom:2px;gap:var(--rf-2)!important}
+.fchips::-webkit-scrollbar{display:none}
+.fchips{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 32px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 32px),transparent);padding-right:32px}
+.fchips button{flex:none;white-space:nowrap;height:var(--rf-ctl-sm)!important;min-height:var(--rf-ctl-sm)!important;padding:0 var(--rf-3)!important;display:inline-flex;align-items:center;gap:6px}
+
+/* ---------- 4. Cartões de indicador (KPI) ---------- */
+/* Mesmo esqueleto em todas as telas: cabeçalho no topo, número, rodapé
+   preso embaixo. Cartões da mesma linha ficam com a mesma altura. */
+.alerts{gap:var(--rf-4)!important;margin-bottom:var(--rf-6)!important;align-items:stretch!important}
+.alerts>.acard{display:flex!important;flex-direction:column!important;gap:var(--rf-2)!important;min-width:0;height:auto!important}
+.acard .top2{min-height:36px;display:flex;align-items:center;justify-content:space-between;gap:var(--rf-2)}
+.acard .v,.dkpi .dkv .tnum{font-size:var(--rf-kpi)!important;line-height:1.05!important;font-variant-numeric:tabular-nums}
+.acard .v{margin-top:var(--rf-1)}
+.acard .ft{margin-top:auto!important;display:flex;align-items:center;justify-content:space-between;gap:var(--rf-2);font-size:13px}
+.acard.fk .l{font:600 var(--rf-t-title)/1.3 var(--font-sans)!important;color:var(--sx-text)!important;min-height:20px}
+.acard.fk .ft{color:var(--sx-text-3)!important;font-size:var(--rf-t-meta)!important;line-height:1.4}
+
+/* dashboard: título alinhado ao topo do ícone (com ou sem subtítulo),
+   altura única para a linha de KPIs, rodapé sempre na mesma posição */
+.dkpi{display:flex!important;flex-direction:column!important;gap:var(--rf-3)!important}
+.dkpi .dkh{display:flex!important;align-items:flex-start!important;gap:var(--rf-3)!important;min-height:38px}
+.dkpi .dkh .dki{flex:none}
+.dkpi .dkt{font:600 var(--rf-t-title)/1.3 var(--font-sans)!important;color:var(--sx-text)!important;padding-top:1px}
+.dkpi .dks{font-size:var(--rf-t-meta)!important;line-height:1.35!important;margin-top:1px}
+.dkpi .dkv{display:flex!important;align-items:center!important;flex-wrap:wrap;gap:var(--rf-2) var(--rf-3)!important;min-height:40px}
+.dkpi .dkl{min-height:22px;display:flex;align-items:center}
+.dkpi .dkf{margin-top:auto!important;padding-top:var(--rf-3)!important;line-height:1.45}
+.dw[data-dw^="kpi_"]:not(.fixo) .dkpi{min-height:208px!important}
+
+/* ---------- 5. Cartões de conteúdo: cabeçalho padrão ---------- */
+.dcard .dch{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--rf-3);margin-bottom:var(--rf-4)!important;min-height:32px}
+.dcard .dct{font:600 var(--rf-t-title)/1.3 var(--font-sans)!important}
+.dcard:not(.dtimer) .dct{color:var(--sx-text)!important}
+.dcard .dch>.btn,.dcard .dch>.dlink,.dcard .dch>a{flex:none}
+.dcard .dempty{padding:var(--rf-6) var(--rf-2)!important;text-align:center;color:var(--sx-text-3)!important;font-size:13px!important}
+/* listas dentro de cartões: linha mínima e respiro iguais */
+.dcard .drow{min-height:44px;gap:var(--rf-3)!important}
+.dcard .drow .dtt{min-width:0}
+.dcard .drow .dtt b,.dcard .drow .dtt span{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* calendário: mês e ano não quebram em duas linhas */
+.cal .hd{display:flex;align-items:center;gap:var(--rf-2);flex-wrap:nowrap}
+.cal .hd>b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;flex:1}
+.cal .hd .gchip{flex:none}
+
+/* tabelas: cabeçalho discreto, status em uma linha, texto longo com reticências */
+#view table th{font:600 var(--rf-t-label)/1.3 var(--font-sans)!important;color:var(--sx-text-3)!important;letter-spacing:0!important;text-transform:none!important;white-space:nowrap}
+#view table td{vertical-align:middle}
+.atable td:last-child,.atable .sdot{white-space:nowrap}
+.atable td:nth-child(3){white-space:nowrap}
+
+/* ---------- 6. Destaques em azul: um por região ---------- */
+/* O gráfico de entregas ficava azul cheio ao lado do cronômetro (também azul),
+   duas massas iguais disputando atenção. O cronômetro mantém o destaque;
+   o gráfico vira cartão branco com barras na cor da marca. */
+.dcard.dent{background:var(--sx-surface)!important;color:var(--sx-text)!important;box-shadow:var(--sx-shadow)!important}
+.dent .dct,.dent .dbig,.dent .dbig .tnum{color:var(--sx-text)!important}
+.dent .dbig span:not(.tnum),.dent .dlegend,.dent .bars .bl,.dent .bars .yax span,.dent .dcs{color:var(--sx-text-3)!important}
+.dent .seg{background:var(--sx-sunken)!important}
+.dent .seg button{color:var(--sx-text-2)!important}
+.dent .seg button.on{background:var(--mn-ink)!important;color:#fff!important}
+.dent .bars .b{background:var(--mn-azul-soft)!important}
+.dent .bars .b i{background:var(--mn-azul)!important}
+.dent .bars .bc.cur .b{background:var(--mn-azul-100)!important}
+.dent .bars .bc.cur .b i{background:var(--mn-azul)!important}
+.dent .bars .bc.cur .bl{color:var(--sx-text)!important}
+.dent .bars .bl{white-space:nowrap;font-size:11.5px!important}
+.dent .dlegend .lg-done{background:var(--mn-azul)!important}
+.dent .dlegend .lg-pend{background:var(--mn-azul-100)!important}
+.dent :focus-visible,.dent.dchart:focus-visible{outline-color:var(--mn-azul)!important}
+
+/* ---------- 7. Linhas de licença: colunas alinhadas entre linhas ---------- */
+/* Cada linha é uma grade própria; sem min-width:0 o texto longo alargava a
+   coluna e "Local", "Validade"... ficavam em x diferentes a cada linha. */
+.rowc>*{min-width:0}
+.rowc>* b,.rowc>* .t{overflow:hidden;text-overflow:ellipsis}
+.rowc.lic{grid-template-columns:minmax(0,2.2fr) minmax(0,.9fr) minmax(0,1.3fr) minmax(0,.9fr) minmax(0,1.1fr) minmax(0,.7fr) 176px!important;column-gap:var(--rf-4)!important}
+.rowc.lic>:last-child{justify-self:end}
+@media (max-width:1250px){.rowc.lic{grid-template-columns:repeat(3,minmax(0,1fr))!important}.rowc.lic>:last-child{justify-self:start}}
+@media (max-width:760px){.rowc.lic{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+
+/* ---------- 8. Quadro de processos ---------- */
+/* etiqueta do órgão: cabe no cartão com reticências em vez de corte seco */
+.pcol .ptags,.mcard .ptags{display:inline-flex;max-width:100%;min-width:0;overflow:hidden}
+.pcol .ptags>*{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+/* dica abaixo do quadro não fica por baixo da barra de rolagem */
+.pmain>.hint{margin-top:var(--rf-3)!important;padding:0 var(--rf-1)}
+
+/* ---------- 9. Carga de trabalho: nome da pessoa legível ---------- */
+.cg-pc{min-width:0}
+.cg-pn{min-width:0;flex:1}
+.cg-pn b{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;white-space:normal!important;overflow:hidden;overflow-wrap:normal;word-break:normal}
+#view .cg-hrow input,#view .cg-row input{height:var(--rf-ctl-xs)!important}
+/* "5 por dia" era cortado em "5 por-": rótulo compacto "5/dia" (o title do campo continua explicando) */
+.cg-pc .cg-lim{font-size:0!important;gap:3px!important;white-space:nowrap}
+.cg-pc .cg-lim input{font-size:12.5px!important}
+.cg-pc .cg-lim::after{content:"/dia";font:500 12px var(--font-sans);color:var(--sx-text-3)}
+
+/* ---------- 10. Responsividade ---------- */
+/* tablet largo (769–1180): KPIs em 2 colunas, nunca 1 */
+@media (min-width:769px) and (max-width:1180px){
+  .alerts,.alerts.four,.alerts.fkpis{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+/* tablet/celular (≤768, modo .mx) */
+@media (max-width:768px){
+  /* KPIs: 1 coluna no celular estreito, 2 colunas a partir de 480px;
+     quando sobra um cartão ímpar no fim, ele ocupa a linha inteira */
+  html.mx .alerts{gap:var(--rf-3)!important}
+  html.mx .pagehead>div:first-child{flex:1 1 100%}
+  html.mx .acard .v,html.mx .dkpi .dkv .tnum{font-size:28px!important}
+  /* dashboard: KPIs sem altura mínima de desktop */
+  html.mx .dw[data-dw^="kpi_"]:not(.fixo) .dkpi{min-height:0!important}
+  /* ações do cabeçalho: uma linha rolável, sem botão órfão */
+  html.mx .pagehead>.btn,html.mx .pagehead>.seg{flex:none}
+  /* material técnico: árvore de clientes ocupa a largura e não vaza */
+  html.mx .pwrap{grid-template-columns:minmax(0,1fr)!important}
+  html.mx .pwrap>div:first-child,html.mx .pwrap .tree{width:100%!important;max-width:100%!important;min-width:0!important;box-sizing:border-box}
+  html.mx .tree .tnode{min-width:0}
+  html.mx .tree .tnode>span:not(.ti){overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+  /* filtros empilham inteiros */
+  html.mx .filters>input,html.mx .filters>select{flex:1 1 100%!important;max-width:100%!important;min-width:0!important}
+  /* botão do menu no mesmo formato dos outros botões redondos do topo */
+  html.mx .mx-burger{border-radius:999px!important}
+}
+
+@media (min-width:480px) and (max-width:768px){
+  html.mx .alerts,html.mx .alerts.four,html.mx .alerts.fkpis{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  html.mx .alerts>.acard:last-child:nth-child(odd){grid-column:1/-1}
+  /* dashboard: KPIs lado a lado, demais cartões na largura toda */
+  html.mx .dgridl{grid-template-columns:repeat(2,minmax(0,1fr))!important;column-gap:var(--rf-3)!important}
+  html.mx .dgridl>.dw[data-dw^="kpi_"]{grid-column:auto!important}
+  html.mx .dw[data-dw^="kpi_"]:not(.fixo) .dkpi{min-height:208px!important}
+  /* filtros: busca na linha toda, selects dois por linha */
+  html.mx .filters>select{flex:1 1 calc(50% - var(--rf-2))!important}
+  /* linhas de licença: duas colunas de dados em vez de uma pilha longa */
+  html.mx .rowc.lic{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  html.mx .rowc.lic>:first-child{grid-column:1/-1}
+}
+
+/* ---------- 11. Higiene geral de overflow ---------- */
+#view{min-width:0}
+#view .dcard,#view .acard,#view .blk,#view .rowc{overflow-wrap:anywhere}
+#view .dcard table,#view .blk table{overflow-wrap:normal}
+img,svg,video{max-width:100%}
+</style>
 </head>
 <body>
 <a class="skip" href="#view">Pular para o conteúdo</a>
