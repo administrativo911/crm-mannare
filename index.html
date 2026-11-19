@@ -3850,6 +3850,25 @@ html.cm-aberto body{overflow:hidden}
   /* rail rola por dentro em telas baixas, sem barra visível */
   .side{scrollbar-width:none}
   .side::-webkit-scrollbar{display:none}
+  /* rótulos de seção ("Menu principal", "Acompanhamento", "Geral") eram cortados embaixo:
+     altura e entrelinha explícitas */
+  /* o menu é uma coluna flex: sem isto, quando falta altura os itens encolhem
+     e os rótulos/botões são cortados em vez de o menu rolar */
+  .side>*{flex-shrink:0!important}
+  .side .leg{box-sizing:border-box!important;line-height:16px!important}
+  .side:hover .leg,.side:has(:focus-visible) .leg{height:30px!important;padding:12px 0 0 4px!important}
+  /* "Sair" sempre visível: fica preso na base do menu, por cima da lista quando ela rola */
+  .side .sidebox{position:sticky;bottom:0;z-index:2;background:#fff!important;padding:10px 0 0!important;width:100%;box-shadow:0 -12px 12px -12px rgba(14,16,48,.12)}
+  /* telas baixas: itens um pouco mais compactos para caber tudo sem rolar */
+  @media (max-height:1000px){
+    .side{gap:2px!important}
+    .side .nav,.side .sside,.sidebox #btnSair{height:40px!important;min-height:40px!important}
+    .side:hover .logo,.side:has(:focus-visible) .logo{margin:4px 0 14px 2px!important}
+    .side:hover .leg,.side:has(:focus-visible) .leg{height:26px!important;padding-top:9px!important}
+  }
+  @media (max-height:820px){
+    .side .nav,.side .sside,.sidebox #btnSair{height:36px!important;min-height:36px!important}
+  }
 }
 
 /* ---------- 2. Cabeçalho da página ---------- */
