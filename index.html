@@ -3507,6 +3507,31 @@ button.cu-row:hover{background:#F6F7F9!important;color:#1F2033!important}
 .cn-m>.cn-av{margin-top:1px}.cn-th .cn-r>.cn-av{margin-top:2px}
 .cn-mh{min-height:20px;line-height:20px}
 @media (max-width:768px){.cn-av.s32{width:28px;height:28px;font-size:11px}.cn-m{gap:10px!important}}
+/* @ no canal */
+.cn-menc{position:fixed;z-index:1500;background:#fff;border:1px solid #E4E5EA;border-radius:14px!important;box-shadow:0 12px 32px rgba(14,16,48,.18)!important;padding:6px;max-height:340px;overflow:auto;font-family:var(--font-sans,inherit)}
+.cn-mtit{font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#8C8FA3;padding:4px 8px}
+.cn-mg{font-size:11.5px;font-weight:700;color:#55577A;padding:8px 8px 2px}
+.cn-menc button{all:unset;box-sizing:border-box;display:flex;align-items:center;gap:10px;width:100%;padding:6px 8px;border-radius:10px!important;cursor:pointer;min-height:38px}
+.cn-menc button.hl,.cn-menc button:hover{background:#EEF0FF}
+.cn-menc button span:last-child{display:flex;flex-direction:column;min-width:0}.cn-menc b{font-size:13.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.cn-menc small{font-size:11.5px;color:#8C8FA3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cn-mico{width:24px;height:24px;border-radius:9999px!important;background:#F1F2F7;display:inline-grid;place-items:center;font-size:12px;flex:none}
+.cn-ref{display:inline-flex;align-items:baseline;gap:5px;background:#EEF0FF;color:#0000B3!important;border-radius:6px!important;padding:0 6px;font-weight:600;text-decoration:none!important;cursor:pointer}
+.cn-ref small{font-weight:500;color:#55577A;font-size:11px}.cn-ref:hover{background:#E0E4FF}
+.cn-ref-mat{background:#E6FAFF;color:#00566B!important}
+@media (hover:none) and (pointer:coarse){.cn-menc button{min-height:44px}}
+
+.pr-resp{display:flex;align-items:flex-start;gap:10px;flex-wrap:wrap;margin:-4px 0 14px}
+.pr-resp .k{font-size:12.5px;font-weight:600;color:#55577A;padding-top:6px;min-width:96px}
+.pr-resp .whopick{flex:1;min-width:240px}
+.pr-resp .whopick button i{font-style:normal;color:#C99500;margin-left:3px}
+.pr-resp .whopick button.pr-princ{box-shadow:0 0 0 1.5px #0000B3 inset!important}
+.pr-dica{flex-basis:100%;font-size:11.5px;color:#8C8FA3;margin-left:106px}
+@media (max-width:768px){.pr-dica{margin-left:0}}
+/* botões do topo do processo (Editar e Canal) alinhados e centralizados */
+#drawer .dhead{align-items:center!important}
+#drawer .dhead .cn-dacts{display:flex;align-items:center;gap:8px;align-self:center;flex:none}
+html body #drawer .dhead .cn-dacts>.btn,html body #drawer .dhead .cn-dacts>.btn.ghost,html body #drawer .dhead .cn-dacts>.btn.sm{height:34px!important;min-height:34px!important;width:auto!important;min-width:0!important;color:#1F2033!important;display:inline-flex!important;align-items:center;justify-content:center;gap:6px;padding:0 14px!important;border-radius:999px!important;margin:0!important;font-size:13px;line-height:1;white-space:nowrap;background:#fff!important;box-shadow:0 1px 2px rgba(14,16,48,.08)!important;border:1px solid #E4E5EA!important}
+html body #drawer .dhead .cn-dacts>.btn:hover{background:#F4F7FD!important}
 
 /* ===== iPad / tablet (769–1180px) ===== */
 @media (min-width:769px) and (max-width:1180px){
@@ -3732,6 +3757,62 @@ html.cm-aberto body{overflow:hidden}
   html.mx .dgridl{padding-left:0!important;padding-right:0!important}
 }
 @media (max-width:768px) and (prefers-reduced-motion:reduce){html.mx .side,html.mx .mx-scrim,html.mx .mx-burger span{transition:none!important}}
+
+/* ===== Ajustes de consistência visual (revisão UI/UX) ===== */
+/* dias nos comentários/canais: cada dia é um bloco, a etiqueta do dia anterior sai de cena ao rolar (sem sobrepor) */
+.cmd-dia{position:relative}
+.cmd-dia>.cmd-sep[data-cmday]{background:linear-gradient(#fff 0 60%,rgba(255,255,255,0))}
+.cmd-sep{margin:4px 0 10px!important}
+
+/* topo do processo: foco do teclado só quando usa teclado (não parece botão primário ao abrir) */
+#drawer .dhead .cn-dacts>.btn:focus:not(:focus-visible){outline:none!important;box-shadow:0 1px 2px rgba(14,16,48,.08)!important;border-color:#E4E5EA!important}
+
+/* processo: "Responsáveis" no mesmo padrão dos outros campos (rótulo em cima, chips com a mesma altura) */
+.pr-resp{display:block!important;margin:0 0 16px!important}
+.pr-resp .k{display:block;min-width:0!important;padding:0!important;margin:0 0 6px;font-size:12.5px;font-weight:600;color:#55577A}
+.pr-resp .whopick{display:flex;flex-wrap:wrap;gap:6px}
+.pr-resp .whopick button{height:32px;display:inline-flex;align-items:center;gap:6px;padding:0 12px 0 4px;border-radius:999px!important;border:1px solid #E4E5EA!important;background:#fff!important;font-size:13px;color:#33354D;box-shadow:none!important}
+.pr-resp .whopick button.on{border-color:#0000B3!important;background:#EEF0FF!important;color:#0000B3}
+.pr-resp .whopick button.pr-princ{border-width:1.5px!important}
+.pr-resp .whopick button .avw,.pr-resp .whopick button .av{flex:none}
+.pr-dica{display:block;margin:6px 0 0!important;font-size:11.5px;color:#8C8FA3}
+
+/* canais: barra de "seguir" no tom da marca (o roxo fugia da paleta) e sem botão primário duplicado */
+.cn-segbar{background:#EEF0FF!important;color:#1F2033!important;border:1px solid #DCDFF7}
+.cn-segbar svg{color:#0000B3}
+.cn-segbar button{border-color:#0000B3!important;color:#0000B3!important;background:#fff!important}
+.cn-segbar button:hover{background:#E0E4FF!important}
+.cn-ph .btn.primary[data-cnseg]{background:#fff!important;color:#0000B3!important;border:1px solid #0000B3!important;box-shadow:none!important}
+/* avatares do topo do canal redondos, como no resto do chat */
+.cn-avs .av,.cn-avs .avw{border-radius:9999px!important;overflow:hidden}
+.cn-avs .st{display:none}
+.cn-ph{min-height:64px}
+.cn-tabs{min-height:44px;align-items:center}
+
+/* celular: topo do canal numa linha, ações da mensagem no canto (não espremem o texto/publicação) */
+@media (max-width:900px){
+  .cn-ph{flex-wrap:nowrap!important;gap:6px!important}
+  .cn-pt{flex:1;min-width:0}.cn-pn h2{font-size:16px!important}
+  .cn-ph .spacer{display:none}
+  .cn-ph .btn[data-cnseg]{padding:0 10px!important;font-size:12.5px}
+  .cn-ph .cn-eng{flex:none}
+}
+@media (hover:none){
+  .cn-m{padding-right:10px}
+  .cn-acts{position:absolute!important;top:6px!important;right:6px!important;margin:0!important;display:flex!important;gap:0;background:transparent!important}
+  .cn-acts button{width:28px;height:28px}
+  .cn-m .cn-mh{padding-right:116px}
+  .cn-post{width:100%;box-sizing:border-box}
+}
+
+/* celular: linhas de ações e abas quebram em vez de cortar o último botão */
+@media (max-width:768px){
+  html.mx .mx-acts{flex-wrap:wrap!important;overflow:visible!important}
+  html.mx #view .seg{flex-wrap:nowrap!important;overflow-x:auto!important;max-width:100%;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  html.mx #view .seg::-webkit-scrollbar{display:none}
+  html.mx #view .seg>button{flex:none!important;white-space:nowrap!important}
+  html.mx .plcal h2,html.mx .plcal .plt,html.mx .pltop b{white-space:nowrap}
+}
 </style>
 </head>
 <body>
@@ -13450,8 +13531,8 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
     return '<div class="cmd-wrap">' + grupos.map(function(g){
       var sep = g.cont ? '<div class="cmd-sep cmd-novo-only"><span class="cmd-novo">Novo</span><i></i></div>'
         : '<div class="cmd-sep ' + (g.novo ? 'tem-novo' : '') + '" data-cmday="' + g.d + '">' + (g.novo ? '<span class="cmd-novo">Novo</span>' : '') + '<i></i><button type="button" class="cmd-pill" data-cmdpill="' + g.d + '" aria-haspopup="menu">' + x(g.d === 'sem' ? 'Sem data' : rotulo(g.d)) + ICO + '</button><i></i></div>';
-      return sep + _fh.call(self, g.cs, t);
-    }).join('') + '</div>';
+      return (g.cont ? '' : '</div><div class="cmd-dia">') + sep + _fh.call(self, g.cs, t);
+    }).join('').replace(/^<\/div>/, '') + '</div></div>';
   };
 
   /* menu "Pular para" */
@@ -13486,6 +13567,68 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
   document.addEventListener('change', function(ev){ if(menu && ev.target.hasAttribute && ev.target.hasAttribute('data-cmddata') && ev.target.value){ var w = menu._wrap, v = ev.target.value; fecharMenu(); pular(w, v, false); } }, true);
   document.addEventListener('keydown', function(ev){ if(menu && ev.key === 'Escape'){ ev.stopPropagation(); fecharMenu(); } }, true);
   window.addEventListener('scroll', function(ev){ if(menu && !menu.contains(ev.target) && Date.now() - (menu._em || 0) > 400) fecharMenu(); }, true);
+})();
+</script>
+<script id="mannare-resp">
+/* MANNARE CRM · Vários responsáveis no processo (pessoas e equipes) + aviso a todos os responsáveis
+   - Processo: p.resp continua sendo o responsável principal (uma pessoa); p.respExtra guarda os outros (pessoas ou equipes).
+   - Material técnico já aceita várias pessoas e equipes (m.resp).
+   - Toda alteração registrada no processo ou no material avisa TODOS os responsáveis, inclusive quem fez a alteração. */
+(function(){
+  if(typeof S === 'undefined' || typeof people !== 'function') return;
+  var x = function(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'}[c]; }); };
+  var t = function(m){ return typeof toast === 'function' ? toast(m) : console.log(m); };
+  var ehEq = function(id){ return typeof isEq === 'function' && isEq(id); };
+  var expandir = function(ids){ var out = []; (ids || []).forEach(function(id){ (typeof membrosDe === 'function' ? membrosDe(id) : [id]).forEach(function(m){ if(m && out.indexOf(m) < 0) out.push(m); }); }); return out; };
+  function respsProc(p){ return [p.resp].concat(p.respExtra || []).filter(Boolean); }
+  window.cgResp = {respsProc:respsProc, pessoas:function(p){ return expandir(respsProc(p)); }};
+
+  // filtros e listas que usam people(p) passam a enxergar os outros responsáveis
+  var _people = people;
+  people = function(p){ var l = _people.apply(this, arguments); expandir(p && p.respExtra).forEach(function(m){ if(l.indexOf(m) < 0) l.push(m); }); return l; };
+
+  /* ---------- aviso a todos os responsáveis (inclusive quem alterou) ---------- */
+  function avisarTodos(alvo, txt, onde){
+    if(!txt || !S.notifs) return; var agora = Date.now(), nome = typeof first === 'function' ? first(me) : me;
+    alvo.forEach(function(u){
+      var rec = S.notifs.find(function(n){ return n.para === u && n._resp && (onde.procId ? n.procId === onde.procId : n.matId === onde.matId) && agora - Date.parse(n.em) < 5000; });
+      if(rec){ if(rec.txt.indexOf(txt) < 0) rec.txt += '; ' + x(txt); return; }   // várias alterações juntas viram um aviso só
+      var ja = S.notifs.find(function(n){ return n.para === u && !n._resp && (onde.procId ? n.procId === onde.procId : n.matId === onde.matId) && agora - Date.parse(n.em) < 3000; });
+      if(ja) return;   // a própria ação já avisou essa pessoa agora
+      S.notifs.unshift(Object.assign({id:uid(), para:u, txt:'<b>' + x(nome) + '</b> ' + x(txt) + ' | ' + x(onde.rot || ''), procId:null, taskId:null, em:new Date().toISOString(), lida:false, _resp:true}, onde.procId ? {procId:onde.procId} : {matId:onde.matId}));
+    });
+  }
+  if(typeof logP === 'function'){ var _lp = logP; logP = function(p, txt){ var r = _lp.apply(this, arguments);
+    try{ if(p && p.id && (S.procs || []).indexOf(p) >= 0) avisarTodos(expandir(respsProc(p)), txt, {procId:p.id, rot:typeof pcod === 'function' ? pcod(p) : (p.codigo || '')}); }catch(err){ console.warn('resp:', err); } return r; }; }
+  if(typeof logT === 'function'){ var _lt = logT; logT = function(o, txt){ var r = _lt.apply(this, arguments);
+    try{ if(o && o.id && (S.mats || []).indexOf(o) >= 0 && !o._cm) avisarTodos(expandir(o.resp || []), txt, {matId:o.id, rot:o.codigo || o.titulo || 'material técnico'}); }catch(err){ console.warn('resp:', err); } return r; }; }
+
+  // se a ação já gerou o aviso de responsável há pouco, o aviso específico (ex.: "atribuiu a você") não duplica: só complementa
+  function juntar(para, procId, matId, txt){ var agora = Date.now(); var rec = (S.notifs || []).find(function(n){ return n.para === para && n._resp && (procId ? n.procId === procId : matId && n.matId === matId) && agora - Date.parse(n.em) < 5000; });
+    if(!rec) return false; var limpo = String(txt || '').replace(/<[^>]+>/g, ''); if(rec.txt.indexOf(limpo) < 0) rec.txt += '; ' + x(limpo); return true; }
+  if(typeof notify === 'function'){ var _nt = notify; notify = function(para, txt, procId, taskId){ if(procId && !taskId && typeof isEq === 'function' && !isEq(para) && juntar(para, procId, null, txt)) return; return _nt.apply(this, arguments); }; }
+  if(typeof notifyMat === 'function'){ var _nm = notifyMat; notifyMat = function(para, txt, m){ if(m && typeof isEq === 'function' && !isEq(para) && juntar(para, null, m.id, txt)) return; return _nm.apply(this, arguments); }; }
+
+  /* ---------- tela do processo: escolher várias pessoas e equipes ---------- */
+  function decorar(){
+    if(!ui.drawer || ui.drawer.kind !== 'proc') return; var dr = document.getElementById('drawer'); if(!dr || dr.querySelector('.pr-resp')) return;
+    var p = typeof procById === 'function' ? procById(ui.drawer.id) : null; if(!p) return;
+    var sel = dr.querySelector('select[data-pf="resp"]'); if(!sel) return; var lab = sel.closest('label'), fields = sel.closest('.fields'); if(!fields) return;
+    if(lab) lab.style.display = 'none';
+    var rs = respsProc(p), US = typeof USERS !== 'undefined' ? USERS : [];
+    var bt = function(id, nome, eq){ var on = rs.indexOf(id) >= 0, pr = id === p.resp; return '<button type="button" data-pwho="' + x(id) + '" class="' + (eq ? 'eqbtn ' : '') + (on ? 'on' : '') + (pr ? ' pr-princ' : '') + '" title="' + (pr ? 'Responsável principal' : on ? 'Tirar' : 'Adicionar') + '">' + (typeof av === 'function' ? av(id, true, true) : '') + x(nome) + (pr ? '<i aria-label="principal">★</i>' : '') + '</button>'; };
+    var div = document.createElement('div'); div.className = 'pr-resp';
+    div.innerHTML = '<span class="k">Responsáveis</span><span class="whopick">' + US.map(function(u){ return bt(u.id, typeof first === 'function' ? first(u.id) : u.nome, false); }).join('') + (typeof equipes === 'function' ? equipes() : []).map(function(e){ return bt(e.id, e.nome, true); }).join('') + '</span><span class="pr-dica">★ principal. Todos recebem os avisos do processo.</span>';
+    fields.insertAdjacentElement('afterend', div);
+  }
+  if(typeof renderDrawer === 'function'){ var _rd = renderDrawer; renderDrawer = function(){ var r = _rd.apply(this, arguments); try{ decorar(); }catch(err){ console.warn('resp:', err); } return r; }; }
+  window.addEventListener('click', function(ev){ var el = ev.target.closest && ev.target.closest('[data-pwho]'); if(!el) return; ev.stopPropagation(); ev.preventDefault();
+    var p = ui.drawer && procById(ui.drawer.id); if(!p) return; var id = el.dataset.pwho, ex = (p.respExtra = p.respExtra || []), nome = ehEq(id) ? 'a equipe ' + ((eqById(id) || {}).nome || '') : (typeof first === 'function' ? first(id) : id);
+    if(id === p.resp){ var outra = ex.find(function(z){ return !ehEq(z); }); if(!outra){ t('O processo precisa de pelo menos uma pessoa responsável'); return; } p.resp = outra; p.respExtra = ex.filter(function(z){ return z !== outra; }); logP(p, 'tirou ' + nome + ' dos responsáveis (principal agora: ' + (typeof first === 'function' ? first(outra) : outra) + ')'); }
+    else if(ex.indexOf(id) >= 0){ p.respExtra = ex.filter(function(z){ return z !== id; }); logP(p, 'tirou ' + nome + ' dos responsáveis'); }
+    else { if(!p.resp && !ehEq(id)) p.resp = id; else ex.push(id); logP(p, 'adicionou ' + nome + ' como responsável'); }
+    save(); renderDrawer(); if(typeof render === 'function') render();
+  }, true);
 })();
 </script>
 <script id="mannare-canais">
@@ -13585,10 +13728,57 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
     // publicação é para a equipe: tira a saudação ao cliente que vinha no modelo padrão antigo
     l.forEach(function(md){ if(/^\s*Ol[áa][!,]?\s*(\{cliente\})?[!,]?\s*(Segue o andamento de \{cliente\}:)?/i.test(md.texto || '')){ var nv = String(md.texto).replace(/^\s*Ol[áa][!,]?\s*(\{cliente\}[!,]?)?\s*(Segue o andamento de \{cliente\}:)?\s*/i, 'Andamento de {cliente} | semana {semana}\n\n'); if(nv !== md.texto){ md.texto = nv; md._limpo = true; } } });
     return l; }
-  function texto(s){
+  function texto(s, refs){
     var h = typeof fmtText === 'function' ? fmtText(s) : x(s);
-    return h.replace(/(https?:\/\/[^\s<]+[^\s<.,;:!?)\]])/g, '<a href="$1" target="_blank" rel="noopener">$1</a>');
+    h = h.replace(/(https?:\/\/[^\s<]+[^\s<.,;:!?)\]])/g, '<a href="$1" target="_blank" rel="noopener">$1</a>');
+    (refs || []).slice().sort(function(a, b){ return String(b.rot).length - String(a.rot).length; }).forEach(function(r){ if(!r || !r.rot || r.t === 'user') return; var alvo = x(r.rot);
+      var chip = r.t === 'eq' ? '<span class="men cn-reqp" title="Equipe">' + alvo + '</span>'
+        : '<a class="cn-ref cn-ref-' + r.t + '" data-cnref="' + x(r.t + '|' + (r.p || '') + '|' + r.id) + '" title="' + (r.t === 'task' ? 'Abrir a tarefa' : 'Abrir o material técnico') + '">' + (r.t === 'task' ? '☑ ' : '◧ ') + x(String(r.rot).replace(/^@\[|\]$/g, '')) + (r.onde ? '<small>' + x(r.onde) + '</small>' : '') + '</a>';
+      h = h.split(alvo).join(chip); });
+    return h;
   }
+  /* ---------- @ no canal: pessoa, equipe, tarefa ou material técnico ---------- */
+  ui.canalRefs = ui.canalRefs || [];
+  function opcoesMencao(q, c){
+    q = nz(q); var bate = function(s){ return !q || nz(s).indexOf(q) >= 0; }, out = [];
+    (typeof USERS !== 'undefined' ? USERS : []).filter(function(u){ return bate(u.nome + ' ' + u.id); }).slice(0, 6).forEach(function(u){ out.push({g:'Pessoas', t:'user', id:u.id, rot:'@' + primeiro(u.id), nome:u.nome || u.id, sub:u.cargo || u.id}); });
+    (typeof equipes === 'function' ? equipes() : []).filter(function(e){ return bate(e.nome); }).slice(0, 5).forEach(function(e){ out.push({g:'Equipes', t:'eq', id:e.id, rot:'@' + e.nome, nome:e.nome, sub:(e.membros || []).length + ' pessoa' + ((e.membros || []).length === 1 ? '' : 's')}); });
+    var doCanal = c ? procsDoCanal(c).map(function(p){ return p.id; }) : [], ts = [];
+    (S.procs || []).forEach(function(p){ (p.tarefas || []).forEach(function(tk){ var cod = typeof pcod === 'function' ? pcod(p) : ''; if(tk.status === 'concluida' || !bate(tk.titulo + ' ' + cod)) return; ts.push({g:'Tarefas', t:'task', id:tk.id, p:p.id, rot:'@[' + tk.titulo + ']', nome:tk.titulo, sub:cod + (doCanal.indexOf(p.id) >= 0 ? ' · deste canal' : ''), onde:cod, peso:doCanal.indexOf(p.id) >= 0 ? 0 : 1}); }); });
+    ts.sort(function(a, b){ return a.peso - b.peso; }).slice(0, 6).forEach(function(z){ out.push(z); });
+    (S.mats || []).filter(function(m){ return !m._cm && m.status !== 'entregue' && bate((m.titulo || '') + ' ' + (m.codigo || '')); }).slice(0, 4).forEach(function(m){ out.push({g:'Material técnico', t:'mat', id:m.id, rot:'@[' + (m.titulo || m.codigo) + ']', nome:m.titulo || m.codigo, sub:m.codigo || '', onde:m.codigo || ''}); });
+    return out;
+  }
+  var menc = null;
+  function fecharMenc(){ if(menc && menc.el) menc.el.remove(); menc = null; }
+  function abrirMenc(ta){
+    var pos = ta.selectionStart, antes = ta.value.slice(0, pos), mt = antes.match(/(^|\s)@([^\s@\[\]]{0,30})$/);
+    if(!mt){ fecharMenc(); return; }
+    var c = canalPorId(ui.canal), its = opcoesMencao(mt[2], c); if(!its.length){ fecharMenc(); return; }
+    if(!menc || menc.ta !== ta){ fecharMenc(); menc = {ta:ta, el:document.createElement('div'), sel:0}; menc.el.className = 'cn-menc'; menc.el.setAttribute('role', 'listbox'); document.body.appendChild(menc.el); }
+    if(menc.q !== mt[2] && menc.q !== undefined && menc.sel >= its.length) menc.sel = 0; menc.q = mt[2];
+    menc.ini = pos - mt[2].length - 1; menc.its = its; if(menc.sel >= its.length) menc.sel = 0;
+    var g0 = '', ICN = {eq:'👥', task:'☑', mat:'◧'};
+    menc.el.innerHTML = '<div class="cn-mtit">Direcionar a mensagem</div>' + its.map(function(o, i){ var hd = o.g !== g0 ? '<div class="cn-mg">' + o.g + '</div>' : ''; g0 = o.g;
+      return hd + '<button type="button" role="option" data-cnmen="' + i + '" class="' + (i === menc.sel ? 'hl' : '') + '">' + (o.t === 'user' ? cnAv(o.id, 24) : '<span class="cn-mico">' + ICN[o.t] + '</span>') + '<span><b>' + x(o.nome) + '</b><small>' + x(o.sub || '') + '</small></span></button>'; }).join('');
+    var r = ta.getBoundingClientRect(), w = Math.min(360, window.innerWidth - 16); menc.el.style.width = w + 'px'; menc.el.style.left = Math.max(8, Math.min(window.innerWidth - w - 8, r.left)) + 'px';
+    var h = menc.el.offsetHeight; menc.el.style.top = (r.top - h - 6 > 8 ? r.top - h - 6 : r.bottom + 6) + 'px';
+    var hl = menc.el.querySelector('.hl'); if(hl) hl.scrollIntoView({block:'nearest'});
+  }
+  function escolherMenc(i){
+    if(!menc) return; var o = menc.its[i], ta = menc.ta; if(!o){ fecharMenc(); return; }
+    var pos = ta.selectionStart, ins = o.rot + ' '; ta.value = ta.value.slice(0, menc.ini) + ins + ta.value.slice(pos); var np = menc.ini + ins.length; ta.focus(); ta.setSelectionRange(np, np);
+    if(!ui.canalRefs.some(function(r){ return r.t === o.t && r.id === o.id; })) ui.canalRefs.push({t:o.t, id:o.id, p:o.p || '', rot:o.rot, onde:o.onde || ''});
+    fecharMenc();
+  }
+  function refsDoTexto(txt){ var out = []; ui.canalRefs.forEach(function(r){ if(String(txt).indexOf(r.rot) >= 0 && !out.some(function(z){ return z.t === r.t && z.id === r.id; })) out.push(r); }); return out; }
+  function quemDasRefs(refs){ var out = [];
+    var add = function(ids){ (ids || []).forEach(function(id){ (typeof membrosDe === 'function' ? membrosDe(id) : [id]).forEach(function(m){ if(m && out.indexOf(m) < 0) out.push(m); }); }); };
+    (refs || []).forEach(function(r){ if(r.t === 'user' || r.t === 'eq') add([r.id]);
+      else if(r.t === 'task'){ var p = typeof procById === 'function' ? procById(r.p) : null, tk = p && (p.tarefas || []).find(function(z){ return z.id === r.id; }); add(tk ? tk.resp : []); if(p && (!tk || !(tk.resp || []).length)) add([p.resp]); }
+      else if(r.t === 'mat'){ var m = (S.mats || []).find(function(z){ return z.id === r.id; }); add(m ? m.resp : []); } });
+    return out; }
+
   function mencionados(txt){ var n = nz(txt); return (typeof USERS !== 'undefined' ? USERS : []).filter(function(u){ return n.indexOf('@' + nz(primeiro(u.id))) >= 0; }).map(function(u){ return u.id; }); }
   function avisar(c, m, quem, txtNotif){
     quem.forEach(function(p){ if(!p || String(p).toLowerCase() === eu() || typeof notify !== 'function') return; var n0 = S.notifs.length; notify(p, txtNotif, null, null); if(S.notifs.length > n0 && S.notifs[0]){ S.notifs[0].canalId = c.id; S.notifs[0].canalMsg = m.id; } });
@@ -13624,8 +13814,8 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
       + (meu ? '<button data-cnedit="' + m.id + '" title="Editar">' + I.lapis + '</button>' : '') + (meu || socio() ? '<button data-cndel="' + m.id + '" title="Excluir" class="cn-del">' + I.lixo + '</button>' : '') + '</div>';
     var corpo = ed
       ? '<div class="cn-edbox">' + (m.tipo === 'post' ? '<input data-cneditt value="' + x(m.titulo || '') + '" placeholder="Título">' : '') + '<textarea data-cneditx rows="3">' + x(m.texto) + '</textarea><div><button class="btn sm" data-cneditno>Cancelar</button><button class="btn sm primary" data-cneditok="' + m.id + '">Salvar</button></div></div>'
-      : (m.tipo === 'post' ? '<div class="cn-post"><div class="cn-ptag">' + I.pub + ' Publicação' + (m.modelo ? ' · ' + x(m.modelo) : '') + '</div><h4>' + x(m.titulo || 'Publicação') + '</h4><div class="cn-tx">' + texto(m.texto) + '</div></div>' : '<div class="cn-tx">' + texto(m.texto) + '</div>');
-    var thread = rs.length || aberto ? '<div class="cn-th">' + (aberto ? rs.map(function(r){ return '<div class="cn-r">' + cnAv(r.autor, 24) + '<div class="cn-mb"><div class="cn-mh"><b>' + x(nomeDe(r.autor)) + '</b><span>' + hora(r.em) + (diaLocal(r.em) !== diaLocal(m.em) ? ' · ' + diaLocal(r.em).split('-').reverse().slice(0, 2).join('/') : '') + '</span></div><div class="cn-tx">' + texto(r.texto) + '</div></div></div>'; }).join('')
+      : (m.tipo === 'post' ? '<div class="cn-post"><div class="cn-ptag">' + I.pub + ' Publicação' + (m.modelo ? ' · ' + x(m.modelo) : '') + '</div><h4>' + x(m.titulo || 'Publicação') + '</h4><div class="cn-tx">' + texto(m.texto, m.refs) + '</div></div>' : '<div class="cn-tx">' + texto(m.texto, m.refs) + '</div>');
+    var thread = rs.length || aberto ? '<div class="cn-th">' + (aberto ? rs.map(function(r){ return '<div class="cn-r">' + cnAv(r.autor, 24) + '<div class="cn-mb"><div class="cn-mh"><b>' + x(nomeDe(r.autor)) + '</b><span>' + hora(r.em) + (diaLocal(r.em) !== diaLocal(m.em) ? ' · ' + diaLocal(r.em).split('-').reverse().slice(0, 2).join('/') : '') + '</span></div><div class="cn-tx">' + texto(r.texto, r.refs) + '</div></div></div>'; }).join('')
         + '<div class="cn-rbox"><textarea data-cnrtx="' + m.id + '" rows="1" placeholder="Responder… (Enter envia)"></textarea><button class="btn sm primary" data-cnrok="' + m.id + '">Responder</button></div>'
       : '<button class="cn-thl" data-cnresp="' + m.id + '">' + rs.length + ' resposta' + (rs.length > 1 ? 's' : '') + ' · última ' + hora(rs[rs.length - 1].em) + '</button>') + '</div>' : '';
     return '<div class="cn-m ' + (m.tipo === 'post' ? 'is-post' : '') + (fix ? ' fix' : '') + '" id="cnm-' + m.id + '">' + cnAv(m.autor, 32) + '<div class="cn-mb"><div class="cn-mh"><b>' + x(nomeDe(m.autor)) + '</b><span>' + hora(m.em) + (m.editadaEm ? ' · editada' : '') + '</span>' + (fix ? '<em class="cn-fx">' + I.pino + ' fixada</em>' : '') + '</div>' + corpo + thread + '</div>' + (ed ? '' : acoes) + '</div>';
@@ -13641,10 +13831,10 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
       + '<button class="cn-vc azul" data-cnpubnova><span>' + I.modelo + '</span><div><b>Fazer uma publicação</b><small>Comece de um modelo de informação recorrente</small></div></button></div>';
     if(!ms.length) return '<p class="cn-vz2">' + (ui.canalTab === 'pub' ? 'Nenhuma publicação ainda.' : 'Nada fixado. Passe o mouse numa mensagem e clique no alfinete.') + '</p>';
     var l = c._lidoAoAbrir || '', novoFeito = false, dia = '', h = '';
-    ms.forEach(function(m){ var d = diaLocal(m.em); if(d !== dia){ h += sepDia(m.em); dia = d; }
+    ms.forEach(function(m){ var d = diaLocal(m.em); if(d !== dia){ h += (dia ? '</div>' : '') + '<div class="cmd-dia">' + sepDia(m.em); dia = d; }
       if(!novoFeito && l && m.em > l && String(m.autor).toLowerCase() !== eu()){ h += '<div class="cmd-sep cmd-novo-only"><span class="cmd-novo">Novo</span><i></i></div>'; novoFeito = true; }
       h += msgHtml(m, c); });
-    return '<div class="cmd-wrap cn-feedin">' + h + '</div>';
+    return '<div class="cmd-wrap cn-feedin">' + h + (dia ? '</div>' : '') + '</div>';
   }
   function compositor(c){
     var pub = ui.canalComp === 'pub', d = ui.canalRasc || {};
@@ -13652,7 +13842,7 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
     return '<div class="cn-comp">' + (segue(c) ? '' : '<div class="cn-segbar">' + I.sino + '<span>Você não está seguindo este canal: não recebe aviso das publicações e ele não aparece em Seguindo.</span><button data-cnseg>Seguir</button></div>')
       + '<div class="cn-ctabs"><button class="' + (pub ? '' : 'on') + '" data-cncomp="msg">' + I.msg + ' Mensagem</button><button class="' + (pub ? 'on' : '') + '" data-cncomp="pub">' + I.pub + ' Publicação</button></div>'
       + '<div class="cn-cbox">' + (pub ? '<div class="cn-prow"><select data-cnmod aria-label="Modelo"><option value="">Modelo de publicação…</option>' + mods.map(function(md){ return '<option value="' + md.id + '">' + x(md.nome) + '</option>'; }).join('') + '<option value="__gerir">Gerenciar modelos…</option></select></div><input class="cn-ptit" data-cnptit placeholder="Título da publicação" value="' + x(d.titulo || '') + '">' : '')
-      + '<textarea data-cntx rows="' + (pub ? 4 : 2) + '" placeholder="' + (pub ? 'Escreva a publicação. Use @nome para mencionar.' : 'Escreva para ' + x(c.nome) + '. Enter envia, Shift+Enter quebra a linha. Use @nome para mencionar.') + '">' + x(d.texto || '') + '</textarea>'
+      + '<textarea data-cntx rows="' + (pub ? 4 : 2) + '" placeholder="' + (pub ? 'Escreva a publicação. Digite @ para direcionar a uma pessoa, equipe, tarefa ou material técnico.' : 'Escreva para ' + x(c.nome) + '. Digite @ para direcionar a uma pessoa, equipe, tarefa ou material técnico. Enter envia.') + '">' + x(d.texto || '') + '</textarea>'
       + '<div class="cn-cft">' + (pub ? '<label class="cn-ck"><input type="checkbox" data-cnsalvamod> Salvar como modelo</label><span class="cn-dica">{data} {semana} {mes} {cliente} {empreendimento} são preenchidos sozinhos</span>' : '<span class="cn-dica">' + (segue(c) ? '' : '') + '</span>') + '<span class="spacer"></span><button class="btn sm primary" data-cnenv>' + (pub ? 'Publicar' : 'Enviar') + '</button></div></div></div>';
   }
   function painel(c){
@@ -13699,18 +13889,22 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
     if(pub && ui.canalModeloUsado) m.modelo = ui.canalModeloUsado;
     S.canalMsgs.push(m);
     if(pub && (v.querySelector('[data-cnsalvamod]') || {}).checked){ var nm = prompt('Nome do modelo (ex.: Andamento semanal):', ti); if(nm){ modelos().push({id:uid(), nome:nm.trim(), titulo:tiRaw, texto:txRaw, criadoPor:me, em:agora()}); } }
-    var men = mencionados(tx + ' ' + ti);
+    var refs = refsDoTexto(tx + ' ' + ti); if(refs.length) m.refs = refs;
+    var men = mencionados(tx + ' ' + ti); quemDasRefs(refs).forEach(function(u){ if(men.indexOf(u) < 0) men.push(u); });
     if(pub) avisar(c, m, (c.seguidores || []).filter(function(p){ return men.indexOf(p) < 0; }), 'publicou em #' + c.nome + ': “' + ti + '”');
-    avisar(c, m, men, 'mencionou você em #' + c.nome);
+    var sobre = refs.filter(function(r){ return r.t === 'task' || r.t === 'mat'; }).map(function(r){ return '“' + String(r.rot).replace(/^@\[|\]$/g, '') + '”'; });
+    avisar(c, m, men, (sobre.length ? 'direcionou a você uma mensagem sobre ' + sobre.join(', ') : 'mencionou você') + ' em #' + c.nome);
+    ui.canalRefs = [];
     var l = lidos(); l[c.id] = m.em; c._lidoAoAbrir = m.em;
     ui.canalRasc = {}; ui.canalModeloUsado = ''; v.querySelectorAll('[data-cntx],[data-cnptit]').forEach(function(i){ i.value = ''; }); if(pub) ui.canalComp = 'msg'; save(); desenhar(); var f = document.getElementById('cnFeed'); if(f) f.scrollTop = f.scrollHeight; var nt = document.querySelector('#view [data-cntx]'); if(nt) nt.focus();
   }
   function responder(id){
     var c = canalPorId(ui.canal), m = S.canalMsgs.find(function(z){ return z.id === id; }); if(!c || !m) return;
     var ta = document.querySelector('#view [data-cnrtx="' + id + '"]'), tx = ta ? ta.value.trim() : ''; if(!tx) return;
-    (m.respostas = m.respostas || []).push({id:uid(), autor:me, texto:tx, em:agora()}); ta.value = '';
+    var rrefs = refsDoTexto(tx), rr = {id:uid(), autor:me, texto:tx, em:agora()}; if(rrefs.length) rr.refs = rrefs; (m.respostas = m.respostas || []).push(rr); ta.value = '';
     var quem = [m.autor].concat((m.respostas || []).map(function(r){ return r.autor; })).filter(function(p, i, a){ return a.indexOf(p) === i; });
-    var men = mencionados(tx); avisar(c, m, quem.filter(function(p){ return men.indexOf(p) < 0; }), 'respondeu em #' + c.nome + ': “' + tx.slice(0, 60) + '”'); avisar(c, m, men, 'mencionou você em #' + c.nome);
+    var men = mencionados(tx); quemDasRefs(rrefs).forEach(function(u){ if(men.indexOf(u) < 0) men.push(u); }); ui.canalRefs = [];
+    avisar(c, m, quem.filter(function(p){ return men.indexOf(p) < 0; }), 'respondeu em #' + c.nome + ': “' + tx.slice(0, 60) + '”'); avisar(c, m, men, 'mencionou você em #' + c.nome);
     save(); desenhar(); var n = document.querySelector('#view [data-cnrtx="' + id + '"]'); if(n) n.focus();
   }
   // janela simples
@@ -13795,7 +13989,9 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
     var p = typeof procById === 'function' ? procById(ui.drawer.id) : null; if(!p) return; var cc = canalDoProcesso(p); if(!cc) return;
     var bt = document.createElement('button'); bt.className = 'btn sm cn-dbtn'; bt.dataset.cnproc = p.id; bt.title = cc.novo ? 'Criar o canal deste ' + (cc.tipo === 'emp' ? 'empreendimento' : 'cliente') : 'Abrir o canal';
     var n = cc.novo ? 0 : naoLidas(cc); bt.innerHTML = I.hash + '<span>' + (cc.novo ? 'Criar canal' : x(cc.nome)) + '</span>' + (n ? '<b class="cn-n">' + n + '</b>' : '');
-    var fecha = dh.querySelector('[data-close]'); if(fecha && fecha.parentElement === dh) dh.insertBefore(bt, fecha); else dh.appendChild(bt);
+    var grp = document.createElement('div'); grp.className = 'cn-dacts'; var ed = dh.querySelector('[data-peedit]');
+    var fecha = dh.querySelector('[data-close]'); if(fecha && fecha.parentElement === dh) dh.insertBefore(grp, fecha); else dh.appendChild(grp);
+    if(ed && ed.parentElement === dh) grp.appendChild(ed); grp.appendChild(bt);
   }
   if(typeof renderDrawer === 'function'){ var _rd = renderDrawer; renderDrawer = function(){ var r = _rd.apply(this, arguments); try{ decorarDrawer(); }catch(_){} return r; }; }
   window.cgCanais = {abrir:abrirCanal, novo:novoCanal, canalDoProcesso:canalDoProcesso};
@@ -13847,11 +14043,23 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
   document.addEventListener('keydown', function(ev){
     var tg = ev.target;
     if(ov && ev.key === 'Escape'){ ev.stopPropagation(); fecharOv(); return; }
+    if(menc && menc.ta === tg){
+      if(ev.key === 'ArrowDown' || ev.key === 'ArrowUp'){ ev.preventDefault(); ev.stopPropagation(); menc.sel = (menc.sel + (ev.key === 'ArrowDown' ? 1 : -1) + menc.its.length) % menc.its.length; abrirMenc(tg); return; }
+      if((ev.key === 'Enter' || ev.key === 'Tab') && !ev.isComposing){ ev.preventDefault(); ev.stopPropagation(); escolherMenc(menc.sel); return; }
+      if(ev.key === 'Escape'){ ev.preventDefault(); ev.stopPropagation(); fecharMenc(); return; }
+    }
     if(!tg.dataset || ui.view !== 'canais') return;
     if(tg.dataset.cntx !== undefined && ev.key === 'Enter' && !ev.shiftKey && !ev.isComposing && ui.canalComp !== 'pub'){ ev.preventDefault(); enviar(); return; }
     if(tg.dataset.cntx !== undefined && ev.key === 'Enter' && (ev.metaKey || ev.ctrlKey)){ ev.preventDefault(); enviar(); return; }
     if(tg.dataset.cnrtx && ev.key === 'Enter' && !ev.shiftKey && !ev.isComposing){ ev.preventDefault(); responder(tg.dataset.cnrtx); return; }
   }, true);
+  document.addEventListener('input', function(ev){ var tg = ev.target; if(ui.view === 'canais' && tg.dataset && (tg.dataset.cntx !== undefined || tg.dataset.cnrtx || tg.hasAttribute('data-cneditx'))) abrirMenc(tg); });
+  document.addEventListener('mousedown', function(ev){ var b = ev.target.closest && ev.target.closest('[data-cnmen]'); if(b && menc){ ev.preventDefault(); ev.stopPropagation(); escolherMenc(+b.dataset.cnmen); return; } if(menc && !(ev.target.closest && ev.target.closest('.cn-menc')) && ev.target !== menc.ta) fecharMenc(); }, true);
+  document.addEventListener('focusout', function(ev){ if(menc && ev.target === menc.ta) setTimeout(function(){ if(menc && document.activeElement !== menc.ta) fecharMenc(); }, 150); });
+  window.addEventListener('click', function(ev){ var el = ev.target.closest && ev.target.closest('[data-cnref]'); if(!el) return; ev.stopPropagation(); ev.preventDefault(); var pr = el.dataset.cnref.split('|');
+    if(pr[0] === 'task' && typeof openTask === 'function' && procById(pr[1])){ openTask(pr[1], pr[2]); return; }
+    if(pr[0] === 'mat' && typeof openMat === 'function'){ openMat(pr[2]); return; }
+    t('Não encontrei mais esse item'); }, true);
   document.addEventListener('input', function(ev){ var tg = ev.target; if(ui.view === 'canais' && tg.dataset && tg.dataset.cnq !== undefined){ ui.canalQ = tg.value; var l = document.querySelector('#view .cn-lst'); if(l){ var tmp = document.createElement('div'); tmp.innerHTML = lista(); l.querySelector('.cn-scroll').innerHTML = tmp.querySelector('.cn-scroll').innerHTML; } } });
   document.addEventListener('change', function(ev){ var tg = ev.target; if(!tg.dataset) return;
     if(tg.hasAttribute('data-cntodos') && ov){ ov.querySelectorAll('[data-cnpp]').forEach(function(i){ i.disabled = tg.checked; if(tg.checked) i.checked = true; }); return; }
