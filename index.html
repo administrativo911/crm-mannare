@@ -1129,7 +1129,7 @@ table.pitab tr.grp td{background:var(--m-azul-t05)!important}
 .pdh.hoje b{background:var(--m-azul)!important}
 .pnow{border-top-color:var(--m-azul)!important}.pnow::before,.pnowl{background:var(--m-azul)!important}
 
-.pev.blk{border:1px solid color-mix(in srgb,var(--c) 25%,transparent)!important;border-left:2px solid var(--c)!important}
+.pev.blk{border:1px solid color-mix(in srgb,var(--c) 28%,transparent)!important} /* FIX UX-6: sem faixa na esquerda */
 .plad{border-color:color-mix(in srgb,var(--c) 40%,transparent)!important;background:color-mix(in srgb,var(--c) 6%,#fff)!important}
 .pevlink{background:var(--m-azul)!important}
 .plchk{border-style:solid!important;border-color:var(--z-300)!important}
@@ -2500,8 +2500,8 @@ table.atable tbody tr:hover td{background:#FAFBFE!important}
 .dsub .seg button .n{background:var(--mn-azul-soft)!important;color:var(--mn-azul)!important;font-weight:700}
 .crhead b,.crtop b{text-transform:none!important;letter-spacing:0!important}
 /* ---------- agenda: blocos padronizados ---------- */
-.pev.reu{background:#EEF0FF!important;border:0!important;border-left:3px solid var(--mn-azul)!important;color:var(--sx-text)!important;border-radius:8px!important;cursor:pointer!important;padding:4px 30px 4px 8px!important;gap:1px!important;transition:background-color .15s,box-shadow .15s}
-.pev.reu:hover,.pev.reu:focus-visible{background:#E2E5FF!important;box-shadow:var(--sx-shadow-btn)!important;z-index:4}
+.pev.reu{background:#EEF0FF!important;border:1px solid #D6DAFF!important; /* FIX UX-6: borda fina inteira, sem faixa */color:var(--sx-text)!important;border-radius:8px!important;cursor:pointer!important;padding:4px 30px 4px 8px!important;gap:1px!important;transition:background-color .15s,box-shadow .15s}
+.pev.reu:hover,.pev.reu:focus-visible{background:#E2E5FF!important;border-color:#B8BFFF!important;box-shadow:var(--sx-shadow-btn)!important;z-index:4}
 .pev.reu:focus-visible{outline:2px solid var(--mn-azul)!important;outline-offset:1px!important}
 .pev.reu b{font:600 12px/1.25 var(--font-sans)!important;color:var(--sx-text)!important;text-transform:none!important}
 .pev.reu span{font:500 11px/1.25 var(--font-sans)!important;color:var(--sx-text-2)!important;opacity:1!important}
@@ -3354,7 +3354,7 @@ button.cu-row:hover{background:#F6F7F9!important;color:#1F2033!important}
 .cu-vlink{width:calc(100% - 0px);text-align:left;cursor:pointer}
 .cu-vlink:hover span{text-decoration:underline}
 /* blocos do Planejador (tempo de foco e tarefas com horário): o tema genérico ".blk" deixava o bloco branco e sem texto */
-.plan .pev.blk,.pev.blk{padding:3px 7px!important;background:color-mix(in srgb,var(--c) 12%,#fff)!important;box-shadow:none!important;border:1px solid color-mix(in srgb,var(--c) 25%,transparent)!important;border-left:3px solid var(--c)!important;border-radius:8px!important;margin:0!important;min-height:0!important;display:flex!important;flex-direction:column!important;gap:1px!important}
+.plan .pev.blk,.pev.blk{padding:3px 7px!important;background:color-mix(in srgb,var(--c) 12%,#fff)!important;box-shadow:none!important;border:1px solid color-mix(in srgb,var(--c) 28%,transparent)!important;border-radius:8px!important;margin:0!important;min-height:0!important;display:flex!important;flex-direction:column!important;gap:1px!important}
 .pev.blk.curto{flex-direction:row!important;align-items:center!important;gap:6px!important}
 .pev.blk b{font:600 12px/1.25 var(--font-sans,inherit)!important;color:var(--c)!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:none}
 .pev.blk span{font:500 11px/1.25 var(--font-sans,inherit)!important;color:#55577A!important;opacity:1!important;flex:none}
