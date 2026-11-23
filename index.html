@@ -4710,7 +4710,8 @@ function renderMine(){
   });
   (S.propsDb || []).forEach(r => (r.tarefas || []).forEach(t => { if(!respTem(t.resp, me) || (t.status === 'concluida') !== feito) return; const ref = 'pt|' + r.id + '|' + t.id;
     its.push({tipo:'pro', titulo:t.titulo, prazo:t.prazo || '', feito:t.status === 'concluida', st:'', ctx:`Proposta ${esc(r.codigo || '')}${r.cliente ? ' | ' + esc(r.cliente) : ''}`, chk:`data-ptchk="${ref}"`, abre:`data-ptopen="${ref}"`}); }));
-  const ROT = {tar:'Tarefa', sub:'Subtarefa', com:'Comentário', rev:'Revisão', mat:'Material técnico', pro:'Proposta'};
+  if(typeof pnMine === 'function') pnMine(feito).forEach(x => its.push(x)); /* FIX UX-7: tarefas avulsas */
+  const ROT = {tar:'Tarefa', sub:'Subtarefa', com:'Comentário', rev:'Revisão', mat:'Material técnico', pro:'Proposta', pes:'Avulsa'};
   const nK = k => its.filter(i => i.tipo === k || (k === 'tar' && ['tar', 'sub', 'com'].includes(i.tipo))).length;
   const kind = ui.mineKind && nK(ui.mineKind) ? ui.mineKind : '';
   const vis = kind ? its.filter(i => i.tipo === kind || (kind === 'tar' && ['tar', 'sub', 'com'].includes(i.tipo))) : its;
@@ -4745,7 +4746,7 @@ function renderMine(){
     const lista = Object.values(grupos).map(g => Object.assign(g, {at:g.its.filter(late).length, hj:g.its.filter(i => !i.feito && i.prazo && diffDays(i.prazo) === 0).length, pz:g.its.map(i => i.prazo).filter(Boolean).sort()[0] || '9999'}))
       .sort((x, y) => (!!y.p - !!x.p) || (y.at > 0) - (x.at > 0) || x.pz.localeCompare(y.pz));
     corpo = lista.map(g => { const ab = !!ui.mineOpen[g.k], pr = g.p ? propById(g.p.propId) || g.p.prop || {} : null;
-      const tit = g.p ? esc(pr.emp || pcod(g.p)) : {rev:'Revisões e validações', mat:'Material técnico', pro:'Tarefas de propostas'}[g.tipo];
+      const tit = g.p ? esc(pr.emp || pcod(g.p)) : {rev:'Revisões e validações', mat:'Material técnico', pro:'Tarefas de propostas', pes:'Tarefas avulsas (só você vê)'}[g.tipo];
       const sub = g.p ? `${esc(g.p.servico || '')}${pr.cliente ? ' | ' + esc(pr.cliente) : ''} | ${esc(pcod(g.p))}` : 'fora dos processos';
       const fl = g.at ? `<span class="pk-late">${ic('alerta', 'sm')} ${g.at} atrasada${g.at > 1 ? 's' : ''}</span>` : g.hj ? `<span class="mt-hj">${g.hj} para hoje</span>` : g.pz !== '9999' ? `<span class="mt-pz">próximo prazo ${fmtD(g.pz)}</span>` : '<span class="mt-pz">sem prazo</span>';
       return `<div class="mt-pp ${g.at ? 'is-late' : ''}"><div class="mt-pph" data-mineproc="${g.k}" role="button" tabindex="0" aria-expanded="${ab}"><span class="mt-car">${ab ? '▾' : '▸'}</span><div class="mt-ppm"><b>${tit}</b><span>${sub}</span></div>${fl}<span class="mt-pz">${g.its.length} ite${g.its.length > 1 ? 'ns' : 'm'}</span></div>
@@ -4753,9 +4754,10 @@ function renderMine(){
     ui._mineIds = Object.keys(grupos);
   }
   const nAb = its.length, nAt = its.filter(late).length;
-  const chips = its.length ? `<div class="mt-chips">${[['', 'Tudo', its.length], ['tar', 'Tarefas', nK('tar')], ['rev', 'Revisões', nK('rev')], ['mat', 'Material técnico', nK('mat')], ['pro', 'Propostas', nK('pro')]].filter(([k, , n]) => !k || n).map(([k, l, n]) => `<button class="pk-chip mt-chip ${kind === k ? 'on' : ''}" data-mkind="${k}" aria-pressed="${kind === k}">${l} <b>${n}</b></button>`).join('')}</div>` : '';
+  const chips = its.length ? `<div class="mt-chips">${[['', 'Tudo', its.length], ['tar', 'Tarefas', nK('tar')], ['rev', 'Revisões', nK('rev')], ['mat', 'Material técnico', nK('mat')], ['pro', 'Propostas', nK('pro')], ['pes', 'Avulsas', nK('pes')]].filter(([k, , n]) => !k || n).map(([k, l, n]) => `<button class="pk-chip mt-chip ${kind === k ? 'on' : ''}" data-mkind="${k}" aria-pressed="${kind === k}">${l} <b>${n}</b></button>`).join('')}</div>` : '';
   $('#view').innerHTML = `<div class="pagehead"><div><h1>Minhas tarefas</h1><p>${feito ? `${nAb} concluída${nAb === 1 ? '' : 's'}` : `${nAb} em aberto${nAt ? ` | <b class="mt-red">${nAt} atrasada${nAt > 1 ? 's' : ''}</b>` : ''}`} | tudo que está atribuído a ${esc(first(me))}</p></div><span class="spacer"></span>
     ${modo === 'proc' && vis.length ? `<button class="btn sm ghost" data-mineall>${(ui._mineIds || []).every(k => ui.mineOpen[k]) ? 'Recolher todos' : 'Expandir todos'}</button>` : ''}
+    <button class="btn sm primary" data-psnew>${ic('mais', 'sm')} Tarefa avulsa</button>
     <div class="seg"><button data-mview="prazo" class="${modo === 'prazo' ? 'on' : ''}">${ic('relogio', 'sm')} Por prazo</button><button data-mview="proc" class="${modo === 'proc' ? 'on' : ''}">${ic('pasta', 'sm')} Por processo</button></div>
     <div class="seg"><button data-mf="aberto" class="${!feito ? 'on' : ''}">Em aberto</button><button data-mf="feito" class="${feito ? 'on' : ''}">Concluídas</button></div></div>
     ${chips}${corpo}<div style="height:40px"></div>`;
@@ -4777,9 +4779,9 @@ function toastAcao(msg, rot, fn){
   setTimeout(() => d.remove(), 5000);
 }
 window.addEventListener('click', e => {
-  const b = e.target.closest && e.target.closest('.mt-ck[data-chk-task],.mt-ck[data-chk-sub],.mt-ck[data-chk-com],.mt-ck[data-ptchk]');
+  const b = e.target.closest && e.target.closest('.mt-ck[data-chk-task],.mt-ck[data-chk-sub],.mt-ck[data-chk-com],.mt-ck[data-ptchk],.mt-ck[data-pschk]');
   if(!b || ui.view !== 'mine' || ui.mineFilter !== 'aberto' || b.classList.contains('on')) return;
-  const at = ['data-chk-task', 'data-chk-sub', 'data-chk-com', 'data-ptchk'].find(a => b.hasAttribute(a)), val = b.getAttribute(at), nome = (b.closest('.mt-row')?.querySelector('.mt-t .n')?.textContent) || '';
+  const at = ['data-chk-task', 'data-chk-sub', 'data-chk-com', 'data-ptchk', 'data-pschk'].find(a => b.hasAttribute(a)), val = b.getAttribute(at), nome = (b.closest('.mt-row')?.querySelector('.mt-t .n')?.textContent) || '';
   setTimeout(() => toastAcao('Concluída: ' + nome, 'Desfazer', () => { ui.mineFilter = 'feito'; render(); const x = document.querySelector(`.mt-ck[${at}="${val}"]`); if(x) x.click(); ui.mineFilter = 'aberto'; render(); }), 0);
 }, true);
 
@@ -10175,6 +10177,7 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
         (t.subs || []).forEach(function(s){ if(!s.feito) out.push({ref:'s|' + p.id + '|' + t.id + '|' + s.id, k:'subtarefa', titulo:s.titulo, onde:t.titulo + ' | ' + pcod(p), prazo:s.prazo || '', prog:s.prog || '', resp:s.resp ? [s.resp] : [], obj:s, log:t, p:p, t:t, s:s}); });
       }); });
     (S.mats || []).forEach(function(m){ if(m.status !== 'entregue') out.push({ref:'m|' + m.id, k:'material', titulo:m.titulo || m.codigo, onde:m.codigo || 'Material técnico', prazo:m.prazo || '', prog:m.prog || '', resp:m.resp || [], obj:m, log:m.log ? m : null, m:m}); });
+    if(typeof pnCargaItens === 'function') pnCargaItens().forEach(function(x){ out.push(x); }); /* FIX UX-7: tarefas avulsas contam no dia */
     return out;
   }
   var diaDe = function(i){ return i.prog || i.prazo || ''; };
@@ -10210,7 +10213,7 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
     var html = '<div class="cg-dh"><div><div class="cg-eyebrow">Limite de ' + MAX(c.pid) + ' tarefas por dia</div><h2>' + (voce ? 'Você já tem ' : esc(first(c.pid)) + ' já tem ') + hoje.length + ' tarefa' + (hoje.length === 1 ? '' : 's') + ' para ' + diaLongo(c.d) + '</h2></div><button class="x" data-cgfechar aria-label="Fechar">✕</button></div>'
       + '<p class="cg-p">' + (c.acao === 'iniciar' ? 'Para começar “<b>' + esc(c.titulo) + '</b>” hoje, reprograme ou conclua alguma das tarefas abaixo.' : 'Para colocar “<b>' + esc(c.titulo) + '</b>” neste dia, reprograme ou conclua alguma das tarefas abaixo.') + '</p>'
       + '<div class="cg-meter ' + (cheio ? 'cheio' : 'ok') + '"><span style="width:' + Math.min(100, hoje.length * 100 / MAX(c.pid)) + '%"></span><b>' + hoje.length + '/' + MAX(c.pid) + '</b></div>'
-      + '<div class="cg-list">' + hoje.map(function(i){ return '<div class="cg-li"><span class="cg-dot" style="background:' + (KCOR[i.k] || '#0000FF') + '"></span><div class="cg-lt"><b>' + esc(i.titulo) + '</b><span>' + esc(i.onde) + (i.st ? ' | ' + esc(TS[i.st].l) : '') + '</span></div>'
+      + '<div class="cg-list">' + hoje.map(function(i){ if(i.alheia && typeof pnCapItem === 'function') return pnCapItem(i); return '<div class="cg-li"><span class="cg-dot" style="background:' + (KCOR[i.k] || '#0000FF') + '"></span><div class="cg-lt"><b>' + esc(i.titulo) + '</b><span>' + esc(i.onde) + (i.st ? ' | ' + esc(TS[i.st].l) : '') + '</span></div>'
           + '<input type="date" class="cg-date" data-cgrepro="' + i.ref + '" value="' + diaDe(i) + '" min="' + TODAY + '" aria-label="Reprogramar ' + esc(i.titulo) + '">'
           + '<button class="btn sm" data-cglivre="' + i.ref + '" title="Passa para o próximo dia útil com vaga">Próximo dia livre</button></div>'; }).join('') + '</div>'
       + '<div class="cg-df"><button class="btn" data-cgfechar>Cancelar</button><button class="btn primary" data-cgcapok ' + (cheio ? 'disabled' : '') + '>' + acao + (cheio ? ' (libere uma vaga)' : '') + '</button></div>';
@@ -10321,7 +10324,7 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
   }
   function pendHtml(lista){
     var u = cgUI(), q = (u.pq || '').toLowerCase(), f = u.pf;
-    var base = lista.filter(function(i){ var d = diaDe(i);
+    var base = lista.filter(function(i){ var d = diaDe(i); if(i.pess) return false; /* FIX UX-7: avulsa não vai para a lista */
       if(f === 'semdata' && d) return false; if(f === 'atrasadas' && !(d && d < TODAY)) return false; if(f === 'semresp' && i.resp.length) return false; if(f === 'minhas' && !conta(i, me)) return false;
       return !q || (i.titulo + ' ' + i.onde).toLowerCase().indexOf(q) >= 0; });
     var opts = [['semdata', 'Não agendado'], ['atrasadas', 'Atrasadas'], ['semresp', 'Sem responsável'], ['minhas', 'Minhas'], ['todas', 'Todas em aberto']];
@@ -10343,7 +10346,7 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
     fecharPop(); var a = cell.dataset.cgcell.split('|'), pid = a[0], d = a[1], its = doDia(pid, d);
     pop = document.createElement('div'); pop.className = 'cg-pop'; pop.setAttribute('role', 'dialog'); pop.setAttribute('aria-label', 'Tarefas de ' + first(pid) + ' em ' + fmtD(d)); pop.dataset.cell = cell.dataset.cgcell;
     pop.innerHTML = '<div class="cg-poph">' + av(pid, true, true) + '<div><b>' + esc(first(pid)) + '</b><span>' + diaLongo(d) + '</span></div><span class="cg-cap ' + nivel(its.length, pid) + '">' + its.length + '/' + MAX(pid) + '</span><button class="x" data-cgpopx aria-label="Fechar">✕</button></div>'
-      + (its.length ? its.map(function(i){ return '<div class="cg-popi" draggable="true" data-cgref="' + i.ref + '" data-cgde="' + pid + '"><span class="cg-dot" style="background:' + (i.st ? TS[i.st].c : KCOR[i.k]) + '"></span><button class="cg-pt" data-cgabrir="' + i.ref + '"><b>' + esc(i.titulo) + '</b><span>' + esc(i.onde) + (i.st ? ' | ' + esc(TS[i.st].l) : '') + (i.prazo && i.prazo !== d ? ' | prazo ' + fmtD(i.prazo) : '') + '</span></button>'
+      + (its.length ? its.map(function(i){ if(i.pess && typeof pnPopItem === 'function') return pnPopItem(i); return '<div class="cg-popi" draggable="true" data-cgref="' + i.ref + '" data-cgde="' + pid + '"><span class="cg-dot" style="background:' + (i.st ? TS[i.st].c : KCOR[i.k]) + '"></span><button class="cg-pt" data-cgabrir="' + i.ref + '"><b>' + esc(i.titulo) + '</b><span>' + esc(i.onde) + (i.st ? ' | ' + esc(TS[i.st].l) : '') + (i.prazo && i.prazo !== d ? ' | prazo ' + fmtD(i.prazo) : '') + '</span></button>'
           + '<input type="date" class="cg-date" data-cgrepro="' + i.ref + '" data-cgquem="' + pid + '" value="' + d + '" min="' + TODAY + '" aria-label="Reprogramar"><button class="cg-mini" data-cgdeleg="' + i.ref + '" aria-label="Delegar" title="Delegar">' + I.deleg + '</button></div>'; }).join('')
         : '<div class="cg-sub" style="padding:10px 4px">Nenhuma tarefa programada. Arraste uma tarefa da lista de pendências para cá.</div>');
     document.body.appendChild(pop);
@@ -15361,6 +15364,15 @@ button.mt-ck:hover i{border-color:var(--mu-ok-solid);background:var(--mu-ok-bg)}
   .plchk{position:relative}
   .plchk::after{content:"";position:absolute;inset:-11px}
 }
+/* ===== FIX UX-7 | Tarefas avulsas ===== */
+.mt-k.pes{background:#F1EDFF;color:#4A1FB8}
+.ps-priv{display:inline-flex;align-items:center;gap:4px;font-weight:600;color:#4A1FB8}
+.ps-priv::before{content:"";width:6px;height:6px;border-radius:50%;background:#7A5AF8}
+.ps-dlg .f{display:grid;gap:6px;font:600 var(--mu-fs-2)/1.3 var(--mu-font);color:var(--mu-text-2)}
+.ps-dlg .f input,.ps-dlg .f textarea{width:100%}
+.ps-dlg .ps-hint{margin:0;font-size:var(--mu-fs-1);color:var(--mu-text-3)}
+.ps-dlg .cg-df .spacer{flex:1}
+.mt-row[data-psopen]:focus-visible{outline:none;box-shadow:var(--mu-focus)}
 </style>
 <script id="mannare-ui-js">
 /* FIX UX-5 — modal próprio no lugar de confirm() e prompt() nativos.
@@ -15535,6 +15547,124 @@ button.mt-ck:hover i{border-color:var(--mu-ok-solid);background:var(--mu-ok-bg)}
   if(window.cgRender) cgRender.depois(function(){ aplica(); atualiza(); });
   setInterval(atualiza, 4000); /* os contadores do menu também mudam com dados novos do servidor */
   aplica();
+})();
+</script>
+<script id="mannare-pessoal">
+/* ==========================================================================
+   FIX UX-7: Tarefas avulsas (pessoais), em Minhas tarefas
+   - Qualquer pessoa cria uma tarefa só dela: título, dia e observação.
+   - Gravada como tipo novo "pessoal" (pm_docs: id "pessoal:<id>", dados com "dono").
+     Com o SQL tarefas-avulsas-supabase.sql, o banco só entrega a tarefa ao dono.
+   - Para a Carga de trabalho, cada pessoa publica um resumo SEM título
+     (tipo "cargapessoal", id "cargapessoal:<e-mail>": só id, dia e feito).
+     Os outros veem "Tarefa pessoal" contando no dia, sem detalhes.
+   - Não mexe em nenhum documento ou campo que já existe.
+   ========================================================================== */
+(function(){
+  'use strict';
+  if(typeof S === 'undefined' || typeof TIPO_COL === 'undefined') return;
+  TIPO_COL.pessoal = 'pessoais'; TIPO_COL.cargapessoal = 'cargasPess';
+  S.pessoais = S.pessoais || []; S.cargasPess = S.cargasPess || [];
+  if(typeof KCOR !== 'undefined') KCOR.pessoal = '#7A5AF8';
+
+  var minhas = function(){ return (S.pessoais || []).filter(function(x){ return String(x.dono || '').toLowerCase() === String(me || '').toLowerCase(); }); };
+  var porId = function(id){ return minhas().find(function(x){ return x.id === id; }); };
+  var diaDe = function(x){ return x.prog || x.prazo || ''; };
+
+  /* ---------- resumo sem título, para a Carga de trabalho dos outros ---------- */
+  function resumo(){
+    if(typeof me === 'undefined' || !me || typeof DB === 'undefined' || !DB.ready) return false;
+    var itens = minhas().filter(function(x){ return !x.feito && diaDe(x); }).map(function(x){ return {id:x.id, dia:diaDe(x)}; })
+      .sort(function(a, b){ return a.id < b.id ? -1 : 1; });
+    var r = S.cargasPess.find(function(c){ return c.id === me; });
+    if(!r){ if(!itens.length) return false; r = {id:me, dono:me, _espaco:'comum', itens:[]}; S.cargasPess.push(r); }
+    if(JSON.stringify(r.itens || []) === JSON.stringify(itens)) return false;
+    r.itens = itens; r.dono = me; r._espaco = 'comum'; return true;
+  }
+
+  /* ---------- itens para Minhas tarefas (usados por renderMine) ---------- */
+  window.pnMine = function(feito){
+    return minhas().filter(function(x){ return !!x.feito === !!feito; }).map(function(x){
+      var ctx = '<span class="ps-priv">Só você vê</span>' + (x.nota ? ' | ' + esc(String(x.nota).slice(0, 120)) : '');
+      return {tipo:'pes', titulo:x.titulo || 'Sem título', prazo:diaDe(x), feito:!!x.feito, st:'', ctx:ctx, ctxP:ctx, chk:'data-pschk="' + x.id + '"', abre:'data-psopen="' + x.id + '" role="button" tabindex="0"'};
+    });
+  };
+
+  /* ---------- itens para a Carga de trabalho ---------- */
+  window.pnCargaItens = function(){
+    var out = [];
+    minhas().forEach(function(x){ if(x.feito) return;
+      out.push({ref:'pp|' + x.id, k:'pessoal', titulo:x.titulo || 'Sem título', onde:'Tarefa avulsa (só você vê)', prazo:x.prazo || '', prog:x.prog || '', resp:[me], st:'', obj:x, log:null, pess:true}); });
+    (S.cargasPess || []).forEach(function(c){ var dono = String(c.dono || c.id || '').toLowerCase(); if(!dono || dono === String(me).toLowerCase()) return;
+      (c.itens || []).forEach(function(i){ if(!i.dia) return;
+        out.push({ref:'pq|' + dono + '|' + i.id, k:'pessoal', titulo:'Tarefa pessoal', onde:'Tarefa pessoal', prazo:i.dia, prog:'', resp:[dono], st:'', obj:{}, log:null, pess:true, alheia:true}); }); });
+    return out;
+  };
+  window.pnPopItem = function(i){
+    return '<div class="cg-popi"><span class="cg-dot" style="background:' + KCOR.pessoal + '"></span>'
+      + (i.alheia ? '<div class="cg-pt"><b>Tarefa pessoal</b><span>Só a pessoa vê os detalhes</span></div>'
+        : '<button class="cg-pt" data-psopen="' + i.obj.id + '"><b>' + esc(i.titulo) + '</b><span>Tarefa avulsa | só você vê</span></button>') + '</div>';
+  };
+  window.pnCapItem = function(i){
+    return '<div class="cg-li"><span class="cg-dot" style="background:' + KCOR.pessoal + '"></span><div class="cg-lt"><b>Tarefa pessoal</b><span>Só a pessoa vê os detalhes</span></div></div>';
+  };
+
+  /* ---------- criar, editar, concluir, excluir ---------- */
+  var ov = null, editando = null, volta = null;
+  function fechar(){ if(ov){ ov.remove(); ov = null; editando = null; if(volta && volta.focus) try{ volta.focus(); }catch(_){} } }
+  function abrir(x){
+    fechar(); volta = document.activeElement; editando = x ? x.id : null;
+    var t = x || {titulo:'', prazo:TODAY, nota:''};
+    ov = document.createElement('div'); ov.className = 'cg-ov ps-ov';
+    ov.innerHTML = '<div class="cg-dlg ps-dlg" role="dialog" aria-modal="true" aria-labelledby="psTit" tabindex="-1">'
+      + '<div class="cg-dh"><div><div class="cg-eyebrow">Tarefa avulsa | só você vê</div><h2 id="psTit">' + (x ? 'Editar tarefa' : 'Nova tarefa') + '</h2></div><span class="spacer"></span><button class="x" data-psx aria-label="Fechar">✕</button></div>'
+      + '<label class="f">O que fazer<input id="psT" maxlength="200" value="' + esc(t.titulo || '') + '" placeholder="Ex.: ligar para o cartório do 2º ofício" autocomplete="off"></label>'
+      + '<label class="f">Dia<input id="psD" type="date" value="' + esc(diaDe(t)) + '"></label>'
+      + '<label class="f">Observação (opcional)<textarea id="psN" rows="3" maxlength="1000">' + esc(t.nota || '') + '</textarea></label>'
+      + '<p class="cg-p ps-hint">Conta na sua Carga de trabalho no dia escolhido. Os outros veem só "Tarefa pessoal", sem o texto.</p>'
+      + '<div class="cg-df">' + (x ? '<button class="btn danger ps-del" data-psdel>Excluir</button><span class="spacer"></span>' : '') + '<button class="btn" data-psx>Cancelar</button><button class="btn primary" data-psok>' + (x ? 'Salvar' : 'Criar tarefa') + '</button></div></div>';
+    document.body.appendChild(ov);
+    setTimeout(function(){ var i = ov && ov.querySelector('#psT'); if(i) i.focus(); }, 30);
+  }
+  function salvar(){
+    var tit = (ov.querySelector('#psT').value || '').trim(), dia = ov.querySelector('#psD').value || '', nota = (ov.querySelector('#psN').value || '').trim();
+    if(!tit){ toast('Escreva o que fazer'); ov.querySelector('#psT').focus(); return; }
+    var x = editando ? porId(editando) : null;
+    if(x){ x.titulo = tit; x.prazo = dia; delete x.prog; x.nota = nota; }
+    else { x = {id:uid(), dono:me, titulo:tit, prazo:dia, nota:nota, feito:false, feitoEm:'', criadoEm:nowISO(), _espaco:'comum'}; S.pessoais.push(x); }
+    var novo = !editando; fechar(); resumo(); save(); render(); toast(novo ? 'Tarefa avulsa criada' : 'Tarefa salva');
+  }
+  function excluir(){
+    var x = editando ? porId(editando) : null; if(!x) return fechar();
+    var copia = JSON.parse(JSON.stringify(x)); S.pessoais = S.pessoais.filter(function(o){ return o !== x; });
+    fechar(); resumo(); save(); render();
+    if(typeof toastAcao === 'function') toastAcao('Tarefa excluída', 'Desfazer', function(){ S.pessoais.push(copia); resumo(); save(); render(); });
+  }
+  function alternar(id){
+    var x = porId(id); if(!x) return;
+    x.feito = !x.feito; x.feitoEm = x.feito ? nowISO() : ''; resumo(); save(); render();
+  }
+
+  window.addEventListener('click', function(e){
+    var t = e.target; if(!t.closest) return; var el;
+    if(ov && t.closest('.ps-ov')){
+      e.stopPropagation();
+      if(t === ov || t.closest('[data-psx]')){ fechar(); return; }
+      if(t.closest('[data-psok]')){ salvar(); return; }
+      if(t.closest('[data-psdel]')){ excluir(); return; }
+      return;
+    }
+    if((el = t.closest('[data-psnew]'))){ e.stopPropagation(); abrir(null); return; }
+    if((el = t.closest('[data-pschk]'))){ e.stopPropagation(); alternar(el.getAttribute('data-pschk')); return; }
+    if((el = t.closest('[data-psopen]'))){ e.stopPropagation(); var x = porId(el.getAttribute('data-psopen')); if(x){ var p = document.querySelector('.cg-pop'); if(p) p.remove(); abrir(x); } return; }
+  }, true);
+  document.addEventListener('keydown', function(e){
+    if(ov){ if(e.key === 'Escape'){ e.stopPropagation(); fechar(); } else if(e.key === 'Enter' && e.target.id !== 'psN' && e.target.closest('.ps-ov') && !e.target.closest('button')){ e.preventDefault(); salvar(); } return; }
+    if((e.key === 'Enter' || e.key === ' ') && e.target.matches && e.target.matches('.mt-row[data-psopen]')){ e.preventDefault(); var x = porId(e.target.getAttribute('data-psopen')); if(x) abrir(x); }
+  }, true);
+
+  /* mantém o resumo em dia (ex.: tarefa reprogramada pela Carga de trabalho) */
+  if(window.cgRender) cgRender.depois(function(){ if(resumo()) save(); });
 })();
 </script>
 </body>
