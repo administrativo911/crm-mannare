@@ -15622,6 +15622,9 @@ button.mt-ck:hover i{border-color:var(--mu-ok-solid);background:var(--mu-ok-bg)}
    Respondeu → CRM bloqueado por 5 min para alongar e levantar; o cronômetro
    para na pausa e volta ao fim. Sem resposta em 5 min → cronômetro pausado
    na hora da pergunta (o tempo fora não conta).
+   FIX UX-11: o navegador não deixa um site pular para a frente sozinho, então a
+   pergunta chama atenção de 3 jeitos: som curto (repete a cada 90 s), título da
+   aba piscando e notificação que fica na tela; clicar nela traz o CRM para a frente.
    ========================================================================== */
 (function(){
   'use strict';
@@ -15815,15 +15818,40 @@ button.mt-ck:hover i{border-color:var(--mu-ok-solid);background:var(--mu-ok-bg)}
   function retoma(ref){ var o = objDe(ref); if(!o) return;
     if(o.x){ if(!o.x.feito){ o.x.st = 'fazendo'; liga(o.x); } return; }
     if(o.t && typeof startTimer === 'function') startTimer(o.p || null, o.t, me); }
-  function notificar(txt){
-    try{ if(!('Notification' in window) || Notification.permission !== 'granted') return;
-      var op = {body:txt, tag:'mannare-pausa', renotify:true, requireInteraction:true};
-      if(navigator.serviceWorker && navigator.serviceWorker.getRegistration) navigator.serviceWorker.getRegistration().then(function(r){ if(r) r.showNotification('CRM Mannare', op); else new Notification('CRM Mannare', op); }).catch(function(){});
-      else new Notification('CRM Mannare', op); }catch(_){}
+  /* som curto (gerado no próprio navegador, sem arquivo) */
+  var audio = null;
+  function preparaSom(){ try{ if(!audio){ var AC = window.AudioContext || window.webkitAudioContext; if(AC) audio = new AC(); } if(audio && audio.state === 'suspended') audio.resume(); }catch(_){} }
+  ['pointerdown', 'keydown'].forEach(function(ev){ window.addEventListener(ev, preparaSom, {capture:true, passive:true}); });
+  function tocar(){
+    try{ preparaSom(); if(!audio) return; var t0 = audio.currentTime + .02;
+      [[880, 0], [660, .22]].forEach(function(n){ var o = audio.createOscillator(), g = audio.createGain(); o.type = 'sine'; o.frequency.value = n[0];
+        g.gain.setValueAtTime(0, t0 + n[1]); g.gain.linearRampToValueAtTime(.18, t0 + n[1] + .02); g.gain.exponentialRampToValueAtTime(.0001, t0 + n[1] + .45);
+        o.connect(g); g.connect(audio.destination); o.start(t0 + n[1]); o.stop(t0 + n[1] + .5); }); }catch(_){}
   }
+  /* título da aba piscando enquanto a pergunta está aberta */
+  var tituloOrig = '', pisca = null, somT = null, viewAntes = '';
+  function chamaAtencao(){
+    paraAtencao(); tituloOrig = document.title; var on = false;
+    pisca = setInterval(function(){ on = !on; document.title = on ? '⏸ Você ainda está aí?' : tituloOrig; }, 1000);
+    tocar(); somT = setInterval(tocar, 90000);
+  }
+  function paraAtencao(){ if(pisca){ clearInterval(pisca); pisca = null; document.title = tituloOrig || document.title; } if(somT){ clearInterval(somT); somT = null; } }
+  /* notificação que fica na tela; o clique traz o CRM para a frente */
+  function notificar(txt){
+    try{
+      if(!('Notification' in window) || Notification.permission !== 'granted') return;
+      if(document.visibilityState === 'visible' && document.hasFocus()) return;
+      var op = {body:txt, tag:'mannare-pausa', renotify:true, requireInteraction:true, icon:'icons/icon-192.png'};
+      try{ var n = new Notification('CRM Mannare | pausa', op); n.onclick = function(){ try{ window.focus(); }catch(_){} n.close(); }; return; }catch(_){}
+      if(navigator.serviceWorker && navigator.serviceWorker.getRegistration) navigator.serviceWorker.getRegistration().then(function(r){ if(r) r.showNotification('CRM Mannare | pausa', op); }).catch(function(){});
+    }catch(_){}
+  }
+  /* no celular a notificação passa pelo sw.js, que avisa a página; aqui só garantimos que a tela não mude por trás da pergunta */
+  if(navigator.serviceWorker) navigator.serviceWorker.addEventListener('message', function(ev){ var m = ev.data || {};
+    if(m.tipo === 'pm-abrir' && !m.procId && cx && viewAntes && typeof ui !== 'undefined' && ui.view !== viewAntes){ ui.view = viewAntes; render(); } });
   var cx = null;
-  function camada(html, cls){ if(cx) cx.remove(); cx = document.createElement('div'); cx.className = 'pz-ov ' + (cls || ''); cx.innerHTML = html; document.body.appendChild(cx); var f = cx.querySelector('[autofocus]') || cx.querySelector('button:not([disabled])'); if(f) setTimeout(function(){ try{ f.focus(); }catch(_){} }, 30); }
-  function tiraCamada(){ if(cx){ cx.remove(); cx = null; } }
+  function camada(html, cls){ paraAtencao(); if(cx) cx.remove(); cx = document.createElement('div'); cx.className = 'pz-ov ' + (cls || ''); cx.innerHTML = html; document.body.appendChild(cx); var f = cx.querySelector('[autofocus]') || cx.querySelector('button:not([disabled])'); if(f) setTimeout(function(){ try{ f.focus(); }catch(_){} }, 30); }
+  function tiraCamada(){ paraAtencao(); if(cx){ cx.remove(); cx = null; } }
   var hm = function(iso){ var d = new Date(iso); return pad(d.getHours()) + ':' + pad(d.getMinutes()); };
   function perguntar(st){
     var ts = meusTimers(), o = ocupadoCom(me), min = Math.round((Date.now() - new Date(st.desde)) / 60000);
@@ -15831,7 +15859,8 @@ button.mt-ck:hover i{border-color:var(--mu-ok-solid);background:var(--mu-ok-bg)}
       + '<h2 id="pzT">Você ainda está aí?</h2><p id="pzD">O cronômetro está ligado há <b>' + min + ' minutos</b> seguidos' + (o ? ' em <b>' + esc(o.txt) + '</b>' : '') + '. Se estiver, vamos fazer uma pausa de 5 minutos para alongar e levantar.</p>'
       + '<p class="pz-sub">Sem resposta até ' + hm(new Date(new Date(st.perguntaEm).getTime() + RESPOSTA_MS).toISOString()) + ', o cronômetro é pausado às ' + hm(st.perguntaEm) + ' e o tempo fora não conta.</p>'
       + '<div class="pz-acts"><button class="btn primary" data-pzsim autofocus>Estou aqui, vamos pausar</button></div></div>', 'pz-pergunta');
-    if(ts.length) notificar('Você ainda está aí? Cronômetro ligado há ' + min + ' minutos. Abra o CRM para fazer uma pausa.');
+    viewAntes = typeof ui !== 'undefined' ? ui.view : ''; chamaAtencao();
+    if(ts.length) notificar('Você ainda está aí? Cronômetro ligado há ' + min + ' minutos. Clique aqui para responder.');
   }
   var DICAS = [['Levante e caminhe', 'Saia da cadeira, vá até a janela, beba água, vá ao banheiro.'], ['Alongue pescoço e ombros', 'Incline a cabeça devagar para cada lado e gire os ombros para trás.'], ['Descanse a vista', 'Olhe para algo distante por uns 20 segundos e pisque algumas vezes.']];
   function travar(st){
