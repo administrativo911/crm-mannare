@@ -365,7 +365,7 @@ button{font:inherit;color:inherit}
 .cal .g .d i.late{background:var(--danger)}.cal .g .d i.g{background:#1A73E8}
 .cal .g .d.sel i{background:#fff}
 .agenda{border-top:1px solid var(--line);margin-top:14px;padding-top:14px}
-.agenda h6{margin:0 0 10px;font-size:15px;font-weight:800}
+.agenda h2.agh{margin:0 0 10px;font-size:15px;font-weight:800}
 .ag{display:flex;gap:10px;padding:6px 0;cursor:pointer}
 .ag .dot{width:9px;height:9px;margin-top:6px;flex:none}
 .ag .tt{font-weight:700;font-size:14px;line-height:1.25}
@@ -422,7 +422,7 @@ button{font:inherit;color:inherit}
 .tnode.leaf.on{color:var(--azul);font-weight:700}
 .tnode .car{width:14px;color:var(--muted);font-size:12px;text-align:center}
 .tnode .ti{width:18px;text-align:center;color:var(--muted)}
-.tnode .tn{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tnode .tn{flex:1;overflow:hidden}
 .tnode .tc{font-size:11.5px;color:var(--muted);font-weight:700;background:var(--soft);padding:0 7px}
 .tnode .tc:empty{display:none}
 .tsep{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:700;padding:12px 10px 4px}
@@ -804,7 +804,6 @@ a.nav{text-decoration:none}
 .sync{padding:4px 10px;white-space:nowrap}
 .sync.salvando{background:var(--azul-10);color:var(--azul)}
 .sync.erro{background:#FDE8E7;color:#B42318}
-@media (max-width:760px){.sync{display:none}}
 
 /* editor da proposta */
 .ptools{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
@@ -980,7 +979,7 @@ button,a,.trow,.mine-row,.pli,.dcom,.li,.ccard{transition:background-color .15s,
 .badge,.nav .n,.blk h3 .cnt,.kcol h5 .cnt,.ccard .chip,.tmr,.gchip,.sync,.fpill,.ftag,.apb,.plst .n,.pdh.hoje b,.pnowl,.chip,.n.red,.pill i,.stchip i,.avw .st,.cal .g .d i,.ag .dot,.tmdot,.tile .tdot,.bdot,.sdot i,.tmr.on i,.toptimer i,.pldot,.pnow::before,i.st-online,i.st-offline,.okc{border-radius:999px!important}
 
 /* ---------- tipografia ---------- */
-.pagehead h1,.dhead h2,.mhead b,.plhead h2,.pltop h3,h1,h2{font-family:var(--font-display)!important;text-transform:uppercase;letter-spacing:-.01em!important;font-weight:600!important;color:var(--ui-text)}
+.pagehead h1,.dhead h2,.mhead b,.plhead h2,.pltop h3,h1,h2:where(:not(.mst):not(.agh):not(.h3)){font-family:var(--font-display)!important;text-transform:uppercase;letter-spacing:-.01em!important;font-weight:600!important;color:var(--ui-text)}
 .pagehead h1{font-size:26px!important;}
 .pagehead p{font-family:var(--font-sans)}
 .blk h3,.sect h4{font-family:var(--font-display)!important;text-transform:uppercase;letter-spacing:-.005em!important;font-weight:600!important;font-size:14px!important;color:var(--ui-text)}
@@ -1327,7 +1326,7 @@ input[type="checkbox"]{border-radius:3px!important}
 .pmain{min-width:0}
 .pmain .mboard{padding-bottom:16px}
 .pmain .mboard + .hint{margin-top:8px!important}
-.tree .tnode .tn{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;flex:1}
+.tree .tnode .tn{overflow:hidden;min-width:0;flex:1}
 /* parametrização: checklist com observação */
 .cksum{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);margin:0 0 8px}
 .cksum b{color:var(--ink)}
@@ -2039,9 +2038,8 @@ body{background:var(--sx-canvas) fixed!important;font:400 14px/1.5 var(--font-sa
 
 /* nome: escondido só visualmente (leitor de tela continua lendo) */
 .nav .tx{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip:rect(0 0 0 0)!important;white-space:nowrap!important;margin:0!important;padding:0!important;opacity:1}
-/* notificações em amarelo */
-.nav .n,.nav [id^="n"]:not(:empty){position:absolute!important;top:-4px;right:-6px;min-width:18px;padding:0 5px!important;line-height:16px!important;font-size:10.5px!important;font-weight:700!important;border-radius:999px!important;background:var(--mn-amarelo)!important;color:var(--mn-ink)!important;border:2px solid #fff!important;text-align:center}
-.nav .n.red{background:var(--mn-amarelo)!important;color:var(--mn-ink)!important}
+/* contadores: cinza; vermelho só para atrasados (UX-T5) */
+.nav .n,.nav [id^="n"]:not(:empty){position:absolute!important;top:-4px;right:-6px;min-width:18px;padding:0 5px!important;line-height:16px!important;font-size:10.5px!important;font-weight:700!important;border-radius:999px!important;background:#ECEDF2!important;color:#3D4057!important;border:2px solid #fff!important;text-align:center}
 /* busca geral: ícone no rail que se abre ao focar (atalho "/") */
 .side .sside{display:flex!important;align-items:center;gap:0;width:48px!important;height:48px!important;padding:0 15px!important;margin:0 0 6px!important;border:0!important;border-radius:var(--sx-r-rail)!important;background:var(--sx-sunken)!important;color:#7A7D99!important;overflow:hidden;position:relative;cursor:text;transition:width var(--duration,220ms) cubic-bezier(.2,0,0,1),box-shadow .2s}
 .side .sside .ic{flex:none;width:18px!important;height:18px!important}
@@ -2088,6 +2086,8 @@ body{background:var(--sx-canvas) fixed!important;font:400 14px/1.5 var(--font-sa
 .chip-me .av{border-radius:999px!important}
 .chip-me .em{color:var(--sx-text-3)!important}
 .sync{border:0!important;border-radius:999px!important;background:#fff!important;box-shadow:var(--sx-shadow-btn)!important;color:var(--sx-text-2)!important}
+.sync.salvando{background:var(--azul-10)!important;color:var(--azul)!important} /* UX-R3.1 */
+.sync.erro{background:#FDE8E7!important;color:#B42318!important;box-shadow:0 0 0 1px #FECDCA!important}
 
 /* ======================= CONTEÚDO ======================= */
 .content{padding:12px var(--sx-gutter) 40px!important}
@@ -2240,7 +2240,6 @@ table.atable tbody tr:hover td{background:#FAFBFE!important}
 .pcol,.mcol,.kcol{background:rgba(255,255,255,.5)!important;border:0!important;border-radius:var(--sx-r-card)!important;box-shadow:none!important}
 
 
-.pboard{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 40px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 40px),transparent)}
 .bars .b{background:var(--sx-sunken)!important;border-radius:999px!important}
 
 /* ======================= MODAL, GAVETA, FLUTUANTES ======================= */
@@ -2334,7 +2333,6 @@ table.atable tbody tr:hover td{background:#FAFBFE!important}
 .trkh{gap:8px!important}
 
 /* ---------- Kanban mais legível ---------- */
-.pboard{grid-auto-columns:minmax(260px,1fr)!important}
 .mst{white-space:normal!important;line-height:1.3!important}
 .mcard{padding:14px 16px!important}
 .mcard .mt{font-size:14.5px!important;line-height:1.3!important}
@@ -2356,7 +2354,7 @@ table.atable tbody tr:hover td{background:#FAFBFE!important}
     padding:6px 8px calc(6px + env(safe-area-inset-bottom))!important;border-radius:20px 20px 0 0!important;background:#FFFFFF!important;
     box-shadow:0 -8px 30px rgba(14,16,48,.10)!important;overflow:visible!important;gap:2px!important;-webkit-mask-image:none!important;mask-image:none!important;z-index:40!important}
   .main{padding-bottom:calc(88px + env(safe-area-inset-bottom))!important}
-  .toast{bottom:calc(96px + env(safe-area-inset-bottom))!important}
+  .toast{bottom:calc(140px + env(safe-area-inset-bottom))!important}
   /* 4 destinos principais + Mais */
   .side .nav{display:none!important}
   .side .nav-more{display:flex!important}.side .nav[data-view="dash"],.side .nav[data-view="inbox"],.side .nav[data-view="mine"],.side .nav[data-view="proc"]{display:flex!important}
@@ -2461,7 +2459,7 @@ table.atable tbody tr:hover td{background:#FAFBFE!important}
   .ibx-tab{min-width:120px}
   .ibx-row{grid-template-columns:12px 28px minmax(0,1fr) auto;grid-template-areas:"st av tit when" "st av msg n" ". . acts acts";gap:4px 10px;padding:12px 10px}
   .ibx-st{grid-area:st;align-self:start;margin-top:5px}.ibx-av{grid-area:av;align-self:start}.ibx-tit{grid-area:tit}.ibx-msg{grid-area:msg;white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
-  .ibx-when{grid-area:when}.ibx-n{grid-area:n;justify-self:end}.ibx-acts{grid-area:acts;position:static;transform:none;justify-content:flex-end;opacity:1;pointer-events:auto;margin-top:6px}
+  .ibx-when{grid-area:when}.ibx-n{grid-area:n;justify-self:end}.ibx-acts{grid-area:acts;position:relative;transform:none;justify-content:flex-end;opacity:1;pointer-events:auto;margin-top:6px}
   .ibx-row:hover .ibx-n,.ibx-row:hover .ibx-when,.ibx-row:focus-within .ibx-n,.ibx-row:focus-within .ibx-when{visibility:visible}
   .ibx-clear{height:44px}
   .ibx-act{width:44px;height:44px}
@@ -2614,7 +2612,6 @@ body.arrastando .pcol{transition:background-color .15s}
 .cg-cell.excesso .cg-fill{background:rgba(162,28,17,.16)}
 .cg-cell.fds{background:repeating-linear-gradient(-45deg,#F6F7FB 0 6px,#EEF0F6 6px 12px);color:var(--sx-text-3)}
 .cg-cell.fds.ok,.cg-cell.fds.cheio,.cg-cell.fds.excesso{background-blend-mode:normal}
-.cg-cell.passado{opacity:.6}
 .cg-cell.hoje{box-shadow:inset 0 0 0 2px var(--mn-ink)!important}
 .cg-cell:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(14,16,48,.10)!important}
 .cg-cell.hoje:hover{box-shadow:inset 0 0 0 2px var(--mn-ink),0 6px 16px rgba(14,16,48,.10)!important}
@@ -2856,7 +2853,6 @@ body.arrastando .pcol{transition:background-color .15s}
 /* nomes do cadastro sempre em maiúsculas (também na árvore de clientes) */
 #layer [data-cf="nome"],#layer [data-cf="grupo"],#layer [data-cf="contato"],#layer [data-ce$="|nome"],#layer [data-ce$="|razao"],.cd-outro{text-transform:uppercase}
 #layer [data-cf="nome"]::placeholder,#layer [data-ce$="|nome"]::placeholder,#layer [data-ce$="|razao"]::placeholder,.cd-outro::placeholder{text-transform:none}
-.tree .tn{text-transform:uppercase;letter-spacing:.01em}
 .cd-outro{margin-top:6px}
 .f select[disabled]{opacity:.55;cursor:not-allowed}
 
@@ -3501,7 +3497,7 @@ button.cu-row:hover{background:#F6F7F9!important;color:#1F2033!important}
 /* ===== Canais (modelo ClickUp) ===== */
 .cn-wrap{display:grid;grid-template-columns:280px minmax(0,1fr);gap:16px;height:calc(100vh - 112px);height:calc(100dvh - 112px);min-height:520px}
 .cn-lst,.cn-pane{background:#fff;border-radius:20px!important;box-shadow:0 1px 3px rgba(14,16,48,.07)!important;min-height:0;display:flex;flex-direction:column;overflow:hidden}
-.cn-lh{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:16px 16px 10px}.cn-lh b{font:700 17px var(--font-display,inherit)}
+.cn-lh{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:16px 16px 10px}.cn-lh b,.cn-lh .cn-h1{font:700 17px var(--font-display,inherit)}
 .cn-q{margin:0 12px 8px;border:1px solid #DCDDE3;border-radius:12px!important;padding:8px 12px;font:inherit;min-height:38px}
 .cn-scroll{flex:1;overflow:auto;padding:0 8px 12px}
 .cn-sec{font-size:11.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--mu-text-3)/* FIX UX-4 */;padding:12px 10px 4px}
@@ -3606,12 +3602,11 @@ html body #drawer .dhead .cn-dacts>.btn:hover{background:#F4F7FD!important}
   header.top .crumbs>span{display:none!important}
   header.top .crumbs b{display:block;overflow:hidden;text-overflow:ellipsis}
   header.top .spacer{display:none!important}
-  #btnBack,#btnFwd,#nextMeet{display:none!important}
+  #btnBack,#nextMeet{display:none!important}
   header.top .esp-pill{margin-right:0!important;max-width:170px;overflow:hidden}
   #sync{font-size:0!important;width:10px;height:10px;padding:0!important;border-radius:50%!important;overflow:hidden}
   .chip-me .tx{display:none!important}
   .chip-me{padding:0!important;gap:0!important}
-  #topNew{padding:0 12px!important;white-space:nowrap}
   .drawer,#drawer{max-width:calc(100vw - 20px)!important}
   html:not(.sb-over) body nav#side{z-index:19!important}
   .modal{max-width:calc(100vw - 32px)!important}
@@ -3621,8 +3616,6 @@ html body #drawer .dhead .cn-dacts>.btn:hover{background:#F4F7FD!important}
   #view table{max-width:100%}
 }
 @media (min-width:769px) and (max-width:1100px){
-  #topNew{font-size:0!important;width:40px;height:40px;padding:0!important;justify-content:center}
-  #topNew svg{width:20px;height:20px;margin:0!important}
   #topTimer{max-width:110px;overflow:hidden}
 }
 
@@ -3648,7 +3641,7 @@ html body #drawer .dhead .cn-dacts>.btn:hover{background:#F4F7FD!important}
 
 /* ===== Toque no iPad: sem seleção acidental e alvos de 44px ===== */
 @media (hover:none) and (pointer:coarse) and (min-width:769px){
-  button,.chip,[role=tab],[role=button],label.chip-me,.esp-pill,.fchips,.dfilters,.ibx-tools,.ibx-empty,.leg,.pagehead p,.crumbs,.badge,.ibx-tabs{-webkit-user-select:none!important;user-select:none!important;-webkit-touch-callout:none}.btn,.nav,.seg,.empty,.tabs{-webkit-user-select:none!important;user-select:none!important;-webkit-touch-callout:none}
+  button,.chip,[role=tab],[role=button],.chip-me,.esp-pill,.fchips,.dfilters,.ibx-tools,.ibx-empty,.leg,.pagehead p,.crumbs,.badge,.ibx-tabs{-webkit-user-select:none!important;user-select:none!important;-webkit-touch-callout:none}.btn,.nav,.seg,.empty,.tabs{-webkit-user-select:none!important;user-select:none!important;-webkit-touch-callout:none}
   button,a,[role=tab]{-webkit-tap-highlight-color:transparent;touch-action:manipulation}.btn{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
   [contenteditable],[contenteditable] *{-webkit-user-select:text!important;user-select:text!important}input,textarea,select{-webkit-user-select:text!important;user-select:text!important}
   #view .btn,#view .seg button,#view .fchips button,#view .dfil,#view .dlink,#view .madd,#view [role=tab],header.top .iconbtn,header.top .navbtn,header.top .esp-pill,#topNew,.pm-pushbt button{min-height:44px!important}
@@ -3726,7 +3719,8 @@ html.cm-aberto body{overflow:hidden}
   html.mx.mx-open .mx-burger span:nth-child(2){opacity:0}
   html.mx.mx-open .mx-burger span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
   html.mx .mx-burger:focus-visible,html.mx .mx-close:focus-visible{outline:3px solid var(--azul,#0000FF);outline-offset:2px}
-  html.mx #btnBack,html.mx #btnFwd,html.mx #sync,html.mx #nextMeet,html.mx header.top .esp-pill,html.mx header.top .spacer{display:none!important}
+  html.mx #btnBack,html.mx #sync,html.mx #nextMeet,html.mx header.top .esp-pill,html.mx header.top .spacer{display:none!important}
+  html.mx #sync.erro{display:inline-flex!important;align-items:center;font-size:11px!important;width:auto!important;height:auto!important;padding:4px 8px!important;border-radius:999px!important;overflow:visible} /* UX-R3.1: no celular, aparece só quando há erro */
   html.mx header.top .crumbs{display:flex!important;flex:1 1 auto!important;min-width:0!important;margin:0!important;font-size:15px!important}
   html.mx header.top .crumbs>span{display:none!important}
   html.mx header.top .crumbs b{display:block;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600}
@@ -3735,8 +3729,6 @@ html.cm-aberto body{overflow:hidden}
   html.mx .chip-me{padding:3px!important;min-width:0!important;background:transparent!important;box-shadow:none!important}
   html.mx .chip-me .tx{display:none!important}
   html.mx #btnBell{width:40px!important;height:40px!important;min-width:40px!important}
-  html.mx #topNew{width:42px!important;height:42px!important;min-width:42px!important;padding:0!important;border-radius:999px!important;font-size:0!important;gap:0!important;justify-content:center!important}
-  html.mx #topNew svg,html.mx #topNew .ic{width:20px!important;height:20px!important;margin:0!important}
 
   /* ---------- menu hambúrguer (gaveta lateral) ---------- */
   html.mx .side{position:fixed!important;top:0!important;bottom:0!important;left:0!important;right:auto!important;z-index:200!important;
@@ -4116,15 +4108,22 @@ img,svg,video{max-width:100%}
   </nav>
   <div class="main">
     <header class="top">
-      <button class="navbtn" id="btnBack" title="Voltar" aria-label="Voltar">&#8592;</button><button class="navbtn" id="btnFwd" title="Avançar" aria-label="Avançar">&#8594;</button>
+      <button class="navbtn" id="btnBack" title="Voltar" aria-label="Voltar" hidden>&#8592;</button>
       <div class="crumbs" aria-label="Você está em"><span>Mannare</span><span>&#8250;</span><b id="crumbNow">Dashboard</b></div>
       <span class="spacer"></span>
       <span id="topTimer"></span>
       <span id="nextMeet"></span>
       <button class="iconbtn" id="btnBell" title="Notificações" aria-label="Notificações"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 1 7 7v5l2 3v1H3v-1l2-3V9a7 7 0 0 1 7-7zM9 20h6a3 3 0 0 1-6 0z"/></svg><span class="badge" id="nBell" hidden></span></button>
       <span class="sync ok" id="sync" role="status" aria-live="polite">Salvo</span>
-      <label class="chip-me" id="chipMe" title="Meu perfil" aria-label="Meu perfil"><span id="meAv"></span><span class="tx"><div class="nm" id="meNome"></div><div class="em" id="meEmail"></div></span></label>
-      <button class="btn primary" data-view-go="prop" id="topNew"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 4h2v7h7v2h-7v7h-2v-7H4v-2h7z"/></svg> Abrir processo</button>
+      <button type="button" class="chip-me" id="chipMe" title="Meu perfil" aria-haspopup="dialog" aria-expanded="false"><span id="meAv" aria-hidden="true"></span><span class="tx"><span class="nm" id="meNome"></span><span class="em" id="meEmail"></span></span></button>
+      <div class="newmenu">
+        <button class="btn primary" id="topNew" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="newList" aria-label="Criar novo"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 4h2v7h7v2h-7v7h-2v-7H4v-2h7z"/></svg> Novo <span class="caret" aria-hidden="true">▾</span></button>
+        <ul class="newlist" id="newList" role="menu" hidden>
+          <li role="none"><button role="menuitem" type="button" data-ppnova>Proposta<small>Do pedido ao aceite do cliente</small></button></li>
+          <li role="none"><button role="menuitem" type="button" data-avnew>Processo sem proposta<small>Serviço já contratado</small></button></li>
+          <li role="none"><button role="menuitem" type="button" data-psnew>Tarefa avulsa<small>Sem processo vinculado</small></button></li>
+        </ul>
+      </div>
     </header>
     <div class="content" role="main"><div id="view" tabindex="-1"></div></div>
   </div>
@@ -4172,7 +4171,10 @@ const DEFAULT_USERS = [];
 const STATUS_U = {online:'Online', ausente:'Ausente', offline:'Off-line', folga:'De folga'};
 let USERS = DEFAULT_USERS, U = {};
 const iniOf = n => (n || '?').replace(/\(.*?\)/g, '').trim().split(/\s+/).filter(Boolean).map((w, i, a) => i === 0 || i === a.length - 1 ? w[0] : '').join('').slice(0, 2).toUpperCase();
-const lightBg = c => ['#00D2FF', '#FDCA40', '#CCCCFF', '#66E4FF'].includes((c || '').toUpperCase());
+/* UX-T5: letra escura ou branca pelo contraste real (WCAG), não por uma lista fixa de cores */
+const lumin = h => { const c = (h || '#000').replace('#', '').match(/../g).map(x => parseInt(x, 16) / 255).map(x => x <= .03928 ? x / 12.92 : Math.pow((x + .055) / 1.055, 2.4)); return .2126 * c[0] + .7152 * c[1] + .0722 * c[2]; };
+const contraste = (a, b) => { const [x, y] = [lumin(a), lumin(b)].sort((m, n) => n - m); return (x + .05) / (y + .05); };
+const lightBg = c => /^#[0-9a-f]{6}$/i.test(c || '') && contraste(c, '#FFFFFF') < 4.5;
 function setUsers(list){ USERS = list; U = Object.fromEntries(USERS.map(u => [u.id, u])); }
 const isEq = id => typeof id === 'string' && id.startsWith('eq:');
 const equipes = () => ((typeof S !== 'undefined' && S && S.cfg && S.cfg.equipes) || []);
@@ -4183,7 +4185,9 @@ const optsResp = (sel, nomeCompleto) => USERS.map(u => `<option value="${u.id}" 
 const pcod = p => p ? (String(p.protocolo || '').trim() || p.codigo || '') : '';
 const ORG_COR = {SEUMA:'#12B76A', SEINF:'#F79009', SEFIN:'#0000FF', AMC:'#7A5AF8', SEGER:'#00A9CC', CBMCE:'#D92D20', SEMACE:'#0E9384', IPHAN:'#C99500'};
 function orgaoSigla(p){ const a = typeof tramAtual === 'function' ? tramAtual(p) : null; let s = String((a && a.setor) || p.orgao || '').trim(); if(!s || s === '—') return '';
-  s = s.split(/[\/(|–]|\s-\s/)[0].trim().replace(/^\d+\s*/, ''); return s.toUpperCase().slice(0, 18); }
+  s = s.split(/[\/(|–]|\s-\s/)[0].trim().replace(/^\d+\s*/, ''); const n = s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase(); /* UX-T2: siglas para nomes longos */
+  for(const [re, sg] of ORG_SIGLA) if(re.test(n)) return sg; return s.toUpperCase().slice(0, 18); }
+const ORG_SIGLA = [[/^cartorio de registro de imoveis|^registro de imoveis/, 'CRI'], [/^cartorio de notas|^tabelionato de notas/, 'NOTAS'], [/^cartorio/, 'CARTÓRIO'], [/^corpo de bombeiros/, 'CBMCE'], [/^secretaria (municipal )?(de )?urbanismo e meio ambiente/, 'SEUMA'], [/^secretaria (municipal )?(das )?financas/, 'SEFIN']];
 function orgaoTag(p){ const s = orgaoSigla(p); if(!s) return ''; const a = typeof tramAtual === 'function' ? tramAtual(p) : null;
   return `<span class="orgtag" style="--oc:${ORG_COR[s] || '#52525B'}" title="${a ? 'Tramitando em ' + esc(a.setor) : 'Órgão: ' + esc(p.orgao || '')}">${ic('pin', 'sm')}${esc(s)}</span>`; }
 const first = id => isEq(id) ? ((eqById(id) || {}).nome || 'Equipe') : (U[id]?.nome || '').split(' ')[0];
@@ -4205,7 +4209,7 @@ const PROP_ST = {
 const PROC_ST = [
   /* FIX UX-3B: cores dos 8 status aprovadas na FASE 2 (só as cores mudaram) */
   {k:'naoiniciado', l:'Não iniciado',          c:'#9A9DB0', bg:'#F2F3F7'},
-  {k:'levdoc',      l:'Lev. documentação',     c:'#E0A800', bg:'#FFF4D9'},
+  {k:'levdoc',      l:'Documentação',     c:'#E0A800', bg:'#FFF4D9'},
   {k:'protocolo',   l:'Protocolo',             c:'#00A9CC', bg:'#E0F8FF'},
   {k:'analise',     l:'Análise',               c:'#0000FF', bg:'#EBEBFF'},
   {k:'notifdev',    l:'Notificação devolvida', c:'#7A5AF8', bg:'#F1EDFF'},
@@ -4337,7 +4341,7 @@ function merge3(b, m, t){
   }
   return m;
 }
-function setSync(st){ const el = $('#sync'); if(!el) return; el.className = 'sync ' + st; el.title = {ok:'Tudo salvo', salvando:'Salvando…', erro:'Sem conexão: as mudanças serão enviadas quando voltar'}[st]; el.textContent = {ok:'Salvo', salvando:'Salvando…', erro:'Sem conexão'}[st]; }
+function setSync(st){ const el = $('#sync'); if(!el) return; el.className = 'sync ' + st; el.setAttribute('aria-live', st === 'erro' ? 'assertive' : 'polite'); el.title = {ok:'Tudo salvo', salvando:'Salvando…', erro:'Sem conexão: as mudanças serão enviadas quando voltar'}[st]; el.textContent = {ok:'Salvo', salvando:'Salvando…', erro:'Sem conexão'}[st]; }
 function save(){ if(!DB.ready) return; setSync('salvando'); clearTimeout(DB.timer); DB.timer = setTimeout(flush, 350); }
 async function flush(){
   if(DB.busy){ DB.again = true; return; }
@@ -4513,9 +4517,11 @@ function render(){
   $('#meAv').innerHTML = av(me, false, true); $('#meNome').textContent = U[me].nome; $('#meEmail').textContent = U[me].email || U[me].cargo || '';
   $$('#side [data-view]').forEach(b => b.classList.toggle('on', b.dataset.view === ui.view));
   const openP = S.procs.filter(isOpen).length;
-  $('#nProc').innerHTML = openP ? `<span class="n">${openP}</span>` : '';
+  const lateP = S.procs.filter(p => isOpen(p) && procAtraso(p) > 0).length; /* UX-T5: vermelho só quando há atraso */
+  $('#nProc').innerHTML = lateP ? `<span class="n red" title="${lateP} atrasado(s) de ${openP} em andamento">${lateP}</span>` : openP ? `<span class="n">${openP}</span>` : '';
   const mine = myItems().filter(i => !i.feito).length;
-  $('#nMine').innerHTML = mine ? `<span class="n">${mine}</span>` : '';
+  const lateM = myItems().filter(i => !i.feito && i.prazo && diffDays(i.prazo) < 0).length;
+  $('#nMine').innerHTML = lateM ? `<span class="n red" title="${lateM} atrasada(s) de ${mine} em aberto">${lateM}</span>` : mine ? `<span class="n">${mine}</span>` : '';
   { const la = (S.lics || []).filter(l => ['vencida', 'fora', 'renovar'].includes(licInfo(l).st)).length + semLicenca().length;
     $('#nLic').innerHTML = la ? `<span class="n red">${la}</span>` : ''; }
   { const n = S.mats.filter(m => m.status !== 'entregue' && respTem(m.resp, me)).length; $('#nMat').innerHTML = n ? `<span class="n">${n}</span>` : ''; }
@@ -4524,6 +4530,7 @@ function render(){
   if(ui.hist[ui.hpos] !== ui.view){ ui.hist = ui.hist.slice(0, ui.hpos + 1); ui.hist.push(ui.view); ui.hpos = ui.hist.length - 1; }
   const un = S.notifs.filter(n => n.para === me && !n.lida).length;
   $('#nBell').hidden = !un; $('#nBell').textContent = un;
+  $('#btnBell').setAttribute('aria-label', un ? `Notificações, ${un} não lida${un > 1 ? 's' : ''}` : 'Notificações'); /* UX-R3.2 */
   syncModelos();
   setTimeout(proxReuniaoChip, 0);
   { const n = finLate(); $('#nFin').innerHTML = n ? `<span class="n red">${n}</span>` : ''; }
@@ -4583,18 +4590,28 @@ function procPrazoHtml(p){
   const n = diffDays(p.prazo), cls = !isOpen(p) ? '' : n < 0 ? 'l' : n <= 3 ? 's' : '';
   return `<span class="pk-due ${cls}">${ic('relogio', 'sm')} Prazo ${fmtD(p.prazo)}</span>`;
 }
-function procCard(p){
+/* UX-T2: avatares do cartão sem foco (o cartão já abre pelo título) */
+const avsCard = ids => {
+  const l = ids && ids.length ? ids : [null], extra = l.length > 4 ? l.length - 3 : 0;
+  const nomes = l.filter(Boolean).map(first).join(', ');
+  return `<span class="avs" aria-hidden="true">${(extra ? l.slice(0, 3) : l).map(i => av(i, true, true)).join('')}${extra ? `<span class="av sm pk-mais">+${extra}</span>` : ''}</span>`
+    + (nomes ? `<span class="sr-only">Equipe: ${esc(nomes)}</span>` : '');
+};
+function procCard(p){ /* UX-T2: título é um botão de verdade e o status muda pelo seletor, sem arrastar */
   const pr = propById(p.propId) || p.prop || {}, g = progress(p), lc = lateCount(p), a = tramAtual(p), atr = procAtraso(p), meu = procMeu(p);
   const ncom = p.coms.length + p.tarefas.reduce((x, t) => x + t.coms.length, 0);
   const tv = lc ? p.tarefas.filter(t => t.status !== 'concluida' && t.prazo && diffDays(t.prazo) < 0).sort((x, y) => x.prazo.localeCompare(y.prazo))[0] : null;
-  return `<div class="mcard pk ${atr ? 'is-late' : ''}" draggable="true" data-proc="${p.id}">
-    <div class="pk-r1">${atr ? `<span class="pk-late">${ic('alerta', 'sm')} Atrasado ${atr} d</span>` : ''}${meu ? '<span class="mine">Meu</span>' : ''}<span class="pk-cod">${esc(pcod(p))}</span></div>
-    <div class="pk-t">${esc(pr.emp || p.servico || pcod(p))}</div>
+  const nome = pr.emp || p.servico || pcod(p);
+  const opts = PROC_ST.map(s => `<option value="${s.k}"${s.k === p.status ? ' selected' : ''}>${s.l}</option>`).join('');
+  return `<article class="mcard pk ${atr ? 'is-late' : ''}" draggable="true" data-proc="${p.id}" tabindex="-1" aria-labelledby="pkt-${p.id}">
+    <header class="pk-r1"><span class="pk-tags">${atr ? `<span class="pk-late">${ic('alerta', 'sm')} Atrasado ${atr} d</span>` : ''}${meu ? '<span class="mine">Meu</span>' : ''}</span><span class="pk-cod">${esc(pcod(p))}</span></header>
+    <h3 class="pk-t" id="pkt-${p.id}"><button type="button" class="pk-open">${esc(nome)}</button></h3>
     <div class="pk-s">${esc(p.servico || pr.tipo || '')}${pr.cliente ? (p.servico || pr.tipo ? ' | ' : '') + esc(pr.cliente) : ''}</div>
-    <div class="pk-meta"><span title="Tarefas concluídas">${ic('check', 'sm')} ${g.ok}/${g.tot}</span>${ncom ? `<span title="Comentários">${ic('comentario', 'sm')} ${ncom}</span>` : ''}${p.drive ? `<a href="${esc(p.drive)}" target="_blank" rel="noopener" data-stop title="Pasta no Drive">${ic('pasta', 'sm')}</a>` : ''}${orgaoTag(p)}${a ? `<span>${a.dias === 0 ? 'chegou hoje' : 'há ' + a.dias + ' d'}</span>` : ''}${procCronoHtml(p)}${p.valProt && p.valProt.st === 'pendente' ? `<span class="ctag late" title="Aguardando validação de ${esc(first(p.valProt.por))}">validação: ${esc(first(p.valProt.por))}</span>` : ''}</div>
+    <div class="pk-meta"><span title="Tarefas concluídas">${ic('check', 'sm')} ${g.ok}/${g.tot}</span>${ncom ? `<span title="Comentários">${ic('comentario', 'sm')} ${ncom}</span>` : ''}${p.drive ? `<a href="${esc(p.drive)}" target="_blank" rel="noopener" data-stop title="Pasta no Drive" aria-label="Abrir pasta no Drive">${ic('pasta', 'sm')}</a>` : ''}${orgaoTag(p)}${a ? `<span>${a.dias === 0 ? 'chegou hoje' : 'há ' + a.dias + ' d'}</span>` : ''}${procCronoHtml(p)}${p.valProt && p.valProt.st === 'pendente' ? `<span class="ctag late" title="Aguardando validação de ${esc(first(p.valProt.por))}">validação: ${esc(first(p.valProt.por))}</span>` : ''}</div>
     ${lc ? `<div class="pk-warn">${lc} tarefa${lc > 1 ? 's' : ''} atrasada${lc > 1 ? 's' : ''}${tv ? ': ' + esc(tv.titulo) : ''}</div>` : ''}
-    <div class="pk-ft">${procPrazoHtml(p)}${avs(procPessoas(p))}</div>
-  </div>`;
+    <div class="pk-strow" data-stop><label class="sr-only" for="pks-${p.id}">Status de ${esc(nome)}</label><select class="pk-st" id="pks-${p.id}" data-pkst="${p.id}">${opts}</select></div>
+    <footer class="pk-ft">${procPrazoHtml(p)}${avsCard(procPessoas(p))}</footer>
+  </article>`;
 }
 function procRow(p){
   const pr = propById(p.propId) || p.prop || {}, g = progress(p), lc = lateCount(p), a = tramAtual(p), atr = procAtraso(p);
@@ -4618,7 +4635,8 @@ function procRow(p){
 /* FIX UX-4P: limpar filtros, abrir/recolher coluna vazia e mostrar filtros no celular */
 document.addEventListener('click', e => {
   const el = e.target.closest && e.target.closest('[data-fclear],[data-colopen],[data-ftog]'); if(!el) return;
-  if(el.hasAttribute('data-ftog')){ ui.fOpen = !ui.fOpen; render(); return; }
+  if(el.hasAttribute('data-ftog')){ ui.fOpen = !ui.fOpen; render();
+    const f = document.querySelector(matchMedia('(max-width:760px)').matches ? '#view .pk-ftog' : '#view .pk-fmore'); if(f) f.focus(); return; }
   if(el.hasAttribute('data-colopen')){ e.stopPropagation(); const k = el.dataset.colopen; ui.colOpen = Object.assign({}, ui.colOpen); ui.colOpen[k] = !ui.colOpen[k]; render(); return; }
   const z = {q:'', fResp:'', fServ:'', pSt:'', fAlert:'', fMine:false}, k = el.dataset.fclear;
   if(k === '*') Object.assign(ui, z); else if(k in z) ui[k] = z[k]; render();
@@ -4631,7 +4649,7 @@ function renderProcs(){
   /* FIX UX-4P: faixa fina de contadores que também filtram */
   const KP = [['atras', 'Atrasados'], ['meu', 'Meus'], ['prazo7', 'Prazos em 7 dias'], ['exig', 'Notificados'], ['parado', 'Parados há 7 dias']];
   const alerts = `<div class="pk-kst" role="group" aria-label="Filtros rápidos">${KP.map(([k, l]) => { const n = cnt(k); return `<button class="pkk ${ui.fAlert === k ? 'on' : ''} ${k === 'atras' && n ? 'alert' : ''} ${n ? '' : 'zero'}" data-alert="${k}" aria-pressed="${ui.fAlert === k}"><b>${n}</b><span>${l}</span></button>`; }).join('')}</div>`;
-  const nFil = [ui.q, ui.fResp, ui.fServ, ui.pSt, ui.fMine].filter(Boolean).length;
+  const nFil = [ui.q, ui.fResp, ui.fServ, ui.pSt, ui.fMine].filter(Boolean).length, nSel = [ui.fResp, ui.fServ, ui.pSt, ui.fMine].filter(Boolean).length;
   const ftog = `<button class="btn pk-ftog" data-ftog aria-expanded="${!!ui.fOpen}">${ic('busca', 'sm')} ${ui.fOpen ? 'Esconder filtros' : 'Buscar e filtrar'}${nFil ? ' (' + nFil + ')' : ''}</button>`;
   const at = [];
   if(ui.fAlert) at.push(['fAlert', (KP.find(x => x[0] === ui.fAlert) || [0, ui.fAlert])[1]]);
@@ -4643,10 +4661,13 @@ function renderProcs(){
   const ativos = at.length ? `<div class="pk-ativos">Filtros ativos: ${at.map(([k, l]) => `<button class="pk-chip" data-fclear="${k}" aria-label="Tirar o filtro ${esc(l)}">${esc(l)} ×</button>`).join('')}<a class="link" data-fclear="*">Limpar</a></div>` : '';
   const filtros = `<div class="filters ${ui.fOpen ? 'open' : ''}">
       <input type="search" id="pq" placeholder="Buscar por cliente, obra, código ou protocolo" value="${esc(ui.q)}">
+      <button type="button" class="btn pk-fmore" data-ftog aria-expanded="${!!ui.fOpen}" aria-controls="pkFmais">Filtros${nSel ? ' (' + nSel + ')' : ''} <span aria-hidden="true">${ui.fOpen ? '▴' : '▾'}</span></button>
+      <div class="pk-fmais" id="pkFmais">
       <select id="pResp"><option value="">Todas as pessoas</option>${USERS.map(u => `<option value="${u.id}" ${ui.fResp === u.id ? 'selected' : ''}>${esc(u.nome)}</option>`).join('')}</select>
       <select id="pServ"><option value="">Todos os serviços</option>${Object.entries(MODELOS).map(([k, m]) => `<option value="${k}" ${ui.fServ === k ? 'selected' : ''}>${m.nome}</option>`).join('')}</select>
       <select id="pSt"><option value="">Todos os status</option><option value="abertos" ${ui.pSt === 'abertos' ? 'selected' : ''}>Em aberto (sem concluídos/arquivados)</option>${PROC_ST.map(st => `<option value="${st.k}" ${ui.pSt === st.k ? 'selected' : ''}>${st.l}</option>`).join('')}</select>
       <label class="pk-mine"><input type="checkbox" id="pMine" ${ui.fMine ? 'checked' : ''}> Só onde tenho tarefa</label>
+      </div>
     </div>`;
   let body;
   if(ui.procMode === 'gantt'){
@@ -4661,11 +4682,13 @@ function renderProcs(){
     /* FIX UX-4P: cartões novos, atrasados no alto da coluna e colunas vazias recolhidas */
     const cols = PROC_ST.filter(st => !ui.pSt || (ui.pSt === 'abertos' ? isOpen({status:st.k}) : st.k === ui.pSt)).map(st => ({st, ps:list.filter(p => p.status === st.k).sort(procOrdem)}));
     cols.forEach(c => { c.min = !c.ps.length && !(ui.colOpen || {})[c.st.k]; });
-    const pkc = cols.map(c => c.min ? '44px' : 'minmax(264px,1fr)').join(' '), pkcm = cols.map(c => c.min ? '44px' : '82vw').join(' ');
-    body = `<div class="pboard pk-board" style="--pkc:${pkc};--pkcm:${pkcm}">${cols.map(({st, ps, min}) => min
-      ? `<div class="pcol pk-min" data-col="${st.k}" data-colopen="${st.k}" role="button" tabindex="0" title="Abrir a coluna ${st.l}" aria-label="Abrir a coluna ${st.l} (vazia)"><span class="pk-dot" style="--c:${st.c}"></span><span class="pk-n">0</span><b>${st.l}</b></div>`
-      : `<div class="pcol" data-col="${st.k}"><div class="mh"><span class="mst" style="--c:${st.c}">${st.l}</span><span class="sub mcnt">${ps.length}</span>${ps.length ? '' : `<button class="pk-fecha" data-colopen="${st.k}" title="Recolher a coluna" aria-label="Recolher a coluna ${st.l}">×</button>`}${typeof avulsoModal === 'function' ? `<button class="pk-add" data-avnew="${st.k}" title="Novo processo em ${st.l}" aria-label="Novo processo em ${st.l}">${ic('mais', 'sm')}</button>` : ''}</div>
-        ${ps.map(procCard).join('')}</div>`).join('')}</div><p class="hint">Arraste os cartões entre as colunas para mudar o status. Coluna vazia fica recolhida: clique nela para abrir.</p>`;
+    /* UX-T3: colunas vazias saem do quadro e viram etiquetas acima dele */
+    const cheias = cols.filter(c => !c.min), vazias = cols.filter(c => c.min);
+    const pkc = cheias.map(() => 'minmax(232px,1fr)').join(' '), pkcm = cheias.map(() => '82vw').join(' ');
+    const barra = vazias.length ? `<div class="pk-vazias" role="group" aria-label="Colunas sem processos"><span class="sub">Sem processos:</span>${vazias.map(({st}) => `<button type="button" class="pk-vz" data-colopen="${st.k}" aria-label="Mostrar a coluna ${st.l} (vazia)"><span class="pk-dot" style="--c:${st.c}"></span>${st.l}</button>`).join('')}</div>` : '';
+    const coluna = ({st, ps}) => `<div class="pcol" data-col="${st.k}"><div class="mh"><h2 class="mst" style="--c:${st.c}">${st.l}</h2><span class="sub mcnt">${ps.length}</span>${ps.length ? '' : `<button class="pk-fecha" data-colopen="${st.k}" title="Recolher a coluna" aria-label="Recolher a coluna ${st.l}">×</button>`}${typeof avulsoModal === 'function' ? `<button class="pk-add" data-avnew="${st.k}" title="Novo processo em ${st.l}" aria-label="Novo processo em ${st.l}">${ic('mais', 'sm')}</button>` : ''}</div>
+        ${ps.map(procCard).join('')}</div>`;
+    body = `${barra}<div class="pk-wrap"><button type="button" class="pk-nav prev" aria-label="Ver colunas anteriores" hidden>‹</button><div class="pboard pk-board" style="--pkc:${pkc || '1fr'};--pkcm:${pkcm || '82vw'}">${cheias.map(coluna).join('')}</div><button type="button" class="pk-nav next" aria-label="Ver mais colunas" hidden>›</button></div><p class="hint">Arraste os cartões ou use o seletor de status de cada um.</p>`;
   }
   const crumb = ui.sel.g ? `<div class="crumb"><a class="link" data-tall>Todos</a> / ${ui.sel.e ? `<a class="link" data-tg="${esc(ui.sel.g)}">${esc(ui.sel.g)}</a> / <b>${esc(ui.sel.e)}</b>` : `<b>${esc(ui.sel.g)}</b>`}</div>` : '';
   const scroll = $('.tree')?.scrollTop || 0, hideT = ui.procMode === 'quadro' && ui.hideTree;
@@ -4725,8 +4748,8 @@ function renderMine(){
       : `<span class="mt-ck mt-nochk" title="Conclua abrindo o item"><i></i></span>`;
     const chip = i.tipo === 'tar' ? '' : `<span class="mt-k ${i.tipo}">${i.rot || ROT[i.tipo]}</span>`;
     const ctx = semCtxProc && i.ctxP !== undefined ? i.ctxP : i.ctx;
-    return `<div class="mt-row ${late(i) ? 'is-late' : ''} ${i.feito ? 'is-done' : ''}" ${i.abre}>${ck}<div class="mt-dd">${d1}${d2}</div>
-      <div class="mt-m"><div class="mt-t"><span class="n">${esc(i.titulo)}</span>${chip}</div>${ctx ? `<div class="mt-c">${ctx}</div>` : ''}</div><div class="mt-st">${i.st}</div><span class="mt-go" aria-hidden="true">${ic('seta', 'sm')}</span></div>`;
+    return `<div class="mt-row ${late(i) ? 'is-late' : ''} ${i.feito ? 'is-done' : ''}" ${i.abre} tabindex="-1">${ck}<div class="mt-dd">${d1}${d2}</div>
+      <div class="mt-m"><div class="mt-t"><button type="button" class="n row-open">${esc(i.titulo)}</button>${chip}</div>${ctx ? `<div class="mt-c">${ctx}</div>` : ''}</div><div class="mt-st">${i.st}</div><span class="mt-go" aria-hidden="true">${ic('seta', 'sm')}</span></div>`;
   };
   let corpo = '';
   if(!vis.length){
@@ -5129,9 +5152,9 @@ function calHtml(items){
     cells += `<div class="d ${d.getMonth() !== m - 1 ? 'out' : ''} ${iso === TODAY ? 'today' : ''} ${iso === sel ? 'sel' : ''}" data-cal="${iso}">${d.getDate()}${open.length ? `<i class="${diffDays(iso) < 0 && !open.every(x => x.g) ? 'late' : open.every(x => x.g) ? 'g' : ''}"></i>` : ''}</div>`; }
   const dayIts = (byDay[sel] || []).sort((a, b) => a.feito - b.feito);
   const [, sm, sd] = sel.split('-').map(Number);
-  return `<div class="cal"><div class="hd"><b>${MESN[m - 1]} ${y}</b><span class="gchip" data-view-go="integ" title="${gcalOn() ? 'Google Agenda conectada' : 'Conectar a Google Agenda'}">${gIcon(18)}${gcalOn() ? 'Sincronizada' : 'Conectar'}</span><button data-calnav="-1" title="Mês anterior">&#8249;</button><button data-calnav="1" title="Próximo mês">&#8250;</button></div>
+  return `<div class="cal"><div class="hd"><b title="${MESN[m - 1]} de ${y}">${MESN[m - 1].slice(0, 3)}. ${y}</b><button type="button" class="gchip" data-view-go="integ" title="${gcalOn() ? 'Google Agenda conectada' : 'Conectar a Google Agenda'}">${gIcon(18)}<span class="gtx">${gcalOn() ? 'Sincronizada' : 'Conectar'}</span></button><button data-calnav="-1" title="Mês anterior">&#8249;</button><button data-calnav="1" title="Próximo mês">&#8250;</button></div>
     <div class="g">${['S', 'T', 'Q', 'Q', 'S', 'S', 'D'].map(w => `<div class="w">${w}</div>`).join('')}${cells}</div>
-    <div class="agenda"><h6>${sel === TODAY ? 'Hoje | ' : ''}${sd} de ${MESN[sm - 1]}</h6>
+    <div class="agenda"><h2 class="agh">${sel === TODAY ? 'Hoje | ' : ''}${sd} de ${MESN[sm - 1]}</h2>
       ${dayIts.slice(0, 5).map(i => i.g ? `<div class="ag" data-view-go="integ"><span class="dot" style="background:#1A73E8"></span><div style="min-width:0"><div class="tt"><span class="ghr">${i.g.hora}</span>${esc(i.titulo)}</div><div class="sub">Google Agenda${i.g.local ? ' | ' + esc(i.g.local) : ''}</div></div></div>` : `<div class="ag" ${i.lic ? `data-golic="${i.lic.id}"` : `data-open="${i.p.id}|${i.t.id}"`}><span class="dot" style="background:${i.feito ? '#C2C4D3' : i.lic ? '#FDCA40' : diffDays(i.prazo) < 0 ? '#D92D20' : '#0000FF'}"></span><div style="min-width:0"><div class="tt" style="${i.feito ? 'text-decoration:line-through;color:var(--muted)' : ''}">${esc(i.titulo)}</div><div class="sub">${esc(i.lic ? i.obra : propById(i.p.propId).emp)}${i.resp.length ? ' | ' + esc(i.resp.map(first).join(', ')) : ''}</div></div></div>`).join('') || '<div class="sub">Nenhum prazo neste dia.</div>'}
       ${dayIts.length > 5 ? `<div class="sub">+ ${dayIts.length - 5} itens</div>` : ''}</div></div>`;
 }
@@ -5172,7 +5195,7 @@ function activityRows(){
       <td><div class="actt"><span class="aico">${ic(a.txt.includes('coment') ? 'comentario' : a.txt.includes('tramita') ? 'pin' : a.txt.includes('conclu') ? 'check' : 'doc', 'sm')}</span><div><b>${esc(first(a.por))}</b> ${esc(a.txt)}${a.ctx ? `<div class="sub">${esc(a.ctx)}</div>` : ''}</div></div></td>
       <td><b>${esc(pr.emp)}</b><div class="sub">${esc(pcod(a.p))}</div></td>
       <td>${fmtD(isoOf(d))}</td><td>${pad(d.getHours())}:${pad(d.getMinutes())}</td>
-      <td>${av(a.por, true)}</td><td><span class="sdot"><i style="background:${PS[a.p.status].c}"></i>${PS[a.p.status].l}</span></td></tr>`; }).join('');
+      <td>${av(a.por, true, true)}</td><td><span class="sdot"><i style="background:${PS[a.p.status].c}"></i>${PS[a.p.status].l}</span></td></tr>`; }).join('');
 }
 /* FIX #14: primeira versão de renderDash() removida — era código morto (a definição mais abaixo é a que o navegador usa) */
 
@@ -5452,7 +5475,7 @@ function renderInteg(){
   $('#view').innerHTML = `<div class="pagehead"><div><h1>Integrações</h1><p>Conexões do painel com a Google Agenda e com as planilhas da Mannare.</p></div></div>
     <div class="dash">
       <div class="blk c7">
-        <div style="display:flex;gap:14px;align-items:center;margin-bottom:14px"><span class="glogo">${gIcon()}</span><div style="flex:1"><h3 style="margin:0">Google Agenda</h3><div class="sub">Prazos e protocolos na agenda de cada pessoa${ult ? ' | última sincronização ' + fmtWhen(ult) : ''}</div></div>
+        <div style="display:flex;gap:14px;align-items:center;margin-bottom:14px"><span class="glogo">${gIcon()}</span><div style="flex:1"><h2 class="h3" style="margin:0">Google Agenda</h2><div class="sub">Prazos e protocolos na agenda de cada pessoa${ult ? ' | última sincronização ' + fmtWhen(ult) : ''}</div></div>
           ${on ? `<span class="stchip"><i class="st-online"></i>Ligada</span>` : `<span class="stchip"><i class="st-offline"></i>Desligada</span>`}</div>
         <div class="gsect"><div style="flex:1"><b>${esc(U[me].nome)}</b><div class="sub">${on ? 'Seus prazos vão para a agenda “Mannare | Prazos” como convites para ' + esc(me) + '.' : 'Ligue para receber seus prazos como eventos na Google Agenda.'}</div></div>
           ${on ? `<button class="btn sm" data-gcal="off">Desligar</button>` : `<button class="btn primary sm" data-gcal="on">${gIcon(16)} Ligar para mim</button>`}</div>
@@ -5461,13 +5484,13 @@ function renderInteg(){
         <div class="sub" style="margin-top:14px;font-weight:700">Ligada para: ${conList.length ? conList.map(u => esc(first(u.id))).join(', ') : 'ninguém ainda'}</div>
         ${ult ? '' : '<div class="banner" style="margin:12px 0 0">A sincronização automática começa quando a ponte (Apps Script) for instalada. Até lá, use os botões “Adicionar à Google Agenda” das tarefas e licenças.</div>'}
       </div>
-      <div class="blk c5"><h3>Minhas reuniões (próximos dias)</h3>
+      <div class="blk c5"><h2 class="h3">Minhas reuniões (próximos dias)</h2>
         ${on && sy.trazer ? (reunioes().slice(0, 12).map(reuniaoLinha).join('') || '<div class="sub">Nenhuma reunião encontrada. Confira se sua agenda está compartilhada com administrativo@mannare.com.br.</div>') : '<div class="sub">Ligue a agenda e marque “Mostrar no painel as reuniões”.</div>'}</div>
 
       ${integPropHtml()}
       <!-- FIX #10: importação do Painel de Licenças antigo desligada (cadastro manual) -->
 
-      <div class="blk c6"><h3>Regras</h3>
+      <div class="blk c6"><h2 class="h3">Regras</h2>
         <div class="fields" style="margin:0"><label class="f">Quem aprova o material técnico (validação interna)<select id="cfgAprov" ${isSocio() ? '' : 'disabled'}>${USERS.map(u => `<option value="${u.id}" ${u.id === S.cfg.aprovadorMaterial ? 'selected' : ''}>${esc(u.nome)}</option>`).join('')}</select></label>
           <label class="f">E-mails extras para avisos de licença<input id="cfgAvisos" value="${esc(S.cfg.emailsAviso || '')}" placeholder="separe por vírgula" ${isSocio() ? '' : 'disabled'}></label></div></div>
     </div>`;
@@ -5539,12 +5562,14 @@ const matCount = m => { let t = 0, f = 0; m.checks.forEach(c => c.itens.forEach(
 /* FIX #14: primeira versão de notifyMat() removida — era código morto (a definição mais abaixo é a que o navegador usa) */
 function matCard(m){
   const c = matCount(m), run = runningOf(m).length;
-  return `<div class="mcard" draggable="true" data-mat="${m.id}">
-    <div class="mt">${esc(m.titulo)}</div>
+  const opts = MAT_ST.map(s => `<option value="${s.k}"${s.k === m.status ? ' selected' : ''}>${s.l}</option>`).join(''); /* UX-R3.4 */
+  return `<article class="mcard" draggable="true" data-mat="${m.id}" tabindex="-1" aria-labelledby="mct-${m.id}">
+    <h3 class="mt" id="mct-${m.id}"><button type="button" class="pk-open">${esc(m.titulo)}</button></h3>
     <div class="mm">${m.objetivo || m.historico ? `<span title="Tem descrição">${ic('lista', 'sm')}</span>` : ''}<span title="Checklist">${ic('check', 'sm')} ${c.f}/${c.t}</span>${m.coms.length ? `<span>${ic('comentario', 'sm')} ${m.coms.length}</span>` : ''}${run ? `<span class="tmr on"><i></i><span ${liveAttr(m)}>${fmtClock(timeTotal(m))}</span></span>` : timeTotal(m) ? `<span>${ic('relogio', 'sm')} ${fmtDur(timeTotal(m))}</span>` : ''}</div>
     <div class="ptags" style="margin-top:6px">${matVerTag(m)}${ntTag(m)}</div>${matPausaHtml(m) ? `<div class="mm" style="margin-top:4px">${matPausaHtml(m)}</div>` : ''}${m.procId && procById(m.procId) ? `<div class="ptags" style="margin-top:6px"><span class="ctag" title="Processo vinculado">${ic('pasta', 'sm')} ${esc(pcod(procById(m.procId)))}</span>${orgaoTag(procById(m.procId))}</div>` : ''}
-    <div class="mf">${avs(m.resp)}${m.prazo ? `<span class="sub">${ic('relogio', 'sm')} ${dueHtml(m.prazo, m.status === 'entregue')}</span>` : ''}${m.prio !== 'normal' ? `<span class="flag" style="color:${PRIO[m.prio].c}">${ic('bandeira', 'sm')} ${PRIO[m.prio].l}</span>` : ''}</div>
-    <div class="tags" style="margin-top:8px">${tag(m.tipo, '#6666FF')}</div></div>`;
+    <div class="pk-strow" data-stop><label class="sr-only" for="mst-${m.id}">Status de ${esc(m.titulo)}</label><select class="pk-st" id="mst-${m.id}" data-matst="${m.id}">${opts}</select></div>
+    <div class="mf">${avsCard(m.resp)}${m.prazo ? `<span class="sub">${ic('relogio', 'sm')} ${dueHtml(m.prazo, m.status === 'entregue')}</span>` : ''}${m.prio !== 'normal' ? `<span class="flag" style="color:${PRIO[m.prio].c}">${ic('bandeira', 'sm')} ${PRIO[m.prio].l}</span>` : ''}</div>
+    <div class="tags" style="margin-top:8px">${tag(m.tipo, '#6666FF')}</div></article>`;
 }
 function renderMats(){
   const q = norm(ui.mq || '');
@@ -5628,7 +5653,7 @@ function matHandleClick(e, tg){
     if((el = tg.closest('.mentions div'))){ pickMention(el); return true; }
     return tg.closest('.modal') ? true : false;
   }
-  const card = !tg.closest('#layer') && tg.closest('[data-mat]'); if(card && !tg.closest('[data-user]')){ openMat(card.dataset.mat); return true; }
+  const card = !tg.closest('#layer') && tg.closest('[data-mat]'); if(card && !tg.closest('[data-user]') && !tg.closest('[data-stop]')){ openMat(card.dataset.mat); return true; }
   return false;
 }
 function matHandleChange(tg){
@@ -6323,28 +6348,28 @@ async function processSig(file){
 function integPropHtml(){
   const pc = {} /* FIX #10 */, c = cfgAprov(), sig = assinEmail(), soc = isSocio();
   const sel = (k) => `<select data-cfgap="${k}" ${soc ? '' : 'disabled'}>${USERS.map(u => `<option value="${u.id}" ${u.id === c[k] ? 'selected' : ''}>${esc(u.nome)}</option>`).join('')}</select>`;
-  return `<div class="blk c6"><h3>Aprovação das propostas</h3>
+  return `<div class="blk c6"><h2 class="h3">Aprovação das propostas</h2>
       <div class="sub" style="margin:-6px 0 12px">Quem aparece já escolhido em cada núcleo. Na proposta, quem elabora pode trocar o aprovador.</div>
       <div class="fields" style="margin:0"><label class="f">Licenciamento<span>${sel('licenciamento')}</span></label><label class="f">Material técnico<span>${sel('material')}</span></label><label class="f">Outros e quando o aprovador do núcleo elaborou<span>${sel('padrao')}</span></label></div></div>
-    <div class="blk c6"><h3>Assinatura de e-mail</h3>
+    <div class="blk c6"><h2 class="h3">Assinatura de e-mail</h2>
       <div class="sub" style="margin:-6px 0 12px">Vai no fim dos e-mails que o painel envia ao cliente.</div>
       ${sig ? `<img src="${sig}" alt="" style="width:100%;max-width:440px;border:1px solid var(--line);border-radius:12px;display:block">` : '<div class="empty" style="padding:14px">Desligada.</div>'}
       <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px">
         <label class="btn sm" style="cursor:pointer">${ic('mais', 'sm')} Trocar imagem<input type="file" accept="image/*" data-assinemail hidden ${soc ? '' : 'disabled'}></label>
         ${S.cfg.assinaturaEmail ? `<button class="btn sm ghost" data-assinpadrao ${soc ? '' : 'disabled'}>Voltar à assinatura do administrativo</button>` : ''}
         <label class="pchk"><input type="checkbox" data-assinoff ${S.cfg.assinaturaEmailOff ? '' : 'checked'} ${soc ? '' : 'disabled'}> Usar assinatura</label></div></div>
-    <div class="blk c6"><h3>Assinaturas no PDF</h3>
+    <div class="blk c6"><h2 class="h3">Assinaturas no PDF</h2>
       <div class="sub" style="margin:-6px 0 12px">Assinatura à mão de quem assina pela Mannare. Entra só no PDF da proposta aprovada. Foto ou digitalização com traço escuro em fundo claro.</div>
       ${USERS.map(u => { const a = (S.assin || {})[u.id], pode = u.id === me || soc;
         return `<div class="li" style="align-items:center">${av(u.id, true)}<div style="flex:1;min-width:0"><b>${esc(u.nome)}</b><div class="sub">${a ? 'assinatura cadastrada' : 'sem assinatura'}</div></div>${a ? `<img src="${a}" alt="" style="height:34px;max-width:140px;object-fit:contain">` : ''}
           ${pode ? `<label class="btn sm" style="cursor:pointer">${a ? 'Trocar' : 'Enviar'}<input type="file" accept="image/*" data-assinpdf="${u.id}" hidden></label>${a ? `<button class="btn sm ghost" data-assinpdfdel="${u.id}">Remover</button>` : ''}` : ''}</div>`; }).join('')}
       <div class="fields" style="margin:12px 0 0"><label class="f">Assinam por padrão nas novas propostas<select data-sigpadrao ${soc ? '' : 'disabled'}><option value="">${esc(sigPadrao().map(id => U[id].nome).join(' e ') || '—')} (atual)</option>${USERS.map(u => `<option value="${u.id}">Só ${esc(u.nome)}</option>`).join('')}<option value="*">Todos os sócios</option></select></label></div></div>
-    <div class="blk c6"><h3>Modelos de e-mail</h3>
+    <div class="blk c6"><h2 class="h3">Modelos de e-mail</h2>
       <div class="sub" style="margin:-6px 0 12px">Campos: {contato} {cliente} {codigo} {objeto} {empreendimento} {valor} {autor}</div>
       ${modelosEmail().map((m, i) => `<div style="margin-bottom:12px"><div style="display:flex;gap:8px"><input class="inp" data-mod="${i}|nome" value="${esc(m.nome)}" style="font-weight:700" ${soc ? '' : 'disabled'}>${soc ? `<button class="btn sm ghost" data-moddel="${i}" title="Remover">✕</button>` : ''}</div><textarea class="inp" data-mod="${i}|texto" rows="5" style="margin-top:6px" ${soc ? '' : 'disabled'}>${esc(m.texto)}</textarea></div>`).join('')}
       ${soc ? `<button class="btn sm" data-modadd>${ic('mais', 'sm')} Modelo</button>` : ''}</div>
     ${finIntegHtml()}
-    <div class="blk c12"><h3>Avisos por e-mail</h3><div class="sub" style="margin:-6px 0 12px">Os e-mails saem pela ponte, pela conta administrativo@, com o link do CRM. Cada pessoa escolhe abaixo o que quer receber.</div>
+    <div class="blk c12"><h2 class="h3">Avisos por e-mail</h2><div class="sub" style="margin:-6px 0 12px">Os e-mails saem pela ponte, pela conta administrativo@, com o link do CRM. Cada pessoa escolhe abaixo o que quer receber.</div>
       <label class="pchk"><input type="checkbox" data-mencaoemail ${S.cfg.mencaoEmailOff ? '' : 'checked'} ${isSocio() ? '' : 'disabled'}> Enviar e-mails de aviso do painel (chave geral, só sócios mudam)</label>${emailPrefsHtml()}</div>
     <!-- FIX #10: importação do painel antigo de propostas desligada (cadastro manual) -->`;
 }
@@ -6572,7 +6597,7 @@ function finReceber(){
           <td>${fmtDateBR(r.previsao) || '—'}${lt && d !== null && d < 0 ? `<div class="sub" style="color:#B42318">${-d} dia(s) de atraso</div>` : ''}</td><td style="text-align:right">${brl(numBR(r.valorBruto))}</td><td style="text-align:right">${brl(liquidoDe(r))}</td>
           <td>${recPill(r)}${r.status === 'pago' ? `<div class="sub">${fmtDateBR(r.dataPagamento)}</div>` : ''}</td><td>${re && /^https?:/.test(r.linkNota || '') ? `<a class="link" href="${esc(r.linkNota)}" target="_blank" rel="noopener">${r.numeroND ? 'ND ' + esc(r.numeroND) : 'Nota de débito'} ↗</a>` : esc(r.nf || (r.numeroND ? 'ND ' + r.numeroND : '—'))}${r.emissao ? `<div class="sub">${fmtDateBR(r.emissao)}</div>` : ''}</td></tr>`; }).join('')
       : `<tr><td colspan="7" class="empty">${RT.length ? 'Nenhum recebível com esses filtros.' : 'Nenhum recebível ainda. Eles aparecem aqui quando uma proposta é aceita pelo cliente, ou use <b>Recebível avulso</b>.'}</td></tr>`}</tbody></table></div>
-    <div class="blk" style="overflow:auto"><h3>Recebido por mês <span class="sub" style="font-weight:500">(pela data de pagamento)</span></h3>${ms.length ? `<table class="atable" style="min-width:560px"><thead><tr><th>Mês</th><th style="text-align:right">Bruto</th><th style="text-align:right">Imposto</th><th style="text-align:right">Desembolso</th><th style="text-align:right">Líquido</th></tr></thead>
+    <div class="blk" style="overflow:auto"><h2 class="h3">Recebido por mês <span class="sub" style="font-weight:500">(pela data de pagamento)</span></h2>${ms.length ? `<table class="atable" style="min-width:560px"><thead><tr><th>Mês</th><th style="text-align:right">Bruto</th><th style="text-align:right">Imposto</th><th style="text-align:right">Desembolso</th><th style="text-align:right">Líquido</th></tr></thead>
       <tbody>${ms.map(m => `<tr><td>${fmtMes(m)}</td>${linhaRep(pagos.filter(r => r.dataPagamento.slice(0, 7) === m))}</tr>`).join('')}<tr class="ftot"><td><b>Total</b></td>${linhaRep(pagos.filter(r => ms.includes(r.dataPagamento.slice(0, 7))))}</tr></tbody></table>` : '<p class="sub" style="margin:0">Nenhum pagamento registrado ainda.</p>'}</div>`;
 }
 function finPagar(tipo){
@@ -6746,7 +6771,7 @@ function finChange(tg){
 }
 function finIntegHtml(){
   const c = finCfg(), soc = isSocio();
-  return `<div class="blk c6"><h3>Financeiro</h3><div class="sub" style="margin:-6px 0 12px">Imposto padrão dos recebíveis e categorias das contas a pagar.</div>
+  return `<div class="blk c6"><h2 class="h3">Financeiro</h2><div class="sub" style="margin:-6px 0 12px">Imposto padrão dos recebíveis e categorias das contas a pagar.</div>
     <div class="fields" style="margin:0 0 10px"><label class="f">Imposto padrão (%)<input data-fincfg="imposto" value="${esc(String(c.imposto).replace('.', ','))}" inputmode="decimal" ${soc ? '' : 'disabled'}></label></div>
     <label class="f">Categorias (uma por linha)<textarea data-fincfg="categorias" rows="5" ${soc ? '' : 'disabled'}>${esc(c.categorias.join('\n'))}</textarea></label></div>`;
 }
@@ -7348,7 +7373,7 @@ function renderPlan(){
       <span class="pldot" style="background:${KCOR[i.k]}"></span><div class="plt" data-plopen="${i.ref}"><b>${esc(i.titulo)}</b><span>${esc(i.onde || '')}${i.prazo ? ` | <i class="${i.prazo < TODAY ? 'late' : i.prazo === TODAY ? 'hoje' : ''}">${fmtD(i.prazo)}</i>` : ''}${semBloco.has(i.ref) ? ' | <i class="ok">planejado</i>' : ''}</span></div>
       ${n && meu ? `<button class="plx" data-plprirm="${i.ref}" title="Tirar das prioridades">✕</button>` : ''}</div>`;
   const side = `<aside class="plside">
-    <div class="plhead"><h2>Planejador</h2>${meu ? `<button class="btn sm" data-plnovo title="Novo bloco no calendário">${ic('mais', 'sm')}</button>` : ''}</div>
+    <div class="plhead"><h1>Planejador</h1>${meu ? `<button class="btn sm" data-plnovo title="Novo bloco no calendário">${ic('mais', 'sm')} Bloco</button>` : ''}</div>
     <div class="plsec"><div class="plst">Prioridades</div>${pri.map((r, i) => itRow(itemDe(r), i + 1)).join('') || '<div class="sub" style="padding:4px 8px">Nenhuma prioridade.</div>'}
       ${meu && pri.length < 7 ? `<select class="pladd" data-plpriadd><option value="">+ Adicionar prioridade</option>${its.filter(i => !pri.includes(i.ref)).map(i => `<option value="${i.ref}">${esc(i.titulo.slice(0, 60))}</option>`).join('')}</select>` : ''}</div>
     <div class="plsec"><div class="plst">Ver agenda de</div><select class="pladd" data-plquem>${USERS.map(x => `<option value="${x.id}" ${x.id === quem ? 'selected' : ''}>${x.id === me ? 'Eu (' + esc(first(me)) + ')' : esc(x.nome)}</option>`).join('')}</select></div>
@@ -7371,13 +7396,13 @@ function renderPlan(){
       ${evs(d).map(ev => evHtml(ev, meu)).join('')}
       ${d === TODAY ? `<div class="pnow" style="top:${agoraMin / 60 * PH}px"></div>` : ''}</div>`).join('');
   $('#view').innerHTML = `<div class="plan">${side}<section class="plcal">
-    <div class="pltop"><button class="iconbtn" data-plnav="-1" title="Anterior">‹</button><button class="iconbtn" data-plnav="1" title="Próximo">›</button><h3>${titulo}</h3><button class="btn sm" data-plnav="0">Hoje</button><span class="spacer"></span>
+    <div class="pltop"><button class="iconbtn" data-plnav="-1" title="Anterior">‹</button><button class="iconbtn" data-plnav="1" title="Próximo">›</button><h2 class="h3">${titulo}</h2><button class="btn sm" data-plnav="0">Hoje</button><span class="spacer"></span>
       ${!meu ? `<span class="chip" style="font-size:12px">Agenda de ${esc(first(quem))} (só leitura)</span>` : ''}
       <div class="seg sm"><button data-plmodo="dia" class="${u.modo === 'dia' ? 'on' : ''}">Dia</button><button data-plmodo="semana" class="${u.modo !== 'dia' ? 'on' : ''}">Semana</button></div></div>
     <div class="plgrid" style="--n:${dias.length}">
       <div class="pgh"><div class="ptz">GMT-3</div>${dias.map(d => { const dt = new Date(d + 'T12:00'); return `<div class="pdh ${d === TODAY ? 'hoje' : ''}" data-pldia="${d}">${DSEM[dt.getDay()]} <b>${dt.getDate()}</b></div>`; }).join('')}</div>
       <div class="pga"><div class="ptz">dia todo</div>${dias.map(d => `<div class="pad">${prazosDia(d)}</div>`).join('')}</div>
-      <div class="pgb" id="plScroll"><div class="phrs">${Array.from({length:24}, (_, h) => `<div style="top:${h * PH}px">${h ? hm(h * 60) : ''}</div>`).join('')}${dias.includes(TODAY) ? `<span class="pnowl" style="top:${agoraMin / 60 * PH}px">${hm(agoraMin)}</span>` : ''}</div>${cols}</div>
+      <div class="pgb" id="plScroll" tabindex="0" role="region" aria-label="Agenda por hora"><div class="phrs">${Array.from({length:24}, (_, h) => `<div style="top:${h * PH}px">${h ? hm(h * 60) : ''}</div>`).join('')}${dias.includes(TODAY) ? `<span class="pnowl" style="top:${agoraMin / 60 * PH}px">${hm(agoraMin)}</span>` : ''}</div>${cols}</div>
     </div>${gcalOn() && gSync().trazer ? '' : `<div class="sub" style="margin-top:8px">As reuniões da Google Agenda aparecem aqui quando você liga em <a class="link" data-view-go="integ">Integrações → Google Agenda</a> e marca “Mostrar no painel as reuniões”.</div>`}</section></div>`;
   const sc = $('#plScroll'); if(sc){ sc.scrollTop = u.scroll != null ? u.scroll : Math.max(0, (Math.min(agoraMin, 8 * 60) - 30) / 60 * PH); sc.onscroll = () => { u.scroll = sc.scrollTop; }; }
 }
@@ -7511,8 +7536,8 @@ function semanaHtml(){
   const ctx = i => esc((i.k === 'subtarefa' ? 'em ' : '') + (i.onde || '') + (i.codigo ? ' | ' + i.codigo : ''));
   return `<div class="dcard dsem pn-sem"><div class="dch"><div class="dct">Minha semana</div><button class="dlink" data-view-go="mine">Ver todas (${its.length}) →</button></div>
     <div class="dfilters">${['atrasadas', 'hoje', 'prox'].map(k => { const [l, fn, c, t] = grupos[k], n = its.filter(fn).length; return `<button class="dfil ${k === f ? 'on' : ''}" data-dashf="${k === f ? 'semana' : k}"><i style="background:${c}"></i>${l}<b class="dn ${t}">${n}</b></button>`; }).join('')}</div>
-    <div class="dlist">${lista.slice(0, 8).map(i => `<div class="pn-wr ${dc(i) === 'l' ? 'is-late' : ''}" ${i.mat ? `data-mat="${i.mat}"` : `data-open="${i.go}"`}>
-        ${chk(i)}<span class="pn-wd ${dc(i)}">${dl(i)}</span><div class="pn-wt"><b>${esc(i.titulo)}</b><span>${ctx(i)}</span></div><span class="pn-wst">${stPill(i)}</span><span class="pn-wtm tnum">${tempo(i)}</span>${playBtn(i)}</div>`).join('')
+    <div class="dlist">${lista.slice(0, 8).map(i => `<div class="pn-wr ${dc(i) === 'l' ? 'is-late' : ''}" ${i.mat ? `data-mat="${i.mat}"` : `data-open="${i.go}"`} tabindex="-1">
+        ${chk(i)}<span class="pn-wd ${dc(i)}">${dl(i)}</span><div class="pn-wt"><b><button type="button" class="row-open">${esc(i.titulo)}</button></b><span>${ctx(i)}</span></div><span class="pn-wst">${stPill(i)}</span><span class="pn-wtm tnum">${tempo(i)}</span>${playBtn(i)}</div>`).join('')
       || `<div class="dempty">Nada ${f === 'atrasadas' ? 'atrasado' : f === 'hoje' ? 'para hoje' : 'por aqui'}.</div>`}
       ${lista.length > 8 ? `<button class="dmore" data-view-go="mine">+ ${lista.length - 8} itens em Minhas tarefas</button>` : ''}</div></div>`;
 }
@@ -7542,12 +7567,9 @@ function pnHoje(){
   return {pa, at, hj, ap:minhasAprovacoes(), cs:comsAtribuidos(me)};
 }
 const pnPl = (n, um, varios) => n + ' ' + (n === 1 ? um : varios);
-function dashSub(){
-  const h = pnHoje(), dia = new Date(TODAY + 'T12:00:00').toLocaleDateString('pt-BR', {weekday:'long', day:'numeric', month:'long'}), out = [dia.charAt(0).toUpperCase() + dia.slice(1)];
-  if(h.pa.length) out.push(`<b class="pn-red">${pnPl(h.pa.length, 'processo atrasado', 'processos atrasados')}</b>`);
-  if(h.at.length) out.push(`<b class="pn-red">${pnPl(h.at.length, 'tarefa atrasada', 'tarefas atrasadas')}</b>`);
-  out.push(h.hj.length ? pnPl(h.hj.length, 'tarefa para hoje', 'tarefas para hoje') : 'nada com prazo hoje');
-  return out.join(' | ');
+function dashSub(){ /* UX-T5: só a data; os números ficam no quadro Hoje logo abaixo */
+  const dia = new Date(TODAY + 'T12:00:00').toLocaleDateString('pt-BR', {weekday:'long', day:'numeric', month:'long'});
+  return dia.charAt(0).toUpperCase() + dia.slice(1);
 }
 function hojeHtml(){
   const h = pnHoje(), nm = p => esc((propById(p.propId) || p.prop || {}).emp || pcod(p)), esp = h.ap.length + h.cs.length, old = h.at.length ? -diffDays(h.at[0].prazo) : 0;
@@ -7589,13 +7611,12 @@ function renderDash(){
     kpiCard({ic:'doc', l:'Propostas em aberto', sub:'Em elaboração e com o cliente', v:brl(valorAberto).replace(',00', ''), go:'prop',
       linha:`${propAbertas.length} proposta${propAbertas.length === 1 ? '' : 's'}`, rod:`${aceitasSem} aceita${aceitasSem === 1 ? '' : 's'}, aguardando processo${aprovMinhas ? ` | <b class="warn">${aprovMinhas}</b> esperam sua aprovação` : ''}`}),
     kpiCard({ic:'ok', l:'Licenças', sub:'Validade e renovação', v:licAl.length, go:'lic',
-      linha:`<span class="${licAl.length ? 'w' : ''}">de ${lics.length} precisam renovar</span>`, rod:sem.length ? `<b class="red">${sem.length}</b> processo(s) finalizado(s) sem licença` : 'Todas as licenças cadastradas'}),
-    kpiCard({ic:'users', l:'Entregas da equipe', sub:'Itens em aberto', v:openIts.length, go:'team'})];
+      linha:`<span class="${licAl.length ? 'w' : ''}">de ${lics.length} precisam renovar</span>`, rod:sem.length ? `<b class="red">${sem.length}</b> processo(s) finalizado(s) sem licença` : 'Todas as licenças cadastradas'})];
   $('#view').innerHTML = `
     <div class="pagehead"><div><h1 class="welcome">${hello()}, <span>${esc(first(me))}</span></h1><p>${dashSub()}</p></div><span class="spacer"></span>
       ${ui.dashEdit ? '<button class="btn" data-dashreset>Restaurar padrão</button><button class="btn primary" data-dashedit>Concluir</button>' : `<button class="btn ghost" data-dashedit title="Mover, redimensionar e ocultar os cartões">${ic('quadro', 'sm')} Personalizar</button>`}</div>
     ${dashGridHtml({
-      hoje:hojeHtml(), kpi_proc:kpis[0], kpi_prop:kpis[1], kpi_lic:kpis[2], kpi_ent:kpis[3],
+      hoje:hojeHtml(), kpi_proc:kpis[0], kpi_prop:kpis[1], kpi_lic:kpis[2],
       semana:semanaHtml(), timer:timerMiniHtml(), entregas:entregasHtml(items),
       atividades:`<div class="dcard"><div class="dch"><div class="dct">Atividades recentes</div><label class="minis">${ic('busca', 'sm')}<input id="aq" placeholder="Buscar" value="${esc(ui.aq || '')}"></label></div>
           <div class="tablewrap"><table class="atable"><thead><tr><th style="width:34px"><span class="cbx"></span></th><th>Atividade</th><th>Processo</th><th>Data</th><th>Hora</th><th>Pessoa</th><th>Status</th></tr></thead><tbody>${activityRows() || '<tr><td colspan="7" class="empty">Nada encontrado.</td></tr>'}</tbody></table></div></div>`,
@@ -7603,7 +7624,7 @@ function renderDash(){
       licencas:!nextLics.length ? pnVazio('ok', 'Licenças a vencer', 'Nenhuma licença cadastrada', 'lic') : `<div class="dcard"><div class="dch"><div class="dct">Licenças a vencer</div>${verTodos('lic')}</div>
         ${nextLics.map(l => { const i = licInfo(l), s = LIC_ST[i.st], pr = licObra(l); return `<div class="drow sm" data-golic="${l.id}"><div class="dtt"><b>${esc(pr.emp)}</b><span>${esc(l.tipo)} | vence ${fmtD(l.validade)}</span></div>${pill(s.l, s.c)}</div>`; }).join('') || '<div class="dempty">Nenhuma licença cadastrada.</div>'}</div>`,
       equipe:`<div class="dcard"><div class="dch"><div><div class="dct">Equipe</div><div class="dcs">${USERS.filter(u => ['online', 'ocupado'].includes(stOf(u))).length} online agora</div></div>${verTodos('team')}</div>
-        ${USERS.slice(0, 5).map(u => { const t = openIts.filter(i => respTem(i.resp, u.id)); return `<div class="drow sm" data-view-go="team">${av(u.id, true)}<div class="dtt"><b>${esc(u.nome)}</b><span>${stOf(u) === 'ocupado' && typeof pnOcupadoTxt === 'function' ? 'Ocupado: ' + esc(pnOcupadoTxt(u.id)) : t.length ? esc(t[0].titulo) : 'Sem tarefas abertas'}</span></div><span class="dcount tnum">${t.length}</span></div>`; }).join('')}</div>`,
+        ${USERS.slice(0, 5).map(u => { const t = openIts.filter(i => respTem(i.resp, u.id)); return `<div class="drow sm" data-view-go="team">${av(u.id, true, true)}<div class="dtt"><b>${esc(u.nome)}</b><span>${stOf(u) === 'ocupado' && typeof pnOcupadoTxt === 'function' ? 'Ocupado: ' + esc(pnOcupadoTxt(u.id)) : t.length ? esc(t[0].titulo) : 'Sem tarefas abertas'}</span></div><span class="dcount tnum">${t.length}</span></div>`; }).join('')}</div>`,
       orgao:!stuck ? pnVazio('relogio', 'Mais tempo no órgão', 'Sem tramitação registrada') : `<div class="dcard"><div class="dch"><div><div class="dct">Mais tempo no órgão</div><div class="dcs">Parado no mesmo setor</div></div>${stuck ? `<button class="dlink" data-gotram="${stuck.p.id}">Tramitação →</button>` : ''}</div>
         ${stuck ? `<div class="dkv" style="margin-top:4px"><span class="tnum">${stuck.a.dias} dias</span></div><div class="dcs">${esc((propById(stuck.p.propId) || {}).emp || '')} | ${esc(stuck.a.setor.split(' (')[0])}</div>` : '<div class="dempty">Sem tramitação registrada.</div>'}</div>`})}
     </div>`;
@@ -8033,7 +8054,7 @@ document.addEventListener('click', e => {
   const p = procById(ui.drawer.id); if(!p || !p.valProt) return; const v = p.valProt;
   if(tg.closest('[data-vpok]')){ e.stopPropagation(); if(me !== v.por) return; Object.assign(v, {st:'ok', validou:me, okEm:nowISO()}); logP(p, 'validou a documentação para protocolo'); notify(v.pedidoPor, `validou ${esc(pcod(p))}. Já pode protocolar.`, p.id, null); if(p.resp !== v.pedidoPor) notify(p.resp, `validou ${esc(pcod(p))}. Já pode protocolar.`, p.id, null); save(); render(); toast('Protocolo validado'); return; }
   if(tg.closest('[data-vpajuste]')){ e.stopPropagation(); const obs = prompt('O que precisa ajustar antes de protocolar?'); if(obs === null) return;
-    Object.assign(v, {st:'ajustes', validou:me, okEm:nowISO(), obs:obs.trim()}); logP(p, `pediu ajustes antes do protocolo: ${obs}`); p.status = 'levdoc'; logP(p, 'voltou o processo para “Lev. documentação”');
+    Object.assign(v, {st:'ajustes', validou:me, okEm:nowISO(), obs:obs.trim()}); logP(p, `pediu ajustes antes do protocolo: ${obs}`); p.status = 'levdoc'; logP(p, 'voltou o processo para “Documentação”');
     notify(v.pedidoPor, `pediu ajustes antes de protocolar ${esc(pcod(p))}: ${esc(obs)}`, p.id, null); save(); render(); return; }
   if(tg.closest('[data-vpcancel]')){ e.stopPropagation(); p.valProt = null; logP(p, 'cancelou o pedido de validação do protocolo'); save(); render(); return; }
 }, true);
@@ -8171,11 +8192,11 @@ renderMats = (function(){ return function(){
     const shown = ui.mFst ? list.filter(m => m.status === ui.mFst) : list;
     body = tabs + `<div class="rows">${shown.sort((a, b) => MAT_ST.findIndex(x => x.k === a.status) - MAT_ST.findIndex(x => x.k === b.status) || (a.prazo || '9').localeCompare(b.prazo || '9')).map(matRow).join('') || '<div class="blk empty">Nenhum material com esses filtros.</div>'}</div>`;
   } else {
-    body = `<div class="mboard">${MAT_ST.filter(st => !ui.mSt || (ui.mSt === 'abertos' ? st.k !== 'entregue' : st.k === ui.mSt)).map(st => { const ms = list.filter(m => m.status === st.k);
-      return `<div class="mcol" data-mcol="${st.k}"><div class="mh"><span class="mst" style="--c:${st.c}">${st.l}</span><span class="sub mcnt">${ms.length}</span></div>
+    body = `<div class="pk-wrap"><button type="button" class="pk-nav prev" aria-label="Ver colunas anteriores" hidden>‹</button><div class="mboard pk-board">${MAT_ST.filter(st => !ui.mSt || (ui.mSt === 'abertos' ? st.k !== 'entregue' : st.k === ui.mSt)).map(st => { const ms = list.filter(m => m.status === st.k);
+      return `<div class="mcol" data-mcol="${st.k}"><div class="mh"><h2 class="mst" style="--c:${st.c}">${st.l}</h2><span class="sub mcnt">${ms.length}</span></div>
         ${ms.map(matCard).join('')}
-        <div class="madd"><input data-madd="${st.k}" placeholder="+ Adicionar material"></div></div>`; }).join('')}</div>
-      <p class="hint" style="margin-top:-24px">Arraste os cartões entre as colunas. O cronômetro liga em <b>Em elaboração</b> e <b>Ajustes</b>; em <b>Pausado</b> ele para e começa a contar o tempo parado. Ao ir para <b>Validação interna</b>, você escolhe quem valida (sugestão: ${esc(first(aprovMat()))}).</p>`;
+        <div class="madd"><input data-madd="${st.k}" placeholder="+ Adicionar material"></div></div>`; }).join('')}</div><button type="button" class="pk-nav next" aria-label="Ver mais colunas" hidden>›</button></div>
+      <p class="hint" style="margin-top:-24px">Arraste os cartões ou use o seletor de status de cada um. O cronômetro liga em <b>Em elaboração</b> e <b>Ajustes</b>; em <b>Pausado</b> ele para e começa a contar o tempo parado. Ao ir para <b>Validação interna</b>, você escolhe quem valida (sugestão: ${esc(first(aprovMat()))}).</p>`;
   }
   const crumb = !hideT && (ui.mSel || {}).g ? `<div class="crumb"><a class="link" data-mtall>Todos</a> / ${ui.mSel.e ? `<a class="link" data-mtg="${esc(ui.mSel.g)}">${esc(ui.mSel.g)}</a> / <b>${esc(ui.mSel.e)}</b>` : `<b>${esc(ui.mSel.g)}</b>`}</div>` : '';
   const scroll = $('.tree')?.scrollTop || 0;
@@ -9220,10 +9241,10 @@ document.addEventListener('click', e => { const tg = e.target; if(!tg.closest) r
 
 
 /* ============ Painel inicial personalizável (mover, redimensionar, ocultar) ============ */
-const DASH_W = [['hoje', 'Hoje', 12], ['kpi_proc', 'Processos em andamento', 3], ['kpi_prop', 'Propostas em aberto', 3], ['kpi_lic', 'Licenças', 3], ['kpi_ent', 'Entregas da equipe (número)', 3],
-  ['semana', 'Minha semana', 6], ['entregas', 'Entregas da equipe (gráfico)', 3], ['timer', 'Rastreio de tempo', 3],
+const DASH_W = [['hoje', 'Hoje', 12], ['semana', 'Minha semana', 6], ['kpi_proc', 'Processos em andamento', 3], ['kpi_prop', 'Propostas em aberto', 3], ['kpi_lic', 'Licenças', 3],
+  ['entregas', 'Entregas da equipe', 3], ['timer', 'Rastreio de tempo', 3],
   ['calendario', 'Calendário', 3], ['comatrib', 'Comentários atribuídos', 3], ['licencas', 'Licenças a vencer', 3], ['orgao', 'Mais tempo no órgão', 3],
-  ['atividades', 'Atividades recentes', 9], ['reunioes', 'Minhas reuniões', 3], ['equipe', 'Equipe', 3]]; /* FIX UX-4D: quadro Hoje e ordem padrão nova */
+  ['atividades', 'Atividades recentes', 9], ['reunioes', 'Minhas reuniões', 3], ['equipe', 'Equipe', 3]]; /* UX-T4: Minha semana logo após Hoje; UX-T5: um só "Entregas da equipe" */
 const DASH_GAP = 16, DASH_RU = 2;
 function dashLay(){ let L = null; try{ L = JSON.parse(localStorage.getItem('mannare.dash.' + me) || 'null'); }catch(_){} const c = (S.cfg && S.cfg.dashLay && S.cfg.dashLay[me]) || L || {};
   const ids = DASH_W.map(w => w[0]), ordem = (c.ordem || []).filter(i => ids.includes(i)); ids.forEach(i => { if(!ordem.includes(i)) i === 'hoje' ? ordem.unshift(i) : ordem.push(i); }); /* FIX UX-4D: Hoje entra no topo de quem já personalizou */
@@ -9360,8 +9381,7 @@ document.addEventListener('click', e => {
   if(!tg.closest('[data-tpausex],[data-tstopx]') && matHandleClick(e, tg)) return;
   if(propClick(e, tg)) return;
   { const g = tg.closest('[data-tdel]'); if(g){ S.cfg.timbrado = S.cfg.timbrado || {}; delete S.cfg.timbrado[g.dataset.tdel]; save(); render(); return; } }
-  if(tg.closest('#btnBack')){ if(ui.hpos > 0){ ui.hpos--; ui.view = ui.hist[ui.hpos]; render(); } return; }
-  if(tg.closest('#btnFwd')){ if(ui.hpos < ui.hist.length - 1){ ui.hpos++; ui.view = ui.hist[ui.hpos]; render(); } return; }
+  if(tg.closest('#btnBack')){ if(window.mnVoltar) mnVoltar(); else if(ui.hpos > 0){ ui.hpos--; ui.view = ui.hist[ui.hpos]; render(); } return; } /* UX-R4.2 */
   { const g = tg.closest('[data-tpausex],[data-tstopx]'); if(g){ e.stopPropagation(); const [pid, tid] = (g.dataset.tpausex || g.dataset.tstopx).split('|');
     if(pid === 'mat'){ const m = matById(tid); if(g.dataset.tstopx){ setMatStatus(m, 'revisao'); toast('Cronômetro parado | material pausado'); } else { runningOf(m).filter(x => x.por === me).forEach(x => x.fim = nowISO()); logT(m, 'pausou o cronômetro'); toast('Cronômetro pausado'); } save(); render(); if(ui.mat) renderMat(); return; }
     const p = procById(pid), t = taskOf(p, tid);
@@ -9663,9 +9683,24 @@ document.addEventListener('dragstart', e => { const c = e.target.closest?.('.mca
 document.addEventListener('dragover', e => { const col = e.target.closest?.('.mcol'); if(col){ e.preventDefault(); $$('.mcol').forEach(x => x.classList.toggle('over', x === col)); } });
 document.addEventListener('drop', e => { const col = e.target.closest?.('.mcol'); if(!col) return; e.preventDefault(); $$('.mcol').forEach(x => x.classList.remove('over'));
   const d = e.dataTransfer.getData('text/plain'); if(!d.startsWith('mat:')) return; const m = matById(d.slice(4)); if(m && m.status !== col.dataset.mcol){ setMatStatus(m, col.dataset.mcol); save(); render(); toast(`${m.codigo} → ${MS[m.status].l}`); } });
+/* UX-R3.4: trocar o status do material pelo seletor do cartão = mesmo fluxo de arrastar */
+document.addEventListener('change', e => {
+  const sel = e.target.closest && e.target.closest('[data-matst]'); if(!sel) return;
+  const m = matById(sel.dataset.matst); if(!m || m.status === sel.value) return;
+  const id = m.id, alvo = sel.value; setMatStatus(m, alvo); save(); render();
+  if(m.status === alvo) toast(`${m.codigo} → ${MS[m.status].l}`);
+  requestAnimationFrame(() => { if(!document.querySelector('#layer .modal, #layer [role=dialog], #pickLayer .mlayer')){ const n = document.getElementById('mst-' + id); if(n) n.focus(); } });
+});
 document.addEventListener('drop', e => { const col = e.target.closest?.('.col,.pcol'); if(!col) return; e.preventDefault();
   const p = procById(e.dataTransfer.getData('text/plain')); $$('.col,.pcol').forEach(x => x.classList.remove('over'));
   if(p && p.status !== col.dataset.col) procMudarStatus(p, col.dataset.col, true); });
+/* UX-T2: trocar o status pelo seletor do cartão = mesmo fluxo de arrastar */
+document.addEventListener('change', e => {
+  const sel = e.target.closest && e.target.closest('[data-pkst]'); if(!sel) return;
+  const p = procById(sel.dataset.pkst); if(!p || p.status === sel.value) return;
+  const id = p.id; procMudarStatus(p, sel.value, true);
+  requestAnimationFrame(() => { if(!document.querySelector('#layer .modal, #layer [role=dialog], #muDlg:not([hidden])')){ const n = document.getElementById('pks-' + id); if(n) n.focus(); } });
+});
 
 boot();
 
@@ -9742,6 +9777,93 @@ boot();
     for(var j = 0; j < depois.length; j++){ try{ depois[j].apply(this, arguments); }catch(err){ console.warn('render (depois):', err); } }
     return r;
   };
+})();
+</script>
+<script id="mannare-hist">
+/* UX-R4.2: telas do CRM no histórico do navegador. O "voltar" do navegador, do mouse e o gesto do Android
+   passam a voltar para a tela anterior do CRM em vez de sair dele. A seta ← do topo usa o mesmo histórico (mnVoltar). */
+(function(){
+  if(!window.cgRender || !window.history || !history.pushState) return;
+  var aplicando = false, ultima = null, prof = 0;
+  function valida(v){ return !!document.querySelector('#side [data-view="' + v + '"]'); }
+  function seta(){ var b = document.getElementById('btnBack'); if(b) b.hidden = prof <= 0; }
+  function estado(v, p){ return Object.assign({}, history.state || {}, {crm:1, view:v, prof:p}); }
+  cgRender.depois(function(){
+    if(typeof DB === 'undefined' || !DB.ready) return;
+    if(aplicando){ ultima = ui.view; seta(); return; }
+    if(ultima === null){   // primeira tela depois do login: respeita #tela no endereço e preserva o ?...
+      var h = ''; try{ h = decodeURIComponent(location.hash.slice(1)); }catch(_){}
+      if(h && h !== ui.view && valida(h)){ aplicando = true; ui.view = h; render(); aplicando = false; }
+      history.replaceState(estado(ui.view, 0), '', location.pathname + location.search + '#' + ui.view); ultima = ui.view; prof = 0; seta(); return;
+    }
+    if(ui.view !== ultima){ prof++; history.pushState({crm:1, view:ui.view, prof:prof}, '', location.pathname + location.search + '#' + ui.view); ultima = ui.view; seta(); }
+  });
+  addEventListener('popstate', function(e){
+    var st = e.state; if(!st || !st.crm) return;
+    prof = st.prof || 0;
+    if(st.view === ui.view){ seta(); return; }
+    aplicando = true; ui.view = st.view; window.scrollTo(0, 0); render(); aplicando = false; seta();
+  });
+  window.mnVoltar = function(){ if(prof > 0) history.back(); };
+})();
+</script>
+<script id="mannare-novo">
+/* UX-T1: botão "+ Novo" do topo com menu (Proposta, Processo sem proposta, Tarefa avulsa).
+   Cada item usa o mesmo atributo do botão da própria tela (data-ppnova, data-avnew, data-psnew),
+   então o fluxo é exatamente o mesmo. Some nas telas que já têm o botão principal. */
+(function(){
+  var btn = document.getElementById('topNew'), list = document.getElementById('newList');
+  if(!btn || !list) return;
+  var itens = function(){ return Array.prototype.slice.call(list.querySelectorAll('[role=menuitem]')); };
+  function abrir(){ list.hidden = false; btn.setAttribute('aria-expanded', 'true'); itens()[0].focus(); }
+  function fechar(volta){ list.hidden = true; btn.setAttribute('aria-expanded', 'false'); if(volta) btn.focus(); }
+  btn.addEventListener('click', function(e){ e.stopPropagation(); list.hidden ? abrir() : fechar(true); });
+  btn.addEventListener('keydown', function(e){ if(e.key === 'ArrowDown' && list.hidden){ e.preventDefault(); abrir(); } });
+  /* fecha depois que o item dispara a ação (os cliques delegados que já existem fazem o resto) */
+  /* pointerup e Enter também, porque alguns cliques (como o da tarefa avulsa) são tratados antes e não chegam até aqui */
+  ['click', 'pointerup'].forEach(function(ev){ list.addEventListener(ev, function(){ setTimeout(function(){ fechar(false); }, 0); }); });
+  list.addEventListener('keydown', function(e){ if(e.key === 'Enter' || e.key === ' ') setTimeout(function(){ fechar(false); }, 0); });
+  document.addEventListener('click', function(e){ if(!list.hidden && !(e.target.closest && e.target.closest('.newmenu'))) fechar(false); });
+  list.addEventListener('keydown', function(e){
+    var it = itens(), i = it.indexOf(document.activeElement);
+    if(e.key === 'ArrowDown'){ e.preventDefault(); it[(i + 1) % it.length].focus(); }
+    else if(e.key === 'ArrowUp'){ e.preventDefault(); it[(i - 1 + it.length) % it.length].focus(); }
+    else if(e.key === 'Home'){ e.preventDefault(); it[0].focus(); }
+    else if(e.key === 'End'){ e.preventDefault(); it[it.length - 1].focus(); }
+    else if(e.key === 'Escape'){ e.preventDefault(); e.stopPropagation(); fechar(true); }
+    else if(e.key === 'Tab'){ fechar(false); }
+  });
+  /* UX-R3.2: decide depois que a tela terminou de ser desenhada (alguns blocos desenham depois do render) */
+  var view = document.getElementById('view');
+  function sincroniza(){
+    var temProprio = Array.prototype.some.call(view.querySelectorAll('.btn.primary'), function(b){
+      return b.offsetParent && !b.closest('.modal,[role=dialog],.drawer') && b.getBoundingClientRect().top < 320;
+    });
+    btn.closest('.newmenu').hidden = temProprio; if(temProprio) fechar(false);
+  }
+  new MutationObserver(function(){ requestAnimationFrame(sincroniza); }).observe(view, {childList:true});
+  sincroniza();
+})();
+</script>
+<script id="mannare-quadro">
+/* UX-T3: setas e degradê do quadro de Processos só quando há colunas fora da tela */
+(function(){
+  function atualiza(w){
+    var b = w.querySelector('.pk-board'); if(!b) return;
+    var esq = b.scrollLeft > 4, dir = b.scrollLeft + b.clientWidth < b.scrollWidth - 4;
+    w.classList.toggle('mais-esq', esq); w.classList.toggle('mais-dir', dir);
+    w.querySelector('.pk-nav.prev').hidden = !esq; w.querySelector('.pk-nav.next').hidden = !dir;
+  }
+  function liga(){
+    var w = document.querySelector('#view .pk-wrap'); if(!w || w.dataset.ok) return; w.dataset.ok = '1';
+    var b = w.querySelector('.pk-board'), passo = function(){ return (b.querySelector('.pcol, .mcol') || b).clientWidth + 16; };
+    b.addEventListener('scroll', function(){ atualiza(w); }, {passive:true});
+    w.querySelector('.pk-nav.prev').addEventListener('click', function(){ b.scrollBy({left:-passo(), behavior:'smooth'}); });
+    w.querySelector('.pk-nav.next').addEventListener('click', function(){ b.scrollBy({left:passo(), behavior:'smooth'}); });
+    atualiza(w); requestAnimationFrame(function(){ atualiza(w); });
+  }
+  if(window.cgRender) cgRender.depois(liga);
+  addEventListener('resize', function(){ var w = document.querySelector('#view .pk-wrap'); if(w) atualiza(w); });
 })();
 </script>
 <script id="mannare-pwa">
@@ -9848,9 +9970,9 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
           + (t === 'tarde' ? '<button class="ibx-act" data-ibxnow="' + g.k + '" aria-label="Trazer de volta agora" title="Trazer de volta agora">' + ICO.back + '</button>'
                            : '<button class="ibx-act" data-ibxlater="' + g.k + '" aria-label="Lembrar amanhã às 8h" title="Lembrar amanhã às 8h">' + ICO.snooze + '</button>')
           + '<button class="ibx-clear" data-ibxdel="' + g.k + '" aria-label="Limpar (mover para Removidas)">' + ICO.check + ' Limpar</button>';
-      html += '<div class="ibx-row ' + (g.un ? 'unread' : '') + '" data-ibx="' + g.k + '" role="button" tabindex="0" aria-label="' + esc(g.alvo.tit) + (g.un ? ', ' + g.un + ' não lida(s)' : '') + '">'
+      html += '<div class="ibx-row ' + (g.un ? 'unread' : '') + '" data-ibx="' + g.k + '" tabindex="-1">' /* UX-T6: o título é o botão; a linha toda continua clicável */
         + '<span class="ibx-st" style="--c:' + g.alvo.cor + '" title="' + esc(g.alvo.st) + '"></span>'
-        + '<span class="ibx-tit">' + esc(g.alvo.tit) + '</span>'
+        + '<button type="button" class="ibx-tit ibx-open" aria-label="' + esc(g.alvo.tit) + (g.un ? ', ' + g.un + ' não lida(s)' : '') + '">' + esc(g.alvo.tit) + '</button>'
         + '<span class="ibx-av">' + (autor ? av(autor, true, true) : '<span class="av sm none">!</span>') + '</span>'
         + '<span class="ibx-msg">' + msg + '</span>'
         + '<span class="ibx-n" title="' + g.its.length + ' atualização(ões)">' + g.its.length + '</span>'
@@ -9864,7 +9986,7 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
       + (t === 'principal' ? '<button class="btn" data-ibxreadall>' + ICO.check + ' Marcar tudo como lido</button><button class="btn" data-ibxclear>' + ICO.trash + ' Limpar lidas</button>' : '')
       + (t === 'outro' ? '<button class="btn" data-ibxseen>' + ICO.check + ' Marcar tudo como visto</button>' : '') + '</div>'
       + '<div class="ibx-card"><div class="tabs ibx-tabs">'
-      + aba('principal', 'Principal', nP ? nP + ' não lido(s)' : 'em dia') + aba('outro', 'Outro', nO ? nO + ' com novidade' : '') + aba('tarde', 'Mais tarde', nT ? nT + ' adiada(s)' : '') + aba('removidas', 'Removidas', '')
+      + aba('principal', 'Principal', nP ? nP + ' não lido(s)' : 'em dia') + aba('outro', 'Acompanhando', nO ? nO + ' com novidade' : '') + aba('tarde', 'Mais tarde', nT ? nT + ' adiada(s)' : '') + aba('removidas', 'Removidas', '')
       + '</div><div class="ibx-tools"><label class="minis ibx-q">' + ic('busca', 'sm') + '<input id="ibxq" placeholder="Buscar na caixa de entrada" value="' + esc(ui.ibx.q || '') + '" aria-label="Buscar na caixa de entrada"></label>'
       + '<button class="dfil ' + (ui.ibx.so ? 'on' : '') + '" data-ibxso>Só não lidas</button>'
       + ['', 'p', 'm', 'r'].map(function(k){ return '<button class="dfil ' + (ui.ibx.tipo === k ? 'on' : '') + '" data-ibxtipo="' + k + '">' + {'':'Tudo', p:'Processos', m:'Material técnico', r:'Propostas'}[k] + '</button>'; }).join('')
@@ -10313,7 +10435,7 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
       return '<div class="cg-row" style="' + cols + '"><div class="cg-pc">' + av(pid, true, true) + '<div class="cg-pn"><b>' + esc(x.nome) + '</b><span>' + (podeLimite() ? '<label class="cg-lim" title="Limite de tarefas por dia"><input type="number" min="1" max="30" data-cglim="' + pid + '" value="' + MAX(pid) + '" aria-label="Limite diário de ' + esc(x.nome) + '"> por dia</label>' : esc(x.cargo || '') + (x.cargo ? ' | ' : '') + MAX(pid) + ' por dia') + '</span></div>'
         + '<span class="cg-cap ' + nivel(hj, pid) + '" title="Hoje: ' + hj + ' de ' + MAX(pid) + '">' + hj + '/' + MAX(pid) + '</span>' + (atras ? '<span class="cg-late" title="Tarefas com data que já passou">' + atras + ' atras.</span>' : '') + '</div>'
         + ds.map(function(d){ var its = mapa[pid + '|' + d] || [], n = its.length, lv = nivel(n, pid);
-          return '<button class="cg-cell ' + lv + ' ' + (ehFds(d) ? 'fds' : '') + ' ' + (d < TODAY ? 'passado' : '') + ' ' + (d === TODAY ? 'hoje' : '') + '" data-cgcell="' + pid + '|' + d + '" aria-label="' + esc(first(pid)) + ', ' + diaLongo(d) + ': ' + n + ' de ' + MAX(pid) + ' tarefas">'
+          return '<button class="cg-cell ' + lv + ' ' + (ehFds(d) ? 'fds' : '') + ' ' + (d < TODAY ? 'passado' : '') + ' ' + (d === TODAY ? 'hoje' : '') + '" data-cgcell="' + pid + '|' + d + '" aria-label="' + esc(first(pid)) + ', ' + diaLongo(d) + ': ' + n + ' tarefa' + (n === 1 ? '' : 's') + ' (limite ' + MAX(pid) + ')">'
             + (n || !ehFds(d) ? '<span class="cg-n"><b>' + n + '</b> tarefa' + (n === 1 ? '' : 's') + '</span><span class="cg-fill"><i style="width:' + Math.min(100, n * 100 / MAX(pid)) + '%"></i></span>' : '') + '</button>'; }).join('') + '</div>'; }).join('');
     var pend = u.pend ? pendHtml(lista) : '';
     $('#view').innerHTML = cabecalho()
@@ -10330,7 +10452,7 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
       if(f === 'semdata' && d) return false; if(f === 'atrasadas' && !(d && d < TODAY)) return false; if(f === 'semresp' && i.resp.length) return false; if(f === 'minhas' && !conta(i, me)) return false;
       return !q || (i.titulo + ' ' + i.onde).toLowerCase().indexOf(q) >= 0; });
     var opts = [['semdata', 'Não agendado'], ['atrasadas', 'Atrasadas'], ['semresp', 'Sem responsável'], ['minhas', 'Minhas'], ['todas', 'Todas em aberto']];
-    return '<aside class="cg-pend" aria-label="Lista de pendências"><div class="cg-ph"><h3>Lista de pendências</h3><button class="x" data-cgpend aria-label="Fechar lista">✕</button></div>'
+    return '<aside class="cg-pend" aria-label="Lista de pendências"><div class="cg-ph"><h2 class="h3">Lista de pendências</h2><button class="x" data-cgpend aria-label="Fechar lista">✕</button></div>'
       + '<label class="minis cg-pq">' + ic('busca', 'sm') + '<input data-cgpq placeholder="Pesquisar tarefas" value="' + esc(u.pq || '') + '" aria-label="Pesquisar tarefas"></label>'
       + '<div class="cg-pf"><span>' + base.length + ' tarefa' + (base.length === 1 ? '' : 's') + '</span><select data-cgpf aria-label="Filtro da lista">' + opts.map(function(o){ return '<option value="' + o[0] + '" ' + (o[0] === f ? 'selected' : '') + '>' + o[1] + '</option>'; }).join('') + '</select></div>'
       + '<div class="cg-pl">' + base.slice(0, 200).map(function(i){ var d = diaDe(i);
@@ -10700,13 +10822,13 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
         + card('ret', {t:'Taxa de retrabalho (fora do escopo)', v:pct(taxaRet), sub:revT ? revE + ' de ' + revT + ' revisões por mudança do cliente' + (revE ? ' | base para aditivo' : '') : 'Registre as revisões na aba Indicadores de cada processo.', f:'(Revisões por mudança de escopo do cliente ÷ total de revisões) × 100', nv:nivel(taxaRet, 10, 30, true)})
         + card('wip', {hl:true, t:'Capacidade (WIP)', v:wip.toFixed(1).replace('.', ','), vs:' processos por analista', sub:abertos.length + ' processos ativos ÷ ' + analistas + ' analista' + (analistas === 1 ? '' : 's') + ' | meta até ' + wipMax, f:'Processos ativos simultâneos ÷ número de analistas', nv:nivel(wip, wipMax * .8, wipMax, true)}), ['horas', 'ret', 'wip'])
       + sec(2, 'Transparência e valor para o cliente', 'Números para os relatórios de status: agilidade e precisão técnica.',
-          card('econ', {hl:true, t:'Tempo economizado vs. prazo padrão', v:econM !== null ? fmtDias(econM) : '—', vs:econM !== null ? ' em média' : '', sub:econs.length ? fmtDias(econT) + ' economizados em ' + econs.length + ' processo' + (econs.length === 1 ? '' : 's') + ' concluído' + (econs.length === 1 ? '' : 's') : 'Defina o prazo padrão de cada órgão em Configurar.', f:'Média histórica de tempo do órgão − tempo efetivo alcançado (protocolo → finalização)', nv:econM === null ? '' : econM > 0 ? 'bom' : econM < 0 ? 'ruim' : 'aten'})
+          card('econ', {hl:econM !== null, t:'Tempo economizado vs. prazo padrão', v:econM !== null ? fmtDias(econM) : '—', vs:econM !== null ? ' em média' : '', sub:econs.length ? fmtDias(econT) + ' economizados em ' + econs.length + ' processo' + (econs.length === 1 ? '' : 's') + ' concluído' + (econs.length === 1 ? '' : 's') : 'Defina o prazo padrão de cada órgão em Configurar.', f:'Média histórica de tempo do órgão − tempo efetivo alcançado (protocolo → finalização)', nv:econM === null ? '' : econM > 0 ? 'bom' : econM < 0 ? 'ruim' : 'aten'})
         + card('com', {t:'Resolução no primeiro comunique-se', v:pct(taxa1), sub:respT ? ok1T + ' de ' + respT + ' notas respondidas sem nova exigência' : 'Nenhuma nota devolutiva respondida no período.', f:'(Exigências resolvidas no primeiro retorno ÷ total de notas devolutivas) × 100', nv:nivel(taxa1, 80, 50)})
         + card('sla', {t:'SLA de protocolo inicial', v:slaM !== null ? fmtDias(slaM) : '—', vs:slaM !== null ? ' em média' : '', sub:slas.length ? slas.length + ' protocolo' + (slas.length === 1 ? '' : 's') + ' | meta ' + fmtDias(slaMeta) : 'Sem protocolos no período.', f:'Dias entre o recebimento da documentação final e a data do protocolo', nv:nivel(slaM, slaMeta, slaMeta * 2, true)}), ['econ', 'com', 'sla'])
       + sec(3, 'Gestão de responsabilidades (defesa de prazos)', 'Separa o tempo de cada um para isolar gargalos e proteger a consultoria de atrasos de terceiros.',
           card('cli', {t:'Tempo na fila do cliente', v:fmtDias(cliM), vs:cliM !== null ? ' por processo' : '', sub:aguardandoCli ? aguardandoCli + ' processo' + (aguardandoCli === 1 ? '' : 's') + ' aguardando o cliente agora' : 'Nenhum processo aguardando o cliente agora.', f:'Soma dos dias aguardando cliente (taxas, procurações, ajustes, assinaturas)', nv:''})
         + card('org', {t:'Tempo na fila do órgão (aging)', v:fmtDias(orgM), vs:orgM !== null ? ' por processo' : '', sub:parados.length ? parados.length + ' no órgão agora' + (agAlto ? ' | <b class="kp-neg">' + agAlto + ' parado' + (agAlto === 1 ? '' : 's') + ' há ' + agAlerta + '+ dias</b>' : '') : 'Nenhum processo em análise no órgão agora.', f:'Dias em Análise / Notificação devolvida sem movimentação do órgão', nv:agAlto ? 'ruim' : ''})
-        + card('liq', {hl:true, t:'Tempo líquido da consultoria', v:fmtDias(liqM), vs:liqM !== null ? ' por processo' : '', sub:totM !== null ? 'de ' + fmtDias(totM) + ' no total, em média' : '—', f:'Tempo total − (fila do cliente + fila do órgão)', nv:''}), ['cli', 'org', 'liq']);
+        + card('liq', {hl:liqM !== null, t:'Tempo líquido da consultoria', v:fmtDias(liqM), vs:liqM !== null ? ' por processo' : '', sub:totM !== null ? 'de ' + fmtDias(totM) + ' no total, em média' : '—', f:'Tempo total − (fila do cliente + fila do órgão)', nv:''}), ['cli', 'org', 'liq']);
     var c = document.getElementById('crumbNow'); if(c) c.textContent = 'Indicadores';
   }
 
@@ -11029,12 +11151,6 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
   }, true);
 
   /* ---------- cartão do processo: nome do processo no título ---------- */
-  function ajustaCartoes(){
-    document.querySelectorAll('#view .mcard.pk[data-proc]').forEach(function(c){ var p = procById(c.dataset.proc); if(!p) return; var pr = propById(p.propId) || p.prop || {};
-      var mt = c.querySelector('.mt'), st = c.querySelector('.mtipo'); if(mt){ mt.textContent = nomeProc(p); mt.title = nomeProc(p); }
-      if(st){ st.textContent = pcod(p) + (pr.emp ? ' | ' + pr.emp : ''); st.title = (pr.cliente || '') + (pr.emp ? ' | ' + pr.emp : ''); } });
-  }
-
   /* ---------- matrícula no processo aberto + cronograma do empreendimento ---------- */
   var chaveEmp = function(p){ var pr = propById(p.propId) || p.prop || {}; return pr.emp ? normN(grupoDe(pr)) + '|' + normN(pr.emp) : ''; };
   var procsDoEmp = function(k){ return k ? S.procs.filter(function(x){ return chaveEmp(x) === k; }) : []; };
@@ -11274,11 +11390,11 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
     var seg = document.querySelector('#view .pagehead .seg');
     if(seg && !seg.querySelector('[data-mode="fluxo"]')) seg.insertAdjacentHTML('beforeend', '<button data-mode="fluxo" class="' + (ui.procMode === 'fluxo' ? 'on' : '') + '"><svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h7v6H3zm11 10h7v6h-7zM14 4h7v6h-7zM6.5 10v3.5c0 1.4 1.1 2.5 2.5 2.5h5v-2H9a.5.5 0 0 1-.5-.5V10z"/></svg> Fluxograma</button>');
     if(ui.procMode === 'fluxo'){
-      var main = document.querySelector('#view .pmain'), board = main && main.querySelector('.pboard'); if(!board) return;
-      var dica = board.nextElementSibling; if(dica && dica.matches('p.hint')) dica.remove();
+      var main = document.querySelector('#view .pmain'), board0 = main && main.querySelector('.pboard'); if(!board0) return; var board = board0.closest('.pk-wrap') || board0;
+      var dica = board.nextElementSibling; if(dica && dica.matches('p.hint')) dica.remove(); var vz = main.querySelector('.pk-vazias'); if(vz) vz.remove();
       var al = main.querySelector('.alerts'); if(al) al.remove();
       var w = document.createElement('div'); w.className = 'fx-host'; w.innerHTML = fluxoHtml(); board.replaceWith(w);
-    } else ajustaCartoes();
+    }
   });
   if(typeof DB !== 'undefined' && DB.ready) render();
 })();
@@ -11519,8 +11635,8 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
     render(); toast(e === 'todos' ? 'Todos os espaços' : 'Espaço: ' + espPorId(e).nome);
   }
   var menu = null; function fecharMenu(){ if(menu){ menu.remove(); menu = null; } }
-  function pillHtml(){ var ac = acessiveis(), e = ativo === 'todos' ? {nome:'Todos os espaços', cor:'#0B0B1A'} : espPorId(ativo), varios = ac.length > 1 || interno();
-    return '<button class="esp-pill ' + (varios ? '' : 'fixo') + '" data-esppick ' + (varios ? 'aria-haspopup="menu"' : 'disabled') + ' title="Espaço"><i style="background:' + e.cor + '"></i><span>' + esc(e.nome) + '</span>' + (varios ? '<b aria-hidden="true">▾</b>' : '') + '</button>'; }
+  function pillHtml(){ var ac = acessiveis(), e = ativo === 'todos' ? {nome:'Todos', cor:'#0B0B1A'} : espPorId(ativo), varios = ac.length > 1 || interno();
+    return '<button class="esp-pill ' + (varios ? '' : 'fixo') + '" data-esppick ' + (varios ? 'aria-haspopup="menu"' : 'disabled') + ' title="Espaço de trabalho: escolhe de quais clientes e parceiros o CRM mostra os dados"><span class="esp-lbl">Espaço:</span><i style="background:' + e.cor + '"></i><span>' + esc(e.nome) + '</span>' + (varios ? '<b aria-hidden="true">▾</b>' : '') + '</button>'; }
   function abrirMenu(btn){ fecharMenu(); var ac = acessiveis();
     menu = document.createElement('div'); menu.className = 'esp-menu'; menu.setAttribute('role', 'menu');
     menu.innerHTML = (interno() ? '<button role="menuitemradio" aria-checked="' + (ativo === 'todos') + '" data-espir="todos" class="' + (ativo === 'todos' ? 'on' : '') + '"><i style="background:#0B0B1A"></i><span><b>Todos os espaços</b><em>Tudo o que a Mannare acompanha</em></span></button><hr>' : '')
@@ -12181,7 +12297,7 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
   /* FIX #15: render estendido pela lista única de ganchos */
   cgRender.depois(function(){
     try{
-      if(ui.view === 'inbox'){ var ph = document.querySelector('#view .pagehead'); if(ph && !document.querySelector('#view .pm-pushbox')) ph.insertAdjacentHTML('afterend', blocoHtml().replace('pm-pushbox', 'pm-pushbox pm-inline')); }
+      if(ui.view === 'inbox'){ var ph = document.querySelector('#view .pagehead'); if(ph && !document.querySelector('#view .pm-pushbox') && ['off', 'bloq', 'ios'].indexOf(estado()) >= 0) ph.insertAdjacentHTML('afterend', blocoHtml().replace('pm-pushbox', 'pm-pushbox pm-inline')); }
       if(ui.view === 'integ' && (isSocio() || MYROLE === 'master')){ var ph2 = document.querySelector('#view .pagehead'); if(ph2 && !document.getElementById('pmPushCfg')) ph2.insertAdjacentHTML('afterend', cfgCard()); }
     }catch(err){ console.warn(err); }
   });
@@ -12189,7 +12305,7 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
   // --- configuração (sócio): gera as chaves VAPID no próprio navegador ---
   function cfgCard(){
     var c = cfgP(), pronto = !!c.pub;
-    return '<section class="card pm-pushcfg" id="pmPushCfg"><div class="pm-pushcfg-hd"><div><h3>Notificações push (computador e celular)</h3><p>' + (pronto ? 'Chaves geradas em ' + e(String(c.geradoEm || '').slice(0, 10).split('-').reverse().join('/')) + ' por ' + e(c.geradoPor || '') + '. Cada pessoa ativa no próprio aparelho (perfil ou Caixa de entrada).' : 'Falta gerar as chaves. Faça uma vez só; depois siga o LEIA-ME-NOTIFICACOES.') + '</p></div>'
+    return '<section class="card pm-pushcfg" id="pmPushCfg"><div class="pm-pushcfg-hd"><div><h2 class="h3">Notificações push (computador e celular)</h2><p>' + (pronto ? 'Chaves geradas em ' + e(String(c.geradoEm || '').slice(0, 10).split('-').reverse().join('/')) + ' por ' + e(c.geradoPor || '') + '. Cada pessoa ativa no próprio aparelho (perfil ou Caixa de entrada).' : 'Falta gerar as chaves. Faça uma vez só; depois siga o LEIA-ME-NOTIFICACOES.') + '</p></div>'
       + '<button class="btn sm ' + (pronto ? 'ghost' : 'primary') + '" data-pgerar>' + (pronto ? 'Gerar chaves novas' : 'Gerar chaves') + '</button></div>'
       + (pronto ? '<div class="pm-pushkv"><span>Chave pública (VAPID_PUBLIC)</span><code>' + e(c.pub) + '</code><button class="btn sm" data-pcopy="' + e(c.pub) + '">Copiar</button></div>' : '')
       + '<div id="pmPushNovo"></div></section>';
@@ -12262,7 +12378,7 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
       var d = p.new && p.new.dados; if(!d || d.lida || String(d.para || '').toLowerCase() !== String(me).toLowerCase()) return; mostrarLocal(d);
     }).subscribe();
     var q = new URLSearchParams(location.search).get('n');
-    if(q){ var n = (S.notifs || []).find(function(x){ return x.id === q; }); abrirAlvo(n || {}); history.replaceState(null, '', location.pathname + location.hash); }
+    if(q){ var n = (S.notifs || []).find(function(x){ return x.id === q; }); abrirAlvo(n || {}); history.replaceState(history.state, '', location.pathname + location.hash); }
     if(estado() === 'on') inscrever().catch(function(err){ console.warn('push:', err); });
     setTimeout(banner, 2500);
   }, 600);
@@ -12465,7 +12581,7 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
       return '<div class="rs-row' + (sel[g.k] ? ' on' : '') + '">'
         + '<label class="rs-ck"><input type="checkbox" data-rssel="' + x(g.k) + '" ' + (sel[g.k] ? 'checked' : '') + ' aria-label="Selecionar ' + x(g.nome) + '"></label>'
         + '<div class="rs-cli"><b>' + x(g.nome) + '</b><span>' + g.procs.length + ' processo' + (g.procs.length > 1 ? 's' : '') + ' no relatório' + (nNot ? ' | <em>' + nNot + ' notificado' + (nNot > 1 ? 's' : '') + '</em>' : '') + (cc.cnpj ? ' | ' + x(cc.cnpj) : '') + '</span></div>'
-        + '<label class="rs-f"><span>Enviar para</span><input data-rsc="' + x(g.k) + '|para" value="' + x(cc.para) + '" placeholder="email@cliente.com.br, outro@cliente.com.br"></label>'
+        + '<label class="rs-f"><span>Enviar para</span><input data-rsc="' + x(g.k) + '|para" value="' + x(cc.para) + '" placeholder="ex.: contato@cliente.com.br, outro@cliente.com.br"></label>'
         + '<label class="rs-sw" title="Entra no envio semanal"><input type="checkbox" data-rsc="' + x(g.k) + '|semanal" ' + (cc.semanal ? 'checked' : '') + '><i></i><span>Semanal</span></label>'
         + '<div class="rs-ult">' + (e.ultimo ? (enviado ? '<b class="ok">Enviado esta semana</b>' : 'Último') + '<span>' + br(e.ultimo) + (e.auto ? ' | automático' : '') + '</span>' : '<span>Nunca enviado</span>') + '</div>'
         + '<div class="rs-acts"><button class="btn sm" data-rsver="' + x(g.k) + '">Ver e ajustar</button><button class="btn sm primary" data-rsenv="' + x(g.k) + '">Enviar</button></div></div>'; }).join('');
@@ -14094,7 +14210,7 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
     var item = function(c){ var n = naoLidas(c); return '<button class="cn-it ' + (ui.canal === c.id ? 'on' : '') + (n ? ' un' : '') + '" data-cnopen="' + c.id + '"><span class="cn-hash">' + I.hash + '</span><span class="cn-nm">' + x(c.nome) + (c.tipo === 'emp' && c.cliente ? '<small>' + x(c.cliente) + '</small>' : '') + '</span>' + (n ? '<span class="cn-n">' + (n > 99 ? '99+' : n) + '</span>' : '') + '</button>'; };
     var sec = function(tit, ls){ return ls.length ? '<div class="cn-sec">' + tit + '</div>' + ls.sort(ord).map(item).join('') : ''; };
     var seg = vis.filter(segue);
-    return '<aside class="cn-lst"><div class="cn-lh"><b>Canais</b><button class="btn sm primary" data-cnnovo>+ Novo canal</button></div>'
+    return '<aside class="cn-lst"><div class="cn-lh"><h1 class="cn-h1">Canais</h1><button class="btn sm primary" data-cnnovo>+ Novo canal</button></div>'
       + '<input class="cn-q" type="search" data-cnq placeholder="Buscar canal" value="' + x(ui.canalQ || '') + '" aria-label="Buscar canal">'
       + '<div class="cn-scroll">' + sec('Seguindo', seg)
       + sec('Clientes', vis.filter(function(c){ return c.tipo === 'cliente' && !segue(c); }))
@@ -14159,7 +14275,7 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
   }
   function tela(){
     var c = ui.canal && canalPorId(ui.canal); if(c && !podeVer(c)) c = null;
-    return '<div class="cn-wrap ' + (c ? 'tem' : '') + '">' + lista() + (c ? painel(c) : '<section class="cn-pane cn-nada"><div><span>' + I.hash + '</span><h3>Escolha um canal</h3><p>Ou crie um para um cliente ou empreendimento e faça publicações das informações recorrentes.</p><button class="btn primary" data-cnnovo>+ Novo canal</button></div></section>') + '</div>';
+    return '<div class="cn-wrap ' + (c ? 'tem' : '') + '">' + lista() + (c ? painel(c) : '<section class="cn-pane cn-nada"><div><span>' + I.hash + '</span><h2 class="h3">Escolha um canal</h2><p>Ou crie um para um cliente ou empreendimento e faça publicações das informações recorrentes.</p><button class="btn primary" data-cnnovo>+ Novo canal</button></div></section>') + '</div>';
   }
   function desenhar(){
     var v = document.getElementById('view'); if(!v) return;
@@ -14452,7 +14568,7 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
     try{ if(ui.view === 'inbox' && ehMac){ var pb = document.querySelector('#view .pm-pushbox'); if(pb && !document.querySelector('#view .br-row')) pb.insertAdjacentHTML('afterend', linhaHtml().replace('br-row', 'br-row br-inline')); } }catch(_){}
   });
   // links da barra: crm.mannare.com.br/#plan abre o Planejador
-  var tH = setInterval(function(){ if(typeof DB === 'undefined' || !DB.ready) return; clearInterval(tH); if(location.hash === '#plan' && typeof ui !== 'undefined'){ ui.view = 'plan'; history.replaceState(null, '', location.pathname); render(); } }, 400);
+  var tH = setInterval(function(){ if(typeof DB === 'undefined' || !DB.ready) return; clearInterval(tH); if(location.hash === '#plan' && typeof ui !== 'undefined' && ui.view !== 'plan'){ ui.view = 'plan'; render(); } }, 400);
 
   window.addEventListener('click', function(ev){ var tg = ev.target; if(!tg.closest) return;
     if(tg.closest('[data-brabrir]')){ ev.stopPropagation(); ev.preventDefault(); abrir(); return; }
@@ -15035,7 +15151,8 @@ label:has(> #gq:focus-visible){box-shadow:var(--mu-focus)!important;border-color
 .pkk:hover{border-color:var(--mu-border-strong);box-shadow:var(--mu-sh-1)}
 .pkk.on{border-color:var(--mu-azul);box-shadow:inset 0 0 0 1px var(--mu-azul);color:var(--mu-text)}
 .pkk.alert b{color:var(--mu-err)}
-.pkk.zero:not(.on){opacity:.6}
+.pkk.zero:not(.on){opacity:1;color:var(--mu-text-3)}
+.pkk.zero:not(.on) b,.pkk.zero:not(.on) .n{color:var(--mu-text-3)} /* UX-T5: contraste 6:1 em vez de opacidade */
 .pkk:focus-visible{outline:none;box-shadow:var(--mu-focus)}
 /* filtros */
 .pk-ftog{display:none}
@@ -15047,9 +15164,6 @@ label:has(> #gq:focus-visible){box-shadow:var(--mu-focus)!important;border-color
 
 /* quadro */
 #view .pboard.pk-board{grid-template-columns:var(--pkc)}
-#view .pcol.pk-min{display:flex;flex-direction:column;align-items:center;gap:10px;min-height:240px;padding:12px 0!important;cursor:pointer;transition:background var(--mu-t-fast)}
-#view .pcol.pk-min:hover{background:var(--mu-border)!important}
-#view .pcol.pk-min b{writing-mode:vertical-rl;transform:rotate(180deg);font:600 var(--mu-fs-2)/1 var(--mu-font);color:var(--mu-text-2);white-space:nowrap}
 .pk-dot{width:8px;height:8px;border-radius:50%;background:var(--c)}
 .pk-n{font:600 11px/1 var(--mu-font);color:var(--mu-text-3)}
 .pcol .mh{align-items:center}
@@ -15088,7 +15202,7 @@ label:has(> #gq:focus-visible){box-shadow:var(--mu-focus)!important;border-color
 
 /* lista */
 .pk-lista{border:1px solid var(--mu-border);border-radius:var(--mu-r-lg);background:var(--mu-surface);overflow:hidden}
-.pk-lh,.pk-row{display:grid;grid-template-columns:118px minmax(0,2.3fr) minmax(0,1.1fr) minmax(0,1.2fr) 110px 92px 56px;gap:var(--mu-s3);align-items:center;padding:0 var(--mu-s4)}
+.pk-lh,.pk-row{display:grid;grid-template-columns:118px minmax(0,2.1fr) minmax(128px,1.1fr) minmax(0,1.2fr) 110px 92px 56px;gap:var(--mu-s3);align-items:center;padding:0 var(--mu-s4)}
 .pk-lh{height:36px;background:var(--mu-surface-2);border-bottom:1px solid var(--mu-border);font:600 11px/1 var(--mu-font);color:var(--mu-text-3);text-transform:uppercase;letter-spacing:.05em}
 .pk-grp{padding:10px var(--mu-s4);background:var(--mu-surface-2);border-bottom:1px solid var(--mu-border);font:700 11px/1 var(--mu-font);color:var(--mu-text-3);text-transform:uppercase;letter-spacing:.06em}
 .pk-grp.red{color:var(--mu-err)}
@@ -15345,8 +15459,9 @@ button.mt-ck:hover i{border-color:var(--mu-ok-solid);background:var(--mu-ok-bg)}
   .mu-tab button.on{color:var(--mu-azul-press)}
   .mu-tab button.on::before{content:"";position:absolute;top:0;left:30%;right:30%;height:3px;border-radius:0 0 3px 3px;background:var(--mu-azul)}
   .mu-tab button:focus-visible{outline:none;box-shadow:var(--mu-focus)}
-  .mu-tab .n{position:absolute;top:2px;left:calc(50% + 6px);min-width:18px;height:18px;padding:0 5px;border-radius:var(--mu-r-pill);background:var(--mu-err-solid);color:#fff;font:700 10.5px/18px var(--mu-font);text-align:center}
-  html.mu-tab-on body{padding-bottom:calc(72px + env(safe-area-inset-bottom,0px))}
+  .mu-tab .n{position:absolute;top:2px;left:calc(50% + 6px);min-width:18px;height:18px;padding:0 5px;border-radius:var(--mu-r-pill);background:#ECEDF2;color:#3D4057;font:700 10.5px/18px var(--mu-font);text-align:center;box-shadow:0 0 0 2px var(--mu-surface)}
+  .mu-tab .n.red{background:var(--mu-err-solid);color:#fff}
+  html.mu-tab-on body{padding-bottom:calc(140px + env(safe-area-inset-bottom,0px))} /* UX-T4: espaço para a barra e o botão flutuante */
   html.mx-open .mu-tab{display:none}
   /* Painel: números em 2 x 2, compactos */
   .pn-kpi{padding:12px 14px;gap:4px}
@@ -15448,6 +15563,133 @@ button.mt-ck:hover i{border-color:var(--mu-ok-solid);background:var(--mu-ok-bg)}
 .tcard .info{margin-top:0}
 .tcard .info .row{min-height:36px;box-sizing:border-box}
 .tcard .info .row .link{min-height:0}
+/* ===== UX-T1 | botão "+ Novo" no topo ===== */
+.newmenu{position:relative}
+.newmenu[hidden]{display:none!important}
+.newlist{position:absolute;right:0;top:calc(100% + 6px);z-index:60;min-width:260px;margin:0;padding:6px;list-style:none;background:var(--mu-surface);border:1px solid var(--mu-border);border-radius:var(--mu-r-md);box-shadow:var(--mu-sh-3)}
+.newlist[hidden]{display:none}
+.newlist button{display:flex;flex-direction:column;align-items:flex-start;gap:2px;width:100%;padding:10px 12px;border:0;border-radius:8px;background:none;font:inherit;font-weight:600;color:var(--mu-text);text-align:left;cursor:pointer}
+.newlist button small{font-weight:400;font-size:12px;color:var(--mu-text-3)}
+.newlist button:hover,.newlist button:focus-visible{background:var(--mu-azul-soft);outline:none}
+#topNew .caret{font-size:11px;margin-left:2px}
+/* ===== UX-T2 | cartão do quadro acessível e status sem arrastar ===== */
+#view .mcard.pk{position:relative}
+#view .pk-r1{display:flex;align-items:flex-start;gap:6px;min-height:24px;flex-wrap:wrap;row-gap:4px}
+#view .pk-tags{display:flex;gap:6px;flex-wrap:wrap;flex:1 1 auto;min-width:auto}
+#view .pk-cod{margin-left:auto;white-space:nowrap;line-height:24px}
+#view .pk-t{margin:6px 0 2px;font-size:inherit}
+#view .pk-open{all:unset;cursor:pointer;font:inherit;font-weight:700;color:inherit}
+#view .pk-open::after{content:"";position:absolute;inset:0;border-radius:inherit}
+#view .pk-open:focus-visible::after{outline:2px solid var(--mu-azul);outline-offset:2px}
+#view .pk-strow{position:relative;z-index:1;margin-top:8px}
+#view .pk-meta a,#view .pk-meta button{position:relative;z-index:1}
+#view .pk-ft .avs{position:relative;z-index:0}
+#view .mcard .pk-st{width:100%;min-height:36px;padding:0 10px;border:1px solid var(--mu-border);border-radius:8px;background:var(--mu-surface);font:inherit;font-size:13px;color:var(--mu-text)}
+@media (hover:hover){#view .mcard .pk-st{opacity:.75}#view .mcard.pk:hover .pk-st,#view .mcard .pk-st:focus{opacity:1}}
+#view .orgtag,#view .pk-meta span{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#view .pk-mais{display:inline-grid;place-items:center;font-size:10.5px;font-weight:700;background:var(--mu-sunken);color:var(--mu-text-2)}
+/* ===== UX-T3 | colunas do quadro ===== */
+#view .pk-vazias{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 12px}
+#view .pk-vz{display:inline-flex;align-items:center;gap:6px;min-height:32px;padding:0 12px;border:1px dashed var(--mu-border-strong);border-radius:999px;background:transparent;font:inherit;font-size:13px;color:var(--mu-text-2);cursor:pointer}
+#view .pk-vz:hover{border-style:solid;background:var(--mu-surface)}
+#view .pk-vz:focus-visible{outline:none;box-shadow:var(--mu-focus)}
+#view .pk-wrap{position:relative}
+#view .pk-wrap .pboard{-webkit-mask-image:none;mask-image:none}
+#view .pk-wrap.mais-dir .pboard{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 48px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 48px),transparent)}
+#view .pk-wrap.mais-esq .pboard{-webkit-mask-image:linear-gradient(90deg,transparent,#000 48px);mask-image:linear-gradient(90deg,transparent,#000 48px)}
+#view .pk-wrap.mais-esq.mais-dir .pboard{-webkit-mask-image:linear-gradient(90deg,transparent,#000 48px,#000 calc(100% - 48px),transparent);mask-image:linear-gradient(90deg,transparent,#000 48px,#000 calc(100% - 48px),transparent)}
+body.arrastando #view .pk-wrap .pboard{-webkit-mask-image:none;mask-image:none}
+#view .pk-nav{position:absolute;top:12px;z-index:5;width:36px;height:36px;border:1px solid var(--mu-border);border-radius:50%;background:var(--mu-surface);box-shadow:var(--mu-sh-2);font-size:20px;line-height:1;color:var(--mu-text);cursor:pointer;display:grid;place-items:center}
+#view .pk-nav[hidden]{display:none}
+#view .pk-nav.prev{left:-12px}
+#view .pk-nav.next{right:-12px}
+#view .pk-nav:focus-visible{outline:none;box-shadow:var(--mu-focus)}
+@media (max-width:768px){#view .pk-nav{display:none}}
+/* UX-R3.3: Financeiro com os cartões de resumo em 2 colunas também abaixo de 480 px */
+@media (max-width:479px){
+  html.mx #view .alerts.fkpis{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  html.mx #view .fkpis .acard{padding:12px!important}
+  html.mx #view .fkpis .acard .v{font-size:18px!important}
+  html.mx #view .fkpis .acard .ft{font-size:11.5px!important}
+}
+/* ===== UX-T4 | celular: um menu só, "+ Novo" flutuante, sem Personalizar, filtros rolando ===== */
+@media (max-width:768px){
+  html.mu-tab-on #mxBurger{display:none}
+  html.mu-tab-on .newmenu{position:fixed;right:16px;z-index:35;bottom:calc(52px + 8px + 8px + env(safe-area-inset-bottom,0px))}
+  html.mu-tab-on #topNew{width:56px;height:56px;min-height:56px;padding:0;border-radius:50%;font-size:0;justify-content:center;box-shadow:0 8px 24px rgba(0,0,255,.35)}
+  html.mu-tab-on #topNew svg{width:22px;height:22px;margin:0}
+  html.mu-tab-on #topNew .caret{display:none}
+  html.mu-tab-on .newlist{top:auto;bottom:calc(100% + 8px);right:0;min-width:min(280px,calc(100vw - 32px))}
+  #view [data-dashedit],#view [data-dashreset]{display:none}
+  #view .pk-kst{display:flex;flex-wrap:nowrap;gap:8px;overflow-x:auto;scroll-snap-type:x proximity;scroll-padding-inline:16px;-webkit-mask-image:linear-gradient(90deg,#000 85%,transparent);mask-image:linear-gradient(90deg,#000 85%,transparent);padding-right:32px;scrollbar-width:none}
+  #view .pk-kst::-webkit-scrollbar{display:none}
+  #view .pk-kst .pkk{flex:0 0 auto;scroll-snap-align:start;white-space:nowrap}
+}
+/* ===== UX-T6 | linhas com título-botão e títulos em ordem ===== */
+.row-open{all:unset;cursor:pointer;font:inherit;color:inherit;min-width:0;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row-open::after{content:"";position:absolute;inset:0}
+.row-open:focus-visible::after{outline:2px solid var(--mu-azul);outline-offset:-2px;border-radius:8px}
+#view .mt-row,#view .pn-wr{position:relative}
+#view .mt-row .mt-ck,#view .pn-wr .pn-ck,#view .pn-wr .pn-play,#view .mt-row a,#view .pn-wr a,#view .mt-row .mt-st button{position:relative;z-index:1}
+#view .pcol h2.mst{margin:0}
+.ibx-open{appearance:none;background:none;border:0;padding:0;margin:0;line-height:inherit;text-align:left;cursor:pointer;color:inherit;font-family:inherit;min-width:0}
+.ibx-open::after{content:"";position:absolute;inset:0;border-radius:inherit}
+.ibx-open:focus-visible{outline:none}
+.ibx-open:focus-visible::after{outline:2px solid var(--mu-azul);outline-offset:-2px}
+.ibx-row .ibx-msg a{position:relative;z-index:1}
+/* ===== UX-R3.4 | Material técnico: cartão e quadro no padrão das Tarefas 2 e 3 ===== */
+#view .mcard[data-mat]{position:relative}
+#view .mcard[data-mat] h3.mt{margin:0;font-size:inherit}
+#view .mcard[data-mat] .mm a,#view .mcard[data-mat] .mm button,#view .mcard[data-mat] .ptags a{position:relative;z-index:1}
+#view .mcol h2.mst{margin:0}
+#view .pk-wrap .mboard{-webkit-mask-image:none;mask-image:none}
+#view .pk-wrap.mais-dir .mboard{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 48px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 48px),transparent)}
+#view .pk-wrap.mais-esq .mboard{-webkit-mask-image:linear-gradient(90deg,transparent,#000 48px);mask-image:linear-gradient(90deg,transparent,#000 48px)}
+#view .pk-wrap.mais-esq.mais-dir .mboard{-webkit-mask-image:linear-gradient(90deg,transparent,#000 48px,#000 calc(100% - 48px),transparent);mask-image:linear-gradient(90deg,transparent,#000 48px,#000 calc(100% - 48px),transparent)}
+/* ===== UX-R3.5 | clareza e contraste nas telas de apoio ===== */
+.cg-cell.passado{opacity:1}
+.cg-cell.passado .cg-n,.cg-cell.passado .cg-n b{color:var(--mu-text-3)}
+.cg-cell.passado .cg-fill{opacity:.5}
+.plhead h1{margin:0;font:500 20px var(--kanit);color:var(--ink)}
+#plScroll:focus-visible{outline:2px solid var(--mu-azul);outline-offset:-2px}
+.cn-lh .cn-h1{margin:0}
+#view [data-rsc$="|para"]::placeholder{color:#8A8DA3;font-style:italic}
+/* ===== UX-R4.1 | títulos de seção como h2 com o visual dos antigos h3 ===== */
+h2.h3{margin:0;font:700 15px/1.35 var(--font-sans);color:var(--ink,#0B0B1A);letter-spacing:normal;text-transform:none}
+.blk h2.h3{margin:0 0 8px!important}
+.pltop h2.h3{margin:0 6px;font:600 19px/normal var(--kanit);letter-spacing:-.01em!important}
+.cg-ph h2.h3{font-size:16px;font-weight:600;line-height:1.2}
+.cn-nada h2.h3{font-size:16.38px;line-height:1.5}
+.pm-pushcfg-hd h2.h3{margin:0 0 4px;font-size:16px;line-height:1.5}
+/* ===== UX-R4.2 | topo: espaço com rótulo, "Salvo" discreto, seta só quando há para onde voltar ===== */
+.esp-pill .esp-lbl{font-weight:500;color:var(--sx-text-3)}
+#btnBack[hidden]{display:none!important}
+.sync.ok{background:transparent!important;box-shadow:none!important;padding-left:2px!important;padding-right:2px!important;color:var(--sx-text-3)!important;font-weight:500}
+.sync.ok::before{content:"✓ ";color:#12B76A;font-weight:700}
+/* ===== UX-R4.3 | textos: calendário do painel ===== */
+.dw .cal .hd .gchip{padding:3px!important;gap:0}
+.dw .cal .hd .gchip .gtx{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+.dw .cal .hd b{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* ===== UX-R4.4 | filtros: Processos com "Filtros (n)" no desktop; Financeiro quebra linha no desktop ===== */
+.pk-fmais{display:contents}
+.pk-fmore{display:none}
+@media (min-width:761px){
+  #view .pk-pw .pk-fmore{display:inline-flex;align-items:center;gap:6px;flex:none}
+  #view .pk-pw .filters:not(.open) .pk-fmais{display:none}
+}
+@media (min-width:769px){
+  #view .fchips{flex-wrap:wrap!important;overflow:visible;-webkit-mask-image:none;mask-image:none;padding-right:0;row-gap:8px}
+}
+/* ===== UX-R4.5 | acabamentos: árvore de clientes e topo do Planejador no celular ===== */
+#view .tree .tn{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.3;overflow-wrap:anywhere}
+@media (max-width:768px){
+  #view .pltop{flex-wrap:wrap;row-gap:8px}
+  #view .pltop .spacer{display:none}
+  #view .pltop .seg{margin-left:auto}
+}
+/* ===== UX-T5 | perfil do topo como botão ===== */
+.chip-me{font:inherit;color:inherit;text-align:left;cursor:pointer;border:0;background:transparent}
+.chip-me .nm,.chip-me .em{display:block}
 </style>
 <script id="mannare-ui-js">
 /* FIX UX-5 — modal próprio no lugar de confirm() e prompt() nativos.
@@ -15614,11 +15856,38 @@ button.mt-ck:hover i{border-color:var(--mu-ok-solid);background:var(--mu-ok-bg)}
     bar.querySelectorAll('[data-mutab]').forEach(function(b){
       var on = b.dataset.mutab === v; b.classList.toggle('on', on); if(on) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current');
       var c = b.querySelector('.n'); if(!c) return; var n = navDe(b.dataset.mutab), t = n ? (n.querySelector('span[id]') || {}).textContent || '' : '';
-      t = String(t).trim(); c.textContent = t; c.hidden = !t || t === '0';
+      t = String(t).trim(); c.textContent = t; c.hidden = !t || t === '0'; c.classList.toggle('red', !!(n && n.querySelector('.red'))); /* UX-T5 */
     });
   }
   function aplica(){ if(MQ.matches) monta(); document.documentElement.classList.toggle('mu-tab-on', MQ.matches && !!bar); }
   (MQ.addEventListener ? MQ.addEventListener('change', aplica) : MQ.addListener(aplica));
+  /* UX-T4: no celular, Processos abre em Lista (uma vez por sessão; a escolha da pessoa vale depois) */
+  var modoAjustado = false;
+  if(window.cgRender) cgRender.antes(function(){ if(modoAjustado || typeof ui === 'undefined' || typeof DB === 'undefined' || !DB.ready) return; modoAjustado = true; if(MQ.matches && ui.procMode === 'quadro') ui.procMode = 'lista'; });
+  /* UX-R3.3: Planejador abre no dia de hoje no celular; UX-R3.4: Material técnico abre em Lista (uma vez por sessão) */
+  var planAjustado = false;
+  if(window.cgRender) cgRender.antes(function(){
+    if(planAjustado || typeof DB === 'undefined' || !DB.ready) return; planAjustado = true;
+    if(MQ.matches && typeof planUI === 'function'){ var u = planUI(); if(u.modo === 'semana'){ u.modo = 'dia'; u.dia = TODAY; } }
+    if(MQ.matches && !ui.mMode) ui.mMode = 'lista';
+  });
+  /* UX-R3.3: Carga rola até hoje ao abrir ou trocar de semana; nas outras atualizações, mantém a posição */
+  var cargaChave = '', cargaPos = 0;
+  if(window.cgRender){
+    cgRender.antes(function(){ var g = document.querySelector('#view .cg-grid'); if(g) cargaPos = g.scrollLeft; });
+    cgRender.depois(function(){
+      if(!MQ.matches) return;
+      if(ui.view !== 'carga'){ cargaChave = ''; return; }
+      var chave = ui.cg ? ui.cg.base + '|' + ui.cg.dias : 'x', nova = chave !== cargaChave; cargaChave = chave;
+      requestAnimationFrame(function(){
+        var g = document.querySelector('#view .cg-grid'); if(!g) return;
+        if(!nova){ g.scrollLeft = cargaPos; return; }
+        var h = g.querySelector('.cg-hd.hoje'); if(!h) return;
+        var nome = h.parentElement.firstElementChild;
+        g.scrollLeft = Math.max(0, h.offsetLeft - (nome ? nome.getBoundingClientRect().width : 0) - 8);
+      });
+    });
+  }
   if(window.cgRender) cgRender.depois(function(){ aplica(); atualiza(); });
   setInterval(atualiza, 4000); /* os contadores do menu também mudam com dados novos do servidor */
   aplica();
@@ -15691,7 +15960,7 @@ button.mt-ck:hover i{border-color:var(--mu-ok-solid);background:var(--mu-ok-bg)}
       if(s === 'fazendo') st = '<span class="ps-stc"><span class="ps-fz" title="Fazendo: cronômetro ligado"><i></i>Fazendo <b class="tnum" ' + liveAttr(x, true) + '>' + fmtClock(tot) + '</b></span><button class="ps-pb on" data-psplay="' + x.id + '" aria-label="Pausar: ' + esc(x.titulo) + '" title="Pausar (volta para A fazer)">❚❚</button></span>';
       else if(s === 'afazer') st = '<span class="ps-stc">' + (tot ? '<span class="ps-tot tnum">' + fmtDur(tot) + '</span>' : '') + '<button class="ps-go" data-psplay="' + x.id + '" aria-label="Começar: ' + esc(x.titulo) + '" title="Começar (Fazendo) e ligar o cronômetro">▶ Começar</button></span>';
       else st = tot ? '<span class="ps-tot tnum">' + fmtDur(tot) + '</span>' : '';
-      return {tipo:'pes', titulo:x.titulo || 'Sem título', prazo:diaDe(x), feito:!!x.feito, st:st, ctx:ctx, ctxP:ctx, chk:'data-pschk="' + x.id + '"', abre:'data-psopen="' + x.id + '" role="button" tabindex="0"'};
+      return {tipo:'pes', titulo:x.titulo || 'Sem título', prazo:diaDe(x), feito:!!x.feito, st:st, ctx:ctx, ctxP:ctx, chk:'data-pschk="' + x.id + '"', abre:'data-psopen="' + x.id + '"'};
     });
   };
 
