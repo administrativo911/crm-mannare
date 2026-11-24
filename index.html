@@ -5188,7 +5188,8 @@ function renderTeam(){
       return `<div class="tcard">
       ${photoBox(u, 'ph')}
       <div class="nm">${esc(u.nome)}</div><div class="sub">${esc(u.cargo || '')}</div>
-      <div class="chips">${tag(u.emp || '—', '#9A9DB0')}<span class="stchip"><i class="st-${stOf(u)}"></i>${STATUS_U[stOf(u)]}${stOf(u) === 'ocupado' && typeof pnOcupadoTxt === 'function' ? ': ' + esc(pnOcupadoTxt(u.id)) : ''}</span></div>
+      <div class="chips"><span class="tc-emp">${u.emp ? tag(u.emp, '#9A9DB0') : ''}</span>${(() => { const st = stOf(u), tx = (STATUS_U[st] || '') + (st === 'ocupado' && typeof pnOcupadoTxt === 'function' ? ': ' + pnOcupadoTxt(u.id) : ''); return `<span class="stchip tc-st" title="${esc(tx)}"><i class="st-${st}"></i><span class="tc-sttx">${esc(tx)}</span></span>`; })()}</div> <!-- FIX UX-10 -->
+      <div class="tc-fill" aria-hidden="true"></div>
       <div class="info">
         <div class="row">${ic('email', 'sm')}${u.email ? `<a href="mailto:${esc(u.email)}">${esc(u.email)}</a>` : '<span>sem e-mail</span>'}</div>
         <div class="row">${ic('tel', 'sm')}${u.tel ? `<a href="tel:${esc(u.tel.replace(/\D/g, ''))}">${esc(u.tel)}</a>${waLink(u.tel) ? ` <a href="${waLink(u.tel)}" target="_blank" rel="noopener" class="link" style="color:var(--azul);margin-left:auto">WhatsApp</a>` : ''}` : '<span>sem telefone</span>'}</div>
@@ -15426,6 +15427,27 @@ button.mt-ck:hover i{border-color:var(--mu-ok-solid);background:var(--mu-ok-bg)}
 .pz-volta.pz-espera{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.2);color:#fff;cursor:not-allowed;box-shadow:none}
 .pz-volta.pz-espera:hover{background:rgba(255,255,255,.12)}
 @media (max-width:768px){.pz-count{font-size:52px}.pz-lock h2{font-size:24px}}
+/* ===== FIX UX-10 | Tela Equipe ===== */
+.eqsec{box-sizing:border-box;width:100%;max-width:100%}
+.eqcard{min-width:0}
+.eqcard .avs{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.eqcard .avs .avw+.avw,.eqcard .avs .avw+.av{margin-left:0}
+.eqcard .avs .av:not(.me){box-shadow:0 0 0 2px var(--mu-surface)}
+.eqcard .avs .avw .st{right:-2px;bottom:-2px}
+.tgrid{grid-template-columns:minmax(0,1fr);align-items:stretch;gap:16px}
+@media (min-width:640px){.tgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:1024px){.tgrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.tcard{height:100%;box-sizing:border-box;min-width:0}
+.tcard .chips{width:100%;max-width:100%;justify-content:center;gap:6px;margin:10px 0 0}
+.tcard .tc-emp:empty{display:none}
+.tcard:has(.esp-chips) .tc-emp{display:none}
+.tcard .tc-st{max-width:100%;min-width:0}
+.tcard .tc-sttx{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tcard .esp-chips{width:100%;justify-content:center;gap:6px;margin-top:8px}
+.tcard .tc-fill{flex:1 0 12px}
+.tcard .info{margin-top:0}
+.tcard .info .row{min-height:36px;box-sizing:border-box}
+.tcard .info .row .link{min-height:0}
 </style>
 <script id="mannare-ui-js">
 /* FIX UX-5 — modal próprio no lugar de confirm() e prompt() nativos.
