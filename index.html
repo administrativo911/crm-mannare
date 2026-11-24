@@ -7516,6 +7516,7 @@ function semanaHtml(){
       ${lista.length > 8 ? `<button class="dmore" data-view-go="mine">+ ${lista.length - 8} itens em Minhas tarefas</button>` : ''}</div></div>`;
 }
 function timerMiniHtml(){ /* FIX UX-4D: cartão branco e discreto, mesmas ações */
+  if(!myRunning().length && typeof pnTimerHtml === 'function'){ const hp = pnTimerHtml(); if(hp) return hp; } /* FIX UX-8: avulsa em andamento */
   const run = myRunning(), cur = run[0], wk = weekMs(me), prox = minhaSemanaItens().find(i => !i.run && i.k !== 'subtarefa');
   const ref = cur ? `${cur.mat ? 'mat' : cur.p.id}|${cur.t.id}` : '';
   return `<div class="dcard pn-tmr ${cur ? 'on' : ''}"><div class="dch"><div class="dct">Rastreio de tempo</div></div>
@@ -7600,7 +7601,7 @@ function renderDash(){
       reunioes:reunioesCardHtml(), comatrib:comAtribCardHtml(), calendario:`<div class="dcard">${calHtml(items)}</div>`,
       licencas:!nextLics.length ? pnVazio('ok', 'Licenças a vencer', 'Nenhuma licença cadastrada', 'lic') : `<div class="dcard"><div class="dch"><div class="dct">Licenças a vencer</div>${verTodos('lic')}</div>
         ${nextLics.map(l => { const i = licInfo(l), s = LIC_ST[i.st], pr = licObra(l); return `<div class="drow sm" data-golic="${l.id}"><div class="dtt"><b>${esc(pr.emp)}</b><span>${esc(l.tipo)} | vence ${fmtD(l.validade)}</span></div>${pill(s.l, s.c)}</div>`; }).join('') || '<div class="dempty">Nenhuma licença cadastrada.</div>'}</div>`,
-      equipe:`<div class="dcard"><div class="dch"><div><div class="dct">Equipe</div><div class="dcs">${USERS.filter(u => stOf(u) === 'online').length} online agora</div></div>${verTodos('team')}</div>
+      equipe:`<div class="dcard"><div class="dch"><div><div class="dct">Equipe</div><div class="dcs">${USERS.filter(u => ['online', 'ocupado'].includes(stOf(u))).length} online agora</div></div>${verTodos('team')}</div>
         ${USERS.slice(0, 5).map(u => { const t = openIts.filter(i => respTem(i.resp, u.id)); return `<div class="drow sm" data-view-go="team">${av(u.id, true)}<div class="dtt"><b>${esc(u.nome)}</b><span>${t.length ? esc(t[0].titulo) : 'Sem tarefas abertas'}</span></div><span class="dcount tnum">${t.length}</span></div>`; }).join('')}</div>`,
       orgao:!stuck ? pnVazio('relogio', 'Mais tempo no órgão', 'Sem tramitação registrada') : `<div class="dcard"><div class="dch"><div><div class="dct">Mais tempo no órgão</div><div class="dcs">Parado no mesmo setor</div></div>${stuck ? `<button class="dlink" data-gotram="${stuck.p.id}">Tramitação →</button>` : ''}</div>
         ${stuck ? `<div class="dkv" style="margin-top:4px"><span class="tnum">${stuck.a.dias} dias</span></div><div class="dcs">${esc((propById(stuck.p.propId) || {}).emp || '')} | ${esc(stuck.a.setor.split(' (')[0])}</div>` : '<div class="dempty">Sem tramitação registrada.</div>'}</div>`})}
@@ -15373,6 +15374,22 @@ button.mt-ck:hover i{border-color:var(--mu-ok-solid);background:var(--mu-ok-bg)}
 .ps-dlg .ps-hint{margin:0;font-size:var(--mu-fs-1);color:var(--mu-text-3)}
 .ps-dlg .cg-df .spacer{flex:1}
 .mt-row[data-psopen]:focus-visible{outline:none;box-shadow:var(--mu-focus)}
+/* ===== FIX UX-8 | Fazendo + cronômetro + Ocupado ===== */
+.st-ocupado{background:#D92D20}
+.ps-stc{display:inline-flex;align-items:center;gap:6px;flex-wrap:nowrap}
+.ps-fz{display:inline-flex;align-items:center;gap:5px;height:24px;padding:0 8px;border-radius:var(--mu-r-pill);background:var(--mu-azul-soft);color:var(--mu-azul-press);font:600 11.5px/1 var(--mu-font);white-space:nowrap}
+.ps-fz i{width:6px;height:6px;border-radius:50%;background:var(--mu-azul);animation:psPulse 1.6s ease-in-out infinite}
+.ps-fz b{font-weight:700}
+@keyframes psPulse{50%{opacity:.35}}
+@media (prefers-reduced-motion:reduce){.ps-fz i{animation:none}}
+.ps-clk{font:600 var(--mu-fs-2)/1 var(--mu-font);color:var(--mu-azul-press)}
+.ps-tot{font:500 var(--mu-fs-1)/1 var(--mu-font);color:var(--mu-text-3)}
+.ps-go{height:28px;padding:0 10px;border:1px solid var(--mu-border-strong);border-radius:var(--mu-r-pill);background:var(--mu-surface);color:var(--mu-azul-press);font:600 var(--mu-fs-1)/1 var(--mu-font);cursor:pointer;white-space:nowrap}
+.ps-go:hover{background:var(--mu-azul-soft);border-color:var(--mu-azul-tint)}
+.ps-pb{width:28px;height:28px;border:0;border-radius:50%;background:var(--mu-azul);color:#fff;font-size:10px;cursor:pointer;display:grid;place-items:center}
+.ps-go:focus-visible,.ps-pb:focus-visible{outline:none;box-shadow:var(--mu-focus)}
+.ps-dlg .ps-row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:768px){.ps-go,.ps-pb{min-height:40px;height:40px}.ps-pb{width:40px}.ps-dlg .ps-row2{grid-template-columns:1fr}}
 </style>
 <script id="mannare-ui-js">
 /* FIX UX-5 — modal próprio no lugar de confirm() e prompt() nativos.
@@ -15559,6 +15576,10 @@ button.mt-ck:hover i{border-color:var(--mu-ok-solid);background:var(--mu-ok-bg)}
      (tipo "cargapessoal", id "cargapessoal:<e-mail>": só id, dia e feito).
      Os outros veem "Tarefa pessoal" contando no dia, sem detalhes.
    - Não mexe em nenhum documento ou campo que já existe.
+   FIX UX-8: status A fazer / Fazendo / Concluída. "Fazendo" liga o cronômetro
+   (sessões em "time", como nas tarefas dos processos) e a pessoa aparece como
+   "Ocupado" para a equipe enquanto houver cronômetro ligado. O resumo da carga
+   leva só "fazendo" (início), nunca o título.
    ========================================================================== */
 (function(){
   'use strict';
@@ -15570,23 +15591,40 @@ button.mt-ck:hover i{border-color:var(--mu-ok-solid);background:var(--mu-ok-bg)}
   var minhas = function(){ return (S.pessoais || []).filter(function(x){ return String(x.dono || '').toLowerCase() === String(me || '').toLowerCase(); }); };
   var porId = function(id){ return minhas().find(function(x){ return x.id === id; }); };
   var diaDe = function(x){ return x.prog || x.prazo || ''; };
+  var stDe = function(x){ return x.feito ? 'concluida' : x.st === 'fazendo' ? 'fazendo' : 'afazer'; };
+  var rodando = function(x){ return (x.time || []).some(function(s){ return !s.fim && s.por === me; }); };
+  var ST = {afazer:['A fazer', '#9A9DB0'], fazendo:['Fazendo', '#0000FF'], concluida:['Concluída', '#12B76A']};
+  function liga(x){ if(!rodando(x)) sessOf(x).push({id:uid(), por:me, ini:nowISO(), fim:null}); }
+  function desliga(x){ sessOf(x).forEach(function(s){ if(!s.fim) s.fim = nowISO(); }); }
+  /* muda o status e cuida do cronômetro; só uma avulsa "Fazendo" por vez */
+  function setSt(x, st){
+    if(st === 'fazendo'){ minhas().forEach(function(o){ if(o !== x && stDe(o) === 'fazendo'){ o.st = 'afazer'; desliga(o); } }); x.feito = false; x.feitoEm = ''; x.st = 'fazendo'; liga(x); }
+    else if(st === 'concluida'){ desliga(x); x.st = 'concluida'; x.feito = true; x.feitoEm = nowISO(); }
+    else { desliga(x); x.st = 'afazer'; x.feito = false; x.feitoEm = ''; }
+  }
+  var fazendoAgora = function(){ return minhas().find(function(x){ return stDe(x) === 'fazendo' && rodando(x); }); };
 
   /* ---------- resumo sem título, para a Carga de trabalho dos outros ---------- */
   function resumo(){
     if(typeof me === 'undefined' || !me || typeof DB === 'undefined' || !DB.ready) return false;
     var itens = minhas().filter(function(x){ return !x.feito && diaDe(x); }).map(function(x){ return {id:x.id, dia:diaDe(x)}; })
       .sort(function(a, b){ return a.id < b.id ? -1 : 1; });
+    var fz = fazendoAgora(), ini = fz ? ((fz.time || []).filter(function(s){ return !s.fim; })[0] || {}).ini || '' : '';
     var r = S.cargasPess.find(function(c){ return c.id === me; });
-    if(!r){ if(!itens.length) return false; r = {id:me, dono:me, _espaco:'comum', itens:[]}; S.cargasPess.push(r); }
-    if(JSON.stringify(r.itens || []) === JSON.stringify(itens)) return false;
-    r.itens = itens; r.dono = me; r._espaco = 'comum'; return true;
+    if(!r){ if(!itens.length && !ini) return false; r = {id:me, dono:me, _espaco:'comum', itens:[]}; S.cargasPess.push(r); }
+    if(JSON.stringify(r.itens || []) === JSON.stringify(itens) && (r.fazendo || '') === ini) return false;
+    r.itens = itens; r.fazendo = ini; r.dono = me; r._espaco = 'comum'; return true;
   }
 
   /* ---------- itens para Minhas tarefas (usados por renderMine) ---------- */
   window.pnMine = function(feito){
     return minhas().filter(function(x){ return !!x.feito === !!feito; }).map(function(x){
       var ctx = '<span class="ps-priv">Só você vê</span>' + (x.nota ? ' | ' + esc(String(x.nota).slice(0, 120)) : '');
-      return {tipo:'pes', titulo:x.titulo || 'Sem título', prazo:diaDe(x), feito:!!x.feito, st:'', ctx:ctx, ctxP:ctx, chk:'data-pschk="' + x.id + '"', abre:'data-psopen="' + x.id + '" role="button" tabindex="0"'};
+      var s = stDe(x), tot = typeof timeTotal === 'function' ? timeTotal(x) : 0, st;
+      if(s === 'fazendo') st = '<span class="ps-stc"><span class="ps-fz" title="Fazendo: cronômetro ligado"><i></i>Fazendo <b class="tnum" ' + liveAttr(x, true) + '>' + fmtClock(tot) + '</b></span><button class="ps-pb on" data-psplay="' + x.id + '" aria-label="Pausar: ' + esc(x.titulo) + '" title="Pausar (volta para A fazer)">❚❚</button></span>';
+      else if(s === 'afazer') st = '<span class="ps-stc">' + (tot ? '<span class="ps-tot tnum">' + fmtDur(tot) + '</span>' : '') + '<button class="ps-go" data-psplay="' + x.id + '" aria-label="Começar: ' + esc(x.titulo) + '" title="Começar (Fazendo) e ligar o cronômetro">▶ Começar</button></span>';
+      else st = tot ? '<span class="ps-tot tnum">' + fmtDur(tot) + '</span>' : '';
+      return {tipo:'pes', titulo:x.titulo || 'Sem título', prazo:diaDe(x), feito:!!x.feito, st:st, ctx:ctx, ctxP:ctx, chk:'data-pschk="' + x.id + '"', abre:'data-psopen="' + x.id + '" role="button" tabindex="0"'};
     });
   };
 
@@ -15594,7 +15632,7 @@ button.mt-ck:hover i{border-color:var(--mu-ok-solid);background:var(--mu-ok-bg)}
   window.pnCargaItens = function(){
     var out = [];
     minhas().forEach(function(x){ if(x.feito) return;
-      out.push({ref:'pp|' + x.id, k:'pessoal', titulo:x.titulo || 'Sem título', onde:'Tarefa avulsa (só você vê)', prazo:x.prazo || '', prog:x.prog || '', resp:[me], st:'', obj:x, log:null, pess:true}); });
+      out.push({ref:'pp|' + x.id, k:'pessoal', titulo:x.titulo || 'Sem título', onde:'Tarefa avulsa (só você vê)' + (stDe(x) === 'fazendo' ? ' | fazendo agora' : ''), prazo:x.prazo || '', prog:x.prog || '', resp:[me], st:'', obj:x, log:null, pess:true}); });
     (S.cargasPess || []).forEach(function(c){ var dono = String(c.dono || c.id || '').toLowerCase(); if(!dono || dono === String(me).toLowerCase()) return;
       (c.itens || []).forEach(function(i){ if(!i.dia) return;
         out.push({ref:'pq|' + dono + '|' + i.id, k:'pessoal', titulo:'Tarefa pessoal', onde:'Tarefa pessoal', prazo:i.dia, prog:'', resp:[dono], st:'', obj:{}, log:null, pess:true, alheia:true}); }); });
@@ -15619,31 +15657,59 @@ button.mt-ck:hover i{border-color:var(--mu-ok-solid);background:var(--mu-ok-bg)}
     ov.innerHTML = '<div class="cg-dlg ps-dlg" role="dialog" aria-modal="true" aria-labelledby="psTit" tabindex="-1">'
       + '<div class="cg-dh"><div><div class="cg-eyebrow">Tarefa avulsa | só você vê</div><h2 id="psTit">' + (x ? 'Editar tarefa' : 'Nova tarefa') + '</h2></div><span class="spacer"></span><button class="x" data-psx aria-label="Fechar">✕</button></div>'
       + '<label class="f">O que fazer<input id="psT" maxlength="200" value="' + esc(t.titulo || '') + '" placeholder="Ex.: ligar para o cartório do 2º ofício" autocomplete="off"></label>'
-      + '<label class="f">Dia<input id="psD" type="date" value="' + esc(diaDe(t)) + '"></label>'
+      + '<div class="ps-row2"><label class="f">Dia<input id="psD" type="date" value="' + esc(diaDe(t)) + '"></label>'
+      + '<label class="f">Status<select id="psS">' + Object.keys(ST).map(function(k){ return '<option value="' + k + '" ' + (k === stDe(t) ? 'selected' : '') + '>' + ST[k][0] + '</option>'; }).join('') + '</select></label></div>'
       + '<label class="f">Observação (opcional)<textarea id="psN" rows="3" maxlength="1000">' + esc(t.nota || '') + '</textarea></label>'
-      + '<p class="cg-p ps-hint">Conta na sua Carga de trabalho no dia escolhido. Os outros veem só "Tarefa pessoal", sem o texto.</p>'
+      + '<p class="cg-p ps-hint">Conta na sua Carga de trabalho no dia escolhido. Em "Fazendo", o cronômetro liga e você aparece como Ocupado. Os outros veem só "Tarefa pessoal", sem o texto.</p>'
       + '<div class="cg-df">' + (x ? '<button class="btn danger ps-del" data-psdel>Excluir</button><span class="spacer"></span>' : '') + '<button class="btn" data-psx>Cancelar</button><button class="btn primary" data-psok>' + (x ? 'Salvar' : 'Criar tarefa') + '</button></div></div>';
     document.body.appendChild(ov);
     setTimeout(function(){ var i = ov && ov.querySelector('#psT'); if(i) i.focus(); }, 30);
   }
   function salvar(){
-    var tit = (ov.querySelector('#psT').value || '').trim(), dia = ov.querySelector('#psD').value || '', nota = (ov.querySelector('#psN').value || '').trim();
+    var tit = (ov.querySelector('#psT').value || '').trim(), dia = ov.querySelector('#psD').value || '', nota = (ov.querySelector('#psN').value || '').trim(), st = ov.querySelector('#psS').value || 'afazer';
     if(!tit){ toast('Escreva o que fazer'); ov.querySelector('#psT').focus(); return; }
     var x = editando ? porId(editando) : null;
     if(x){ x.titulo = tit; x.prazo = dia; delete x.prog; x.nota = nota; }
-    else { x = {id:uid(), dono:me, titulo:tit, prazo:dia, nota:nota, feito:false, feitoEm:'', criadoEm:nowISO(), _espaco:'comum'}; S.pessoais.push(x); }
+    else { x = {id:uid(), dono:me, titulo:tit, prazo:dia, nota:nota, st:'afazer', feito:false, feitoEm:'', criadoEm:nowISO(), time:[], _espaco:'comum'}; S.pessoais.push(x); }
+    if(st !== stDe(x)) setSt(x, st);
     var novo = !editando; fechar(); resumo(); save(); render(); toast(novo ? 'Tarefa avulsa criada' : 'Tarefa salva');
   }
   function excluir(){
     var x = editando ? porId(editando) : null; if(!x) return fechar();
-    var copia = JSON.parse(JSON.stringify(x)); S.pessoais = S.pessoais.filter(function(o){ return o !== x; });
+    desliga(x); var copia = JSON.parse(JSON.stringify(x)); S.pessoais = S.pessoais.filter(function(o){ return o !== x; });
     fechar(); resumo(); save(); render();
     if(typeof toastAcao === 'function') toastAcao('Tarefa excluída', 'Desfazer', function(){ S.pessoais.push(copia); resumo(); save(); render(); });
   }
   function alternar(id){
     var x = porId(id); if(!x) return;
-    x.feito = !x.feito; x.feitoEm = x.feito ? nowISO() : ''; resumo(); save(); render();
+    setSt(x, x.feito ? 'afazer' : 'concluida'); resumo(); save(); render();
   }
+  function playPausa(id){
+    var x = porId(id); if(!x) return; var ia = stDe(x) !== 'fazendo';
+    setSt(x, ia ? 'fazendo' : 'afazer'); resumo(); save(); render(); toast(ia ? 'Fazendo: cronômetro ligado' : 'Pausada: cronômetro parado');
+  }
+
+  /* ---------- Painel: o cartão "Rastreio de tempo" mostra a avulsa em andamento ---------- */
+  window.pnTimerHtml = function(){
+    var x = fazendoAgora(); if(!x) return '';
+    return '<div class="dcard pn-tmr on"><div class="dch"><div class="dct">Rastreio de tempo</div></div>'
+      + '<div class="pn-tr"><div><div class="pn-tl">Tarefa avulsa | só você vê</div><div class="pn-clk tnum" ' + liveAttr(x, true) + '>' + fmtClock(timeTotal(x)) + '</div></div>'
+      + '<button class="pn-pb" data-psplay="' + x.id + '" aria-label="Pausar" title="Pausar">❚❚</button></div>'
+      + '<div class="pn-tgo"><button class="dlink strong" data-psopen="' + x.id + '">' + esc(x.titulo) + '</button></div>'
+      + '<div class="pn-th">Você aparece como <b>Ocupado</b> para a equipe enquanto o cronômetro estiver ligado.</div></div>';
+  };
+
+  /* ---------- presença: "Ocupado" enquanto houver cronômetro ligado ---------- */
+  if(typeof STATUS_U !== 'undefined') STATUS_U.ocupado = 'Ocupado';
+  function ocupado(uid){
+    uid = String(uid || '').toLowerCase(); if(!uid) return false;
+    if(typeof myRunningOf === 'function' && myRunningOf(uid) > 0) return true;
+    if(uid === String(me || '').toLowerCase()) return !!fazendoAgora();
+    var r = (S.cargasPess || []).find(function(c){ return String(c.dono || c.id || '').toLowerCase() === uid; });
+    return !!(r && r.fazendo);
+  }
+  window.pnOcupado = ocupado;
+  if(typeof stOf === 'function'){ var _stOfP = stOf; stOf = function(u){ var s = _stOfP.apply(this, arguments); return s === 'online' && u && ocupado(u.id) ? 'ocupado' : s; }; }
 
   window.addEventListener('click', function(e){
     var t = e.target; if(!t.closest) return; var el;
@@ -15655,6 +15721,7 @@ button.mt-ck:hover i{border-color:var(--mu-ok-solid);background:var(--mu-ok-bg)}
       return;
     }
     if((el = t.closest('[data-psnew]'))){ e.stopPropagation(); abrir(null); return; }
+    if((el = t.closest('[data-psplay]'))){ e.stopPropagation(); playPausa(el.getAttribute('data-psplay')); return; }
     if((el = t.closest('[data-pschk]'))){ e.stopPropagation(); alternar(el.getAttribute('data-pschk')); return; }
     if((el = t.closest('[data-psopen]'))){ e.stopPropagation(); var x = porId(el.getAttribute('data-psopen')); if(x){ var p = document.querySelector('.cg-pop'); if(p) p.remove(); abrir(x); } return; }
   }, true);
