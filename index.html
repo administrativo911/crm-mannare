@@ -4193,7 +4193,7 @@ const av = (id, sm, noclick) => {
     return `<span class="avw eqav" title="Equipe ${esc(e.nome)} | ${membrosDe(id).map(m => first(m)).join(', ') || 'sem membros'}"><span class="av ${sm ? 'sm' : ''}" style="background:${e.cor || '#3333FF'};color:#fff"><svg viewBox="0 0 24 24" width="60%" height="60%" fill="currentColor" aria-hidden="true"><path d="M9 4a3.5 3.5 0 1 1 0 7 3.5 3.5 0 0 1 0-7zM2 19c0-3.3 3.1-6 7-6s7 2.7 7 6v1H2zM16.5 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6zM17.5 13c2.6.4 4.5 2.6 4.5 5.3V20h-4v-1c0-2.3-.9-4.4-2.4-5.9z"/></svg></span></span>`; }
   const u = id && U[id];
   if(!u) return `<span class="av none ${sm ? 'sm' : ''}" title="Sem responsável">+</span>`;
-  return `<span class="avw" ${noclick ? '' : `data-user="${u.id}"`} title="${esc(u.nome)} | ${STATUS_U[stOf(u)] || ''}"><span class="av ${sm ? 'sm' : ''}" style="background:${u.cor};color:${lightBg(u.cor) ? '#000' : '#fff'}">${avInner(u)}</span><span class="st st-${stOf(u)}"></span></span>`;
+  return `<span class="avw" ${noclick ? '' : `data-user="${u.id}"`} title="${esc(u.nome)} | ${STATUS_U[stOf(u)] || ''}${stOf(u) === 'ocupado' && typeof pnOcupadoTxt === 'function' ? ': ' + esc(pnOcupadoTxt(u.id)) : ''}"><span class="av ${sm ? 'sm' : ''}" style="background:${u.cor};color:${lightBg(u.cor) ? '#000' : '#fff'}">${avInner(u)}</span><span class="st st-${stOf(u)}"></span></span>`;
 };
 const avs = ids => { const l = ids && ids.length ? ids : [null]; const extra = l.length > 4 ? l.length - 3 : 0; return `<span class="avs">${(extra ? l.slice(0, 3) : l).map(i => av(i, true)).join('')}${extra ? `<span class="av sm" style="background:#ECEDF5;color:#4B4E66;margin-left:-9px" title="${esc(l.slice(3).map(first).join(', '))}">+${extra}</span>` : ''}</span>`; };
 
@@ -5188,7 +5188,7 @@ function renderTeam(){
       return `<div class="tcard">
       ${photoBox(u, 'ph')}
       <div class="nm">${esc(u.nome)}</div><div class="sub">${esc(u.cargo || '')}</div>
-      <div class="chips">${tag(u.emp || '—', '#9A9DB0')}<span class="stchip"><i class="st-${stOf(u)}"></i>${STATUS_U[stOf(u)]}</span></div>
+      <div class="chips">${tag(u.emp || '—', '#9A9DB0')}<span class="stchip"><i class="st-${stOf(u)}"></i>${STATUS_U[stOf(u)]}${stOf(u) === 'ocupado' && typeof pnOcupadoTxt === 'function' ? ': ' + esc(pnOcupadoTxt(u.id)) : ''}</span></div>
       <div class="info">
         <div class="row">${ic('email', 'sm')}${u.email ? `<a href="mailto:${esc(u.email)}">${esc(u.email)}</a>` : '<span>sem e-mail</span>'}</div>
         <div class="row">${ic('tel', 'sm')}${u.tel ? `<a href="tel:${esc(u.tel.replace(/\D/g, ''))}">${esc(u.tel)}</a>${waLink(u.tel) ? ` <a href="${waLink(u.tel)}" target="_blank" rel="noopener" class="link" style="color:var(--azul);margin-left:auto">WhatsApp</a>` : ''}` : '<span>sem telefone</span>'}</div>
@@ -5236,7 +5236,7 @@ function showPop(uid, anchor){
   const its = allItems().filter(i => !i.feito && respTem(i.resp, uid)).sort((a, b) => (a.prazo || '9').localeCompare(b.prazo || '9'));
   const pop = $('#pop');
   pop.innerHTML = `<div class="hd">${photoBox(u, 'ph')}<div style="min-width:0;flex:1"><div class="nm">${esc(u.nome)}</div><div class="sub">${esc(u.cargo || '')}${u.emp ? ' | ' + esc(u.emp) : ''}</div>
-      <div style="margin-top:8px;display:flex;align-items:center;gap:6px"><span class="stchip" style="padding:0"><i class="st-${stOf(u)}" style="margin-left:6px"></i></span><select data-ustatus="${u.id}">${Object.entries(STATUS_EDIT).map(([k, v]) => `<option value="${k}" ${k === (u.status || 'auto') ? 'selected' : ''}>${v}</option>`).join('')}</select></div></div></div>
+      ${typeof pnStatusLinha === 'function' ? pnStatusLinha(u) : ''}<label class="us-sel">Disponibilidade<select data-ustatus="${u.id}">${Object.entries(STATUS_EDIT).map(([k, v]) => `<option value="${k}" ${k === (u.status || 'auto') ? 'selected' : ''}>${v}</option>`).join('')}</select></label></div></div>
     <div class="bd">
       <div class="ln">${ic('email', 'sm')}${u.email ? `<a href="mailto:${esc(u.email)}">${esc(u.email)}</a>` : '<span class="sub">sem e-mail</span>'}</div>
       <div class="ln">${ic('tel', 'sm')}${u.tel ? `<a href="tel:${esc(u.tel.replace(/\D/g, ''))}">${esc(u.tel)}</a>${waLink(u.tel) ? `<a class="link" style="color:var(--azul)" href="${waLink(u.tel)}" target="_blank" rel="noopener">WhatsApp</a>` : ''}` : '<span class="sub">sem telefone</span>'}</div>
@@ -7602,7 +7602,7 @@ function renderDash(){
       licencas:!nextLics.length ? pnVazio('ok', 'Licenças a vencer', 'Nenhuma licença cadastrada', 'lic') : `<div class="dcard"><div class="dch"><div class="dct">Licenças a vencer</div>${verTodos('lic')}</div>
         ${nextLics.map(l => { const i = licInfo(l), s = LIC_ST[i.st], pr = licObra(l); return `<div class="drow sm" data-golic="${l.id}"><div class="dtt"><b>${esc(pr.emp)}</b><span>${esc(l.tipo)} | vence ${fmtD(l.validade)}</span></div>${pill(s.l, s.c)}</div>`; }).join('') || '<div class="dempty">Nenhuma licença cadastrada.</div>'}</div>`,
       equipe:`<div class="dcard"><div class="dch"><div><div class="dct">Equipe</div><div class="dcs">${USERS.filter(u => ['online', 'ocupado'].includes(stOf(u))).length} online agora</div></div>${verTodos('team')}</div>
-        ${USERS.slice(0, 5).map(u => { const t = openIts.filter(i => respTem(i.resp, u.id)); return `<div class="drow sm" data-view-go="team">${av(u.id, true)}<div class="dtt"><b>${esc(u.nome)}</b><span>${t.length ? esc(t[0].titulo) : 'Sem tarefas abertas'}</span></div><span class="dcount tnum">${t.length}</span></div>`; }).join('')}</div>`,
+        ${USERS.slice(0, 5).map(u => { const t = openIts.filter(i => respTem(i.resp, u.id)); return `<div class="drow sm" data-view-go="team">${av(u.id, true)}<div class="dtt"><b>${esc(u.nome)}</b><span>${stOf(u) === 'ocupado' && typeof pnOcupadoTxt === 'function' ? 'Ocupado: ' + esc(pnOcupadoTxt(u.id)) : t.length ? esc(t[0].titulo) : 'Sem tarefas abertas'}</span></div><span class="dcount tnum">${t.length}</span></div>`; }).join('')}</div>`,
       orgao:!stuck ? pnVazio('relogio', 'Mais tempo no órgão', 'Sem tramitação registrada') : `<div class="dcard"><div class="dch"><div><div class="dct">Mais tempo no órgão</div><div class="dcs">Parado no mesmo setor</div></div>${stuck ? `<button class="dlink" data-gotram="${stuck.p.id}">Tramitação →</button>` : ''}</div>
         ${stuck ? `<div class="dkv" style="margin-top:4px"><span class="tnum">${stuck.a.dias} dias</span></div><div class="dcs">${esc((propById(stuck.p.propId) || {}).emp || '')} | ${esc(stuck.a.setor.split(' (')[0])}</div>` : '<div class="dempty">Sem tramitação registrada.</div>'}</div>`})}
     </div>`;
@@ -15390,6 +15390,42 @@ button.mt-ck:hover i{border-color:var(--mu-ok-solid);background:var(--mu-ok-bg)}
 .ps-go:focus-visible,.ps-pb:focus-visible{outline:none;box-shadow:var(--mu-focus)}
 .ps-dlg .ps-row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 @media (max-width:768px){.ps-go,.ps-pb{min-height:40px;height:40px}.ps-pb{width:40px}.ps-dlg .ps-row2{grid-template-columns:1fr}}
+/* ===== FIX UX-9 | Status da pessoa e pausa de cuidado ===== */
+.us-now{display:flex;align-items:flex-start;gap:8px;margin-top:10px;padding:8px 10px;border-radius:var(--mu-r-md);background:var(--mu-surface);border:1px solid var(--mu-border)}
+.us-dot{flex:none;width:10px;height:10px;margin-top:4px;border-radius:50%;background:#B0B3C3;box-shadow:0 0 0 3px rgba(176,179,195,.22)}
+.us-now[data-s="online"] .us-dot{background:#12B76A;box-shadow:0 0 0 3px rgba(18,183,106,.18)}
+.us-now[data-s="ocupado"] .us-dot{background:#D92D20;box-shadow:0 0 0 3px rgba(217,45,32,.16)}
+.us-now[data-s="ausente"] .us-dot,.us-now[data-s="ferias"] .us-dot{background:#E0A800;box-shadow:0 0 0 3px rgba(224,168,0,.18)}
+.us-now[data-s="folga"] .us-dot{background:#00A9CC;box-shadow:0 0 0 3px rgba(0,169,204,.18)}
+.us-tx{display:grid;gap:2px;min-width:0;font-size:var(--mu-fs-2);line-height:1.35;color:var(--mu-text-2)}
+.us-tx b{font-weight:600;color:var(--mu-text)}
+.us-tx span{overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.us-tx em{font-style:normal;color:var(--mu-text-3);white-space:nowrap}
+.us-sel{display:grid;gap:4px;margin-top:8px;font:600 11px/1 var(--mu-font);letter-spacing:.04em;text-transform:uppercase;color:var(--mu-text-3)}
+.us-sel select{text-transform:none;letter-spacing:0;font-weight:500}
+.pz-ov{position:fixed;inset:0;z-index:10000;display:grid;place-items:center;padding:16px;background:rgba(11,11,26,.45);backdrop-filter:blur(3px)}
+.pz-ov.pz-travado{background:linear-gradient(160deg,#0B0B1A 0%,#1A1A5C 100%);backdrop-filter:none}
+.pz-card{width:min(440px,100%);background:var(--mu-surface);border-radius:var(--mu-r-lg);box-shadow:var(--mu-sh-3);padding:24px;display:grid;gap:12px;text-align:center;justify-items:center}
+.pz-card h2,.pz-lock h2{margin:0;font:600 22px/1.25 var(--mu-font-display);color:var(--mu-text)}
+.pz-card p{margin:0;font-size:var(--mu-fs-3);line-height:1.5;color:var(--mu-text-2)}
+.pz-card .pz-sub,.pz-lock .pz-sub{font-size:var(--mu-fs-1);color:var(--mu-text-3)}
+.pz-ic{width:48px;height:48px;border-radius:50%;background:var(--mu-azul-soft);color:var(--mu-azul-press);display:grid;place-items:center}
+.pz-ic .ic{width:24px;height:24px;fill:currentColor}
+.pz-acts{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:4px}
+.pz-lock{width:min(520px,100%);text-align:center;color:#fff}
+.pz-lk-in{display:grid;gap:16px;justify-items:center}
+.pz-lock h2{color:#fff;font-size:28px}
+.pz-eyebrow{font:700 12px/1 var(--mu-font);letter-spacing:.08em;text-transform:uppercase;color:#FDCA40}
+.pz-count{font:600 64px/1 var(--mu-font-display);letter-spacing:.02em;color:#fff}
+.pz-dicas{list-style:none;margin:0;padding:0;display:grid;gap:10px;width:100%;text-align:left}
+.pz-dicas li{display:grid;gap:2px;padding:12px 16px;border-radius:var(--mu-r-md);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12)}
+.pz-dicas b{font:600 15px/1.3 var(--mu-font);color:#fff}
+.pz-dicas span{font-size:13px;line-height:1.45;color:rgba(255,255,255,.75)}
+.pz-lock .pz-sub{color:rgba(255,255,255,.7)}
+.pz-volta{min-width:220px;min-height:44px;justify-content:center}
+.pz-volta.pz-espera{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.2);color:#fff;cursor:not-allowed;box-shadow:none}
+.pz-volta.pz-espera:hover{background:rgba(255,255,255,.12)}
+@media (max-width:768px){.pz-count{font-size:52px}.pz-lock h2{font-size:24px}}
 </style>
 <script id="mannare-ui-js">
 /* FIX UX-5 — modal próprio no lugar de confirm() e prompt() nativos.
@@ -15580,6 +15616,12 @@ button.mt-ck:hover i{border-color:var(--mu-ok-solid);background:var(--mu-ok-bg)}
    (sessões em "time", como nas tarefas dos processos) e a pessoa aparece como
    "Ocupado" para a equipe enquanto houver cronômetro ligado. O resumo da carga
    leva só "fazendo" (início), nunca o título.
+   FIX UX-9: "Ocupado em ..." (o que a pessoa está fazendo; avulsa dos outros
+   aparece só como "Tarefa pessoal") e pausa de cuidado: 30 min seguidos de
+   cronômetro ligado → "Você ainda está aí?" (também por notificação).
+   Respondeu → CRM bloqueado por 5 min para alongar e levantar; o cronômetro
+   para na pausa e volta ao fim. Sem resposta em 5 min → cronômetro pausado
+   na hora da pergunta (o tempo fora não conta).
    ========================================================================== */
 (function(){
   'use strict';
@@ -15730,6 +15772,123 @@ button.mt-ck:hover i{border-color:var(--mu-ok-solid);background:var(--mu-ok-bg)}
     if((e.key === 'Enter' || e.key === ' ') && e.target.matches && e.target.matches('.mt-row[data-psopen]')){ e.preventDefault(); var x = porId(e.target.getAttribute('data-psopen')); if(x) abrir(x); }
   }, true);
 
+
+  /* ---------- com o quê a pessoa está ocupada ---------- */
+  function ocupadoCom(uid){
+    uid = String(uid || '').toLowerCase(); var best = null, eu = uid === String(me || '').toLowerCase();
+    var add = function(txt, ini){ if(!best || (ini && ini < best.ini)) best = {txt:txt, ini:ini || ''}; };
+    (S.procs || []).forEach(function(p){ (p.tarefas || []).forEach(function(t){ runningOf(t).forEach(function(x){ if(String(x.por).toLowerCase() !== uid) return; var pr = propById(p.propId) || p.prop || {}; add(t.titulo + ' | ' + (pr.emp || pcod(p)), x.ini); }); }); });
+    (S.mats || []).forEach(function(m){ runningOf(m).forEach(function(x){ if(String(x.por).toLowerCase() === uid) add((m.titulo || m.codigo) + ' | Material técnico', x.ini); }); });
+    if(eu){ var f = fazendoAgora(); if(f){ var s = (f.time || []).find(function(z){ return !z.fim; }); add(f.titulo + ' (tarefa avulsa)', s ? s.ini : ''); } }
+    else { var r = (S.cargasPess || []).find(function(c){ return String(c.dono || c.id || '').toLowerCase() === uid; }); if(r && r.fazendo) add('Tarefa pessoal', r.fazendo); }
+    return best;
+  }
+  var haQuanto = function(ini){ if(!ini) return ''; var m = Math.max(0, Math.round((Date.now() - new Date(ini)) / 60000)); return m < 1 ? 'agora' : 'há ' + fmtDur(m * 60000); };
+  window.pnOcupadoCom = ocupadoCom;
+  window.pnOcupadoTxt = function(uid){ var o = ocupadoCom(uid); return o ? o.txt + (o.ini ? ' | ' + haQuanto(o.ini) : '') : ''; };
+  /* linha de status do cartão da pessoa (bolinha + o que está fazendo) */
+  window.pnStatusLinha = function(u){
+    var s = stOf(u), o = s === 'ocupado' ? ocupadoCom(u.id) : null;
+    return '<div class="us-now" data-s="' + s + '"><i class="us-dot" aria-hidden="true"></i><div class="us-tx"><b>' + esc(STATUS_U[s] || s) + '</b>'
+      + (o ? '<span>' + esc(o.txt) + (o.ini ? ' <em>' + haQuanto(o.ini) + '</em>' : '') + '</span>' : '') + '</div></div>';
+  };
+
+  /* ---------- pausa de cuidado ---------- */
+  var PERGUNTA_MS = 30 * 60e3, RESPOSTA_MS = 5 * 60e3, PAUSA_MS = 5 * 60e3;
+  var chave = function(){ return 'mannare.pausa.' + me; };
+  function lsGet(){ try{ return JSON.parse(localStorage.getItem(chave()) || '{}') || {}; }catch(_){ return {}; } }
+  function lsSet(o){ try{ localStorage.setItem(chave(), JSON.stringify(o)); }catch(_){} }
+  function meusTimers(){
+    var out = [];
+    (S.procs || []).forEach(function(p){ (p.tarefas || []).forEach(function(t){ runningOf(t).forEach(function(x){ if(x.por === me) out.push({ref:'t|' + p.id + '|' + t.id, ini:x.ini}); }); }); });
+    (S.mats || []).forEach(function(m){ runningOf(m).forEach(function(x){ if(x.por === me) out.push({ref:'m|' + m.id, ini:x.ini}); }); });
+    minhas().forEach(function(x){ (x.time || []).forEach(function(z){ if(!z.fim && z.por === me) out.push({ref:'a|' + x.id, ini:z.ini}); }); });
+    return out;
+  }
+  function objDe(ref){ var a = ref.split('|');
+    if(a[0] === 't'){ var p = procById(a[1]); return p ? {p:p, t:taskOf(p, a[2])} : null; }
+    if(a[0] === 'm'){ var m = matById(a[1]); return m ? {t:m} : null; }
+    var x = porId(a[1]); return x ? {x:x} : null; }
+  function para(ref, quando){ var o = objDe(ref); if(!o) return;
+    if(o.x){ (o.x.time || []).forEach(function(z){ if(!z.fim && z.por === me) z.fim = quando; }); if(stDe(o.x) === 'fazendo') o.x.st = 'afazer'; return; }
+    if(!o.t) return; var n = 0; runningOf(o.t).forEach(function(z){ if(z.por === me){ z.fim = quando; n++; } }); if(n && typeof logT === 'function') logT(o.t, 'pausou o cronômetro (pausa de cuidado)'); }
+  function retoma(ref){ var o = objDe(ref); if(!o) return;
+    if(o.x){ if(!o.x.feito){ o.x.st = 'fazendo'; liga(o.x); } return; }
+    if(o.t && typeof startTimer === 'function') startTimer(o.p || null, o.t, me); }
+  function notificar(txt){
+    try{ if(!('Notification' in window) || Notification.permission !== 'granted') return;
+      var op = {body:txt, tag:'mannare-pausa', renotify:true, requireInteraction:true};
+      if(navigator.serviceWorker && navigator.serviceWorker.getRegistration) navigator.serviceWorker.getRegistration().then(function(r){ if(r) r.showNotification('CRM Mannare', op); else new Notification('CRM Mannare', op); }).catch(function(){});
+      else new Notification('CRM Mannare', op); }catch(_){}
+  }
+  var cx = null;
+  function camada(html, cls){ if(cx) cx.remove(); cx = document.createElement('div'); cx.className = 'pz-ov ' + (cls || ''); cx.innerHTML = html; document.body.appendChild(cx); var f = cx.querySelector('[autofocus]') || cx.querySelector('button:not([disabled])'); if(f) setTimeout(function(){ try{ f.focus(); }catch(_){} }, 30); }
+  function tiraCamada(){ if(cx){ cx.remove(); cx = null; } }
+  var hm = function(iso){ var d = new Date(iso); return pad(d.getHours()) + ':' + pad(d.getMinutes()); };
+  function perguntar(st){
+    var ts = meusTimers(), o = ocupadoCom(me), min = Math.round((Date.now() - new Date(st.desde)) / 60000);
+    camada('<div class="pz-card" role="alertdialog" aria-modal="true" aria-labelledby="pzT" aria-describedby="pzD"><div class="pz-ic" aria-hidden="true">' + ic('relogio') + '</div>'
+      + '<h2 id="pzT">Você ainda está aí?</h2><p id="pzD">O cronômetro está ligado há <b>' + min + ' minutos</b> seguidos' + (o ? ' em <b>' + esc(o.txt) + '</b>' : '') + '. Se estiver, vamos fazer uma pausa de 5 minutos para alongar e levantar.</p>'
+      + '<p class="pz-sub">Sem resposta até ' + hm(new Date(new Date(st.perguntaEm).getTime() + RESPOSTA_MS).toISOString()) + ', o cronômetro é pausado às ' + hm(st.perguntaEm) + ' e o tempo fora não conta.</p>'
+      + '<div class="pz-acts"><button class="btn primary" data-pzsim autofocus>Estou aqui, vamos pausar</button></div></div>', 'pz-pergunta');
+    if(ts.length) notificar('Você ainda está aí? Cronômetro ligado há ' + min + ' minutos. Abra o CRM para fazer uma pausa.');
+  }
+  var DICAS = [['Levante e caminhe', 'Saia da cadeira, vá até a janela, beba água, vá ao banheiro.'], ['Alongue pescoço e ombros', 'Incline a cabeça devagar para cada lado e gire os ombros para trás.'], ['Descanse a vista', 'Olhe para algo distante por uns 20 segundos e pisque algumas vezes.']];
+  function travar(st){
+    var falta = Math.max(0, new Date(st.travaAte) - Date.now()), mm = Math.floor(falta / 60000), ss = Math.floor(falta / 1000) % 60, fim = falta <= 0;
+    var html = '<div class="pz-lock" role="dialog" aria-modal="true" aria-labelledby="pzL"><div class="pz-lk-in"><div class="pz-eyebrow">Pausa de cuidado</div><h2 id="pzL">' + (fim ? 'Pausa concluída' : 'Hora de levantar um pouco') + '</h2>'
+      + '<div class="pz-count tnum" aria-live="polite">' + (fim ? 'Pronto' : pad(mm) + ':' + pad(ss)) + '</div>'
+      + '<ul class="pz-dicas">' + DICAS.map(function(d){ return '<li><b>' + d[0] + '</b><span>' + d[1] + '</span></li>'; }).join('') + '</ul>'
+      + '<p class="pz-sub">' + (st.retomar && st.retomar.length ? 'O cronômetro está parado e volta a contar quando você retomar.' : 'Aproveite para se movimentar.') + '</p>'
+      + '<button class="btn primary pz-volta ' + (fim ? '' : 'pz-espera') + '" data-pzvolta aria-disabled="' + !fim + '" ' + (fim ? 'autofocus' : '') + '>' + (fim ? 'Voltar ao trabalho' : 'Liberado em ' + pad(mm) + ':' + pad(ss)) + '</button></div></div>';
+    if(cx && cx.classList.contains('pz-travado')){ var c = cx.querySelector('.pz-count'), b = cx.querySelector('[data-pzvolta]'), h = cx.querySelector('#pzL');
+      c.textContent = fim ? 'Pronto' : pad(mm) + ':' + pad(ss); h.textContent = fim ? 'Pausa concluída' : 'Hora de levantar um pouco';
+      if(fim && b.classList.contains('pz-espera')){ b.classList.remove('pz-espera'); b.setAttribute('aria-disabled', 'false'); b.textContent = 'Voltar ao trabalho'; b.focus(); } else if(!fim) b.textContent = 'Liberado em ' + pad(mm) + ':' + pad(ss); return; }
+    camada(html, 'pz-travado');
+  }
+  function aviso(st){
+    camada('<div class="pz-card" role="dialog" aria-modal="true" aria-labelledby="pzA"><div class="pz-ic" aria-hidden="true">' + ic('relogio') + '</div><h2 id="pzA">Cronômetro pausado</h2>'
+      + '<p>Como não houve resposta, pausamos o cronômetro às <b>' + hm(st.pausadoEm) + '</b>. O tempo depois disso não foi contado.</p><div class="pz-acts"><button class="btn primary" data-pzok autofocus>Entendi</button></div></div>', 'pz-aviso');
+  }
+  function passo(){
+    if(typeof DB === 'undefined' || !DB.ready || !me) return;
+    var st = lsGet(), agora = Date.now(), ts = meusTimers();
+    if(st.travaAte){ travar(st); return; }
+    if(st.pausadoEm){ if(!cx || !cx.classList.contains('pz-aviso')) aviso(st); return; }
+    if(st.perguntaEm){
+      if(!ts.length){ delete st.perguntaEm; delete st.desde; lsSet(st); tiraCamada(); return; }
+      if(agora - new Date(st.perguntaEm) >= RESPOSTA_MS){ ts.forEach(function(x){ para(x.ref, st.perguntaEm); }); st.pausadoEm = st.perguntaEm; delete st.perguntaEm; delete st.desde; st.ok = new Date().toISOString(); lsSet(st); resumo(); save(); render(); aviso(st); return; }
+      if(!cx || !cx.classList.contains('pz-pergunta')) perguntar(st); return;
+    }
+    if(!ts.length) return;
+    var ini = ts.map(function(x){ return x.ini; }).sort()[0], desde = st.ok && st.ok > ini ? st.ok : ini;
+    if(agora - new Date(desde) >= PERGUNTA_MS){ st.perguntaEm = new Date().toISOString(); st.desde = desde; lsSet(st); perguntar(st); }
+  }
+  window.pnPausaPasso = passo;
+  function comecarPausa(){
+    var st = lsGet(), agora = new Date().toISOString(), ts = meusTimers();
+    ts.forEach(function(x){ para(x.ref, agora); });
+    st.retomar = ts.map(function(x){ return x.ref; }); st.travaAte = new Date(Date.now() + PAUSA_MS).toISOString(); delete st.perguntaEm; delete st.desde; lsSet(st);
+    resumo(); save(); render(); tiraCamada(); travar(st);
+  }
+  function voltar(){
+    var st = lsGet(); if(st.travaAte && new Date(st.travaAte) > Date.now()) return;
+    (st.retomar || []).forEach(retoma); st.ok = new Date().toISOString(); delete st.travaAte; delete st.retomar; lsSet(st);
+    tiraCamada(); resumo(); save(); render(); toast('Bom retorno! Cronômetro ligado de novo');
+  }
+  window.addEventListener('click', function(e){
+    if(!cx || !e.target.closest || !e.target.closest('.pz-ov')) return; e.stopPropagation(); e.preventDefault();
+    if(e.target.closest('[data-pzsim]')) comecarPausa();
+    else if(e.target.closest('[data-pzvolta]')) voltar();
+    else if(e.target.closest('[data-pzok]')){ var st = lsGet(); delete st.pausadoEm; lsSet(st); tiraCamada(); }
+  }, true);
+  /* com a camada aberta, nada do CRM recebe teclado (a não ser o Tab dentro dela) */
+  document.addEventListener('keydown', function(e){
+    if(!cx) return; if(e.key === 'Tab'){ var f = [].slice.call(cx.querySelectorAll('button:not([disabled])')); if(!f.length){ e.preventDefault(); return; } if(!cx.contains(document.activeElement)){ e.preventDefault(); f[0].focus(); } return; }
+    if(!cx.contains(e.target)){ e.preventDefault(); e.stopPropagation(); } else if(e.key === 'Escape'){ e.preventDefault(); e.stopPropagation(); }
+  }, true);
+  window.addEventListener('storage', function(e){ if(e.key === chave()){ if(!lsGet().travaAte && !lsGet().perguntaEm && !lsGet().pausadoEm) tiraCamada(); passo(); } });
+  var volta15 = 0; setInterval(function(){ var st = cx || lsGet().travaAte || lsGet().perguntaEm; if(st || ++volta15 >= 15){ volta15 = 0; passo(); } }, 1000);
   /* mantém o resumo em dia (ex.: tarefa reprogramada pela Carga de trabalho) */
   if(window.cgRender) cgRender.depois(function(){ if(resumo()) save(); });
 })();
