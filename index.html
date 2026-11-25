@@ -281,7 +281,7 @@ button{font:inherit;color:inherit}
 .blk h3{font-family:var(--kanit);font-weight:500;margin:0 0 14px;display:flex;align-items:center;gap:8px}
 .blk h3 .cnt{background:var(--soft);color:var(--muted);font-size:12.5px;font-family:var(--font-sans);font-weight:700;padding:1px 9px}
 .sect{padding:18px 20px;margin-bottom:14px}
-.sect h4{margin:0 0 12px;font-family:var(--kanit);font-weight:500;font-size:16px;display:flex;align-items:center;gap:8px}
+.sect h4,.sect h3{margin:0 0 12px;font-family:var(--kanit);font-weight:500;font-size:16px;display:flex;align-items:center;gap:8px}
 .hint{color:var(--muted);margin:4px 0 0}
 .sub{color:var(--muted);font-size:12.5px}
 .late{color:var(--danger);font-weight:700}
@@ -483,7 +483,7 @@ label.f input,label.f select,label.f textarea,.inp{width:100%}
 .whopick{display:flex;flex-wrap:wrap;gap:6px}
 .whopick button{padding:2px 12px 2px 2px;display:inline-flex;align-items:center;gap:6px;cursor:pointer;font-size:13px;font-weight:600}
 .whopick button.on{border-color:var(--azul);}
-.whopick button:not(.on) .av{filter:grayscale(1);opacity:.5}
+.whopick button:not(.on) .av{filter:grayscale(1);background:#E4E5EC!important;color:#4B4E66!important}
 
 .srow{display:grid;grid-template-columns:20px 1fr 120px 128px 24px;gap:8px;align-items:center;padding:7px 12px;}
 .srow input.st{border:1px solid transparent;padding:5px 7px;width:100%}
@@ -510,7 +510,7 @@ label.f input,label.f select,label.f textarea,.inp{width:100%}
 .mentions div{padding:6px 8px;cursor:pointer;display:flex;gap:8px;align-items:center;font-size:13.5px}
 .mentions div:hover,.mentions div.on{background:var(--azul-10)}
 .mfoot{display:flex;gap:8px;justify-content:flex-end;padding:14px 20px}
-@media (max-width:860px){.mlayer{padding:0}.modal{max-height:none;min-height:100vh}.mbody{display:block}.mleft{overflow:visible}.mright{margin:0 12px 12px}.mhead span:not(.spacer){display:none}.trow{grid-template-columns:20px 1fr auto}.trow .hidem{display:none}}
+@media (max-width:860px){.mlayer{padding:0}.modal{max-height:none;min-height:100vh}.mbody{display:block}.mleft{overflow:visible}.mright{margin:0 12px 12px}.mhead{flex-wrap:wrap;row-gap:6px}.mhead span:not(.spacer):not(:first-child){display:none}.mhead>span:first-child:not(.spacer){flex:1 1 100%;order:-1;font-size:12px;color:var(--sx-text-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.trow{grid-template-columns:20px 1fr auto}.trow .hidem{display:none}}
 @media (max-width:620px){.srow{grid-template-columns:20px 1fr 24px}.srow select,.srow input[type=date]{grid-column:2}}
 /* notificações e popover */
 .npanel{position:fixed;top:72px;right:24px;width:min(400px,calc(100% - 32px));max-height:70vh;overflow:auto;background:#fff;z-index:35}
@@ -982,7 +982,7 @@ button,a,.trow,.mine-row,.pli,.dcom,.li,.ccard{transition:background-color .15s,
 .pagehead h1,.dhead h2,.mhead b,.plhead h2,.pltop h3,h1,h2:where(:not(.mst):not(.agh):not(.h3)){font-family:var(--font-display)!important;text-transform:uppercase;letter-spacing:-.01em!important;font-weight:600!important;color:var(--ui-text)}
 .pagehead h1{font-size:26px!important;}
 .pagehead p{font-family:var(--font-sans)}
-.blk h3,.sect h4{font-family:var(--font-display)!important;text-transform:uppercase;letter-spacing:-.005em!important;font-weight:600!important;font-size:14px!important;color:var(--ui-text)}
+.blk h3,.sect h4,.sect h3{font-family:var(--font-display)!important;text-transform:uppercase;letter-spacing:-.005em!important;font-weight:600!important;font-size:14px!important;color:var(--ui-text)}
 
 .acard .v,.ccard .big,.dark .big,.ccard .v,.kpi .v,.fk .v,.big{font-family:var(--font-display)!important;letter-spacing:-.02em!important;font-weight:600!important;color:inherit}
 .side .leg,.tgh,.plst,.mhd,.sub.mhd,table.atable th,.ptz,.kcol h5,.cal .hd b{font-size:11px!important;letter-spacing:.12em!important;text-transform:uppercase;font-weight:600!important;color:var(--ui-text-2)!important}
@@ -1677,7 +1677,7 @@ input[type="checkbox"]{border-radius:3px!important}
 .rsk:hover{border-color:var(--m-azul,#4948d1)}.rsk b{font-size:15px;line-height:1.3}
 .rscards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
 .rsc{border:1px solid var(--line);background:var(--ui-panel,#fff);padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-width:0}
-.rsc h4{margin:0 0 4px;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.rsc h4,.rsc h3{margin:0 0 4px;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 .rsd{font-size:13.5px;line-height:1.5}
 .rsv{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:13px}
 .rstot{display:flex;justify-content:space-between;border-top:2px solid var(--navy,#0000FF);padding-top:8px;margin-top:6px;font-weight:700}
@@ -1775,14 +1775,14 @@ body{letter-spacing:0}
 @media (hover:none){.cmx,.plx,.dkgo{opacity:1!important}}
 
 /* ---------- tipografia: sem caixa alta, escala de 6 tamanhos ---------- */
-.pagehead h1,.welcome,.dhead h2,.plhead h2,.pltop h3,h1,h2,.ttitle,.blk h3,.sect h4,.ccard .ct,.mst,.mcard .mt,.side .leg,.tgh,.plst,.mhd,.sub.mhd,table.atable th,.ptz,.kcol h5,.cal .hd b,.dct{text-transform:none!important}
+.pagehead h1,.welcome,.dhead h2,.plhead h2,.pltop h3,h1,h2,.ttitle,.blk h3,.sect h4,.sect h3,.ccard .ct,.mst,.mcard .mt,.side .leg,.tgh,.plst,.mhd,.sub.mhd,table.atable th,.ptz,.kcol h5,.cal .hd b,.dct{text-transform:none!important}
 
 
 
 
 .mhead b{font-size:var(--text-sm)!important;font-family:var(--font-sans)!important;text-transform:none!important}
 
-.blk h3,.sect h4,.dct,.ccard .ct{font:600 var(--text-md)/var(--leading-snug) var(--font-sans)!important;letter-spacing:0!important;color:var(--color-text)!important}
+.blk h3,.sect h4,.sect h3,.dct,.ccard .ct{font:600 var(--text-md)/var(--leading-snug) var(--font-sans)!important;letter-spacing:0!important;color:var(--color-text)!important}
 .dcs,.dks,.hint,.sub{color:var(--color-text-2)}
 /* rótulos pequenos: 12px, peso 600, caixa normal */
 .side .leg,.tgh,.plst,.mhd,.sub.mhd,table.atable th,.ptz,.kcol h5,.cal .hd b,.mst{font:600 var(--text-xs)/var(--leading-normal) var(--font-sans)!important;letter-spacing:0!important;color:var(--color-text-2)!important}
@@ -2097,10 +2097,10 @@ body{background:var(--sx-canvas) fixed!important;font:400 14px/1.5 var(--font-sa
 .pagehead p{color:var(--sx-text-3)!important;font-size:14px!important;margin-top:6px!important}
 
 /* ======================= TIPOGRAFIA ======================= */
-h1,h2,.dhead h2,.ttitle,.dct,.blk h3,.sect h4,.ccard .ct,.mhead b,.side .leg,.mst,.tgh,table.atable th{text-transform:none!important;letter-spacing:0!important}
+h1,h2,.dhead h2,.ttitle,.dct,.blk h3,.sect h4,.sect h3,.ccard .ct,.mhead b,.side .leg,.mst,.tgh,table.atable th{text-transform:none!important;letter-spacing:0!important}
 .dhead h2{font:600 22px/1.3 var(--font-sans)!important;letter-spacing:-.01em!important}
 .ttitle{font:600 22px/1.3 var(--font-sans)!important}
-.dct,.blk h3,.sect h4,.ccard .ct,.dkt{font:600 14px/1.35 var(--font-sans)!important;color:var(--sx-text)!important}
+.dct,.blk h3,.sect h4,.sect h3,.ccard .ct,.dkt{font:600 14px/1.35 var(--font-sans)!important;color:var(--sx-text)!important}
 .mhead b{font:600 14px/1.4 var(--font-sans)!important}
 .dcs,.dks,.dkl,.dkf,.sub:not([style*="color"]),.hint:not([style*="color"]){color:var(--sx-text-3)!important}
 .dcs,.dks,.dkl,.dkf,.sub,.hint{font-size:13px!important}
@@ -2457,11 +2457,12 @@ table.atable tbody tr:hover td{background:#FAFBFE!important}
 @media (max-width:760px){
   .ibx-card{padding:4px 4px 12px}
   .ibx-tab{min-width:120px}
-  .ibx-row{grid-template-columns:12px 28px minmax(0,1fr) auto;grid-template-areas:"st av tit when" "st av msg n" ". . acts acts";gap:4px 10px;padding:12px 10px}
+  .ibx-row{grid-template-columns:12px 28px minmax(0,1fr) auto;grid-template-areas:"st av tit when" "st av msg n" ". . acts acts";gap:4px 10px;padding:12px 10px 14px}
   .ibx-st{grid-area:st;align-self:start;margin-top:5px}.ibx-av{grid-area:av;align-self:start}.ibx-tit{grid-area:tit}.ibx-msg{grid-area:msg;white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
-  .ibx-when{grid-area:when}.ibx-n{grid-area:n;justify-self:end}.ibx-acts{grid-area:acts;position:relative;transform:none;justify-content:flex-end;opacity:1;pointer-events:auto;margin-top:6px}
+  .ibx-when{grid-area:when}.ibx-n{grid-area:n;justify-self:end}.ibx-acts{grid-area:acts;position:relative;top:auto;transform:none;justify-content:flex-end;gap:6px;opacity:1;pointer-events:auto;margin-top:2px}
   .ibx-row:hover .ibx-n,.ibx-row:hover .ibx-when,.ibx-row:focus-within .ibx-n,.ibx-row:focus-within .ibx-when{visibility:visible}
-  .ibx-clear{height:44px}
+  .ibx-clear{height:44px;background:transparent;color:var(--sx-text-2,#3D4057);border:1px solid var(--sx-border-strong,#D5D7E2);padding:0 12px}
+  .ibx-clear .ic{color:currentColor!important}
   .ibx-act{width:44px;height:44px}
 }
 
@@ -2490,7 +2491,7 @@ table.atable tbody tr:hover td{background:#FAFBFE!important}
 /* ---------- tipografia: sem Kanit/caixa alta forçados no meio das telas ---------- */
 [style*="text-transform:uppercase"]{text-transform:none!important;letter-spacing:0!important}
 [style*="font-family:var(--kanit)"]{font-family:var(--font-sans)!important;font-weight:600!important}
-.sect h4,.rsc h4,.cfsec h4,.blk h3{font:700 15px/1.35 var(--font-sans)!important;color:var(--sx-text)!important;margin:0 0 8px!important;letter-spacing:0!important}
+.sect h4,.sect h3,.rsc h4,.rsc h3,.cfsec h4,.blk h3{font:700 15px/1.35 var(--font-sans)!important;color:var(--sx-text)!important;margin:0 0 8px!important;letter-spacing:0!important}
 .sect p{font-size:14px;line-height:1.55;color:var(--sx-text-2)}
 .cfhead b{display:block;font:600 18px/1.3 var(--font-sans)!important;color:var(--sx-text)!important;margin-bottom:2px}
 .cfrow{font-size:14px!important;min-height:40px;border-top-color:var(--sx-divider)!important}
@@ -4130,7 +4131,7 @@ img,svg,video{max-width:100%}
 </div>
 
 <div class="overlay" id="overlay"></div>
-<aside class="drawer" id="drawer"></aside>
+<div class="drawer" id="drawer"></div>
 <div id="layer"></div>
 <div id="npanel" class="npanel" hidden></div>
 <div id="pop" class="pop" hidden></div>
@@ -4813,7 +4814,19 @@ function openDrawer(kind, id, tab){
   ui.drawer = {kind, id}; ui.dtab = tab || (kind === 'proc' ? 'resumo' : 'dados');
   $('#overlay').classList.add('on'); $('#drawer').classList.add('on'); renderDrawer();
 }
-function closeDrawer(){ ui.drawer = null; $('#overlay').classList.remove('on'); $('#drawer').classList.remove('on'); }
+/* UX-R5.2: proposta criada nesta sessão, aberta e fechada sem nada preenchido, não fica como rascunho vazio.
+   Só vale para propostas recém-criadas (PROP_NOVAS): propostas antigas, mesmo vazias, nunca são apagadas por aqui. */
+const PROP_NOVAS = new Set();
+novaProposta = (function(base){ return function(){ const p = base.apply(this, arguments); if(p && p.id) PROP_NOVAS.add(p.id); return p; }; })(novaProposta);
+function propVazia(p){ return !!p && !String(p.cliente || '').trim() && !String(p.emp || '').trim() && !String((p.doc || {}).objeto || '').trim()
+  && !((p.doc || {}).itens || []).some(i => String(i.descricao || '').trim() || String(i.valor || '').trim()) && !(p.coms || []).length && (p.log || []).length <= 1; }
+function closeDrawer(){
+  const dw = ui.drawer, pv = dw && dw.kind === 'prop' && PROP_NOVAS.has(dw.id) ? (S.propsDb || []).find(x => x.id === dw.id) : null;
+  if(pv && propVazia(pv)){ S.propsDb = S.propsDb.filter(x => x !== pv); PROP_NOVAS.delete(pv.id); rebuildProps(); save();
+    setTimeout(() => { render(); toast('Proposta vazia descartada');
+      const b = [...document.querySelectorAll('#view .pagehead .btn.primary')].find(x => x.offsetParent) || document.querySelector('#view h1');
+      if(b){ if(!b.matches('button,a,[tabindex]')) b.tabIndex = -1; b.focus({preventScroll:true}); } }, 0); }
+  ui.drawer = null; $('#overlay').classList.remove('on'); $('#drawer').classList.remove('on'); }
 function renderDrawer(){
   const d = ui.drawer, el = $('#drawer');
   if(!d){ return; }
@@ -4875,7 +4888,7 @@ function drawerProc(p){
     const all = [...p.log.map(l => ({...l, ctx:''})), ...p.tarefas.flatMap(t => t.log.map(l => ({...l, ctx:t.titulo})))].sort((a, b) => b.em.localeCompare(a.em));
     body = all.map(l => `<div class="act">${av(l.por, true)}<div><b>${esc(first(l.por))}</b> ${esc(l.txt)}${l.ctx ? ` <span class="sub">em “${esc(l.ctx)}”</span>` : ''}<div>${fmtWhen(l.em)}</div></div></div>`).join('') || '<div class="empty">Sem atividade.</div>';
   } else {
-    body = `<div class="sect"><h4>${esc(pr.codigo)} ${pill(PROP_ST[pr.status].l, PROP_ST[pr.status].c, PROP_ST[pr.status].b)}</h4>
+    body = `<div class="sect"><h3>${esc(pr.codigo)} ${pill(PROP_ST[pr.status].l, PROP_ST[pr.status].c, PROP_ST[pr.status].b)}</h3>
       <div><b>${esc(pr.cliente)}</b></div><div class="sub" style="margin-bottom:8px">${esc(pr.emp)} | ${esc(pr.objeto)}</div>
       ${pr.itens.map(([n, v]) => `<div style="display:flex;justify-content:space-between;border-top:1px solid var(--line);padding:6px 0;font-size:14px"><span>${esc(n)}</span><b>${brl(v)}</b></div>`).join('')}
       <div style="display:flex;justify-content:space-between;border-top:2px solid var(--navy);padding:8px 0 0;font-weight:700"><span>Total</span><span>${brl(pr.valor)}</span></div>
@@ -4917,12 +4930,12 @@ function cleanHtml(html){
 let descEdit = false;
 function descHtml(p){
   const im = p.imovel || {};
-  const imv = `<div class="sect"><h4>Dados do imóvel / empreendimento</h4><div class="imv">${IMOVEL.map(([k, l]) => `<label class="f">${l}<input data-imv="${k}" value="${esc(im[k] || '')}"></label>`).join('')}</div></div>`;
+  const imv = `<div class="sect"><h3>Dados do imóvel / empreendimento</h3><div class="imv">${IMOVEL.map(([k, l]) => `<label class="f">${l}<input data-imv="${k}" value="${esc(im[k] || '')}"></label>`).join('')}</div></div>`;
   if(!descEdit){
-    return `<div class="sect"><h4>Descrição <span class="spacer"></span><button class="btn sm" data-descedit>✎ Editar</button></h4>
+    return `<div class="sect"><h3>Descrição <span class="spacer"></span><button class="btn sm" data-descedit>✎ Editar</button></h3>
       ${p.desc ? `<div class="rt">${cleanHtml(p.desc)}</div>` : '<div class="sub">Sem descrição. Clique em <b>Editar</b> para escrever orientações, alertas e textos-padrão do processo.</div>'}</div>${imv}`;
   }
-  return `<div class="sect"><h4>Descrição</h4>
+  return `<div class="sect"><h3>Descrição</h3>
     <div class="editor"><div class="edbar">
       <button data-cmd="bold" title="Negrito"><b>B</b></button><button data-cmd="italic" title="Itálico"><i>I</i></button><button data-cmd="underline" title="Sublinhado"><u>U</u></button><button data-cmd="strikeThrough" title="Riscado"><s>S</s></button>
       <span class="sep"></span><button data-cmd="formatBlock" data-arg="H3" title="Título">T</button><button data-cmd="insertUnorderedList" title="Lista">• Lista</button><button data-cmd="insertOrderedList" title="Lista numerada">1. Lista</button>
@@ -4934,12 +4947,12 @@ function descHtml(p){
 const isDrive = u => /^https:\/\/(drive|docs)\.google\.com\//i.test(u || '');
 function driveHtml(p){
   const ok = isDrive(p.drive);
-  return `<div class="sect"><h4>Pasta do processo no Google Drive</h4>
+  return `<div class="sect"><h3>Pasta do processo no Google Drive</h3>
       ${p.drive ? `<div class="drivebox"><span class="ico" style="color:var(--azul)">${ic('pasta')}</span><div style="flex:1;min-width:0"><b>Pasta do processo</b><div class="sub" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(p.drive)}</div>${!ok ? '<div class="late" style="font-size:12.5px">Este link não parece ser do Google Drive.</div>' : ''}</div>
         <a class="btn primary" href="${esc(p.drive)}" target="_blank" rel="noopener">Abrir no Drive ↗</a></div>` : ''}
       <label class="f" style="margin-top:12px">${p.drive ? 'Trocar link da pasta' : 'Link da pasta'}<div style="display:flex;gap:8px"><input id="driveUrl" value="${esc(p.drive)}" placeholder="https://drive.google.com/drive/folders/…"><button class="btn sm primary" data-drivesave>Salvar</button>${p.drive ? '<button class="btn sm danger" data-driveclear>Remover</button>' : ''}</div></label>
       <p class="hint">No Drive: clique com o botão direito na pasta → <b>Compartilhar</b> → <b>Copiar link</b>, e cole aqui.</p></div>
-    <div class="sect"><h4>Outros links do processo</h4>
+    <div class="sect"><h3>Outros links do processo</h3>
       ${(p.links || []).map(l => `<div class="lk" data-lk="${l.id}"><input data-lkf="nome" value="${esc(l.nome)}" placeholder="Nome"><input data-lkf="url" value="${esc(l.url)}" placeholder="https://…"><a class="btn sm" href="${esc(l.url)}" target="_blank" rel="noopener">Abrir ↗</a><button class="btn sm ghost" data-lkdel="${l.id}" title="Remover">✕</button></div>`).join('') || '<div class="sub" style="margin-bottom:8px">Planilhas, documentos ou pastas extras (ex.: acompanhamento da notificação).</div>'}
       <div class="lk" style="border-top:1px dashed var(--line)"><input id="lkNome" placeholder="Nome do link"><input id="lkUrl" placeholder="https://…"><button class="btn sm primary" data-lkadd>Adicionar</button><span></span></div></div>`;
 }
@@ -4981,7 +4994,7 @@ function tramHtml(p){
       ${t.obs ? `<div style="margin-top:4px;font-size:14px">${esc(t.obs)}</div>` : ''}
       <div class="tmft"><span>${fmtDT(t.em)}${t.dur ? ` | duração: ${esc(t.dur)}` : ''}</span><span class="spacer"></span>${av(t.autor, true)}<span>registrado por ${esc(first(t.autor))}</span><button class="x" data-trdel="${t.id}" title="Remover">✕</button></div></div></div>`; }).join('');
   return `${atual}
-    <div class="sect"><h4>Colar do sistema do órgão</h4>
+    <div class="sect"><h3>Colar do sistema do órgão</h3>
       <textarea id="trPaste" class="inp" rows="4" placeholder="Copie as movimentações no sistema do órgão e cole aqui. Ex.: “02SEINF/PROTOCOLO encaminhou o processo para SEINF/COGEPRO  Encaminhado por Fulana (fulana@…) em Sexta, 06 de Novembro de 2026 às 11:16:55 (duração: 6 minutos)”"></textarea>
       <div style="display:flex;gap:8px;margin-top:8px;align-items:center"><button class="btn primary sm" data-trparse>Ler e adicionar</button><span class="hint" style="margin:0">Pode colar várias movimentações de uma vez. As repetidas são ignoradas.</span></div></div>
     <details class="sect"${list.length ? '' : ' open'}><summary style="cursor:pointer;font-weight:700;color:var(--navy);font-size:13.5px;text-transform:uppercase;letter-spacing:.04em">+ Registrar movimentação à mão</summary>
@@ -4995,7 +5008,7 @@ function tramHtml(p){
       </div>
       <label class="f">Observação<input id="trObs" placeholder="Ex.: notificação pede complementação do memorial"></label>
       <div style="margin-top:10px"><button class="btn primary sm" data-tradd>Adicionar</button></div></details>
-    <div class="sect"><h4>Histórico de tramitação <span class="sub" style="text-transform:none;letter-spacing:0;font-weight:500">${list.length} movimentaç${list.length === 1 ? 'ão' : 'ões'}</span></h4>
+    <div class="sect"><h3>Histórico de tramitação <span class="sub" style="text-transform:none;letter-spacing:0;font-weight:500">${list.length} movimentaç${list.length === 1 ? 'ão' : 'ões'}</span></h3>
       ${timeline || '<div class="sub">Nenhuma movimentação registrada ainda.</div>'}</div>`;
 }
 function addTram(p, items){
@@ -5382,11 +5395,11 @@ function renderLics(){
 function licTabHtml(p){
   const ls = licsOf(p);
   return (ls.map(l => { const i = licInfo(l), s = LIC_ST[i.st];
-    return `<div class="sect"><h4>${esc(l.tipo)} ${l.numero ? '<span class="sub">| nº ' + esc(l.numero) + '</span>' : ''}<span class="spacer"></span>${pill(s.l, s.c)}</h4>
+    return `<div class="sect"><h3>${esc(l.tipo)} ${l.numero ? '<span class="sub">| nº ' + esc(l.numero) + '</span>' : ''}<span class="spacer"></span>${pill(s.l, s.c)}</h3>
       <div class="fields" style="margin:0 0 10px"><div><div class="sub">Emissão</div><b>${fmtD(l.emissao)}</b></div><div><div class="sub">Validade</div><b>${fmtD(l.validade)}</b></div><div><div class="sub">Preparar a partir de</div><b>${fmtD(i.prepararDesde)}</b></div><div><div class="sub">Protocolar até</div><b class="${i.dp < 0 ? 'late' : ''}">${fmtD(i.protocolarAte)}</b></div></div>
       <div class="sub" style="margin-bottom:10px">${esc(l.orgao)} | ${esc([l.bairro, l.cidade].filter(Boolean).join(' | '))}${l.condicionantes ? ' | ' + esc(l.condicionantes) : ''}</div>
       <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn sm" data-licedit="${l.id}">Editar</button>${gcalBtn('Protocolar renovação | ' + l.tipo + ' | ' + propById(p.propId).emp, i.protocolarAte, 'Vence em ' + fmtD(l.validade) + (l.numero ? ' | nº ' + l.numero : ''))}${['renovar', 'fora', 'vencida'].includes(i.st) && !l.renovProcId ? `<button class="btn sm primary" data-licrenov="${l.id}">Iniciar renovação</button>` : ''}</div></div>`; }).join('')
-    || `<div class="sect"><h4>Licença final</h4><p style="margin:0 0 4px">${p.semLicenca ? 'Marcado como processo que não gera licença.' : isOpen(p) ? 'Quando a licença sair, cadastre aqui: ela vai para o painel de <b>Licenças</b>, que acompanha a validade e avisa a hora de renovar.' : 'Processo finalizado e ainda sem licença cadastrada.'}</p></div>`)
+    || `<div class="sect"><h3>Licença final</h3><p style="margin:0 0 4px">${p.semLicenca ? 'Marcado como processo que não gera licença.' : isOpen(p) ? 'Quando a licença sair, cadastre aqui: ela vai para o painel de <b>Licenças</b>, que acompanha a validade e avisa a hora de renovar.' : 'Processo finalizado e ainda sem licença cadastrada.'}</p></div>`)
     + `<div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><button class="btn primary" data-licnew="${p.id}">${ic('mais', 'sm')} Cadastrar ${ls.length ? 'outra ' : ''}licença no painel</button>${!ls.length ? `<label class="sub" style="display:flex;gap:6px;align-items:center"><input type="checkbox" data-semlic="${p.id}" ${p.semLicenca ? 'checked' : ''}> este processo não gera licença</label>` : ''}<a class="link" data-golic style="margin-left:auto">abrir painel de Licenças →</a></div>`;
 }
 function afterStatus(p, old){
@@ -5581,7 +5594,7 @@ function renderMats(){
     <div class="mboard">${MAT_ST.map(st => { const ms = list.filter(m => m.status === st.k);
       return `<div class="mcol" data-mcol="${st.k}"><div class="mh"><span class="mst" style="--c:${st.c}">${st.l}</span><span class="sub mcnt">${ms.length}</span></div>
         ${ms.map(matCard).join('')}
-        <div class="madd"><input data-madd="${st.k}" placeholder="+ Adicionar material"></div></div>`; }).join('')}</div>
+        <div class="madd"><input data-madd="${st.k}" placeholder="+ Novo material (digite e Enter)" aria-label="Novo material em ${st.l}: digite o título e aperte Enter"></div></div>`; }).join('')}</div>
     <p class="hint" style="margin-top:-24px">Arraste os cartões entre as colunas. O cronômetro liga em <b>Em elaboração</b> e <b>Ajustes</b>; em <b>Pausado</b> ele para e começa a contar o tempo parado. Ao ir para <b>Validação interna</b>, você escolhe quem valida (sugestão: ${esc(first(aprovMat()))}).</p></div></div>`;
 }
 function openMat(id){ ui.mat = id; ui.task = null; ui.feedTab = 'com'; renderMat(); }
@@ -5606,7 +5619,7 @@ function renderMat(){
         <span class="k">Processo</span><span style="display:flex;gap:8px;align-items:center"><select data-mf="procId"><option value="">Sem vínculo</option>${S.procs.map(p => `<option value="${p.id}" ${p.id === m.procId ? 'selected' : ''}>${esc(pcod(p))} | ${esc((propById(p.propId) || {}).emp || '')} | ${esc(p.servico || '')}</option>`).join('')}</select>${m.procId && procById(m.procId) ? `<a class="link" data-goproc="${m.procId}">abrir</a>` : ''}</span>
       </div>
       ${timeSectHtml(null, m).replace('Começa sozinho quando a tarefa vai para <b>Em andamento</b> e para quando sai desse status.', 'Liga sozinho em <b>Em elaboração</b> e <b>Ajustes</b> e para quando o material sai dessas colunas.').replace(/data-tstart/, 'data-mtstart').replace(/data-tpause/, 'data-mtpause')}
-      <div class="sect" style="box-shadow:none;border:1px solid var(--line)"><h4>Dados do processo</h4><div class="fields" style="margin:0">${D.map(([k, l]) => `<label class="f">${l}<input data-md="${k}" value="${esc(m.dados[k] || '')}"></label>`).join('')}</div></div>
+      <div class="sect" style="box-shadow:none;border:1px solid var(--line)"><h3>Dados do processo</h3><div class="fields" style="margin:0">${D.map(([k, l]) => `<label class="f">${l}<input data-md="${k}" value="${esc(m.dados[k] || '')}"></label>`).join('')}</div></div>
       <label class="f" style="margin-bottom:12px">Objetivo do material<textarea data-mf="objetivo" rows="2" placeholder="O que o material precisa demonstrar ou resolver">${esc(m.objetivo)}</textarea></label>
       <label class="f" style="margin-bottom:16px">Histórico / observações<textarea data-mf="historico" rows="2">${esc(m.historico)}</textarea></label>
       <div class="fields">
@@ -5646,7 +5659,7 @@ function matHandleClick(e, tg){
     if(tg.closest('[data-mtpause]')){ runningOf(m).filter(x => x.por === me).forEach(x => x.fim = nowISO()); logT(m, 'pausou o cronômetro'); save(); renderMat(); render(); return true; }
     if(tg.closest('[data-mataprova]')){ setMatStatus(m, 'entregue'); save(); renderMat(); render(); toast('Material aprovado e entregue'); return true; }
     if(tg.closest('[data-matajuste]')){ setMatStatus(m, 'ajustes'); m.resp.forEach(r => notifyMat(r, `pediu ajustes em “${esc(m.titulo)}”`, m)); save(); renderMat(); render(); $('#layer .composer textarea')?.focus(); toast('Status: Ajustes. Explique nos comentários o que mudar.'); return true; }
-    if(tg.closest('[data-matdel]')){ S.mats = S.mats.filter(x => x !== m); save(); closeTask(); render(); toast('Material excluído'); return true; }
+    if(tg.closest('[data-matdel]')){ if(!confirm(`Excluir o material ${m.codigo}${m.titulo ? ' “' + m.titulo + '”' : ''}? As versões, o checklist e os comentários também são apagados. Isso não pode ser desfeito.`)) return true; S.mats = S.mats.filter(x => x !== m); save(); closeTask(); render(); toast('Material excluído'); return true; }
     if((el = tg.closest('[data-ftab]'))){ ui.feedTab = el.dataset.ftab; renderMat(); return true; }
     if((el = tg.closest('[data-resolve]'))){ const c = m.coms.find(x => x.id === el.dataset.resolve); c.resolvido = true; save(); renderMat(); render(); return true; }
     if((el = tg.closest('[data-send]'))){ sendMatComment(el.closest('.composer')); return true; }
@@ -5867,7 +5880,7 @@ function drawerProp(pr){
   const tabs = [['dados', 'Dados'], ['proposta', 'Proposta'], ['aprovacao', 'Aprovação e envio'], ['financeiro', 'Financeiro', recsDaProp(p.id).filter(isLate).length], ['comentarios', 'Comentários', p.coms.length], ['historico', 'Histórico']];
   let body = '';
   if(tab === 'dados'){
-    const f = (k, l, extra) => `<label class="f">${l}<input data-pp="${k}" value="${esc(p[k] || '')}" ${extra || ''}></label>`;
+    const f = (k, l, extra) => `<label class="f">${l}<input data-pp="${k}" value="${esc(p[k] || '')}" ${k === 'cliente' && !p.cliente ? 'data-foco' : ''} ${extra || ''}></label>`;
     body = `<div class="fields">
       <label class="f">Status<select data-pp="status">${PROP_ORDEM.map(k => `<option value="${k}" ${k === p.status ? 'selected' : ''} ${PROP_PRECISA_APROV.includes(k) && !ok ? 'disabled' : ''}>${PROP_ST[k].l}${PROP_PRECISA_APROV.includes(k) && !ok ? ' (precisa de aprovação)' : ''}</option>`).join('')}</select></label>
       <label class="f">Responsável<select data-pp="resp">${USERS.map(u => `<option value="${u.id}" ${u.id === p.resp ? 'selected' : ''}>${esc(u.nome)}</option>`).join('')}</select></label>
@@ -5876,34 +5889,34 @@ function drawerProp(pr){
       <label class="f">Tipo de serviço<select data-pp="tipo"><option value=""></option>${(S.servs || []).length ? `<optgroup label="Serviços cadastrados">${[...S.servs].sort((a, b) => String(a.nome).localeCompare(String(b.nome), 'pt')).map(v => `<option ${v.nome === p.tipo ? 'selected' : ''}>${esc(v.nome)}</option>`).join('')}</optgroup><optgroup label="Tipos">` : ''}${PROP_TIPOS.map(t => `<option ${t === p.tipo ? 'selected' : ''}>${t}</option>`).join('')}${p.tipo && !PROP_TIPOS.includes(p.tipo) && !(S.servs || []).some(v => v.nome === p.tipo) ? `<option selected>${esc(p.tipo)}</option>` : ''}${(S.servs || []).length ? '</optgroup>' : ''}</select></label>
       <label class="f">Modelo do processo ao aceitar<select data-pp="modelo">${Object.entries(MODELOS).map(([k, m]) => `<option value="${k}" ${k === p.modelo ? 'selected' : ''}>${m.nome}</option>`).join('')}</select></label>
     </div>
-    <div class="sect"><h4>Cliente</h4><div class="fields" style="margin:0">
+    <div class="sect"><h3>Cliente</h3><div class="fields" style="margin:0">
       ${f('cliente', 'Cliente (razão social ou nome)', 'list="dlCli" autocomplete="off"')}${f('cnpj', 'CNPJ / CPF')}${f('grupo', 'Grupo (pasta no Processos)', 'placeholder="igual ao cliente se ficar vazio"')}${f('emp', 'Obra / empreendimento', 'list="dlEmp" autocomplete="off"')}
       ${f('contato', 'Contato (A/C)')}${f('email', 'E-mail', 'type="email"')}${f('telefone', 'Telefone')}${f('origem', 'Origem (indicação, site…)')}</div>${(() => { const c = findCli(p.cliente, p.cnpj), s = findSpe(p.cliente, p.cnpj);
         return (s ? `<p class="hint" style="margin:10px 0 0">Contratante: <b>SPE ${esc(s.emp.razao || s.emp.nome)}</b>${s.emp.cnpj ? ' | CNPJ ' + esc(s.emp.cnpj) : ''}, empreendimento <b>${esc(s.emp.nome)}</b> do cliente <b>${esc(s.cli.nome)}</b>.</p>` : '')
           + (p.cliente && !c ? `<p class="hint" style="margin:10px 0 0">“${esc(p.cliente)}” ainda não está nos Cadastros. <a class="link" data-clinovo>Cadastrar com os dados desta proposta</a></p>` : '')
           + `<datalist id="dlCli">${(S.clis || []).map(c => `<option value="${esc(c.nome)}" label="${esc([c.cnpj, c.grupo].filter(Boolean).join(' | '))}">`).join('')}${(S.clis || []).flatMap(c => spesDe(c).filter(e => temSpe(e) && e.razao).map(e => `<option value="${esc(e.razao)}" label="${esc('SPE do ' + (e.nome || 'empreendimento') + ' | ' + c.nome)}">`)).join('')}</datalist>`
           + `<datalist id="dlEmp">${(c ? spesDe(c) : (S.clis || []).flatMap(spesDe)).filter(e => e.nome).map(e => `<option value="${esc(e.nome)}" label="${esc(temSpe(e) ? 'SPE: ' + [e.razao, e.cnpj].filter(Boolean).join(' | ') : 'no CNPJ do cliente')}">`).join('')}</datalist>`; })()}</div>
-    <div class="sect"><h4>Operação</h4><div class="fields" style="margin:0"><label class="f">Equipe de operação<select data-pp="equipeOp"><option value="">— definir equipe</option>${equipes().map(e => `<option value="${e.id}" ${p.equipeOp === e.id ? 'selected' : ''}>${esc(e.nome)}</option>`).join('')}</select></label></div>
+    <div class="sect"><h3>Operação</h3><div class="fields" style="margin:0"><label class="f">Equipe de operação<select data-pp="equipeOp"><option value="">— definir equipe</option>${equipes().map(e => `<option value="${e.id}" ${p.equipeOp === e.id ? 'selected' : ''}>${esc(e.nome)}</option>`).join('')}</select></label></div>
       ${equipes().length ? '' : '<p class="hint" style="margin:8px 0 0">Crie as equipes em <b>Equipe</b> para escolher aqui.</p>'}${cadInfoHtml(p)}</div>
-    <div class="sect"><h4>Datas</h4><div class="fields" style="margin:0">
+    <div class="sect"><h3>Datas</h3><div class="fields" style="margin:0">
       <label class="f">Entrada<input type="date" data-pp="dataEntrada" value="${p.dataEntrada || ''}"></label><label class="f">Prazo para enviar<input type="date" data-pp="prazo" value="${p.prazo || ''}"></label></div>
       <label class="f" style="margin-top:12px">Observações internas<textarea data-pp="obs" rows="2">${esc(p.obs || '')}</textarea></label></div>`;
   } else if(tab === 'proposta'){
     body = editorProposta(p, ok);
   } else if(tab === 'aprovacao'){
     const a = p.aprov || {st:'rascunho'}, envios = (p.envios || []).map(e => ({...e, em2:(S.emails.find(x => x.id === e.emailId) || {})}));
-    body = `<div class="sect"><h4>Aprovação interna</h4>
+    body = `<div class="sect"><h3>Aprovação interna</h3>
       <div class="drivebox" style="margin-bottom:12px">${av(aprov)}<div style="flex:1"><div class="sub">Quem aprova (${esc(NUCLEOS[p.nucleo])})</div>${ok ? `<b>${esc(U[aprov] ? U[aprov].nome : aprov)}</b>` : `<select data-pp="aprovador" class="inp" style="max-width:280px;margin-top:4px">${USERS.map(u => `<option value="${u.id}" ${u.id === aprov ? 'selected' : ''}>${esc(u.nome)}${u.id === aprovadorPadrao(p) ? ' (padrão do núcleo)' : ''}</option>`).join('')}</select>`}</div>${aprovChip(p)}</div>
       ${a.st === 'ajustes' && a.obs ? `<div class="banner" style="background:#FDE8E7;color:#7A1A12"><b>Ajustes pedidos por ${esc(first(a.por))}:</b> ${esc(a.obs)}</div>` : ''}
       ${ok ? `<p style="margin:0">Aprovada por <b>${esc(U[a.por] ? U[a.por].nome : a.por)}</b> em ${fmtWhen(a.em)}.</p>`
         : a.st === 'pendente' ? (me === aprov ? `<label class="f">Comentário (obrigatório para pedir ajustes)<textarea id="ppAdjObs" rows="2"></textarea></label><div style="display:flex;gap:8px;margin-top:10px"><button class="btn primary" data-ppok>${ic('check', 'sm')} Aprovar</button><button class="btn danger" data-ppadj>Pedir ajustes</button><button class="btn sm ghost" data-ppprint>Ver PDF</button></div>` : `<p class="sub" style="margin:0">Enviada para ${esc(first(aprov))} em ${fmtWhen(a.pedidoEm)}. Só ${esc(first(aprov))} pode aprovar.</p>`)
         : `<button class="btn primary" data-ppsend ${docTotal(p.doc) && p.cliente ? '' : 'disabled title="Preencha cliente e valores"'}>${ic('envio', 'sm')} Enviar para aprovação de ${esc(first(aprov))}</button>`}
     </div>
-    <div class="sect"><h4>Envio ao cliente</h4>
+    <div class="sect"><h3>Envio ao cliente</h3>
       ${ok ? `<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn primary" data-ppmail>${ic('email', 'sm')} Enviar por e-mail</button><button class="btn" data-ppprint>${ic('doc', 'sm')} Visualizar / gerar PDF</button></div>` : '<p class="sub" style="margin:0">Disponível depois da aprovação interna.</p>'}
       ${envios.length ? `<div style="margin-top:12px">${envios.map(e => `<div class="li"><span class="cico sm">${ic('email', 'sm')}</span><div style="flex:1;min-width:0"><b>${esc(e.para)}</b><div class="sub">${fmtWhen(e.em)} | por ${esc(first(e.por))}</div></div>${e.em2.status === 'enviado' ? '<span class="stchip"><i class="st-online"></i>Enviado</span>' : e.em2.status === 'erro' ? `<span class="stchip" style="background:#FDE8E7;color:#B42318" title="${esc(e.em2.erro || '')}"><i style="background:#D92D20"></i>Erro</span>` : '<span class="stchip"><i class="st-ausente"></i>Na fila</span>'}</div>`).join('')}</div>` : ''}
     </div>
-    ${p.status === 'aprovada' ? `<div class="sect"><h4>Processo</h4>${(S.props.find(x => x.id === p.id) || {}).procId ? `<button class="btn" data-goproc="${S.props.find(x => x.id === p.id).procId}">Abrir o processo</button>` : `<button class="btn primary" data-newproc="${p.id}">${ic('mais', 'sm')} Abrir processo</button>`}</div>` : ''}`;
+    ${p.status === 'aprovada' ? `<div class="sect"><h3>Processo</h3>${(S.props.find(x => x.id === p.id) || {}).procId ? `<button class="btn" data-goproc="${S.props.find(x => x.id === p.id).procId}">Abrir o processo</button>` : `<button class="btn primary" data-newproc="${p.id}">${ic('mais', 'sm')} Abrir processo</button>`}</div>` : ''}`;
   } else if(tab === 'financeiro'){
     body = finPropHtml(p);
   } else if(tab === 'comentarios'){
@@ -5966,7 +5979,7 @@ function editorProposta(p, ok){
   ${d.secoes.map((s, i) => `${i === apos ? `<div class="psecbar ghost">${String(3 + apos).padStart(2, '0')}. ${esc(pz.titulo || 'TABELA DE PRAZOS')} <span class="sub">(tabela de prazos, abaixo)</span></div>` : ''}<div class="psec"><div class="psecbar"><span>${secNum[i]}.</span><input class="st" data-psec="${i}|titulo" value="${esc(s.titulo || '')}"><button class="x" data-secdel="${i}" title="Remover seção">✕</button></div><textarea class="inp" data-psec="${i}|texto" rows="${Math.min(12, String(s.texto || '').split('\n').length + 1)}">${esc(s.texto || '')}</textarea></div>`).join('')}
   ${apos >= nsec && pz.ativo ? `<div class="psecbar ghost">${String(3 + nsec).padStart(2, '0')}. ${esc(pz.titulo || 'TABELA DE PRAZOS')} <span class="sub">(tabela de prazos, abaixo)</span></div>` : ''}
   <div class="prow"><button class="btn sm" data-secadd>${ic('mais', 'sm')} Seção</button><span class="sub">Em cada seção, cada linha vira um item a), b), c)…</span></div>
-  <div class="sect" style="margin-top:16px"><h4>Tabela de prazos <label class="pchk" style="font-size:13.5px"><input type="checkbox" data-pz="ativo" ${pz.ativo ? 'checked' : ''}> Incluir na proposta</label></h4>
+  <div class="sect" style="margin-top:16px"><h3>Tabela de prazos <label class="pchk" style="font-size:13.5px"><input type="checkbox" data-pz="ativo" ${pz.ativo ? 'checked' : ''}> Incluir na proposta</label></h3>
     ${pz.ativo ? `<div class="fields" style="margin-bottom:10px"><label class="f">Título da seção<input data-pz="titulo" value="${esc(pz.titulo)}"></label><label class="f">Posição na proposta<select data-pz="apos">${d.secoes.map((s, i) => `<option value="${i}" ${i === apos ? 'selected' : ''}>Antes de “${esc(s.titulo || '(sem título)')}”</option>`).join('')}<option value="${nsec}" ${apos >= nsec ? 'selected' : ''}>No final (depois de todas as seções)</option></select></label><label class="f">Cabeçalho da coluna de prazo<input data-pz="coluna" value="${esc(pz.coluna)}"></label></div>
       <div class="ptbl"><table class="pitab"><thead><tr><th>Etapa</th><th style="width:150px">Prazo</th><th style="width:34px"></th></tr></thead><tbody>${(pz.etapas && pz.etapas.length ? pz.etapas : [{etapa:'', prazo:''}]).map((e, i) => `<tr><td><input class="inp" data-pze="${i}|etapa" value="${esc(e.etapa || '')}" placeholder="Ex.: AOP 1ª FASE"></td><td><input class="inp" data-pze="${i}|prazo" value="${esc(e.prazo || '')}" placeholder="Ex.: 30"></td><td><button class="x" data-pzdel="${i}" title="Remover">✕</button></td></tr>`).join('')}</tbody></table></div>
       <div class="prow"><button class="btn sm" data-pzadd>${ic('mais', 'sm')} Etapa</button></div>
@@ -6549,12 +6562,12 @@ function garantirRecebiveis(p){ if(!p || recsDaProp(p.id).length || !docTotal(p.
 function finPropHtml(p){
   const recs = recsDaProp(p.id), fs = (S.pags || []).filter(x => x.tipo === 'forn' && x.propostaId === p.id), total = docTotal(p.doc);
   const recTot = recs.filter(r => r.status !== 'cancelada').reduce((a, r) => a + numBR(r.valorBruto), 0);
-  return `<div class="sect"><h4>Recebíveis</h4>${recs.length ? `<div style="overflow:auto"><table class="atable" style="min-width:560px"><thead><tr><th>Parcela</th><th>Previsão</th><th style="text-align:right">Bruto</th><th style="text-align:right">Líquido</th><th>Status</th><th>NF</th></tr></thead><tbody>
+  return `<div class="sect"><h3>Recebíveis</h3>${recs.length ? `<div style="overflow:auto"><table class="atable" style="min-width:560px"><thead><tr><th>Parcela</th><th>Previsão</th><th style="text-align:right">Bruto</th><th style="text-align:right">Líquido</th><th>Status</th><th>NF</th></tr></thead><tbody>
       ${recs.map(r => `<tr data-rec="${r.id}"><td>${r.parcela}/${r.deTotal}<div class="sub">${esc(r.condicao || '')}</div></td><td>${fmtDateBR(r.previsao) || '—'}</td><td style="text-align:right">${brl(numBR(r.valorBruto))}</td><td style="text-align:right">${brl(liquidoDe(r))}</td><td>${recPill(r)}</td><td>${esc(r.nf || '—')}</td></tr>`).join('')}</tbody></table></div>
       ${Math.abs(recTot - total) > 0.01 ? `<div class="banner" style="margin:10px 0 0">O total dos recebíveis (${brl(recTot)}) difere do valor atual da proposta (${brl(total)}). Ajuste no Financeiro, se for o caso.</div>` : ''}`
     : p.status === 'aprovada' ? `<div class="banner">A proposta está aceita, mas ainda não há recebíveis.</div><button class="btn primary sm" data-recgerar>Gerar recebíveis agora</button>`
     : '<p class="sub" style="margin:0">Os recebíveis são gerados automaticamente quando a proposta é marcada como “Aceita pelo cliente”, um por parcela.</p>'}</div>
-    <div class="sect"><h4>Fornecedores <span class="spacer"></span><button class="btn sm" data-fornprop>${ic('mais', 'sm')} Pedido de fornecedor</button></h4>${fs.length ? `<div style="overflow:auto"><table class="atable" style="min-width:520px"><thead><tr><th>Serviço</th><th>Fornecedor</th><th>Vencimento</th><th style="text-align:right">Valor</th><th>Status</th></tr></thead><tbody>
+    <div class="sect"><h3>Fornecedores <span class="spacer"></span><button class="btn sm" data-fornprop>${ic('mais', 'sm')} Pedido de fornecedor</button></h3>${fs.length ? `<div style="overflow:auto"><table class="atable" style="min-width:520px"><thead><tr><th>Serviço</th><th>Fornecedor</th><th>Vencimento</th><th style="text-align:right">Valor</th><th>Status</th></tr></thead><tbody>
       ${fs.map(x => `<tr data-pag="${x.id}"><td>${esc(x.descricao)}${x.recebivelId && x.descontar !== false ? ' <span class="ftag">desembolso</span>' : ''}</td><td>${esc(x.fornecedor || '—')}</td><td>${fmtDateBR(x.vencimento) || '—'}</td><td style="text-align:right">${brl(numBR(x.valor))}</td><td>${pagPill(x)}</td></tr>`).join('')}</tbody></table></div>`
       : '<p class="sub" style="margin:0">Nenhum pedido de fornecedor vinculado.</p>'}</div>`;
 }
@@ -6690,7 +6703,7 @@ function pagModalHtml(){
         ${finInp('valor', 'Valor (R$)', moneyIn(x.valor), 'inputmode="decimal"')}${finInp('vencimento', 'Vencimento', x.vencimento, 'type="date"')}
         <label class="f">Status<select data-fe="status">${Object.entries(PAG_ST[forn ? 'forn' : 'conta']).filter(([k]) => forn || k !== 'agendado' || x.status === 'agendado').map(([k, l]) => `<option value="${k}" ${k === x.status ? 'selected' : ''}>${l}</option>`).join('')}</select></label>${finInp('dataPagamento', 'Data do pagamento', x.dataPagamento, 'type="date"')}</div>
       <datalist id="dlForn">${[...new Set((S.pags || []).map(p => p.fornecedor).filter(Boolean))].map(f => `<option value="${esc(f)}">`).join('')}</datalist>
-      ${forn ? `<div class="sect" style="margin:4px 0 12px;box-shadow:none;border:1px solid var(--line)"><h4>Vínculo com proposta</h4><div class="fields" style="margin:0">
+      ${forn ? `<div class="sect" style="margin:4px 0 12px;box-shadow:none;border:1px solid var(--line)"><h3>Vínculo com proposta</h3><div class="fields" style="margin:0">
           <label class="f">Proposta<select data-fe="propostaId" data-ferender><option value="">— nenhuma —</option>${props.map(p => `<option value="${p.id}" ${p.id === x.propostaId ? 'selected' : ''}>${esc(p.codigo)} | ${esc(String(p.cliente || '').slice(0, 30))}</option>`).join('')}</select></label>
           <label class="f">Parcela a receber<select data-fe="recebivelId" ${recs.length ? '' : 'disabled'}><option value="">— nenhuma —</option>${recs.map(r => `<option value="${r.id}" ${r.id === x.recebivelId ? 'selected' : ''}>Parcela ${r.parcela}/${r.deTotal} | ${brl(numBR(r.valorBruto))} | ${RST[r.status] ? RST[r.status].l : r.status}</option>`).join('')}</select></label></div>
           <label class="pchk" style="margin-top:10px"><input type="checkbox" data-fechk="descontar" ${x.descontar !== false ? 'checked' : ''}> Descontar como desembolso dessa parcela (reduz o líquido)</label>
@@ -8130,7 +8143,7 @@ function matProcHtml(p){
   const ms = matsDoProc(p), livres = (S.mats || []).filter(m => m.procId !== p.id);
   return `<div class="sect" style="padding:0;overflow:hidden">${ms.map(m => { const c = matCount(m), st = MS[m.status];
       return `<div class="vrow mrow" data-mat="${m.id}"><span class="mst" style="--c:${st.c}">${st.l}</span><div style="flex:1;min-width:0"><b>${esc(m.titulo || m.codigo)}</b><div class="sub">${esc(m.codigo)} | ${esc(m.tipo)} | checklist ${c.f}/${c.t}${m.status === 'revisao' && m.pausa && m.pausa.ini ? ' | pausado' : ''}</div></div>${avs(m.resp)}<span style="min-width:60px;text-align:right">${dueHtml(m.prazo, m.status === 'entregue')}</span><button class="x" data-matunlink="${m.id}" title="Desvincular do processo">✕</button></div>`; }).join('') || '<div class="sub" style="padding:14px">Nenhum material técnico vinculado.</div>'}</div>
-    <div class="sect"><h4>Vincular</h4>
+    <div class="sect"><h3>Vincular</h3>
       <div class="vadd"><input class="inp" id="matNovoTit" placeholder="Novo material para este processo (ex.: Memorial descritivo)"><select class="inp" id="matNovoTipo" style="max-width:220px">${MAT_TIPOS.map(t => `<option>${t}</option>`).join('')}</select><button class="btn sm primary" data-matnovoproc>Criar</button></div>
       ${livres.length ? `<div class="vadd"><select class="inp" id="matLink"><option value="">Vincular material já existente…</option>${livres.map(m => `<option value="${m.id}">${esc(m.codigo)} | ${esc(m.titulo || '')}${m.procId && procById(m.procId) ? ' (hoje em ' + esc(pcod(procById(m.procId))) + ')' : ''}</option>`).join('')}</select><button class="btn sm" data-matlink>Vincular</button></div>` : ''}</div>`;
 }
@@ -8195,7 +8208,7 @@ renderMats = (function(){ return function(){
     body = `<div class="pk-wrap"><button type="button" class="pk-nav prev" aria-label="Ver colunas anteriores" hidden>‹</button><div class="mboard pk-board">${MAT_ST.filter(st => !ui.mSt || (ui.mSt === 'abertos' ? st.k !== 'entregue' : st.k === ui.mSt)).map(st => { const ms = list.filter(m => m.status === st.k);
       return `<div class="mcol" data-mcol="${st.k}"><div class="mh"><h2 class="mst" style="--c:${st.c}">${st.l}</h2><span class="sub mcnt">${ms.length}</span></div>
         ${ms.map(matCard).join('')}
-        <div class="madd"><input data-madd="${st.k}" placeholder="+ Adicionar material"></div></div>`; }).join('')}</div><button type="button" class="pk-nav next" aria-label="Ver mais colunas" hidden>›</button></div>
+        <div class="madd"><input data-madd="${st.k}" placeholder="+ Novo material (digite e Enter)" aria-label="Novo material em ${st.l}: digite o título e aperte Enter"></div></div>`; }).join('')}</div><button type="button" class="pk-nav next" aria-label="Ver mais colunas" hidden>›</button></div>
       <p class="hint" style="margin-top:-24px">Arraste os cartões ou use o seletor de status de cada um. O cronômetro liga em <b>Em elaboração</b> e <b>Ajustes</b>; em <b>Pausado</b> ele para e começa a contar o tempo parado. Ao ir para <b>Validação interna</b>, você escolhe quem valida (sugestão: ${esc(first(aprovMat()))}).</p>`;
   }
   const crumb = !hideT && (ui.mSel || {}).g ? `<div class="crumb"><a class="link" data-mtall>Todos</a> / ${ui.mSel.e ? `<a class="link" data-mtg="${esc(ui.mSel.g)}">${esc(ui.mSel.g)}</a> / <b>${esc(ui.mSel.e)}</b>` : `<b>${esc(ui.mSel.g)}</b>`}</div>` : '';
@@ -9126,10 +9139,10 @@ function procResumoHtml(p, pr){
       <div class="rsk" data-dtab="notas"><span class="sub">Notificações</span><b>${np ? `${np} pendência${np > 1 ? 's' : ''}` : (p.notas || []).length ? 'Tudo atendido' : 'Nenhuma'}</b>${dn !== null ? `<span class="ctag ${dn <= 3 ? 'late' : ''}">${dn < 0 ? `resposta atrasada ${-dn}d` : dn === 0 ? 'responder hoje' : `responder em ${dn}d`}</span>` : ''}</div>
       <div class="rsk" data-dtab="vinculos"><span class="sub">Bloqueado por</span><b>${pend.length ? pend.map(x => esc(pcod(x))).join(', ') : 'nenhum processo'}</b>${pend.length ? `<span class="ctag late">${pend.length} em aberto</span>` : ''}</div></div>
     <div class="rscards">
-      <div class="rsc"><h4>Descrição</h4><div class="rsd">${txt ? esc(txt.slice(0, 320)) + (txt.length > 320 ? '…' : '') : '<span class="sub">Sem descrição.</span>'}</div>${end ? `<div class="sub" style="margin-top:6px">${esc(end)}${im.matricula ? ' | matrícula ' + esc(im.matricula) : ''}</div>` : ''}
+      <div class="rsc"><h3>Descrição</h3><div class="rsd">${txt ? esc(txt.slice(0, 320)) + (txt.length > 320 ? '…' : '') : '<span class="sub">Sem descrição.</span>'}</div>${end ? `<div class="sub" style="margin-top:6px">${esc(end)}${im.matricula ? ' | matrícula ' + esc(im.matricula) : ''}</div>` : ''}
         <div class="rsb">${p.drive ? `<a class="btn sm" href="${esc(p.drive)}" target="_blank" rel="noopener">${ic('pasta', 'sm')} Pasta no Drive ↗</a>` : `<button class="btn sm" data-dtab="drive">${ic('pasta', 'sm')} Definir pasta no Drive</button>`}<button class="btn sm ghost" data-dtab="descricao">Descrição e imóvel</button></div></div>
-      <div class="rsc"><h4>Proposta</h4>${pr ? `<div class="rsv"><b>${esc(pr.codigo)}</b>${pill(PROP_ST[pr.status].l, PROP_ST[pr.status].c, PROP_ST[pr.status].b)}</div><div class="sub">${esc(pr.emp || '')}${pr.objeto ? ' | ' + esc(pr.objeto) : ''}</div><div class="rstot"><span>Total</span><span>${brl(pr.valor)}</span></div><div class="rsb"><button class="btn sm ghost" data-dtab="proposta">Ver itens</button></div>` : '<span class="sub">Sem proposta vinculada.</span>'}</div>
-      <div class="rsc"><h4>Vínculos</h4>${pre.map(x => vl(x, 'vem antes')).join('')}${suc.map(x => vl(x, 'depende deste')).join('')}${!pre.length && !suc.length ? '<span class="sub">Nenhum processo vinculado.</span>' : ''}
+      <div class="rsc"><h3>Proposta</h3>${pr ? `<div class="rsv"><b>${esc(pr.codigo)}</b>${pill(PROP_ST[pr.status].l, PROP_ST[pr.status].c, PROP_ST[pr.status].b)}</div><div class="sub">${esc(pr.emp || '')}${pr.objeto ? ' | ' + esc(pr.objeto) : ''}</div><div class="rstot"><span>Total</span><span>${brl(pr.valor)}</span></div><div class="rsb"><button class="btn sm ghost" data-dtab="proposta">Ver itens</button></div>` : '<span class="sub">Sem proposta vinculada.</span>'}</div>
+      <div class="rsc"><h3>Vínculos</h3>${pre.map(x => vl(x, 'vem antes')).join('')}${suc.map(x => vl(x, 'depende deste')).join('')}${!pre.length && !suc.length ? '<span class="sub">Nenhum processo vinculado.</span>' : ''}
         ${ms.length ? `<div class="sub" style="margin-top:6px">${ms.length} material(is) técnico(s) vinculado(s)</div>` : ''}<div class="rsb"><button class="btn sm ghost" data-dtab="vinculos">+ Vincular</button>${crComp(p).length > 1 ? `<button class="btn sm ghost" data-crlic="${p.id}">Cronograma do licenciamento</button>` : ''}</div></div></div>`;
 }
 
@@ -9407,7 +9420,7 @@ document.addEventListener('click', e => {
   { const g = tg.closest('[data-licrenov]'); if(g){ e.stopPropagation(); startRenewal(S.lics.find(x => x.id === g.dataset.licrenov)); return; } }
   { const g = tg.closest('[data-golic]'); if(g){ const l = S.lics.find(x => x.id === g.dataset.golic); ui.view = 'lic'; render(); if(l.procId && procById(l.procId)) openDrawer('proc', l.procId, 'licenca'); else licModal(null, l.id); return; } }
   { const g = tg.closest('[data-licskip]'); if(g){ const p = procById(g.dataset.licskip); p.semLicenca = true; logP(p, 'marcou que o processo não gera licença'); save(); closeTask(); render(); return; } }
-  { const g = tg.closest('[data-licdel]'); if(g){ const l = S.lics.find(x => x.id === g.dataset.licdel); S.lics = S.lics.filter(x => x !== l); if(procById(l.procId)) logP(procById(l.procId), `excluiu a licença ${l.tipo}`); save(); closeTask(); render(); toast('Licença excluída'); return; } }
+  { const g = tg.closest('[data-licdel]'); if(g){ const l = S.lics.find(x => x.id === g.dataset.licdel); if(l && !confirm(`Excluir a licença “${l.tipo || 'sem tipo'}”${l.numero ? ' nº ' + l.numero : ''}? Isso não pode ser desfeito.`)) return; S.lics = S.lics.filter(x => x !== l); if(procById(l.procId)) logP(procById(l.procId), `excluiu a licença ${l.tipo}`); save(); closeTask(); render(); toast('Licença excluída'); return; } }
   { const g = tg.closest('[data-licsave]'); if(g){
     const val = $('#lfVal').value; if(!val){ toast('Informe a validade'); return; }
     const p = procById(g.dataset.procId) || null;
@@ -9482,7 +9495,7 @@ document.addEventListener('click', e => {
     if((el = tg.closest('[data-resolve]'))){ const c = t.coms.find(x => x.id === el.dataset.resolve); c.resolvido = true; logT(t, 'resolveu um comentário atribuído'); if(c.autor !== me) notify(c.autor, `resolveu seu comentário em “${esc(t.titulo)}”`, p.id, t.id); save(); renderTask(); render(); return; }
     if((el = tg.closest('[data-send]'))){ sendComment(el.closest('.composer')); return; }
     if((el = tg.closest('.mentions div'))){ pickMention(el); return; }
-    if(tg.closest('[data-deltask]')){ { p.tarefas = p.tarefas.filter(x => x !== t); logP(p, `excluiu a tarefa “${t.titulo}”`); save(); closeTask(); render(); } return; }
+    if(tg.closest('[data-deltask]')){ if(!confirm(`Excluir a tarefa “${t.titulo || 'sem título'}”? Os comentários e o tempo registrado nela também são apagados. Isso não pode ser desfeito.`)) return; { p.tarefas = p.tarefas.filter(x => x !== t); logP(p, `excluiu a tarefa “${t.titulo}”`); save(); closeTask(); render(); } return; }
     return;
   }
 
@@ -9777,6 +9790,94 @@ boot();
     for(var j = 0; j < depois.length; j++){ try{ depois[j].apply(this, arguments); }catch(err){ console.warn('render (depois):', err); } }
     return r;
   };
+})();
+</script>
+<script id="mannare-r5">
+/* UX-R5: janelas e painéis acessíveis, erros junto ao campo e abas roláveis no celular */
+(function(){
+  var FOC = 'a[href],button:not([disabled]),input:not([disabled]):not([type=hidden]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
+  function visiveis(box){ return [].slice.call(box.querySelectorAll(FOC)).filter(function(x){ return x.offsetParent !== null || getComputedStyle(x).position === 'fixed'; }); }
+
+  /* R5.4a: Tab preso em qualquer janela modal aberta fora de #layer/#drawer (ex.: Tarefa avulsa) */
+  document.addEventListener('keydown', function(e){
+    if(e.key !== 'Tab') return;
+    var ds = [].slice.call(document.querySelectorAll('[role=dialog][aria-modal=true],[role=alertdialog][aria-modal=true]'))
+      .filter(function(d){ return !d.closest('#layer,#drawer,#muDlg') && (d.offsetParent || getComputedStyle(d).position === 'fixed'); });
+    if(!ds.length) return; var d = ds[ds.length - 1], fs = visiveis(d); if(!fs.length) return;
+    var i = fs.indexOf(document.activeElement);
+    if(e.shiftKey && i <= 0){ e.preventDefault(); fs[fs.length - 1].focus(); }
+    else if(!e.shiftKey && (i === -1 || i === fs.length - 1)){ e.preventDefault(); fs[0].focus(); }
+  }, true);
+
+  /* R5.4b: painel do sino e cartão de perfil como diálogos não modais */
+  var PAINEIS = [['npanel', 'Notificações', 'btnBell'], ['pop', 'Perfil', null]], origem = {};
+  PAINEIS.forEach(function(x){
+    var el = document.getElementById(x[0]); if(!el) return;
+    el.setAttribute('role', 'dialog'); el.setAttribute('aria-label', x[1]);
+    new MutationObserver(function(){
+      var aberto = !el.hidden, bt = x[2] && document.getElementById(x[2]);
+      if(bt) bt.setAttribute('aria-expanded', String(aberto));
+      if(aberto){ origem[x[0]] = document.activeElement; requestAnimationFrame(function(){ if(el.contains(document.activeElement)) return; var f = visiveis(el)[0]; if(f) f.focus({preventScroll:true}); else { el.tabIndex = -1; el.focus({preventScroll:true}); } }); }
+    }).observe(el, {attributes:true, attributeFilter:['hidden']});
+  });
+  /* Tab no último item (ou Shift+Tab no primeiro) fecha o painel e segue a ordem a partir do botão que o abriu */
+  document.addEventListener('keydown', function(e){
+    if(e.key !== 'Tab') return;
+    PAINEIS.forEach(function(x){ var el = document.getElementById(x[0]);
+      if(!el || el.hidden || !el.contains(document.activeElement)) return;
+      var fs = visiveis(el), i = fs.indexOf(document.activeElement), bt = (x[2] && document.getElementById(x[2])) || origem[x[0]];
+      if(!bt || !document.contains(bt)) return;
+      if(!e.shiftKey && i === fs.length - 1){ e.preventDefault(); el.hidden = true;
+        var todos = visiveis(document.body), k = todos.indexOf(bt); (todos[k + 1] || bt).focus(); }
+      else if(e.shiftKey && i <= 0){ e.preventDefault(); el.hidden = true; bt.focus(); }
+    });
+  }, true);
+  document.addEventListener('keydown', function(e){
+    if(e.key !== 'Escape') return;
+    for(var i = 0; i < PAINEIS.length; i++){ var x = PAINEIS[i], el = document.getElementById(x[0]);
+      if(el && !el.hidden){ e.stopPropagation(); e.preventDefault(); el.hidden = true;
+        var volta = (x[2] && document.getElementById(x[2])) || origem[x[0]]; if(volta && document.contains(volta)) volta.focus(); return; } }
+  }, true);
+
+  /* R5.3: mensagens de validação também aparecem junto ao campo com problema */
+  var VALID = /^(preencha|escolha|informe|escreva|digite|defina|coloque)\b/i;
+  if(typeof toast === 'function'){
+    var base = toast;
+    window.toast = toast = function(msg){
+      var r = base.apply(this, arguments), t = [].slice.call(document.querySelectorAll('.toast')).pop();
+      var val = VALID.test(String(msg || ''));
+      if(t){ t.setAttribute('role', val ? 'alert' : 'status'); }
+      if(val) requestAnimationFrame(function(){
+        var c = document.activeElement; if(!c || !c.matches || !c.matches('input,select,textarea')) return;
+        limpa(c); var id = 'erro-' + Math.random().toString(36).slice(2, 8), d = document.createElement('span');
+        d.className = 'f-erro'; d.id = id; d.textContent = msg;
+        var lab = c.closest('label'); if(lab) lab.appendChild(d); else c.insertAdjacentElement('afterend', d);
+        c.setAttribute('aria-invalid', 'true'); c.setAttribute('aria-describedby', ((c.getAttribute('aria-describedby') || '') + ' ' + id).trim());
+      });
+      return r;
+    };
+  }
+  function limpa(c){ var ids = (c.getAttribute('aria-describedby') || '').split(/\s+/).filter(Boolean), resta = [];
+    ids.forEach(function(id){ var el = document.getElementById(id); if(el && el.classList.contains('f-erro')) el.remove(); else resta.push(id); });
+    if(resta.length) c.setAttribute('aria-describedby', resta.join(' ')); else c.removeAttribute('aria-describedby'); c.removeAttribute('aria-invalid'); }
+  ['input', 'change'].forEach(function(ev){ document.addEventListener(ev, function(e){ var c = e.target; if(c && c.getAttribute && c.getAttribute('aria-invalid') === 'true') limpa(c); }, true); });
+
+  /* R5.6: Relatórios semanais — "Enviar" liga e desliga enquanto o e-mail é digitado */
+  document.addEventListener('input', function(e){ var t = e.target; if(!t.matches || !t.matches('[data-rsc$="|para"]')) return;
+    var k = t.getAttribute('data-rsc').split('|')[0], b = document.querySelector('[data-rsenv="' + k + '"]');
+    if(b){ var ok = !!t.value.trim(); b.disabled = !ok; if(ok) b.removeAttribute('title'); else b.title = 'Preencha o e-mail para enviar'; } }, true);
+
+  /* R5.5: abas que não cabem no celular mostram que há mais, e a aba ativa fica à vista */
+  var MQ = matchMedia('(max-width:768px)'), SEL = '[role=tablist], .tabs, #view .pagehead ~ .seg, #view .pmain > .seg';
+  function marca(el){ var esq = el.scrollLeft > 4, dir = el.scrollLeft + el.clientWidth < el.scrollWidth - 4; el.classList.toggle('mais-esq', esq); el.classList.toggle('mais-dir', dir); }
+  function varre(){ if(!MQ.matches) return; [].slice.call(document.querySelectorAll(SEL)).forEach(function(el){
+      if(!el.offsetParent || el.scrollWidth <= el.clientWidth + 2) return;
+      if(!el.classList.contains('tabrola')){ el.classList.add('tabrola'); el.addEventListener('scroll', function(){ marca(el); }, {passive:true}); }
+      var on = el.querySelector('[aria-selected=true], .on');
+      if(on){ var R = el.getBoundingClientRect(), O = on.getBoundingClientRect();
+        if(O.left < R.left + 8) el.scrollLeft -= (R.left + 24 - O.left); else if(O.right > R.right - 8) el.scrollLeft += (O.right - R.right + 24); }
+      marca(el); }); }
+  ['view', 'layer', 'drawer'].forEach(function(id){ var c = document.getElementById(id); if(c) new MutationObserver(function(){ requestAnimationFrame(varre); }).observe(c, {childList:true, subtree:true}); });
 })();
 </script>
 <script id="mannare-hist">
@@ -10846,7 +10947,7 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
     var tile = function(tit, v, sub, nv){ return '<div class="kp-tile"><span>' + tit + '</span><b class="' + (nv ? 'kp-' + nv : '') + '">' + v + '</b>' + (sub ? '<em>' + sub + '</em>' : '') + '</div>'; };
     var hojeISO = isoOf(new Date());
     return '<div class="kp-proc-wrap">'
-      + '<div class="sect"><h4>Linha do tempo de responsabilidades</h4>' + barraTempo(c) + '</div>'
+      + '<div class="sect"><h3>Linha do tempo de responsabilidades</h3>' + barraTempo(c) + '</div>'
       + '<div class="kp-tiles">'
       + tile('Tempo total', fmtDias(c.total), isOpen(p) ? 'em andamento' : 'concluído')
       + tile('Fila do cliente', fmtDias(c.cli), c.pausa ? 'aguardando agora' : '', c.pausa ? 'aten' : '')
@@ -10858,14 +10959,14 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
       + tile('Horas vs. fee', c.consumo !== null ? pct(c.consumo) : c.horas ? c.horas.toFixed(1).replace('.', ',') + ' h' : '—', c.fee ? brl(c.custo) + ' de ' + brl(c.fee) : 'sem valor na proposta', c.consumo !== null && c.consumo > 100 ? 'neg' : '')
       + tile('Retrabalho fora do escopo', c.rev ? pct(c.revEsc * 100 / c.rev) : '—', c.rev ? c.revEsc + ' de ' + c.rev + ' revisões' : 'nenhuma revisão', c.revEsc ? 'neg' : '')
       + '</div>'
-      + '<div class="sect"><h4>Fila do cliente</h4><p class="kp-hint">Marque quando o processo depender do cliente (taxas, procurações, ajustes de projeto, assinaturas). Esse tempo sai do tempo da consultoria.</p>'
+      + '<div class="sect"><h3>Fila do cliente</h3><p class="kp-hint">Marque quando o processo depender do cliente (taxas, procurações, ajustes de projeto, assinaturas). Esse tempo sai do tempo da consultoria.</p>'
       + (c.pausa ? '<div class="kp-pausa"><span class="kp-nv aten">Aguardando ' + esc((MOT_CLI.find(function(m){ return m[0] === c.pausa.motivo; }) || ['', 'cliente'])[1].toLowerCase()) + ' desde ' + fmtD(c.pausa.ini.slice(0, 10)) + '</span><button class="btn sm primary" data-kpclifim>Cliente entregou</button></div>'
         : '<div class="kp-form"><select data-kpclimot aria-label="Motivo">' + MOT_CLI.map(function(m){ return '<option value="' + m[0] + '">' + m[1] + '</option>'; }).join('') + '</select><input type="date" data-kpcliini value="' + hojeISO + '" max="' + hojeISO + '" aria-label="Desde"><button class="btn sm" data-kpcliini-go>Marcar aguardando cliente</button></div>')
       + ((k.cli || []).length ? '<div class="kp-lista">' + k.cli.slice().reverse().map(function(x){ return '<div class="kp-li"><span>' + esc((MOT_CLI.find(function(m){ return m[0] === x.motivo; }) || ['', 'Cliente'])[1]) + '</span><span class="kp-sub2">' + fmtD(x.ini.slice(0, 10)) + ' → ' + (x.fim ? fmtD(x.fim.slice(0, 10)) : 'hoje') + ' | ' + fmtDias(dias((x.fim ? t(x.fim) : Date.now()) - t(x.ini))) + '</span><button class="cg-mini" data-kpclidel="' + x.id + '" aria-label="Excluir período" title="Excluir">✕</button></div>'; }).join('') + '</div>' : '') + '</div>'
-      + '<div class="sect"><h4>Revisões do projeto</h4><p class="kp-hint">Cada revisão conta para a taxa de retrabalho. As causadas por mudança de escopo do cliente embasam a cobrança de aditivo.</p>'
+      + '<div class="sect"><h3>Revisões do projeto</h3><p class="kp-hint">Cada revisão conta para a taxa de retrabalho. As causadas por mudança de escopo do cliente embasam a cobrança de aditivo.</p>'
       + '<div class="kp-form"><select data-kprevmot aria-label="Motivo da revisão">' + MOT_REV.map(function(m){ return '<option value="' + m[0] + '">' + m[1] + '</option>'; }).join('') + '</select><input data-kprevobs placeholder="O que mudou? (opcional)" aria-label="Observação"><button class="btn sm" data-kprevadd>Registrar revisão</button></div>'
       + ((k.rev || []).length ? '<div class="kp-lista">' + k.rev.slice().reverse().map(function(r){ return '<div class="kp-li"><span class="kp-nv ' + (r.motivo === 'escopo' ? 'ruim' : '') + '">' + esc((MOT_REV.find(function(m){ return m[0] === r.motivo; }) || ['', r.motivo])[1]) + '</span><span>' + esc(r.obs || '') + '</span><span class="kp-sub2">' + fmtD(r.em.slice(0, 10)) + ' | ' + esc(first(r.por)) + '</span><button class="cg-mini" data-kprevdel="' + r.id + '" aria-label="Excluir revisão" title="Excluir">✕</button></div>'; }).join('') + '</div>' : '') + '</div>'
-      + '<div class="sect"><h4>Datas do SLA</h4><p class="kp-hint">Preenchidas sozinhas pelo status (entrada em Protocolo e em Análise). Ajuste se a data real for outra.</p><div class="fields" style="margin:0">'
+      + '<div class="sect"><h3>Datas do SLA</h3><p class="kp-hint">Preenchidas sozinhas pelo status (entrada em Protocolo e em Análise). Ajuste se a data real for outra.</p><div class="fields" style="margin:0">'
       + '<label class="f">Documentação final recebida em<input type="date" data-kpdata="docFinal" value="' + (k.docFinal || (c.docFinal ? isoOf(new Date(c.docFinal)) : '')) + '"></label>'
       + '<label class="f">Data do protocolo<input type="date" data-kpdata="dataProt" value="' + (k.dataProt || (c.dataProt ? isoOf(new Date(c.dataProt)) : '')) + '"></label></div></div>'
       + '</div>';
@@ -11935,7 +12036,7 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
   }
   renderDrawer = (function(base){ return function(){ base.apply(this, arguments);
     if(!ui.drawer || ui.drawer.kind !== 'prop' || ui.dtab !== 'aprovacao') return; var p = rawProp(ui.drawer.id), r = p && regraDe(p); if(!r) return;
-    var s1 = [].slice.call(document.querySelectorAll('#drawer .dbody .sect')).find(function(x){ var h = x.querySelector('h4'); return h && /Aprovação interna/.test(h.textContent); });
+    var s1 = [].slice.call(document.querySelectorAll('#drawer .dbody .sect')).find(function(x){ var h = x.querySelector('h3,h4'); return h && /Aprovação interna/.test(h.textContent); });
     if(s1) s1.outerHTML = caixaMulti(p, r);
   }; })(renderDrawer);
 
@@ -12005,7 +12106,7 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
    ========================================================================== */
 (function(){
   'use strict';
-  var CLICK_SEL = '[data-proc],[data-prop],[data-open],[data-alert],[data-cal],[data-tg],[data-tall],[data-user],[data-golic],[data-mat],[data-gotram],.ag[data-view-go],.drow[data-view-go],.dkpi[data-view-go],#chipMe';
+  var CLICK_SEL = '[data-notif],[data-proc],[data-prop],[data-open],[data-alert],[data-cal],[data-tg],[data-tall],[data-user],[data-golic],[data-mat],[data-gotram],.ag[data-view-go],.drow[data-view-go],.dkpi[data-view-go],#chipMe';
   var CHECK_SEL = '.sq[data-tdone],.sq[data-sdone],.dchk[data-chk-task],.dchk[data-chk-sub],.plchk';
   var FOCUSABLE = 'a[href],button:not([disabled]),input:not([disabled]):not([type=hidden]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
   var SYMBOL_NAMES = {'✕':'Fechar','×':'Fechar','←':'Voltar','→':'Avançar','▶':'Iniciar cronômetro','❚❚':'Pausar cronômetro','■':'Parar cronômetro'};
@@ -12120,7 +12221,7 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
   var lastFocus = null, modalOpen = false, drawerOpen = false;
   function activeDialog(){ return modalOpen ? layer.querySelector('.modal') : drawerOpen ? drawer : null; }
   function firstFocus(box){
-    var pref = box.querySelector('[data-tf="titulo"],.dhead input,.dhead button,input:not([type=hidden]),select,textarea');
+    var pref = box.querySelector('[data-foco]') || box.querySelector('[data-tf="titulo"],.dhead input,.dhead button,input:not([type=hidden]),select,textarea'); /* UX-R5.2 */
     var f = pref && pref.offsetParent !== null ? pref : box.querySelector(FOCUSABLE);
     if(f) f.focus({preventScroll:true}); else { box.tabIndex = -1; box.focus({preventScroll:true}); }
   }
@@ -12137,7 +12238,9 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
     if(drawer){ if(m) drawer.setAttribute('inert', ''); else drawer.removeAttribute('inert'); }
     if(opening){ var box2 = activeDialog(); if(box2 && !box2.contains(document.activeElement)) requestAnimationFrame(function(){ firstFocus(box2); }); }
     if(prevM && !m && d){ requestAnimationFrame(function(){ if(!drawer.contains(document.activeElement)) firstFocus(drawer); }); }
-    if(closingAll && lastFocus && document.contains(lastFocus)){ var lf = lastFocus; lastFocus = null; requestAnimationFrame(function(){ try{ lf.focus({preventScroll:true}); }catch(_){} }); }
+    if(closingAll){ var lf = lastFocus; lastFocus = null; requestAnimationFrame(function(){   /* UX-R5.2: se a origem sumiu, vai ao botão principal da tela */
+      var alvo = lf && document.contains(lf) ? lf : ([].slice.call(document.querySelectorAll('#view .pagehead .btn.primary')).filter(function(x){ return x.offsetParent; })[0] || document.querySelector('#view h1'));
+      if(!alvo) return; if(!alvo.matches(FOCUSABLE)) alvo.tabIndex = -1; try{ alvo.focus({preventScroll:true}); }catch(_){} }); }
   }
   document.addEventListener('keydown', function(e){
     if(e.key !== 'Tab') return; var box = activeDialog(); if(!box) return;
@@ -12584,7 +12687,7 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
         + '<label class="rs-f"><span>Enviar para</span><input data-rsc="' + x(g.k) + '|para" value="' + x(cc.para) + '" placeholder="ex.: contato@cliente.com.br, outro@cliente.com.br"></label>'
         + '<label class="rs-sw" title="Entra no envio semanal"><input type="checkbox" data-rsc="' + x(g.k) + '|semanal" ' + (cc.semanal ? 'checked' : '') + '><i></i><span>Semanal</span></label>'
         + '<div class="rs-ult">' + (e.ultimo ? (enviado ? '<b class="ok">Enviado esta semana</b>' : 'Último') + '<span>' + br(e.ultimo) + (e.auto ? ' | automático' : '') + '</span>' : '<span>Nunca enviado</span>') + '</div>'
-        + '<div class="rs-acts"><button class="btn sm" data-rsver="' + x(g.k) + '">Ver e ajustar</button><button class="btn sm primary" data-rsenv="' + x(g.k) + '">Enviar</button></div></div>'; }).join('');
+        + '<div class="rs-acts"><button class="btn sm" data-rsver="' + x(g.k) + '">Ver e ajustar</button><button class="btn sm primary" data-rsenv="' + x(g.k) + '"' + (String(cc.para || '').trim() ? '' : ' disabled title="Preencha o e-mail para enviar"') + '>Enviar</button></div></div>'; }).join('');
     return '<div class="pagehead"><div><h1>Relatórios semanais</h1><p>Relatório Processual Semanal por cliente (pasta), em PDF, enviado por e-mail pela ponte.</p></div><span class="spacer"></span></div>'
       + '<section class="card rs-cfg"><div class="rs-cfg-g">'
       + '<label class="rs-f"><span>Dia do envio semanal</span><select data-rsg="dia">' + DIAS.map(function(d, i){ return '<option value="' + i + '" ' + (+c.dia === i ? 'selected' : '') + '>' + d.charAt(0).toUpperCase() + d.slice(1) + '</option>'; }).join('') + '</select></label>'
@@ -15245,7 +15348,7 @@ label:has(> #gq:focus-visible){box-shadow:var(--mu-focus)!important;border-color
 .pk-facts .pk-l{color:var(--mu-err)}
 .pk-st{position:relative;display:inline-flex;align-items:center;max-width:100%}
 .pk-st::before{content:"";position:absolute;left:10px;top:50%;width:7px;height:7px;margin-top:-3.5px;border-radius:50%;background:var(--c);pointer-events:none}
-#drawer .pk-st select{min-height:28px;height:28px;padding:0 26px 0 22px;border:0;border-radius:var(--mu-r-pill);background-color:var(--bg);color:var(--mu-text);font:600 var(--mu-fs-1)/1 var(--mu-font);background-position:right 8px center;background-size:14px;cursor:pointer;max-width:100%}
+#drawer .pk-st select{width:auto;min-width:150px;min-height:28px;height:28px;padding:0 26px 0 22px;border:0;border-radius:var(--mu-r-pill);background-color:var(--bg);color:var(--mu-text);font:600 var(--mu-fs-1)/1 var(--mu-font);background-position:right 8px center;background-size:14px;cursor:pointer;max-width:100%}
 #drawer .pk-st select:focus{box-shadow:none}
 #drawer .pk-st select:focus-visible{box-shadow:var(--mu-focus)}
 .pk-aviso{display:flex;align-items:center;gap:8px;margin-top:var(--mu-s3);padding:8px 12px;border-radius:var(--mu-r-md);background:var(--mu-err-bg);color:var(--mu-err);font:600 var(--mu-fs-2)/1.35 var(--mu-font)}
@@ -15687,6 +15790,20 @@ h2.h3{margin:0;font:700 15px/1.35 var(--font-sans);color:var(--ink,#0B0B1A);lett
   #view .pltop .spacer{display:none}
   #view .pltop .seg{margin-left:auto}
 }
+/* ===== UX-R5 | janelas, formulários e celular ===== */
+.f-erro{display:block;margin-top:4px;color:#B42318;font:500 12.5px/1.35 var(--font-sans)}
+[aria-invalid="true"]{border-color:#D92D20!important;box-shadow:0 0 0 1px #D92D20!important}
+/* R5.5 celular: abas que não cabem */
+@media (max-width:768px){
+  .tabrola{-webkit-mask-image:none;mask-image:none;scroll-snap-type:x proximity}
+  .tabrola.mais-dir{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 36px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 36px),transparent)}
+  .tabrola.mais-esq{-webkit-mask-image:linear-gradient(90deg,transparent,#000 36px);mask-image:linear-gradient(90deg,transparent,#000 36px)}
+  .tabrola.mais-esq.mais-dir{-webkit-mask-image:linear-gradient(90deg,transparent,#000 36px,#000 calc(100% - 36px),transparent);mask-image:linear-gradient(90deg,transparent,#000 36px,#000 calc(100% - 36px),transparent)}
+  .trk .trkh{flex-wrap:wrap;row-gap:6px}
+}
+/* R5.6: campo de novo material com cara de campo */
+#view .madd input{border:1px dashed var(--sx-border-strong,#C9CCD8);border-radius:8px;padding:7px 10px;background:#fff}
+#view .madd input::placeholder{opacity:1;color:var(--sx-text-3)}
 /* ===== UX-T5 | perfil do topo como botão ===== */
 .chip-me{font:inherit;color:inherit;text-align:left;cursor:pointer;border:0;background:transparent}
 .chip-me .nm,.chip-me .em{display:block}
