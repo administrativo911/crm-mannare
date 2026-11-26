@@ -16270,6 +16270,15 @@ html.mx .cal .g .d i{bottom:5px}
 .chip-me{font:inherit;color:inherit;text-align:left;cursor:pointer;border:0;background:transparent}
 .chip-me .nm,.chip-me .em{display:block}
 </style>
+<style id="mannare-r8-avs">
+/* UX-R8.1: pilhas de avatares */
+.avs .avw .av,.avs>.av{box-shadow:0 0 0 2px var(--mu-surface,#fff)}
+.avs .avw .av.me{box-shadow:0 0 0 2px var(--mu-surface,#fff)!important}
+.avs .avw:not(:only-child) .st{display:none}
+.eqcard .avs .avw .st{display:block}
+.avs .avw:hover,.avs .avw:focus-visible{z-index:3}
+.avw:focus-visible{outline:2px solid var(--mn-azul,#0000FF)!important;outline-offset:2px!important;border-radius:50%}
+</style>
 <script id="mannare-ui-js">
 /* FIX UX-5 — modal próprio no lugar de confirm() e prompt() nativos.
    Como funciona, sem mexer na lógica das telas:
