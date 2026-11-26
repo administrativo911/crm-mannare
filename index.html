@@ -1221,7 +1221,7 @@ table.pitab tr.grp td{background:var(--m-azul-t05)!important}
 .dfoot b{color:var(--ui-text);font-weight:600}
 .dchart .bars{margin-top:4px}
 .dbottom{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:12px;align-items:start}
-.dcard .cal{border:0!important;padding:0!important;background:transparent!important}
+.dcard .cal{border:0!important;padding:0!important;background:transparent!important;box-shadow:none!important;border-radius:0!important}
 .dcol .blk{padding:14px 16px!important}
 @media (max-width:1200px){.dbottom{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:980px){.dmain{grid-template-columns:1fr}}
@@ -15008,7 +15008,10 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
       if(el.scrollWidth > el.clientWidth + 4 && el.getBoundingClientRect().width >= innerWidth - 40 && getComputedStyle(el).display !== 'grid') el.classList.add('mx-scroll');
     });
   }
-  var tm = null, obs = new MutationObserver(function(){ if(!MQ.matches) return; clearTimeout(tm); tm = setTimeout(ajusta, 90); });
+  var tm = null, obs = new MutationObserver(function(){ if(!MQ.matches) return; clearTimeout(tm); tm = setTimeout(ajustaComFoco, 90); });
+  /* UX-R5.7: mover elementos tira o foco deles; guarda o foco antes de reorganizar e devolve depois */
+  function ajustaComFoco(){ var f = document.activeElement; ajusta();
+    if(f && f !== document.body && f.isConnected && document.activeElement !== f){ try{ f.focus({preventScroll:true}); }catch(_){} } }
   ['view', 'drawer', 'layer'].forEach(function(id){ var el = document.getElementById(id); if(el) obs.observe(el, {childList:true, subtree:true}); });
   obs.observe(document.body, {childList:true});
   window.addEventListener('orientationchange', function(){ setTimeout(ajusta, 200); });
@@ -15719,8 +15722,8 @@ body.arrastando #view .pk-wrap .pboard{-webkit-mask-image:none;mask-image:none}
 @media (max-width:768px){
   html.mu-tab-on #mxBurger{display:none}
   html.mu-tab-on .newmenu{position:fixed;right:16px;z-index:35;bottom:calc(52px + 8px + 8px + env(safe-area-inset-bottom,0px))}
-  html.mu-tab-on #topNew{width:56px;height:56px;min-height:56px;padding:0;border-radius:50%;font-size:0;justify-content:center;box-shadow:0 8px 24px rgba(0,0,255,.35)}
-  html.mu-tab-on #topNew svg{width:22px;height:22px;margin:0}
+  html.mu-tab-on #topNew{width:56px;height:56px;min-height:56px;padding:0!important;gap:0!important;border-radius:50%;font-size:0;justify-content:center;box-shadow:0 8px 24px rgba(0,0,255,.35)}
+  html.mu-tab-on #topNew svg{flex:none;width:22px!important;height:22px!important;margin:0}
   html.mu-tab-on #topNew .caret{display:none}
   html.mu-tab-on .newlist{top:auto;bottom:calc(100% + 8px);right:0;min-width:min(280px,calc(100vw - 32px))}
   #view [data-dashedit],#view [data-dashreset]{display:none}
@@ -15770,7 +15773,9 @@ h2.h3{margin:0;font:700 15px/1.35 var(--font-sans);color:var(--ink,#0B0B1A);lett
 .sync.ok{background:transparent!important;box-shadow:none!important;padding-left:2px!important;padding-right:2px!important;color:var(--sx-text-3)!important;font-weight:500}
 .sync.ok::before{content:"✓ ";color:#12B76A;font-weight:700}
 /* ===== UX-R4.3 | textos: calendário do painel ===== */
-.dw .cal .hd .gchip{padding:3px!important;gap:0}
+.dw .cal .hd .gchip{padding:3px!important;gap:0;justify-content:center}
+html.mx .cal .g .d{height:40px} /* UX-R6: bolinha de evento longe da borda do dia no celular */
+html.mx .cal .g .d i{bottom:5px}
 .dw .cal .hd .gchip .gtx{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
 .dw .cal .hd b{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 /* ===== UX-R4.4 | filtros: Processos com "Filtros (n)" no desktop; Financeiro quebra linha no desktop ===== */
