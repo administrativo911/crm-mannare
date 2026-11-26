@@ -4506,7 +4506,7 @@ function myItems(){
   S.procs.forEach(p => p.tarefas.forEach(t => {
     if(respTem(t.resp, me)) out.push({k:'tarefa', p, t, titulo:t.titulo, prazo:t.prazo, feito:t.status === 'concluida'});
     t.subs.forEach(s => { if(s.resp === me) out.push({k:'subtarefa', p, t, s, titulo:s.titulo, prazo:s.prazo, feito:s.feito}); });
-    t.coms.forEach(c => { if(c.atrib && respTem([c.atrib], me)) out.push({k:'comentário', p, t, c, titulo:c.texto, prazo:'', feito:!!c.resolvido}); });
+    comsPublicos(t.coms).forEach(c => { if(c.atrib && respTem([c.atrib], me)) out.push({k:'comentário', p, t, c, titulo:c.texto, prazo:'', feito:!!c.resolvido}); });
     ckNotasDe(t).forEach(n => { if(n.atrib && respTem([n.atrib], me)) out.push({k:'comentário', p, t, c:n, titulo:n.texto, prazo:'', feito:!!n.resolvido}); });
   }));
   return out;
@@ -4600,7 +4600,7 @@ const avsCard = ids => {
 };
 function procCard(p){ /* UX-T2: título é um botão de verdade e o status muda pelo seletor, sem arrastar */
   const pr = propById(p.propId) || p.prop || {}, g = progress(p), lc = lateCount(p), a = tramAtual(p), atr = procAtraso(p), meu = procMeu(p);
-  const ncom = p.coms.length + p.tarefas.reduce((x, t) => x + t.coms.length, 0);
+  const ncom = comsPublicos(p.coms).length + p.tarefas.reduce((x, t) => x + comsPublicos(t.coms).length, 0);
   const tv = lc ? p.tarefas.filter(t => t.status !== 'concluida' && t.prazo && diffDays(t.prazo) < 0).sort((x, y) => x.prazo.localeCompare(y.prazo))[0] : null;
   const nome = pr.emp || p.servico || pcod(p);
   const opts = PROC_ST.map(s => `<option value="${s.k}"${s.k === p.status ? ' selected' : ''}>${s.l}</option>`).join('');
@@ -4616,7 +4616,7 @@ function procCard(p){ /* UX-T2: título é um botão de verdade e o status muda 
 }
 function procRow(p){
   const pr = propById(p.propId) || p.prop || {}, g = progress(p), lc = lateCount(p), a = tramAtual(p), atr = procAtraso(p);
-  const ncom = p.coms.length + p.tarefas.reduce((x, t) => x + t.coms.length, 0);
+  const ncom = comsPublicos(p.coms).length + p.tarefas.reduce((x, t) => x + comsPublicos(t.coms).length, 0);
   const np = isOpen(p) ? procNotaPrazo(p) : '', dd = p.prazo ? diffDays(p.prazo) : null, pl = p.prazo && isOpen(p) && dd < 0;
   const d1 = !p.prazo ? '<span class="pk-d pk-nd">sem prazo</span>' : `<span class="pk-d ${pl ? 'l' : isOpen(p) && dd <= 3 ? 's' : ''}">${fmtD(p.prazo)}</span>`;
   const d2 = pl ? `<span class="pk-x l">${-dd} dia${dd < -1 ? 's' : ''} atrasado</span>`
@@ -4838,7 +4838,7 @@ function renderDrawer(){
 /* FIX #14: primeira versão de drawerProp() removida — era código morto (a definição mais abaixo é a que o navegador usa) */
 function drawerProc(p){
   const pr = propById(p.propId);
-  const ncom = p.coms.length;
+  const ncom = comsPublicos(p.coms).length;
   const grp = DGRP.find(g => g.subs.some(x => x[0] === ui.dtab)) || DGRP[0]; ui.dgrpLast = ui.dgrpLast || {}; ui.dgrpLast[grp.k] = ui.dtab;
   let body = '';
   if(ui.dtab === 'resumo'){
@@ -4849,7 +4849,7 @@ function drawerProc(p){
       if(!ts.length) return '';
       return `<div class="tgh" style="color:${st.c}">${st.l} <span class="sub">${ts.length}</span></div>` + ts.map(t => {
         const sd = t.subs.filter(s => s.feito).length, done = t.status === 'concluida';
-        const nc = t.coms.length, pend = t.coms.filter(c => c.atrib && !c.resolvido).length;
+        const nc = comsPublicos(t.coms).length, pend = comsPublicos(t.coms).filter(c => c.atrib && !c.resolvido).length;
         return `<div class="trow" data-task="${t.id}">
           <span class="sq ${done ? 'done' : ''}" style="border-color:${st.c}" data-tdone="${t.id}" title="${done ? 'Reabrir' : 'Concluir'}"></span>
           <div><span class="tt ${done ? 'done' : ''}">${esc(t.titulo)}</span>${timerBadge(t)}${taskAprovBadge(t)}<span class="icn">${t.subs.length ? `${ic('check', 'sm')} ${sd}/${t.subs.length}` : ''}${nc ? ` ${ic('comentario', 'sm')} ${nc}` : ''}${pend ? ` <span class="late">${pend} p/ resolver</span>` : ''}${t.prio !== 'normal' ? ` <span class="flag" style="color:${PRIO[t.prio].c}">${ic('bandeira', 'sm')} ${PRIO[t.prio].l}</span>` : ''}</span></div>
@@ -4869,7 +4869,7 @@ function drawerProc(p){
   } else if(ui.dtab === 'tramitacao'){
     body = tramHtml(p);
   } else if(ui.dtab === 'comentarios'){
-    body = `<div class="sect" style="padding:0;overflow:hidden"><div class="feed" style="max-height:none">${feedHtml(p.coms, null)}</div>${composerHtml('proc')}</div>
+    body = `<div class="sect" style="padding:0;overflow:hidden"><div class="feed" style="max-height:none">${feedHtml(p.coms, null, {k:'proc', o:p, key:'proc:' + p.id})}</div>${composerHtml('proc')}</div>
       <p class="hint">Comentários gerais do processo. Para assuntos de uma etapa, comente dentro da tarefa.</p>`;
   } else if(ui.dtab === 'notas'){
     body = ntHtml(p, 'p');
@@ -5031,30 +5031,149 @@ function fmtText(s){
   return h;
 }
 /* FIX #14: primeira versão de feedHtml() removida — era código morto (a definição mais abaixo é a que o navegador usa) */
-function composerHtml(scope){
-  return `<div class="composer" data-scope="${scope}"><div class="mentions" hidden></div>
-    <textarea placeholder="Escreva um comentário… use @ para mencionar"></textarea>
-    <div class="row"><label class="sub" style="display:flex;gap:6px;align-items:center">Atribuir a <select class="atrib"><option value="">ninguém</option>${optsResp('')}</select></label>
-    <span class="spacer"></span><button class="btn primary sm" data-send>Comentar</button></div></div>`;
+/* ===== UX-R7: comentários (links do Drive, envio único, envio programado) ===== */
+/* tipo do arquivo pelo endereço do Google Drive */
+function driveInfo(url){
+  const u = String(url);
+  if(/docs\.google\.com\/document\//i.test(u)) return {tipo:'Documento'};
+  if(/docs\.google\.com\/spreadsheets\//i.test(u)) return {tipo:'Planilha'};
+  if(/docs\.google\.com\/presentation\//i.test(u)) return {tipo:'Apresentação'};
+  if(/docs\.google\.com\/forms\//i.test(u)) return {tipo:'Formulário'};
+  if(/drive\.google\.com\/drive\/(u\/\d+\/)?folders\//i.test(u)) return {tipo:'Pasta'};
+  if(/drive\.google\.com\/(file\/d\/|open\?id=)/i.test(u)) return {tipo:'Arquivo'};
+  return null;
 }
-function sendComment(box){
-  const ta = $('textarea', box), txt = ta.value.trim(); if(!txt) return;
-  const atrib = $('.atrib', box).value;
-  const c = {id:uid(), autor:me, texto:txt, em:new Date().toISOString()};
-  if(atrib){ c.atrib = atrib; c.resolvido = false; }
-  const scope = box.dataset.scope;
-  const p = scope === 'proc' ? procById(ui.drawer.id) : procById(ui.task.procId);
-  const t = scope === 'task' ? taskOf(p, ui.task.taskId) : null;
-  (t ? t.coms : p.coms).push(c);
-  ta.value = '';
-  const onde = t ? `“${esc(t.titulo)}”` : `o processo ${esc(pcod(p))}`;
-  const n = norm(txt);
-  const ment = USERS.filter(u => n.includes('@' + norm(first(u.id))));
-  ment.forEach(u => { if(u.id !== atrib) notify(u.id, `mencionou você em ${onde}`, p.id, t?.id || null); });
-  if(atrib) notify(atrib, `atribuiu um comentário a você em ${onde}`, p.id, t?.id || null);
-  if(t) logT(t, 'comentou'); else logP(p, 'comentou no processo');
-  save(); render(); if(ui.task) renderTask();
-  const f = scope === 'task' ? $('#layer .feed') : $('#drawer .feed'); if(f) f.scrollTop = f.scrollHeight;
+const DRIVE_SVG = '<svg class="dchip-ic" viewBox="0 0 87.3 78" aria-hidden="true"><path d="m6.6 66.85 3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3l13.75-23.8h-27.5c0 1.55.4 3.1 1.2 4.5z" fill="#0066da"/><path d="m43.65 25-13.75-23.8c-1.35.8-2.5 1.9-3.3 3.3l-25.4 44a9.06 9.06 0 0 0 -1.2 4.5h27.5z" fill="#00ac47"/><path d="m73.55 76.8c1.35-.8 2.5-1.9 3.3-3.3l1.6-2.75 7.65-13.25c.8-1.4 1.2-2.95 1.2-4.5h-27.502l5.852 11.5z" fill="#ea4335"/><path d="m43.65 25 13.75-23.8c-1.35-.8-2.9-1.2-4.5-1.2h-18.5c-1.6 0-3.15.45-4.5 1.2z" fill="#00832d"/><path d="m59.8 53h-32.3l-13.75 23.8c1.35.8 2.9 1.2 4.5 1.2h50.8c1.6 0 3.15-.45 4.5-1.2z" fill="#2684fc"/><path d="m73.4 26.5-12.7-22c-.8-1.4-1.95-2.5-3.3-3.3l-13.75 23.8 16.15 28h27.45c0-1.55-.4-3.1-1.2-4.5z" fill="#ffba00"/></svg>';
+function linkHtml(url, nome){
+  const d = driveInfo(url), href = esc(url);
+  if(!d) return `<a href="${href}" target="_blank" rel="noopener">${esc(nome || url)}</a>`;
+  const tipo = d.tipo === 'Arquivo' && /\.pdf$/i.test(nome || '') ? 'PDF' : d.tipo;
+  return `<a class="dchip" href="${href}" target="_blank" rel="noopener" title="Abrir no Google Drive">${DRIVE_SVG}`
+    + `<span class="dchip-t">${tipo}</span> <span class="dchip-n">${esc(nome || 'Abrir no Drive')}</span></a>`;
+}
+/* texto do comentário: [nome](https://…) ou endereço solto viram link; o resto segue com menções. Só http/https. */
+function comText(s){
+  s = String(s || '');
+  const re = /\[([^\]\n]{1,200})\]\((https?:\/\/[^\s)]+)\)|(https?:\/\/[^\s<]+[^\s<.,;:!?)\]])/g;
+  let out = '', i = 0, m;
+  while((m = re.exec(s))){ out += fmtText(s.slice(i, m.index)); out += m[2] ? linkHtml(m[2], m[1]) : linkHtml(m[3]); i = re.lastIndex; }
+  return out + fmtText(s.slice(i));
+}
+
+/* programados: só o autor vê e nada conta nos números até a hora do envio */
+const comsVisiveis = arr => (arr || []).filter(c => !c.agendado || c.autor === me);
+const comsPublicos = arr => (arr || []).filter(c => !c.agendado);
+
+/* Efeitos de um comentário ou resposta: avisos (menção, atribuição, resposta), e-mails e o registro na Atividade.
+   Função PURA: não lê nada global. O mesmo texto está na ponte do Apps Script (publicarAgendados_), para que
+   o comentário programado gere exatamente os mesmos avisos, no nome do AUTOR, mesmo com o CRM dele fechado.
+   d = {k:'proc'|'task'|'mat'|'prop', cod, titulo, ids:{procId,taskId,matId,propId}, c, pai, autor, users:[{id,nome}], equipes:[{id,nome,membros}], url, agora} */
+function efeitosComentarioPuro(d){
+  var norm = function(s){ return String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase(); };
+  var esc = function(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(ch){ return {'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'}[ch]; }); };
+  var U = {}; (d.users || []).forEach(function(u){ if(u && u.id) U[u.id] = u; });
+  var eqs = d.equipes || [], isEq = function(id){ return typeof id === 'string' && id.indexOf('eq:') === 0; };
+  var eq = function(id){ for(var i = 0; i < eqs.length; i++) if(eqs[i].id === id) return eqs[i]; return null; };
+  var membros = function(id){ return isEq(id) ? ((eq(id) || {}).membros || []).filter(function(m){ return U[m]; }) : (id ? [id] : []); };
+  var prim = function(id){ return isEq(id) ? ((eq(id) || {}).nome || 'Equipe') : String((U[id] && U[id].nome) || '').split(' ')[0]; };
+  var nome = function(id){ return (U[id] && U[id].nome) || id; };
+  var gid = function(){ return Math.random().toString(36).slice(2, 9); };
+  var onde = d.k === 'task' || d.k === 'mat' ? 'em “' + esc(d.titulo) + '”' : d.k === 'prop' ? 'na proposta ' + esc(d.cod) : 'no processo ' + esc(d.cod);
+  var item = d.c, n = norm(item.texto), autor = d.autor, agora = d.agora || new Date().toISOString();
+  var ment = (d.users || []).filter(function(u){ var f = prim(u.id); return f && n.indexOf('@' + norm(f)) >= 0; }).map(function(u){ return u.id; });
+  var lista = [], ja = {};
+  var add = function(para, frase){ membros(para).forEach(function(m){ if(!m || m === autor || ja[m]) return; ja[m] = 1; lista.push({para:m, frase:frase}); }); };
+  if(!d.pai){
+    if(item.atrib) add(item.atrib, 'atribuiu um comentário a você ' + onde);
+    ment.forEach(function(u){ add(u, 'mencionou você ' + onde); });
+  } else {
+    ment.forEach(function(u){ add(u, 'mencionou você ' + onde); });
+    var conversa = [d.pai.autor, d.pai.atrib].concat((d.pai.respostas || []).filter(function(r){ return !r.agendado; }).map(function(r){ return r.autor; }));
+    conversa.forEach(function(u){ add(u, u === d.pai.autor ? 'respondeu seu comentário ' + onde : 'respondeu um comentário ' + onde); });
+  }
+  var limpa = function(t){ return String(t || '').replace(/<[^>]+>/g, '').replace(/&quot;|&#39;|&amp;|&lt;|&gt;/g, function(s){ return {'&quot;':'"', '&#39;':"'", '&amp;':'&', '&lt;':'<', '&gt;':'>'}[s]; }); };
+  var textoEmail = String(item.texto || '').replace(/\[([^\]\n]{1,200})\]\((https?:\/\/[^\s)]+)\)/g, '$1: $2');
+  if(/https?:\/\/\S+$/.test(textoEmail)) textoEmail += ' ';   // o link no fim não "engole" as aspas de fechamento
+  var ids = d.ids || {};
+  var avisos = lista.map(function(a){
+    var nt = {id:gid(), para:a.para, txt:'<b>' + esc(prim(autor)) + '</b> ' + a.frase, procId:ids.procId || null, taskId:ids.taskId || null, em:agora, lida:false};
+    if(ids.matId) nt.matId = ids.matId; if(ids.propId) nt.propId = ids.propId;
+    var t = limpa(a.frase);
+    var em = {id:gid(), status:'pendente', tipo:'aviso', cat:'mencoes', para:a.para, cc:'', replyTo:autor, por:autor, em:agora,
+      assunto:(prim(autor) + ' ' + t).slice(0, 150),
+      corpo:'Olá, ' + prim(a.para) + '.\n\n' + nome(autor) + ' ' + t + ':\n\n"' + textoEmail + '"\n\nAbrir no CRM: ' + (d.url || '') + '\n\n(Aviso automático do CRM Mannare. Para escolher o que você recebe por e-mail: Integrações › Avisos por e-mail.)'};
+    return {para:a.para, notif:nt, email:em};
+  });
+  return {avisos:avisos, log:d.pai ? 'respondeu um comentário' : d.k === 'proc' ? 'comentou no processo' : 'comentou'};
+}
+
+/* lugar de um comentário: {k, arr, p, t, m, pr} */
+function lugarDe(scope){
+  if(scope === 'proc'){ const p = procById(ui.drawer && ui.drawer.id); return p ? {k:'proc', p, arr:p.coms} : null; }
+  if(scope === 'task'){ const p = procById(ui.task && ui.task.procId), t = p && taskOf(p, ui.task.taskId); return t ? {k:'task', p, t, arr:t.coms} : null; }
+  if(scope === 'mat'){ const m = matById(ui.mat); return m ? {k:'mat', m, arr:m.coms} : null; }
+  if(scope === 'prop'){ const pr = (S.propsDb || []).find(x => x.id === (ui.drawer && ui.drawer.id)); if(!pr) return null; pr.coms = pr.coms || []; return {k:'prop', pr, arr:pr.coms}; }
+  return null;
+}
+const alvoDe = l => l.t || l.m || l.pr || l.p;          // onde fica o log
+const docDe = l => l.k === 'task' ? l.p : alvoDe(l);     // documento do banco (a tarefa mora dentro do processo)
+function efeitosCalc(l, c, autor, pai){
+  return efeitosComentarioPuro({k:l.k, cod:l.pr ? (l.pr.codigo || '') : l.p ? pcod(l.p) : '', titulo:l.t ? l.t.titulo : l.m ? (l.m.titulo || l.m.codigo) : '',
+    ids:{procId:l.p ? l.p.id : null, taskId:l.t ? l.t.id : null, matId:l.m ? l.m.id : null, propId:l.pr ? l.pr.id : null},
+    c, pai, autor, users:USERS.map(u => ({id:u.id, nome:u.nome})), equipes:equipes(), url:location.origin + location.pathname, agora:nowISO()});
+}
+function efeitosAvisos(r){ r.avisos.forEach(a => { S.notifs.unshift(a.notif); if(!S.cfg.mencaoEmailOff && /@/.test(a.para) && querEmail(a.para, 'mencoes')) S.emails.push(a.email); }); }
+/* efeitos do envio: avisos, e-mails e o registro "comentou", sempre no nome do AUTOR (não de quem está com o CRM aberto) */
+function efeitosComentario(l, c, autor, pai){
+  const r = efeitosCalc(l, c, autor, pai); efeitosAvisos(r);
+  const o = alvoDe(l); if(o && r.log) (o.log = o.log || []).unshift({em:nowISO(), por:autor, txt:r.log});
+}
+/* próximo envio programado do documento: a ponte do Apps Script procura por esse campo (dados.comAgenda) */
+function comAgendaDe(doc){
+  let min = '';
+  const ver = arr => (arr || []).forEach(c => { if(c.agendado && !c.publicadoEm && (!min || c.agendado < min)) min = c.agendado;
+    (c.respostas || []).forEach(r => { if(r.agendado && !r.publicadoEm && (!min || r.agendado < min)) min = r.agendado; }); });
+  ver(doc.coms); (doc.tarefas || []).forEach(t => ver(t.coms));
+  return min;
+}
+function marcaAgenda(doc){ if(!doc) return; const a = comAgendaDe(doc); if(a) doc.comAgenda = a; else delete doc.comAgenda; }
+/* ÚNICA função de envio: comentário (pai vazio) ou resposta; quando = ISO UTC para programar */
+function enviarComentario(l, texto, atrib, quando, pai){
+  const c = {id:uid(), autor:me, texto, em:nowISO()};
+  if(atrib && !pai){ c.atrib = atrib; c.resolvido = false; }
+  if(quando) c.agendado = quando;
+  if(pai) (pai.respostas = pai.respostas || []).push(c); else l.arr.push(c);
+  if(quando) marcaAgenda(docDe(l)); else efeitosComentario(l, c, me, pai);
+  save();
+  return c;
+}
+/* publica um programado (do próprio autor): hora mostrada = hora programada; avisos no nome do autor */
+function publicarItem(l, c, pai, agora){
+  if(!c.agendado || c.publicadoEm) return false;
+  c.em = agora ? nowISO() : c.agendado; delete c.agendado; c.publicadoEm = nowISO();
+  efeitosComentario(l, c, c.autor, pai); marcaAgenda(docDe(l)); return true;
+}
+function composerHtml(scope){ /* UX-R7: cartão no rodapé do feed, com @, Drive, Atribuir e Enviar ▾ (programar) */
+  const l = lugarDe(scope), prog = [];
+  if(l) (l.arr || []).forEach(c => { if(c.agendado && c.autor === me) prog.push(c); (c.respostas || []).forEach(r => { if(r.agendado && r.autor === me) prog.push(r); }); });
+  prog.sort((x, y) => String(x.agendado).localeCompare(String(y.agendado)));
+  const faixa = prog.length ? `<div class="r7-faixa" role="status"><span>🕘 ${prog.length === 1 ? 'Sua mensagem será enviada ' + esc(r7quando(prog[0].agendado, true)) + '.' : prog.length + ' mensagens programadas.'}</span><button type="button" data-r7ver>${prog.length === 1 ? 'Ver mensagem' : 'Ver mensagens'}</button></div>` : '';
+  return `${faixa}<div class="composer r7-comp" data-scope="${scope}"><div class="mentions" hidden></div>
+    <textarea rows="1" placeholder="Escreva um comentário…" aria-label="Escrever comentário (use @ para mencionar)"></textarea>
+    <div class="r7-bar"><button type="button" class="r7-tb" data-r7at title="Mencionar alguém" aria-label="Mencionar alguém">@</button><button type="button" class="r7-tb" data-r7drive title="Inserir link do Google Drive" aria-label="Inserir link do Google Drive">${DRIVE_SVG}</button>
+      <label class="r7-atrib" title="Atribuir o comentário a alguém"><span>Atribuir</span><select class="atrib" aria-label="Atribuir o comentário a"><option value="">ninguém</option>${optsResp('')}</select></label>
+      <span class="spacer"></span><span class="r7-send"><button type="button" class="btn primary sm" data-send title="Enviar (Ctrl+Enter)">Enviar</button><button type="button" class="btn primary sm r7-mais" data-r7menu="com" aria-haspopup="dialog" aria-label="Programar envio">▾</button></span></div></div>`;
+}
+function sendComment(box, quando){ /* UX-R7: um envio só para processo, tarefa, material e proposta */
+  const ta = $('textarea', box), txt = ta.value.trim(); if(!txt){ ta.focus(); return; }
+  const l = lugarDe(box.dataset.scope); if(!l) return;
+  const sel = $('.atrib', box), atrib = sel ? sel.value : '';
+  enviarComentario(l, txt, atrib, quando || '');
+  ta.value = ''; if(sel) sel.value = '';
+  render(); if(ui.task) renderTask(); if(ui.mat) renderMat();
+  if(quando) toast('Mensagem programada para ' + r7quando(quando, true));
+  const f = box.dataset.scope === 'task' || box.dataset.scope === 'mat' ? $('#layer .feed') : null; if(f && !quando) f.scrollTop = f.scrollHeight;
+  const novo = document.querySelector(`.composer[data-scope="${box.dataset.scope}"] textarea`); if(novo) novo.focus({preventScroll:true});
 }
 
 /* ---------- Tarefa (modal estilo ClickUp) ---------- */
@@ -5068,7 +5187,7 @@ function renderTask(){
   const keepTxt = $('#layer .composer textarea')?.value || '';
   const feedScroll = $('#layer .feed')?.scrollTop;
   const leftScroll = $('#layer .mleft')?.scrollTop || 0;
-  const feed = ui.feedTab === 'com' ? feedHtml(t.coms, t)
+  const feed = ui.feedTab === 'com' ? feedHtml(t.coms, t, {k:'task', o:t, key:'task:' + t.id})
     : (t.log.map(l => `<div class="act">${av(l.por, true)}<div><b>${esc(first(l.por))}</b> ${esc(l.txt)}<div>${fmtWhen(l.em)}</div></div></div>`).join('') || '<div class="empty" style="padding:24px">Sem atividade.</div>');
   $('#layer').innerHTML = `<div class="mlayer" data-mclose><div class="modal">
     <div class="mhead"><span>${esc(pcod(p))} | ${esc(pr.emp)}</span><span>/</span><span>${esc(p.servico)}</span><span class="spacer"></span><button class="btn sm danger" data-deltask>Excluir tarefa</button><button class="btn ghost" data-tclose>✕</button></div>
@@ -5095,7 +5214,7 @@ function renderTask(){
         </div>
       </div>
       <div class="mright">
-        <div class="feedtabs"><button class="tab ${ui.feedTab === 'com' ? 'on' : ''}" data-ftab="com">Comentários${t.coms.length ? ` <span class="n">${t.coms.length}</span>` : ''}</button><button class="tab ${ui.feedTab === 'log' ? 'on' : ''}" data-ftab="log">Atividade</button></div>
+        <div class="feedtabs"><button class="tab ${ui.feedTab === 'com' ? 'on' : ''}" data-ftab="com">Comentários${comsPublicos(t.coms).length ? ` <span class="n">${comsPublicos(t.coms).length}</span>` : ''}</button><button class="tab ${ui.feedTab === 'log' ? 'on' : ''}" data-ftab="log">Atividade</button></div>
         <div class="feed">${feed}</div>
         ${composerHtml('task')}
       </div>
@@ -5109,7 +5228,7 @@ function curTask(){ const p = procById(ui.task.procId); return [p, taskOf(p, ui.
 function setTaskStatusBase(p, t, st){
   if(t.status === st) return;
   const old = t.status;
-  t.status = st; logT(t, `mudou o status para “${TS[st].l}”`);
+  t.status = st; logT(t, `mudou o status para “${TS[st].l}”`); Object.assign(t.log[0], {tipo:'status', de:old, para:st}); /* UX-R7 */
   if(st === 'andamento') startTimer(p, t, me);
   else if(old === 'andamento') stopTimers(t, `parou o cronômetro ao mudar para “${TS[st].l}”`);
   if(st === 'concluida') t.resp.forEach(r => notify(r, `concluiu “${esc(t.titulo)}”`, p.id, t.id));
@@ -5578,7 +5697,7 @@ function matCard(m){
   const opts = MAT_ST.map(s => `<option value="${s.k}"${s.k === m.status ? ' selected' : ''}>${s.l}</option>`).join(''); /* UX-R3.4 */
   return `<article class="mcard" draggable="true" data-mat="${m.id}" tabindex="-1" aria-labelledby="mct-${m.id}">
     <h3 class="mt" id="mct-${m.id}"><button type="button" class="pk-open">${esc(m.titulo)}</button></h3>
-    <div class="mm">${m.objetivo || m.historico ? `<span title="Tem descrição">${ic('lista', 'sm')}</span>` : ''}<span title="Checklist">${ic('check', 'sm')} ${c.f}/${c.t}</span>${m.coms.length ? `<span>${ic('comentario', 'sm')} ${m.coms.length}</span>` : ''}${run ? `<span class="tmr on"><i></i><span ${liveAttr(m)}>${fmtClock(timeTotal(m))}</span></span>` : timeTotal(m) ? `<span>${ic('relogio', 'sm')} ${fmtDur(timeTotal(m))}</span>` : ''}</div>
+    <div class="mm">${m.objetivo || m.historico ? `<span title="Tem descrição">${ic('lista', 'sm')}</span>` : ''}<span title="Checklist">${ic('check', 'sm')} ${c.f}/${c.t}</span>${comsPublicos(m.coms).length ? `<span>${ic('comentario', 'sm')} ${comsPublicos(m.coms).length}</span>` : ''}${run ? `<span class="tmr on"><i></i><span ${liveAttr(m)}>${fmtClock(timeTotal(m))}</span></span>` : timeTotal(m) ? `<span>${ic('relogio', 'sm')} ${fmtDur(timeTotal(m))}</span>` : ''}</div>
     <div class="ptags" style="margin-top:6px">${matVerTag(m)}${ntTag(m)}</div>${matPausaHtml(m) ? `<div class="mm" style="margin-top:4px">${matPausaHtml(m)}</div>` : ''}${m.procId && procById(m.procId) ? `<div class="ptags" style="margin-top:6px"><span class="ctag" title="Processo vinculado">${ic('pasta', 'sm')} ${esc(pcod(procById(m.procId)))}</span>${orgaoTag(procById(m.procId))}</div>` : ''}
     <div class="pk-strow" data-stop><label class="sr-only" for="mst-${m.id}">Status de ${esc(m.titulo)}</label><select class="pk-st" id="mst-${m.id}" data-matst="${m.id}">${opts}</select></div>
     <div class="mf">${avsCard(m.resp)}${m.prazo ? `<span class="sub">${ic('relogio', 'sm')} ${dueHtml(m.prazo, m.status === 'entregue')}</span>` : ''}${m.prio !== 'normal' ? `<span class="flag" style="color:${PRIO[m.prio].c}">${ic('bandeira', 'sm')} ${PRIO[m.prio].l}</span>` : ''}</div>
@@ -5603,7 +5722,7 @@ function renderMat(){
   const keepTxt = $('#layer .composer textarea')?.value || '', leftScroll = $('#layer .mleft')?.scrollTop || 0;
   const c = matCount(m), aprov = aprovFor(m);
   const D = [['cliente', 'Cliente'], ['imovel', 'Imóvel'], ['matricula', 'Matrícula / transcrição'], ['municipio', 'Município / comarca'], ['nprocesso', 'Nº do processo']];
-  const feed = ui.feedTab === 'com' ? feedHtml(m.coms, null) : (m.log.map(l => `<div class="act">${av(l.por, true)}<div><b>${esc(first(l.por))}</b> ${esc(l.txt)}<div>${fmtWhen(l.em)}</div></div></div>`).join('') || '<div class="empty">Sem atividade.</div>');
+  const feed = ui.feedTab === 'com' ? feedHtml(m.coms, null, {k:'mat', o:m, key:'mat:' + m.id}) : (m.log.map(l => `<div class="act">${av(l.por, true)}<div><b>${esc(first(l.por))}</b> ${esc(l.txt)}<div>${fmtWhen(l.em)}</div></div></div>`).join('') || '<div class="empty">Sem atividade.</div>');
   $('#layer').innerHTML = `<div class="mlayer" data-mclose><div class="modal">
     <div class="mhead"><span>${esc(m.codigo)} | Material técnico</span><span class="spacer"></span><button class="btn sm danger" data-matdel>Excluir</button><button class="btn ghost" data-tclose>✕</button></div>
     <div class="mbody"><div class="mleft">
@@ -5634,20 +5753,13 @@ function renderMat(){
       <div class="cki add" style="margin-bottom:10px"><input id="mckNew" placeholder="+ Adicionar checklist (nome e Enter)"></div>
     </div>
     <div class="mright">
-      <div class="feedtabs"><button class="tab ${ui.feedTab === 'com' ? 'on' : ''}" data-ftab="com">Comentários${m.coms.length ? ` <span class="n">${m.coms.length}</span>` : ''}</button><button class="tab ${ui.feedTab === 'log' ? 'on' : ''}" data-ftab="log">Atividade</button></div>
+      <div class="feedtabs"><button class="tab ${ui.feedTab === 'com' ? 'on' : ''}" data-ftab="com">Comentários${comsPublicos(m.coms).length ? ` <span class="n">${comsPublicos(m.coms).length}</span>` : ''}</button><button class="tab ${ui.feedTab === 'log' ? 'on' : ''}" data-ftab="log">Atividade</button></div>
       <div class="feed">${feed}</div>${composerHtml('mat')}
     </div></div></div></div>`;
   const ta = $('#layer .composer textarea'); if(ta) ta.value = keepTxt;
   $('#layer .mleft').scrollTop = leftScroll; const f = $('#layer .feed'); if(f) f.scrollTop = f.scrollHeight; tickLive();
 }
-function sendMatComment(box){
-  const m = matById(ui.mat), ta = $('textarea', box), txt = ta.value.trim(); if(!txt) return;
-  const atrib = $('.atrib', box).value, c = {id:uid(), autor:me, texto:txt, em:nowISO()}; if(atrib){ c.atrib = atrib; c.resolvido = false; }
-  m.coms.push(c); ta.value = ''; logT(m, 'comentou');
-  const n = norm(txt); USERS.filter(u => n.includes('@' + norm(first(u.id)))).forEach(u => { if(u.id !== atrib) notifyMat(u.id, `mencionou você em “${esc(m.titulo)}”`, m); });
-  if(atrib) notifyMat(atrib, `atribuiu um comentário a você em “${esc(m.titulo)}”`, m);
-  save(); render(); renderMat();
-}
+function sendMatComment(box, quando){ sendComment(box, quando); }
 function matHandleClick(e, tg){
   if(tg.closest('#layer') && ui.mat){
     const m = matById(ui.mat); let el;
@@ -5877,7 +5989,7 @@ function renderProps(){
 function drawerProp(pr){
   const p = rawProp(pr ? pr.id : ui.drawer.id); if(!p) return '<div class="dbody">Proposta não encontrada.</div>';
   const st = PROP_ST[p.status] || PROP_ST.nova, tab = ui.dtab === 'dados' || !ui.dtab ? 'dados' : ui.dtab, aprov = aprovadorDe(p), ok = aprovOk(p);
-  const tabs = [['dados', 'Dados'], ['proposta', 'Proposta'], ['aprovacao', 'Aprovação e envio'], ['financeiro', 'Financeiro', recsDaProp(p.id).filter(isLate).length], ['comentarios', 'Comentários', p.coms.length], ['historico', 'Histórico']];
+  const tabs = [['dados', 'Dados'], ['proposta', 'Proposta'], ['aprovacao', 'Aprovação e envio'], ['financeiro', 'Financeiro', recsDaProp(p.id).filter(isLate).length], ['comentarios', 'Comentários', comsPublicos(p.coms).length], ['historico', 'Histórico']];
   let body = '';
   if(tab === 'dados'){
     const f = (k, l, extra) => `<label class="f">${l}<input data-pp="${k}" value="${esc(p[k] || '')}" ${k === 'cliente' && !p.cliente ? 'data-foco' : ''} ${extra || ''}></label>`;
@@ -5920,7 +6032,7 @@ function drawerProp(pr){
   } else if(tab === 'financeiro'){
     body = finPropHtml(p);
   } else if(tab === 'comentarios'){
-    body = `<div class="sect" style="padding:0;overflow:hidden"><div class="feed">${feedHtml(p.coms, null)}</div>${composerHtml('prop')}</div>`;
+    body = `<div class="sect" style="padding:0;overflow:hidden"><div class="feed">${feedHtml(p.coms || [], null, {k:'prop', o:p, key:'prop:' + p.id})}</div>${composerHtml('prop')}</div>`;
   } else {
     body = (p.log || []).map(l => `<div class="act">${av(l.por, true)}<div><b>${esc(first(l.por))}</b> ${esc(l.txt)}<div>${fmtWhen(l.em)}</div></div></div>`).join('') || '<div class="empty">Sem histórico.</div>';
   }
@@ -6275,10 +6387,7 @@ function propClick(e, tg){
     p.aprov = {st:'ajustes', por:me, em:nowISO(), obs:obs.trim()}; p.status = 'elaboracao'; propLog(p, 'pediu ajustes: ' + obs.trim());
     notifyProp(p.resp, `pediu ajustes na proposta ${esc(p.codigo)}: ${esc(obs.trim())}`, p); save(); render(); return true; }
   if(tg.closest('[data-ppdel]')){ if(!confirm(`Excluir a proposta ${p.codigo}? Isso não pode ser desfeito.`)) return true; S.propsDb = S.propsDb.filter(x => x !== p); rebuildProps(); save(); closeDrawer(); render(); toast('Proposta excluída'); return true; }
-  if(tg.closest('#drawer [data-send]') && tg.closest('.composer[data-scope="prop"]')){ const box = tg.closest('.composer'), ta = $('textarea', box), txt = ta.value.trim(); if(!txt) return true;
-    const atrib = $('.atrib', box).value, c = {id:uid(), autor:me, texto:txt, em:nowISO()}; if(atrib){ c.atrib = atrib; c.resolvido = false; }
-    p.coms.push(c); ta.value = ''; const n = norm(txt); USERS.filter(u => n.includes('@' + norm(first(u.id)))).forEach(u => notifyProp(u.id, `mencionou você na proposta ${esc(p.codigo)}`, p));
-    if(atrib) notifyProp(atrib, `atribuiu um comentário a você na proposta ${esc(p.codigo)}`, p); propLog(p, 'comentou'); save(); render(); return true; }
+  if(tg.closest('#drawer [data-send]') && tg.closest('.composer[data-scope="prop"]')){ sendComment(tg.closest('.composer')); return true; } /* UX-R7 */
   if((el = tg.closest('#drawer [data-resolve]'))){ const c = p.coms.find(x => x.id === el.dataset.resolve); if(c){ c.resolvido = true; save(); render(); return true; } }
   return false;
 }
@@ -6294,7 +6403,7 @@ function propChange(tg){
   const mud = () => { afterContentEdit(p); rebuildProps(); save(); renderKeep(); return true; };
   if(tg.dataset.pp){ const k = tg.dataset.pp, v = tg.value;
     if(k === 'status'){ if(PROP_PRECISA_APROV.includes(v) && !aprovOk(p)){ toast('Precisa da aprovação interna antes'); renderDrawer(); return true; }
-      propLog(p, `mudou o status para “${PROP_ST[v].l}”`); p.status = v; if(v === 'aprovada') cadAbrir(p); const nr = v === 'aprovada' ? garantirRecebiveis(p) : 0; save(); render(); if(nr) toast(`Proposta aceita: ${nr} recebível(is) gerado(s) no Financeiro`); return true; }
+      propLog(p, `mudou o status para “${PROP_ST[v].l}”`); Object.assign(p.log[0], {tipo:'status', de:p.status, para:v}); /* UX-R7 */ p.status = v; if(v === 'aprovada') cadAbrir(p); const nr = v === 'aprovada' ? garantirRecebiveis(p) : 0; save(); render(); if(nr) toast(`Proposta aceita: ${nr} recebível(is) gerado(s) no Financeiro`); return true; }
     if(k === 'aprovador'){ const ant = aprovadorDe(p); p.aprovador = v === aprovadorPadrao(p) ? '' : v; const nv = aprovadorDe(p);
       if(nv !== ant){ propLog(p, `trocou quem aprova para ${first(nv)}`); if(p.aprov && p.aprov.st === 'pendente'){ p.aprov.aprovador = nv; notifyProp(nv, `pediu a sua aprovação na proposta ${esc(p.codigo)}`, p); } }
       save(); render(); return true; }
@@ -6797,20 +6906,97 @@ function finIntegChange(tg){
 ICONS.lixo = '<path d="M9 3h6l1 2h4v2H4V5h4zM6 9h12l-1 12H7z"/>';
 /* =================== Extras: excluir comentário, aprovações, menções por e-mail, modelos de tarefas, menu suspenso =================== */
 
-/* ---------- comentários: excluir ---------- */
-function feedHtml(coms, t){
-  if(!coms.length) return '<div class="empty" style="padding:24px">Nenhum comentário ainda. Use @ para mencionar alguém.</div>';
-  const soc = isSocio();
-  return coms.map(c => `<div class="cm">${av(c.autor)}<div class="bx"><div class="hd"><b>${esc(first(c.autor))}</b><span class="sub">${fmtWhen(c.em)}</span>${c.autor === me || soc ? `<span class="spacer"></span>${ui.comDel === c.id ? `<span class="cmdel"><span class="sub">Excluir?</span><button class="btn sm" data-comdelno>Não</button><button class="btn sm danger" data-comdelok="${c.id}">Excluir</button></span>` : `<button class="cmx" data-comdel="${c.id}" title="Excluir comentário">${ic('lixo', 'sm')}</button>`}` : ''}</div><div class="tx">${fmtText(c.texto)}</div>
-    ${c.atrib ? `<div class="asg ${c.resolvido ? 'ok' : ''}">${av(c.atrib, true)}<span style="flex:1">${c.resolvido ? `Resolvido por ${esc(first(c.atrib))}` : `Atribuído a <b>${esc(first(c.atrib))}</b>`}</span>${!c.resolvido ? `<button class="btn sm" data-resolve="${c.id}">✓ Resolver</button>` : ''}</div>` : ''}
-    ${respostasHtml(c, soc)}</div></div>`).join('');
+/* ---------- comentários: feed (UX-R7) ---------- */
+/* ctx = {k:'proc'|'task'|'mat'|'prop', o:objeto dono do log, key:'proc:ID'} (feeds antigos sem ctx continuam funcionando) */
+const R7 = {visto:{}, DS:['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado'], MS:['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro']};
+const r7pad = n => String(n).padStart(2, '0');
+const r7dia = ts => { const d = new Date(ts); return isNaN(d) ? '' : d.getFullYear() + '-' + r7pad(d.getMonth() + 1) + '-' + r7pad(d.getDate()); };
+const r7hora = ts => { const d = new Date(ts); return isNaN(d) ? '' : r7pad(d.getHours()) + ':' + r7pad(d.getMinutes()); };
+const r7somaDia = (iso, n) => { const d = new Date(iso + 'T12:00'); d.setDate(d.getDate() + n); return r7dia(d); };
+function r7rotuloDia(iso){ const h = r7dia(Date.now()); if(iso === h) return 'Hoje'; if(iso === r7somaDia(h, -1)) return 'Ontem';
+  const d = new Date(iso + 'T12:00'); return R7.DS[d.getDay()] + ', ' + d.getDate() + ' de ' + R7.MS[d.getMonth()] + (d.getFullYear() !== new Date().getFullYear() ? ' de ' + d.getFullYear() : ''); }
+function r7dataLonga(ts){ const d = new Date(ts); if(isNaN(d)) return ''; return R7.DS[d.getDay()] + ', ' + d.getDate() + ' de ' + R7.MS[d.getMonth()] + ' de ' + d.getFullYear() + ' às ' + r7hora(ts); }
+/* "amanhã, 08:00" / "hoje, 17:00" / "seg., 30/11, 08:00" (fuso de Fortaleza) */
+function r7quando(iso, longo){
+  const f = fortaleza(new Date(iso)), h = fortaleza(new Date()), dd = f.dia === h.dia ? 'hoje' : f.dia === fortalezaSoma(h.dia, 1) ? 'amanhã' : null;
+  const hm = longo ? (f.h + ':' + r7pad(f.m)) : (r7pad(f.h) + ':' + r7pad(f.m));
+  if(dd) return longo ? dd + ' às ' + hm : dd + ', ' + hm;
+  const dt = new Date(f.dia + 'T12:00'), ab = ['dom.', 'seg.', 'ter.', 'qua.', 'qui.', 'sex.', 'sáb.'][dt.getDay()];
+  return (longo ? ab + ' ' + f.dia.slice(8) + '/' + f.dia.slice(5, 7) + ' às ' : ab + ', ' + f.dia.slice(8) + '/' + f.dia.slice(5, 7) + ', ') + hm;
+}
+/* relógio de Fortaleza (UTC-3, sem horário de verão) */
+function fortaleza(d){ const x = new Date(d.getTime() - 3 * 3600e3); return {dia:x.toISOString().slice(0, 10), h:x.getUTCHours(), m:x.getUTCMinutes(), dow:x.getUTCDay()}; }
+const fortalezaSoma = (dia, n) => { const x = new Date(dia + 'T12:00:00Z'); x.setUTCDate(x.getUTCDate() + n); return x.toISOString().slice(0, 10); };
+const fortalezaISO = (dia, hm) => new Date(dia + 'T' + hm + ':00-03:00').toISOString();
+
+function r7stLabel(k, st){ const M = k === 'task' ? TS : k === 'mat' ? MS : k === 'prop' ? PROP_ST : PS, s = M[st]; return s ? `<span class="r7-st"><i style="background:${s.c}"></i>${esc(s.l)}</span>` : esc(st || ''); }
+function r7statusLogs(ctx){
+  if(!ctx || !ctx.o) return [];
+  const M = ctx.k === 'task' ? TS : ctx.k === 'mat' ? MS : ctx.k === 'prop' ? PROP_ST : PS, porRot = {}; Object.keys(M).forEach(k => { porRot[M[k].l] = k; });
+  return (ctx.o.log || []).map(l => { if(l.tipo === 'status') return {log:true, em:l.em, por:l.por, de:l.de, para:l.para};
+    const m = /^mudou o status(?: do processo)? para “(.+)”$/.exec(l.txt || ''); return m ? {log:true, em:l.em, por:l.por, de:null, para:porRot[m[1]] || null, rot:m[1]} : null; }).filter(Boolean);
+}
+function r7linhaStatus(s, ctx){
+  const quem = s.por === me ? 'Você' : esc(U[s.por] ? U[s.por].nome : first(s.por));
+  const para = s.para ? r7stLabel(ctx.k, s.para) : `<b>${esc(s.rot || '')}</b>`;
+  return `<div class="r7-log" role="note">${s.de ? `<span>${quem} alterou o status de ${r7stLabel(ctx.k, s.de)} para ${para}</span>` : `<span>${quem} mudou o status para ${para}</span>`}<time title="${esc(r7dataLonga(s.em))}">${r7hora(s.em)}</time></div>`;
+}
+function r7acoes(c, soc, ehResp, paiId){
+  if(c.agendado) return '';
+  const del = c.autor === me || soc;
+  if(ehResp) return del ? `<div class="r7-acts"><button type="button" class="r7-act" data-respdel="${paiId}|${c.id}">${ic('lixo', 'sm')} Excluir</button></div>` : '';
+  if(ui.comDel === c.id) return `<div class="r7-acts on"><span class="sub">Excluir este comentário?</span><button type="button" class="btn sm" data-comdelno>Não</button><button type="button" class="btn sm danger" data-comdelok="${c.id}">Excluir</button></div>`;
+  return `<div class="r7-acts"><button type="button" class="r7-act" data-resp="${c.id}">${ic('comentario', 'sm')} Responder</button>${del ? `<button type="button" class="r7-act" data-comdel="${c.id}">${ic('lixo', 'sm')} Excluir</button>` : ''}</div>`;
+}
+function r7progHtml(c, paiId){
+  return `<div class="r7-prog"><span class="r7-progselo">🕘 Programado · ${esc(r7quando(c.agendado))}</span><span class="r7-progbt"><button type="button" class="btn sm" data-r7agora="${paiId ? paiId + '|' : ''}${c.id}">Enviar agora</button><button type="button" class="btn sm" data-r7mudar="${paiId ? paiId + '|' : ''}${c.id}">Mudar horário</button><button type="button" class="btn sm" data-r7cancel="${paiId ? paiId + '|' : ''}${c.id}">Cancelar</button></span></div>`;
+}
+function r7item(c, soc, cont, novo){
+  const nome = esc(U[c.autor] ? U[c.autor].nome : first(c.autor) || c.autor), atr = c.atrib && !c.agendado;
+  const asg = !atr ? '' : c.resolvido ? `<div class="r7-asg"><span class="r7-selo ok">✓ Resolvido por ${esc(first(c.resolvidoPor || c.atrib))}</span></div>`
+    : `<div class="r7-asg"><button type="button" class="r7-resolver" data-resolve="${c.id}">✓ Resolver</button><span class="r7-selo">${respTem([c.atrib], me) ? 'Atribuído a você' : 'Atribuído a ' + esc(first(c.atrib))}</span></div>`;
+  return `<div class="r7-c${cont ? ' r7-cont' : ''}${atr && !c.resolvido ? ' r7-atr' : ''}${atr && c.resolvido ? ' r7-ok' : ''}${c.agendado ? ' r7-agd' : ''}" data-cid="${c.id}">${asg}
+    <div class="r7-row">${cont ? `<time class="r7-gut" title="${esc(r7dataLonga(c.em))}">${r7hora(c.em)}</time>` : `<span class="r7-av">${av(c.autor)}</span>`}
+    <div class="r7-main">${cont ? '' : `<div class="r7-hd"><b>${nome}</b><time title="${esc(r7dataLonga(c.em))}">${c.agendado ? '' : r7hora(c.em)}</time></div>`}
+      <div class="r7-tx">${comText(c.texto)}</div>${c.agendado ? r7progHtml(c) : ''}
+      ${r7acoes(c, soc)}${c.agendado ? '' : respostasHtml(c, soc)}</div></div></div>`;
+}
+function feedHtml(coms, t, ctx){
+  ctx = ctx || (t ? {k:'task', o:t, key:'task:' + t.id} : null);
+  const soc = isSocio(), vis = comsVisiveis(coms), pub = vis.filter(c => !c.agendado).slice().sort((a, b) => String(a.em).localeCompare(String(b.em)));
+  const prog = vis.filter(c => c.agendado).sort((a, b) => String(a.agendado).localeCompare(String(b.agendado)));
+  const logs = r7statusLogs(ctx);
+  if(!pub.length && !prog.length && !logs.length) return '<div class="empty" style="padding:24px">Nenhum comentário ainda. Use @ para mencionar alguém.</div>';
+  /* "Novo": o que chegou depois da última vez que você abriu este feed (vale a abertura desta sessão) */
+  const key = ctx && ctx.key ? 'lido:' + ctx.key : '';
+  let visto = '';
+  if(key){ if(R7.visto[key] === undefined){ try{ R7.visto[key] = localStorage.getItem(key) || '';
+      /* versão anterior guardava em "mannare.comVisto" pelo primeiro comentário: aproveita na primeira abertura */
+      if(!R7.visto[key] && coms.length){ const v = JSON.parse(localStorage.getItem('mannare.comVisto') || '{}'); R7.visto[key] = v['c:' + (coms[0].id || coms[0].em)] || ''; }
+    }catch(_){ R7.visto[key] = R7.visto[key] || ''; } } visto = R7.visto[key];
+    const ult = pub.reduce((a, c) => c.em > a ? c.em : a, ''); if(ult) try{ localStorage.setItem(key, ult); }catch(_){} }
+  const tudo = pub.map(c => ({c, em:c.em})).concat(logs.map(s => ({s, em:s.em}))).sort((a, b) => String(a.em).localeCompare(String(b.em)));
+  let h = '', dia = '', ant = null, novoFeito = false;
+  tudo.forEach(it => {
+    const d = r7dia(it.em) || 'sem';
+    if(d !== dia){ h += (dia ? '</div>' : '') + `<div class="cmd-dia"><div class="cmd-sep" data-cmday="${d}"><i></i><button type="button" class="cmd-pill" data-cmdpill="${d}" aria-haspopup="menu">${esc(d === 'sem' ? 'Sem data' : r7rotuloDia(d))}<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M7 10l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><i></i></div>`; dia = d; ant = null; }
+    if(it.s){ h += r7linhaStatus(it.s, ctx); ant = null; return; }
+    const c = it.c, novo = !novoFeito && visto && c.em > visto && c.autor !== me;
+    if(novo){ h += '<div class="r7-novo" role="separator" aria-label="Novas mensagens"><span>Novo</span></div>'; novoFeito = true; ant = null; }
+    const cont = !!(ant && ant.autor === c.autor && !c.atrib && !ant.atrib && new Date(c.em) - new Date(ant.em) < 5 * 60e3);
+    h += r7item(c, soc, cont); ant = c;
+  });
+  if(dia) h += '</div>';
+  if(prog.length) h += `<div class="r7-progs"><div class="r7-progt">Programados (só você vê)</div>${prog.map(c => r7item(c, soc, false)).join('')}</div>`;
+  return `<div class="cmd-wrap r7-feed"${key ? ` data-feedkey="${esc(key)}"` : ''}>${h}</div>`;
 }
 /* ---------- comentários: responder ---------- */
 function respostasHtml(c, soc){
-  const rs = c.respostas || [], aberto = ui.comResp === c.id;
-  return `<div class="cresp">${rs.map(r => `<div class="crr">${av(r.autor, true)}<div class="crb"><div class="hd"><b>${esc(first(r.autor))}</b><span class="sub">${fmtWhen(r.em)}</span>${r.autor === me || soc ? `<span class="spacer"></span><button class="cmx" data-respdel="${c.id}|${r.id}" title="Excluir resposta">${ic('lixo', 'sm')}</button>` : ''}</div><div class="tx">${fmtText(r.texto)}</div></div></div>`).join('')}
-    ${aberto ? `<div class="crform"><textarea id="respTxt" data-respc="${c.id}" rows="2" placeholder="Responder a ${esc(first(c.autor))}… use @ para mencionar"></textarea><div class="row"><span class="sub">Ctrl+Enter envia</span><span class="spacer"></span><button class="btn sm" data-respno>Cancelar</button><button class="btn sm primary" data-respok="${c.id}">Responder</button></div></div>`
-      : `<button class="crbtn" data-resp="${c.id}">${ic('comentario', 'sm')} ${rs.length ? 'Responder' : 'Responder'}${rs.length ? ` <span class="sub">| ${rs.length} resposta${rs.length > 1 ? 's' : ''}</span>` : ''}</button>`}</div>`;
+  const rs = comsVisiveis(c.respostas).slice().sort((a, b) => String(a.agendado || a.em).localeCompare(String(b.agendado || b.em))), aberto = ui.comResp === c.id, npub = comsPublicos(c.respostas).length;
+  if(!rs.length && !aberto) return '';
+  return `<div class="cresp r7-resps">${rs.map(r => `<div class="crr r7-r${r.agendado ? ' r7-agd' : ''}" data-cid="${r.id}">${av(r.autor, true)}<div class="crb"><div class="r7-hd"><b>${esc(U[r.autor] ? U[r.autor].nome : first(r.autor))}</b><time title="${esc(r7dataLonga(r.em))}">${r.agendado ? '' : r7hora(r.em)}</time></div><div class="r7-tx">${comText(r.texto)}</div>${r.agendado ? r7progHtml(r, c.id) : ''}${r7acoes(r, soc, true, c.id)}</div></div>`).join('')}
+    ${aberto ? `<div class="crform"><textarea id="respTxt" data-respc="${c.id}" rows="2" placeholder="Responder a ${esc(first(c.autor))}… use @ para mencionar"></textarea><div class="row"><span class="sub">Ctrl+Enter envia</span><span class="spacer"></span><button type="button" class="btn sm" data-respno>Cancelar</button><span class="r7-send r7-send-sm"><button type="button" class="btn sm primary" data-respok="${c.id}">Responder</button><button type="button" class="btn sm primary r7-mais" data-r7menu="resp:${c.id}" aria-haspopup="dialog" aria-label="Programar envio da resposta">▾</button></span></div></div>`
+      : ''}</div>`;
 }
 function avisarResposta(f, para, txt, texto){
   if(!para || para === me) return;
@@ -6818,17 +7004,11 @@ function avisarResposta(f, para, txt, texto){
   S.notifs.unshift(Object.assign({id:uid(), para, txt:`<b>${esc(first(me))}</b> ${txt}`, procId:null, taskId:null, em:nowISO(), lida:false}, ctx));
   emailAviso(para, txt, ctx, texto);
 }
-function enviarResposta(id){
+function enviarResposta(id, quando){ /* UX-R7: resposta pelo mesmo envio (pode ser programada) */
   const ta = $('#respTxt'), txt = ta ? ta.value.trim() : ''; if(!txt){ toast('Escreva a resposta'); if(ta) ta.focus(); return; }
   const f = acharCom(id); if(!f){ ui.comResp = null; reRender(); return; }
-  const c = f.c; (c.respostas = c.respostas || []).push({id:uid(), autor:me, texto:txt, em:nowISO()});
-  const onde = f.t ? `“${esc(f.t.titulo)}”` : f.m ? `“${esc(f.m.titulo || f.m.codigo)}”` : f.pr ? `a proposta ${esc(f.pr.codigo || '')}` : `o processo ${esc(pcod(f.p))}`;
-  const n = norm(txt), ment = USERS.filter(u => n.includes('@' + norm(first(u.id)))).map(u => u.id);
-  const conversa = new Set([c.autor, c.atrib, ...(c.respostas || []).map(r => r.autor)].filter(x => x && x !== me && !ment.includes(x)));
-  conversa.forEach(u => avisarResposta(f, u, u === c.autor ? `respondeu seu comentário em ${onde}` : `respondeu um comentário em ${onde}`, txt));
-  ment.forEach(u => avisarResposta(f, u, `mencionou você em ${onde}`, txt));
-  const alvo = f.t || f.m || f.p || f.pr; if(alvo && alvo.log) alvo.log.push({em:nowISO(), por:me, txt:'respondeu um comentário'});
-  ui.comResp = null; save(); reRender(); toast('Resposta enviada');
+  enviarComentario({k:f.kind, p:f.p, t:f.t, m:f.m, pr:f.pr, arr:f.arr}, txt, '', quando || '', f.c);
+  ui.comResp = null; reRender(); toast(quando ? 'Resposta programada para ' + r7quando(quando, true) : 'Resposta enviada');
 }
 document.addEventListener('keydown', e => { if(e.target && e.target.id === 'respTxt'){ e.stopPropagation(); if(e.key === 'Enter' && (e.ctrlKey || e.metaKey)){ e.preventDefault(); enviarResposta(e.target.dataset.respc); } else if(e.key === 'Escape'){ ui.comResp = null; reRender(); } } }, true);
 // todos os lugares onde há comentários
@@ -6875,7 +7055,7 @@ function setMatStatus(m, st, escolhido){
       {prazo:true, prazoLabel:'Validar até', botao:'Enviar para validação', ate:m.prazo && m.prazo > TODAY && m.prazo < addDays(TODAY, 2) ? m.prazo : ''});
     return;
   }
-  const old = m.status; m.status = st; logT(m, `mudou o status para “${MS[st].l}”`);
+  const old = m.status; m.status = st; logT(m, `mudou o status para “${MS[st].l}”`); Object.assign(m.log[0], {tipo:'status', de:old, para:st}); /* UX-R7 */
   if(MAT_TIMER.includes(st)) startTimer(null, m, me); else if(MAT_TIMER.includes(old)) stopTimers(m, `parou o cronômetro ao mudar para “${MS[st].l}”`);
   matPausa(m, old, st); matVerSync(m, old, st);
   const aprov = aprovFor(m);
@@ -6930,7 +7110,7 @@ function minhasAprovacoes(){
 }
 function comsAtribuidos(uid){
   const out = [];
-  for(const l of comLugares()) for(const c of l.arr || []){ if(!c.atrib || !respTem([c.atrib], uid) || c.resolvido) continue;
+  for(const l of comLugares()) for(const c of l.arr || []){ if(!c.atrib || !respTem([c.atrib], uid) || c.resolvido || c.agendado) continue;
     const onde = l.kind === 'task' ? `${l.t.titulo} | ${pcod(l.p)}` : l.kind === 'proc' ? `Processo ${pcod(l.p)} | ${(propById(l.p.propId) || {}).emp || ''}` : l.kind === 'mat' ? `${l.m.titulo || l.m.codigo}` : `Proposta ${l.pr.codigo} | ${l.pr.emp || l.pr.cliente || ''}`;
     const go = l.kind === 'task' ? `task|${l.p.id}|${l.t.id}` : l.kind === 'proc' ? `proc|${l.p.id}` : l.kind === 'mat' ? `mat|${l.m.id}` : `prop|${l.pr.id}|comentarios`;
     out.push({c, onde, go}); }
@@ -6976,23 +7156,23 @@ function catDe(txt, ctx){
   return 'processos';
 }
 const limpaHtml = t => String(t || '').replace(/<[^>]+>/g, '').replace(/&quot;|&#39;|&amp;|&lt;|&gt;/g, s => ({'&quot;':'"', '&#39;':"'", '&amp;':'&', '&lt;':'<', '&gt;':'>'})[s]);
-function filaEmail(para, cat, assunto, corpo){
+function filaEmail(para, cat, assunto, corpo, autor = me){ /* UX-R7: autor por parâmetro */
   if(!para || !/@/.test(para) || S.cfg.mencaoEmailOff || !querEmail(para, cat)) return;
-  S.emails.push({id:uid(), status:'pendente', tipo:'aviso', cat, para, cc:'', replyTo:me, por:me, em:nowISO(), assunto:assunto.slice(0, 150),
+  S.emails.push({id:uid(), status:'pendente', tipo:'aviso', cat, para, cc:'', replyTo:autor, por:autor, em:nowISO(), assunto:assunto.slice(0, 150),
     corpo:`Olá, ${first(para)}.\n\n${corpo}\n\nAbrir no CRM: ${location.origin + location.pathname}\n\n(Aviso automático do CRM Mannare. Para escolher o que você recebe por e-mail: Integrações › Avisos por e-mail.)`});
 }
-function emailAviso(para, txt, ctx, comentario){
-  if(!para || para === me) return;
-  const cat = catDe(txt, ctx), t = limpaHtml(txt), quem = U[me] ? U[me].nome : me;
-  filaEmail(para, cat, `${first(me)} ${t}`, `${quem} ${t}${comentario ? ':\n\n"' + comentario + '"' : '.'}`);
+function emailAviso(para, txt, ctx, comentario, autor = me){ /* UX-R7: autor por parâmetro */
+  if(!para || para === autor) return;
+  const cat = catDe(txt, ctx), t = limpaHtml(txt), quem = U[autor] ? U[autor].nome : autor;
+  filaEmail(para, cat, `${first(autor)} ${t}`, `${quem} ${t}${comentario ? ':\n\n"' + comentario + '"' : '.'}`, autor);
 }
 function ultimoComDe(arr){ const c = (arr || []).slice(-1)[0]; return c && c.autor === me && Date.now() - new Date(c.em).getTime() < 60000 ? c.texto : ''; }
 const ehCom = txt => /^(mencionou você|atribuiu um comentário a você)/.test(txt);
-function notify(para, txt, procId, taskId){
-  if(isEq(para)){ membrosDe(para).forEach(m => notify(m, txt, procId, taskId)); return; }
-  if(!para || para === me) return;
-  S.notifs.unshift({id:uid(), para, txt:`<b>${esc(first(me))}</b> ${txt}`, procId, taskId, em:new Date().toISOString(), lida:false});
-  if(procId){ const p = procById(procId), t = p && taskId ? taskOf(p, taskId) : null; emailAviso(para, txt, {procId, taskId}, ehCom(txt) ? ultimoComDe(t ? t.coms : p && p.coms) : ''); }
+function notify(para, txt, procId, taskId, autor = me){ /* UX-R7: autor por parâmetro */
+  if(isEq(para)){ membrosDe(para).forEach(m => notify(m, txt, procId, taskId, autor)); return; }
+  if(!para || para === autor) return;
+  S.notifs.unshift({id:uid(), para, txt:`<b>${esc(first(autor))}</b> ${txt}`, procId, taskId, em:new Date().toISOString(), lida:false});
+  if(procId){ const p = procById(procId), t = p && taskId ? taskOf(p, taskId) : null; emailAviso(para, txt, {procId, taskId}, ehCom(txt) ? ultimoComDe(t ? t.coms : p && p.coms) : '', autor); }
 }
 function notifyMat(para, txt, m){ if(isEq(para)){ membrosDe(para).forEach(x => notifyMat(x, txt, m)); return; } if(!para || para === me) return; S.notifs.unshift({id:uid(), para, txt:`<b>${esc(first(me))}</b> ${txt}`, procId:null, taskId:null, matId:m.id, em:nowISO(), lida:false});
   emailAviso(para, txt, {matId:m.id}, ehCom(txt) ? ultimoComDe(m.coms) : ''); }
@@ -8042,7 +8222,7 @@ document.addEventListener('click', e => {
 /* ============ Processos: mudança de status (validação ao ir para Protocolo) ============ */
 function procMudarStatus(p, v, doQuadro){
   const old = p.status; if(old === v) return;
-  const aplicar = () => { logP(p, `mudou o status do processo para “${PS[v].l}”`); procDatasAuto(p, v, old); p.status = v; save(); render(); if(doQuadro) toast(`${pcod(p)} → ${PS[v].l}`); afterStatus(p, old); };
+  const aplicar = () => { logP(p, `mudou o status do processo para “${PS[v].l}”`); Object.assign(p.log[0], {tipo:'status', de:old, para:v}); /* UX-R7 */ procDatasAuto(p, v, old); p.status = v; save(); render(); if(doQuadro) toast(`${pcod(p)} → ${PS[v].l}`); afterStatus(p, old); };
   if(v === 'protocolo' && !(p.valProt && p.valProt.st === 'pendente')){
     render();
     const def = (USERS.find(u => u.id !== me && u.id !== p.resp && (S.equipe.find(x => x.email.toLowerCase() === u.id) || {}).papel === 'socio') || USERS.find(u => u.id !== me) || U[me]).id;
@@ -9113,7 +9293,7 @@ renderDrawer = (function(base){ return function(){ base.apply(this, arguments); 
 /* ============ Gaveta do processo: 5 grupos de abas + Resumo ============ */
 const DGRP = [
   {k:'resumo', l:'Resumo', n:() => [0], subs:[['resumo', 'Resumo'], ['descricao', 'Descrição e imóvel'], ['drive', 'Pasta no Drive'], ['vinculos', 'Vínculos'], ['proposta', 'Proposta']]},
-  {k:'conv', l:'Conversas', n:p => [p.coms.length], subs:[['comentarios', 'Comentários', p => p.coms.length], ['atividade', 'Atividade']]},
+  {k:'conv', l:'Conversas', n:p => [comsPublicos(p.coms).length], subs:[['comentarios', 'Comentários', p => comsPublicos(p.coms).length], ['atividade', 'Atividade']]},
   {k:'plan', l:'Planejamento', n:p => [p.tarefas.filter(t => t.status !== 'concluida').length], subs:[['tarefas', 'Tarefas', p => p.tarefas.filter(t => t.status !== 'concluida').length], ['crono', 'Cronograma']]},
   {k:'docs', l:'Material técnico', n:p => [matsDoProc(p).length], subs:[['material', 'Material técnico', p => matsDoProc(p).length]]},
   {k:'andam', l:'Andamento', n:p => [ntPend(p), true], subs:[['tramitacao', 'Tramitação', p => (p.tram || []).length], ['notas', 'Notificações', p => ntPend(p)]]},
@@ -9878,6 +10058,170 @@ boot();
         if(O.left < R.left + 8) el.scrollLeft -= (R.left + 24 - O.left); else if(O.right > R.right - 8) el.scrollLeft += (O.right - R.right + 24); }
       marca(el); }); }
   ['view', 'layer', 'drawer'].forEach(function(id){ var c = document.getElementById(id); if(c) new MutationObserver(function(){ requestAnimationFrame(varre); }).observe(c, {childList:true, subtree:true}); });
+})();
+</script>
+<script id="mannare-r7">
+/* UX-R7: comentários. Colar link do Drive, barra do campo de escrever, menu "Programar envio",
+   ações dos programados, rolagem até "Novo" e publicação de reserva no navegador do autor. */
+(function(){
+  if(typeof enviarComentario !== 'function') return;
+
+  /* ---------- colar um link do Drive vira [Nome do arquivo](link) com o nome selecionado ---------- */
+  document.addEventListener('paste', function(e){
+    var ta = e.target; if(!ta.matches || !ta.matches('.composer textarea, #respTxt')) return;
+    var url = ((e.clipboardData && e.clipboardData.getData('text/plain')) || '').trim();
+    if(!/^https?:\/\/\S+$/.test(url) || !driveInfo(url)) return;
+    e.preventDefault();
+    var h = e.clipboardData.getData('text/html'), a = h && new DOMParser().parseFromString(h, 'text/html').querySelector('a');
+    var tit = a ? a.textContent.trim().replace(/[\[\]]/g, '') : '';
+    insereLink(ta, url, tit && tit !== url ? tit : '');
+  }, true);
+  function insereLink(ta, url, tit){
+    var nome = tit || 'Nome do arquivo', ini = ta.selectionStart;
+    ta.setRangeText('[' + nome + '](' + url + ')', ini, ta.selectionEnd, 'end');
+    if(!tit) ta.setSelectionRange(ini + 1, ini + 1 + nome.length);
+    ta.dispatchEvent(new Event('input', {bubbles:true})); ta.focus();
+  }
+
+  /* ---------- texto cresce até 6 linhas ---------- */
+  function cresce(ta){ ta.style.height = 'auto'; ta.style.height = Math.min(ta.scrollHeight + 2, 9 * 21 + 20) + 'px'; }
+  document.addEventListener('input', function(e){ if(e.target.matches && e.target.matches('.composer.r7-comp textarea')) cresce(e.target); }, true);
+
+  /* ---------- quando programar (fuso de Fortaleza) ---------- */
+  function opcoes(agora){
+    var f = fortaleza(agora || new Date()), op = [];
+    if(f.h * 60 + f.m < 16 * 60 + 30) op.push({l:'Hoje às 17:00', iso:fortalezaISO(f.dia, '17:00')});
+    var sexSab = f.dow === 5 || f.dow === 6, dia = fortalezaSoma(f.dia, f.dow === 5 ? 3 : f.dow === 6 ? 2 : 1);
+    op.push({l:(sexSab ? 'Segunda' : 'Amanhã') + ' às 8:00', iso:fortalezaISO(dia, '08:00')});
+    return op;
+  }
+  window.r7opcoes = opcoes;   /* usado nos testes */
+  var menu = null;
+  function fecha(){ if(menu){ menu.remove(); menu = null; } }
+  function abreMenu(btn, alvo){
+    fecha(); var f = fortaleza(new Date()), min = f.dia + 'T' + String(f.h).padStart(2, '0') + ':' + String(f.m).padStart(2, '0');
+    menu = document.createElement('div'); menu.className = 'r7-menu'; menu.setAttribute('role', 'dialog'); menu.setAttribute('aria-label', 'Programar envio');
+    menu.innerHTML = '<div class="r7-mt">Programar envio</div>' + opcoes().map(function(o){ return '<button type="button" class="r7-mi" data-r7iso="' + o.iso + '">' + o.l + '<span>' + esc(r7quando(o.iso)) + '</span></button>'; }).join('')
+      + '<div class="r7-dt"><label for="r7dt" style="font:600 12.5px var(--font-sans)">Escolher data e hora…</label><input id="r7dt" type="datetime-local" min="' + min + '"><span class="r7-err" hidden></span><button type="button" class="btn sm primary" data-r7dtok>Programar</button></div>';
+    document.body.appendChild(menu); menu._btn = btn; menu._alvo = alvo; menu._t = Date.now();
+    var r = btn.getBoundingClientRect(), w = menu.offsetWidth, hh = menu.offsetHeight;
+    var left = Math.max(8, Math.min(innerWidth - w - 8, r.right - w)), top = r.top - hh - 6; if(top < 8) top = Math.min(innerHeight - hh - 8, r.bottom + 6);
+    menu.style.left = left + 'px'; menu.style.top = top + 'px';
+    var b0 = menu.querySelector('.r7-mi'); if(b0) b0.focus({preventScroll:true});
+  }
+  function aplica(alvo, iso){
+    if(alvo.tipo === 'com'){ var box = alvo.btn.closest('.composer'); if(box) envia(box, iso); return; }
+    if(alvo.tipo === 'resp'){ enviarResposta(alvo.id, iso); return; }
+    if(alvo.tipo === 'mudar'){ var x = acha(alvo.id); if(!x || !x.item.agendado) return; x.item.agendado = iso; marcaAgenda(docDe(x.l)); save(); reRender(); toast('Horário mudado: ' + r7quando(iso, true)); }
+  }
+  function envia(box, iso){
+    var ta = box.querySelector('textarea'); if(!ta.value.trim()){ toast('Escreva o comentário'); ta.focus(); return; }
+    sendComment(box, iso);
+  }
+  window.addEventListener('click', function(e){
+    var t = e.target; if(!t.closest) return; var el;
+    if(menu && menu.contains(t)){
+      e.stopPropagation();
+      if((el = t.closest('[data-r7iso]'))){ var a = menu._alvo; fecha(); aplica(a, el.dataset.r7iso); a.btn && document.contains(a.btn) && a.btn.focus(); return; }
+      if(t.closest('[data-r7dtok]')){ var v = menu.querySelector('#r7dt').value, er = menu.querySelector('.r7-err');
+        var iso = v ? new Date(v + ':00-03:00').toISOString() : '';
+        if(!iso || isNaN(new Date(iso))){ er.hidden = false; er.textContent = 'Escolha a data e a hora'; return; }
+        if(new Date(iso) <= new Date()){ er.hidden = false; er.textContent = 'Escolha um horário no futuro'; return; }
+        var a2 = menu._alvo; fecha(); aplica(a2, iso); return; }
+      return;
+    }
+    if((el = t.closest('[data-r7menu]'))){ e.stopPropagation(); e.preventDefault(); if(menu && menu._btn === el){ fecha(); return; }
+      var k = el.dataset.r7menu; abreMenu(el, k === 'com' ? {tipo:'com', btn:el} : {tipo:'resp', id:k.slice(5), btn:el}); return; }
+    if((el = t.closest('[data-r7mudar]'))){ e.stopPropagation(); abreMenu(el, {tipo:'mudar', id:el.dataset.r7mudar, btn:el}); return; }
+    if(menu) fecha();
+    if((el = t.closest('[data-r7agora]'))){ e.stopPropagation(); var x = acha(el.dataset.r7agora); if(x && publicarItem(x.l, x.item, x.pai, true)){ save(); reRender(); toast(x.pai ? 'Resposta enviada' : 'Comentário enviado'); } return; }
+    if((el = t.closest('[data-r7cancel]'))){ e.stopPropagation();
+      var ref = el.dataset.r7cancel, msg = 'Excluir a mensagem programada? Ela não será enviada. Isso não pode ser desfeito.';
+      (window.uiConfirm ? uiConfirm(msg) : Promise.resolve(confirm(msg))).then(function(sim){ if(!sim) return;
+        var y = acha(ref); if(!y) return; var arr = y.pai ? y.pai.respostas : y.l.arr, i = arr.indexOf(y.item); if(i >= 0) arr.splice(i, 1);
+        marcaAgenda(docDe(y.l)); save(); reRender(); toast('Mensagem programada cancelada'); });
+      return; }
+    if((el = t.closest('[data-r7ver]'))){ e.stopPropagation(); var box = el.closest('.mright, #drawer, .modal') || document; var it = box.querySelector('.r7-agd');
+      if(it){ it.scrollIntoView({block:'center', behavior:'smooth'}); it.classList.remove('r7-flash'); void it.offsetWidth; it.classList.add('r7-flash'); var b = it.querySelector('[data-r7agora]'); if(b) b.focus({preventScroll:true}); } return; }
+    if((el = t.closest('[data-r7at]'))){ e.stopPropagation(); var ta = el.closest('.composer').querySelector('textarea'), p = ta.selectionStart, antes = ta.value.slice(0, p);
+      ta.setRangeText((antes && !/\s$/.test(antes) ? ' ' : '') + '@', p, ta.selectionEnd, 'end'); ta.focus(); ta.dispatchEvent(new Event('input', {bubbles:true})); return; }
+    if((el = t.closest('[data-r7drive]'))){ e.stopPropagation(); var ta2 = el.closest('.composer').querySelector('textarea'), s0 = ta2.selectionStart, s1 = ta2.selectionEnd;
+      var pede = window.uiPrompt ? uiPrompt('Cole o link do Google Drive', '') : Promise.resolve(prompt('Cole o link do Google Drive', ''));
+      pede.then(function(u){ u = String(u || '').trim(); if(!u) return; ta2.focus(); ta2.setSelectionRange(s0, s1);
+        if(!/^https?:\/\/\S+$/.test(u)){ toast('Cole um endereço que começa com https://'); return; }
+        insereLink(ta2, u, ''); });
+      return; }
+    /* "Resolvido por": guarda quem resolveu (o clique segue para o código de sempre) */
+    if((el = t.closest('[data-resolve],[data-dresolve]'))){ var f = acharCom(el.dataset.resolve || el.dataset.dresolve); if(f && !f.c.resolvido){ f.c.resolvidoPor = me; f.c.resolvidoEm = nowISO(); } }
+  }, true);
+  document.addEventListener('keydown', function(e){
+    if(menu && e.key === 'Escape'){ e.stopPropagation(); var b = menu._btn; fecha(); if(b && document.contains(b)) b.focus(); return; }
+    if(menu && (e.key === 'ArrowDown' || e.key === 'ArrowUp') && menu.contains(document.activeElement)){ e.preventDefault(); var its = [].slice.call(menu.querySelectorAll('.r7-mi,#r7dt,[data-r7dtok]')), i = its.indexOf(document.activeElement); its[(i + (e.key === 'ArrowDown' ? 1 : -1) + its.length) % its.length].focus(); }
+    if(menu && e.key === 'Enter' && e.target.id === 'r7dt'){ e.preventDefault(); menu.querySelector('[data-r7dtok]').click(); }
+  }, true);
+  /* UX-R7.1: no celular, fechar o teclado ao tocar em ▾ rola e redimensiona a tela; isso não pode fechar o menu recém-aberto */
+  var recente = function(){ return menu && Date.now() - menu._t < 700; };
+  addEventListener('resize', function(){ if(menu && !recente()) fecha(); }); addEventListener('scroll', function(e){ if(menu && !recente() && !menu.contains(e.target)) fecha(); }, true);
+
+  /* acha um comentário ou resposta ("id" ou "idPai|idResposta") com o lugar dele */
+  function acha(ref){
+    var ps = String(ref).split('|'), f = acharCom(ps[0]); if(!f) return null;
+    var l = {k:f.kind, p:f.p, t:f.t, m:f.m, pr:f.pr, arr:f.arr};
+    if(ps.length > 1){ var r = (f.c.respostas || []).find(function(x){ return x.id === ps[1]; }); return r ? {l:l, item:r, pai:f.c} : null; }
+    return {l:l, item:f.c, pai:null};
+  }
+
+  /* ---------- ao abrir um feed: rola até "Novo"; sem novidade, fica como hoje ---------- */
+  var aberto = {};
+  function rolar(){
+    ['layer', 'drawer'].forEach(function(id){
+      var c = document.getElementById(id), fd = c && c.querySelector('.r7-feed[data-feedkey]');
+      if(!fd){ delete aberto[id]; return; }
+      var k = fd.dataset.feedkey; if(aberto[id] === k) return; aberto[id] = k;
+      var nv = fd.querySelector('.r7-novo'); if(nv) requestAnimationFrame(function(){ nv.scrollIntoView({block:'start'}); });
+    });
+    document.querySelectorAll('.composer.r7-comp textarea').forEach(function(ta){ if(ta.value) cresce(ta); });
+  }
+  ['renderTask', 'renderMat', 'renderDrawer'].forEach(function(n){ if(typeof window[n] === 'function'){ var b = window[n]; window[n] = function(){ var r = b.apply(this, arguments); try{ rolar(); }catch(_){} return r; }; } });
+  if(window.cgRender) cgRender.depois(function(){ try{ rolar(); }catch(_){} });
+
+  /* ---------- reserva: o CRM do próprio autor publica os programados dele que passaram da hora ----------
+     Quem publica normalmente é a ponte do Apps Script (a cada minuto). O navegador só entra 2 min depois da hora,
+     e "reserva" o documento gravando com a mesma versão que leu: se a ponte gravou antes, a versão mudou e aqui não faz nada.
+     Assim cada comentário é publicado uma vez só (um aviso, um e-mail). */
+  var rodando = false;
+  async function publicarAgendados(){
+    if(rodando || typeof DB === 'undefined' || !DB.ready || DB.busy || typeof sb === 'undefined' || !sb || !me) return;
+    rodando = true;
+    try {
+      var lim = new Date(Date.now() - 120e3).toISOString(), agora = nowISO(), cur = null;
+      var docs = [].concat(S.procs.map(function(o){ return ['processo', o]; }), (S.mats || []).map(function(o){ return ['material', o]; }), (S.propsDb || []).map(function(o){ return ['proposta', o]; }))
+        .filter(function(x){ return x[1].comAgenda && x[1].comAgenda <= lim; });
+      for(var i = 0; i < docs.length; i++){
+        var tipo = docs[i][0], k = tipo + ':' + docs[i][1].id;
+        cur = cur || collect(); if(!cur[k] || !DB.base[k] || J(cur[k].dados) !== DB.base[k].json) continue;   // alteração local ainda não salva: tenta no próximo ciclo
+        var rs = await sb.from('pm_docs').select('id,tipo,dados,versao').eq('id', k).maybeSingle(); if(rs.error || !rs.data) continue;
+        var row = rs.data, d = JSON.parse(JSON.stringify(row.dados)), feitos = [];
+        var lugares = tipo === 'processo' ? [{k:'proc', p:d, arr:d.coms || []}].concat((d.tarefas || []).map(function(t){ return {k:'task', p:d, t:t, arr:t.coms || []}; }))
+          : tipo === 'material' ? [{k:'mat', m:d, arr:d.coms || []}] : [{k:'prop', pr:d, arr:d.coms || []}];
+        lugares.forEach(function(l){ l.arr.forEach(function(c){
+          if(c.autor === me && c.agendado && c.agendado <= lim && !c.publicadoEm){ c.em = c.agendado; delete c.agendado; c.publicadoEm = agora; feitos.push([l, c, null]); }
+          if(!c.agendado) (c.respostas || []).forEach(function(r){ if(r.autor === me && r.agendado && r.agendado <= lim && !r.publicadoEm){ r.em = r.agendado; delete r.agendado; r.publicadoEm = agora; feitos.push([l, r, c]); } });
+        }); });
+        if(!feitos.length) continue;
+        var efs = feitos.map(function(f){ var r = efeitosCalc(f[0], f[1], me, f[2]); var o = alvoDe(f[0]); if(o && r.log) (o.log = o.log || []).unshift({em:agora, por:me, txt:r.log}); return r; });
+        marcaAgenda(d);
+        var up = await sb.from('pm_docs').update({dados:d}).eq('id', k).eq('versao', row.versao).select('versao');
+        if(up.error || !up.data || !up.data.length) continue;      // a ponte (ou outra aba) publicou antes
+        applyDoc(k, tipo, d); DB.base[k] = {json:J(d), versao:up.data[0].versao};
+        efs.forEach(function(r){ efeitosAvisos(r); });
+        cur = null; save(); reRender();
+      }
+    } catch(err){ console.warn('programados:', err); }
+    rodando = false;
+  }
+  window.publicarAgendados = publicarAgendados;
+  var tPub = setInterval(function(){ if(typeof DB !== 'undefined' && DB.ready){ clearInterval(tPub); publicarAgendados(); setInterval(publicarAgendados, 60e3); } }, 1500);
 })();
 </script>
 <script id="mannare-hist">
@@ -14039,7 +14383,7 @@ if('serviceWorker' in navigator && location.protocol === 'https:'){
   var eu = function(){ return typeof me !== 'undefined' ? String(me).toLowerCase() : ''; };
 
   var _fh = feedHtml;
-  feedHtml = function(coms, t){
+  var _feedAntigo = function(coms, t){ /* UX-R7: não é mais usado; o feed novo (feedHtml) já desenha os dias e o "Novo" */
     if(!coms || !coms.length || coms.length < 2 && !coms.some(function(c){ return c.em; })) return _fh.apply(this, arguments);
     var k = 'c:' + (coms[0].id || coms[0].em), ult = coms.reduce(function(a, c){ return c.em > a ? c.em : a; }, '');
     if(sessao[k] === undefined){ var v = lerVistos(); sessao[k] = v[k] || ''; }
@@ -15809,6 +16153,119 @@ html.mx .cal .g .d i{bottom:5px}
 /* R5.6: campo de novo material com cara de campo */
 #view .madd input{border:1px dashed var(--sx-border-strong,#C9CCD8);border-radius:8px;padding:7px 10px;background:#fff}
 #view .madd input::placeholder{opacity:1;color:var(--sx-text-3)}
+/* ===== UX-R7 | comentários: links do Drive, layout sem caixas, atribuição, "Novo", status e envio programado ===== */
+.dchip{color:var(--ink);text-decoration:none}
+.dchip-ic{width:14px;height:14px;vertical-align:-2px;margin-right:5px}
+.dchip-t{color:var(--mn-ink-60,#5f6680);margin-right:2px}
+.dchip-n{text-decoration:underline dashed #b9bfd3;text-underline-offset:4px;word-break:break-word}
+.dchip:hover .dchip-n{text-decoration:underline solid currentColor}
+.dchip:focus-visible{outline:2px solid var(--azul);outline-offset:2px;border-radius:4px}
+.r7-tx a:not(.dchip){color:var(--mn-azul,#0000FF);word-break:break-word}
+/* feed */
+.r7-feed{display:flex;flex-direction:column}
+.r7-feed .cmd-sep{margin:10px 0 12px!important}
+.r7-c{position:relative;margin-top:16px;border-radius:10px}
+.r7-c.r7-cont{margin-top:4px}
+.cmd-sep+.r7-c,.r7-novo+.r7-c,.r7-log+.r7-c{margin-top:6px}
+.r7-row{display:flex;gap:10px;align-items:flex-start}
+.r7-av{flex:none;width:32px;display:flex}
+.r7-av .avw,.r7-av .av{width:32px!important;height:32px!important;font-size:11px}
+.r7-gut{flex:none;width:32px;text-align:right;font-size:11px;line-height:22px;color:var(--sx-text-3,#80839A);opacity:0;transition:opacity .12s;font-variant-numeric:tabular-nums}
+.r7-c:hover .r7-gut,.r7-c:focus-within .r7-gut{opacity:1}
+.r7-main{flex:1;min-width:0}
+.r7-hd{display:flex;align-items:baseline;gap:8px;min-height:20px;margin-bottom:2px}
+.r7-hd b{font:600 14px/1.3 var(--font-sans);color:var(--sx-text,#0B0B1A);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.r7-hd time{font-size:12px;color:var(--sx-text-3,#80839A);font-variant-numeric:tabular-nums;flex:none}
+.r7-tx{font-size:14px;line-height:1.55;color:var(--sx-text,#0B0B1A);white-space:pre-wrap;overflow-wrap:anywhere}
+/* ações: aparecem ao passar o mouse ou com Tab; no celular ficam sempre visíveis */
+.r7-acts{display:flex;gap:2px;align-items:center;margin:2px 0 0 -6px;opacity:0;transition:opacity .12s;flex-wrap:wrap}
+.r7-c:hover>.r7-row>.r7-main>.r7-acts,.r7-c:focus-within>.r7-row>.r7-main>.r7-acts,.r7-r:hover .r7-acts,.r7-r:focus-within .r7-acts,.r7-acts.on{opacity:1}
+.r7-act{display:inline-flex;align-items:center;gap:5px;border:0;background:none;padding:4px 6px;border-radius:6px;font:500 12.5px var(--font-sans);color:var(--sx-text-3,#6B6E85);cursor:pointer}
+.r7-act .ic{width:13px!important;height:13px!important}
+.r7-act:hover{background:var(--sx-sunken,#F2F3F7);color:var(--sx-text,#0B0B1A)}
+.r7-act:focus-visible{outline:2px solid var(--mn-azul,#0000FF)!important;outline-offset:1px;opacity:1}
+.r7-acts.on{gap:8px;margin-left:0}
+@media (hover:hover) and (min-width:761px){
+  .r7-c>.r7-row>.r7-main>.r7-acts:not(.on),.r7-r .r7-acts{position:absolute;top:-12px;right:6px;margin:0;padding:2px;background:#fff;border:1px solid var(--sx-border,#E4E5EC);border-radius:8px;box-shadow:0 4px 12px rgba(14,16,48,.08);z-index:2;pointer-events:none}
+  .r7-c:hover>.r7-row>.r7-main>.r7-acts,.r7-c:focus-within>.r7-row>.r7-main>.r7-acts,.r7-r:hover .r7-acts,.r7-r:focus-within .r7-acts{pointer-events:auto}
+  .r7-r{position:relative}
+}
+@media (hover:none),(max-width:760px){.r7-acts{opacity:1}.r7-act{color:#5F6680}.r7-gut{opacity:1}}
+/* atribuído: barra azul e linha com Resolver + selo */
+.r7-c.r7-atr{padding:6px 8px 8px 12px;margin-left:-12px;box-shadow:inset 3px 0 0 var(--azul,#0000FF);background:linear-gradient(90deg,rgba(0,0,255,.035),transparent 60%)}
+.r7-c.r7-ok{padding:6px 8px 8px 12px;margin-left:-12px}
+.r7-asg{display:flex;align-items:center;gap:6px;margin:0 0 6px 42px;flex-wrap:wrap}
+.r7-resolver{display:inline-flex;align-items:center;gap:4px;border:1px solid var(--sx-border-strong,#D5D7E2);background:#fff;border-radius:999px!important;padding:2px 10px;font:600 12px var(--font-sans);color:#027A48;cursor:pointer;min-height:26px}
+.r7-resolver:hover{background:#ECFDF3;border-color:#A6F4C5}
+.r7-resolver:focus-visible{outline:2px solid var(--mn-azul,#0000FF)!important;outline-offset:2px}
+.r7-selo{display:inline-flex;align-items:center;border-radius:999px;padding:2px 9px;background:#EBEBFF;color:#1F1FB8;font:600 12px var(--font-sans);min-height:22px}
+.r7-selo.ok{background:#ECFDF3;color:#027A48}
+/* divisor "Novo" */
+.r7-novo{display:flex;align-items:center;gap:8px;margin:14px 0 4px}
+.r7-novo::after{content:"";flex:1;height:1px;background:#E01E5A}
+.r7-novo span{background:#E01E5A;color:#fff;font:700 11px var(--font-sans);border-radius:999px;padding:2px 9px;letter-spacing:.02em}
+/* mudança de status no meio da conversa */
+.r7-log{display:flex;align-items:baseline;gap:10px;margin:10px 0 2px 42px;font-size:13px;line-height:1.5;color:var(--sx-text-3,#6B6E85)}
+.r7-log>span{flex:1;min-width:0}
+.r7-log time{flex:none;font-size:12px;font-variant-numeric:tabular-nums}
+.r7-st{display:inline-flex;align-items:center;gap:5px;font-weight:600;color:var(--sx-text-2,#3D4057);white-space:nowrap}
+.r7-st i{width:8px;height:8px;border-radius:2px;display:inline-block}
+/* respostas */
+.r7-resps{margin-top:6px;gap:6px}
+.r7-resps .crr{padding-left:10px}
+.r7-resps .crb .r7-tx{font-size:13.5px}
+.r7-nresp{font-size:12.5px}
+/* programados */
+.r7-progs{margin-top:18px;padding-top:10px;border-top:1px dashed var(--sx-border-strong,#D5D7E2)}
+.r7-progt{font:600 12px var(--font-sans);color:var(--sx-text-3,#6B6E85);margin-bottom:2px}
+.r7-c.r7-agd,.r7-r.r7-agd{border:1px dashed #A3A7BD;border-radius:12px;padding:8px 10px;background:#FAFAFD;margin-top:8px}
+.r7-r.r7-agd{border-left-width:1px}
+.r7-prog{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:8px}
+.r7-progselo{display:inline-flex;align-items:center;gap:4px;border-radius:999px;background:#EEF0F6;color:#3D4057;font:600 12px var(--font-sans);padding:3px 10px}
+.r7-progbt{display:flex;gap:6px;flex-wrap:wrap}
+.r7-flash{animation:r7flash 1.4s ease}
+@keyframes r7flash{0%,40%{background:#FFF3CC}100%{background:#FAFAFD}}
+/* campo de escrever: cartão fixo no rodapé do feed */
+.r7-faixa{display:flex;align-items:center;gap:10px;margin:8px 12px 0;padding:8px 12px;border-radius:12px;background:#F2F3F7;color:#3D4057;font-size:13px}
+.r7-faixa span{flex:1;min-width:0}
+.r7-faixa button{border:1px solid var(--sx-border-strong,#D5D7E2);background:#fff;border-radius:8px;padding:4px 10px;font:600 12.5px var(--font-sans);cursor:pointer;white-space:nowrap}
+.composer.r7-comp{position:sticky;bottom:0;z-index:4;margin:8px 12px 12px;padding:0!important;background:#fff!important;border:1px solid var(--sx-border-strong,#D5D7E2)!important;border-radius:14px!important;box-shadow:0 2px 10px rgba(14,16,48,.06)!important}
+.composer.r7-comp:focus-within{border-color:var(--mn-azul,#0000FF)!important;box-shadow:0 0 0 3px rgba(0,0,255,.12)!important}
+.composer.r7-comp textarea{display:block;width:100%;min-height:44px!important;max-height:calc(1.5em * 6 + 20px);overflow-y:auto;resize:none!important;border:0!important;box-shadow:none!important;outline:none;background:transparent!important;padding:12px 14px 6px!important;font:400 14px/1.5 var(--font-sans);border-radius:14px 14px 0 0!important}
+.r7-bar{display:flex;align-items:center;gap:4px;padding:4px 8px 8px;flex-wrap:wrap}
+.r7-tb{width:32px;height:32px;display:inline-grid;place-items:center;border:0;background:none;border-radius:8px;cursor:pointer;color:var(--sx-text-2,#3D4057);font:600 16px var(--font-sans)}
+.r7-tb .dchip-ic{width:16px;height:16px;margin:0}
+.r7-tb:hover{background:var(--sx-sunken,#F2F3F7)}
+.r7-tb:focus-visible{outline:2px solid var(--mn-azul,#0000FF)!important}
+.r7-atrib{display:inline-flex;align-items:center;gap:0;border:1px solid var(--sx-border-strong,#D5D7E2);border-radius:999px;padding:0 4px 0 10px;height:30px;font:500 12.5px var(--font-sans);color:var(--sx-text-3,#6B6E85);margin-left:4px;max-width:200px}
+.r7-atrib select{border:0!important;background:transparent!important;padding:0 4px!important;height:28px;font:600 12.5px var(--font-sans)!important;color:var(--sx-text,#0B0B1A);max-width:120px;box-shadow:none!important;min-height:0!important}
+.r7-atrib:focus-within{border-color:var(--mn-azul,#0000FF)}
+.r7-send{display:inline-flex;align-items:stretch}
+.r7-send>.btn{border-radius:10px 0 0 10px!important;margin:0}
+.r7-send>.r7-mais{border-radius:0 10px 10px 0!important;padding:0 8px!important;min-width:30px;border-left:1px solid rgba(255,255,255,.35)!important}
+.composer.r7-comp .mentions{bottom:calc(100% + 4px)}
+/* menu "Programar envio" */
+.r7-menu{position:fixed;z-index:3500;min-width:260px;max-width:calc(100vw - 16px);background:#fff;border:1px solid var(--sx-border-strong,#D5D7E2);border-radius:12px;box-shadow:0 12px 32px rgba(14,16,48,.18);padding:6px}
+.r7-menu .r7-mt{font:700 12px var(--font-sans);color:var(--sx-text-3,#6B6E85);padding:6px 10px 4px}
+.r7-menu button.r7-mi{display:flex;width:100%;align-items:center;justify-content:space-between;gap:12px;border:0;background:none;text-align:left;padding:9px 10px;border-radius:8px;font:500 14px var(--font-sans);color:var(--sx-text,#0B0B1A);cursor:pointer}
+.r7-menu button.r7-mi span{color:var(--sx-text-3,#6B6E85);font-size:12.5px}
+.r7-menu button.r7-mi:hover,.r7-menu button.r7-mi:focus-visible{background:#F2F3F7;outline:none}
+.r7-menu .r7-dt{display:flex;flex-direction:column;gap:6px;padding:8px 10px 6px;border-top:1px solid #ECEDF2;margin-top:4px}
+.r7-menu .r7-dt input{height:38px;border:1px solid var(--sx-border-strong,#D5D7E2);border-radius:8px;padding:0 10px;font:inherit}
+.r7-menu .r7-dt .r7-err{color:#B42318;font-size:12.5px}
+@media (max-width:860px){ #layer .composer.r7-comp{position:relative;bottom:auto} }
+@media (max-width:760px){
+  .r7-asg,.r7-log{margin-left:0}
+  .r7-c.r7-atr,.r7-c.r7-ok{margin-left:-8px;padding-left:10px}
+  .composer.r7-comp{margin:8px 0 0}
+  .r7-faixa{margin:8px 0 0}
+  .r7-bar{gap:2px;flex-wrap:nowrap}
+  .r7-atrib{max-width:132px;padding-left:8px;margin-left:2px}
+  .r7-atrib span{font-size:12px}
+  .r7-atrib select{max-width:76px}
+  .r7-send>.btn{min-height:40px!important;height:40px}
+}
+.r7-send{margin-left:auto}
 /* ===== UX-T5 | perfil do topo como botão ===== */
 .chip-me{font:inherit;color:inherit;text-align:left;cursor:pointer;border:0;background:transparent}
 .chip-me .nm,.chip-me .em{display:block}
